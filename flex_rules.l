@@ -4,6 +4,7 @@
 
 /*Именованные шаблоны*/
 DIGIT [0-9]
+NONDIGIT [A-Za-z_]
 
 /*Подключение библиотек*/
 %{
@@ -52,3 +53,6 @@ DIGIT [0-9]
 "-=" {printf("Found assignment operation: %s", yytext);}
 "*=" {printf("Found assignment operation: %s", yytext);}
 "/=" {printf("Found assignment operation: %s", yytext);}
+
+/*Идентификатор*/
+{NONDIGIT}({NONDIGIT}|{DIGIT})* {printf("Found identifier: %s", yytext);}

@@ -24,7 +24,7 @@ NONDIGIT [A-Za-z_]
     char tmp[10000];
 %}
 
-/*Ключевые слова*/
+
 
 "int" {printf("Found keyword: %s\n", yytext);}
 "NSInteger" {printf("Found keyword: %s\n", yytext);}
@@ -44,13 +44,13 @@ NONDIGIT [A-Za-z_]
 "readonly" {printf("Found keyword: %s\n", yytext);}
 "readwrite" {printf("Found keyword: %s\n", yytext);}
 
-/*Арифметические опрерации*/
+
 "+" {printf("Found arithmetic operation: %s\n", yytext);}
 "-" {printf("Found arithmetic operation: %s\n", yytext);}
 "*" {printf("Found arithmetic operation: %s\n", yytext);}
 "/" {printf("Found arithmetic operation: %s\n", yytext);}
 
-/*Операции сравнения*/
+
 "==" {printf("Found comparison operation: %s\n", yytext);}
 "!=" {printf("Found comparison operation: %s\n", yytext);}
 ">" {printf("Found comparison operation: %s\n", yytext);}
@@ -58,28 +58,28 @@ NONDIGIT [A-Za-z_]
 ">=" {printf("Found comparison operation: %s\n", yytext);}
 "<=" {printf("Found comparison operation: %s\n", yytext);}
 
-/*Операции присваивания*/
+
 "=" {printf("Found assignment operation: %s\n", yytext);}
 "+=" {printf("Found assignment operation: %s\n", yytext);}
 "-=" {printf("Found assignment operation: %s\n", yytext);}
 "*=" {printf("Found assignment operation: %s\n", yytext);}
 "/=" {printf("Found assignment operation: %s\n", yytext);}
 
-/*Скобки*/
+
 "(" {printf("Found bracket: %s\n", yytext);}
 ")" {printf("Found bracket: %s\n", yytext);}
 "{" {printf("Found bracket: %s\n", yytext);}
 "}" {printf("Found bracket: %s\n", yytext);}
 
-/*Разделители*/
+
 ";" {printf("Found delimiter: %s\n", yytext);}
 ":" {printf("Found delimiter: %s\n", yytext);}
 "," {printf("Found delimiter: %s\n", yytext);}
 
-/*Идентификатор*/
+
 {NONDIGIT}({NONDIGIT}|{DIGIT})* {printf("Found identifier: %s", yytext);}
 
-/*Константы*/
+
 ({DIGIT}+\.{DIGIT}*|\.{DIGIT}+)(f|F)? {
     strcpy(tmp, yytext);
     removeFloatSuffix(tmp)
@@ -92,7 +92,7 @@ NONDIGIT [A-Za-z_]
     printf("Found float constant: %s\n", tmp);
 }
 
-/*Комментарии*/
+
 "//" {tmp[0] = '\0'; BEGIN(LINE_COMMENT);}
 <LINE_COMMENT>[^\n*]+ {strcat(tmp, yytext);}
 <LINE_COMMENT>\\*\n[^\n]* {strcat(tmp, yytext);}

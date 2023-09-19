@@ -99,12 +99,12 @@ NONDIGIT [A-Za-z_]
 "//" {tmp[0] = '\0'; BEGIN(LINE_COMMENT);}
 <LINE_COMMENT>[^\n*]+ {strcat(tmp, yytext);}
 <LINE_COMMENT>\\*\n[^\n]* {strcat(tmp, yytext);}
-<LINE_COMMENT>\n {BEGIN(INITIAL); printf("Found comment: %s\n", tmp);}
+<LINE_COMMENT>[^\\]\n {printf("Found comment: %s\n", tmp); BEGIN(INITIAL);}
 
 "/*" {tmp[0] = '\0'; BEGIN(MULTILINE_COMMENT);}
 <MULTILINE_COMMENT>[^*]+ {strcat(tmp, yytext);}
 <MULTILINE_COMMENT>"*"+[^*/] {strcat(tmp, yytext);}
-<MULTILINE_COMMENT>"*"+"/" {BEGIN(INITIAL); printf("Found comment: %s\n", tmp);}
+<MULTILINE_COMMENT>"*"+"/" {printf("Found comment: %s\n", tmp);BEGIN(INITIAL);}
 
 <MULTILINE_COMMENT><<EOF>> {BEGIN(INITIAL); printf("ERROR! Multiline comment \"%s\" isn't close\n", tmp);}
 

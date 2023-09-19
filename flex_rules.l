@@ -121,7 +121,7 @@ void removeSymbol(char *string, char symbol)
         char* pointer = strchr(string, symbol);
         int symbolPos = pointer - string;
         int len = strlen(string);
-        for (i=symbolPos; i < len; i++)
+        for (int i=symbolPos; i < len; i++)
         {
             string[i] = string[i+1];
         }
@@ -132,10 +132,10 @@ void removeSymbol(char *string, char symbol)
 //Удаление суффикса float
 void removeFloatSuffix(char *string)
 {
-    if (isContainsSymbol(string, 'f') || isContainsSymbol(tmp, 'F'))
+    if (isContainsSymbol(string, 'f') || isContainsSymbol(string, 'F'))
     {
-        removeSymbol(tmp, 'f');
-        removeSymbol(tmp, 'F');
+        removeSymbol(string, 'f');
+        removeSymbol(string, 'F');
     }
 }
 

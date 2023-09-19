@@ -921,7 +921,7 @@ YY_RULE_SETUP
 #line 83 "flex_rules.l"
 {
     strcpy(tmp, yytext);
-    removeFloatSuffix(tmp)
+    removeFloatSuffix(tmp);
     printf("Found float constant: %s\n", tmp);
 }
 	YY_BREAK
@@ -930,7 +930,7 @@ YY_RULE_SETUP
 #line 89 "flex_rules.l"
 {
     strcpy(tmp, yytext);
-    removeFloatSuffix(tmp)
+    removeFloatSuffix(tmp);
     printf("Found float constant: %s\n", tmp);
 }
 	YY_BREAK
@@ -952,7 +952,7 @@ YY_RULE_SETUP
 case 46:
 YY_RULE_SETUP
 #line 99 "flex_rules.l"
-{BEGIN(INITIAL); printf("Found comment: %s\n", tmp)}
+{BEGIN(INITIAL); printf("Found comment: %s\n", tmp);}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
@@ -972,11 +972,11 @@ YY_RULE_SETUP
 case 50:
 YY_RULE_SETUP
 #line 104 "flex_rules.l"
-{BEGIN(INITIAL); printf("Found comment: %s\n", tmp)}
+{BEGIN(INITIAL); printf("Found comment: %s\n", tmp);}
 	YY_BREAK
 case YY_STATE_EOF(MULTILINE_COMMENT):
 #line 106 "flex_rules.l"
-{BEGIN(INITIAL); printf("ERROR! Multiline comment \"%s\" isn't close\n", tmp)}
+{BEGIN(INITIAL); printf("ERROR! Multiline comment \"%s\" isn't close\n", tmp);}
 	YY_BREAK
 case 51:
 YY_RULE_SETUP

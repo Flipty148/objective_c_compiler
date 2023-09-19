@@ -82,13 +82,13 @@ NONDIGIT [A-Za-z_]
 
 ({DIGIT}+\.{DIGIT}*|\.{DIGIT}+)(f|F)? {
     strcpy(tmp, yytext);
-    removeFloatSuffix(tmp)
+    removeFloatSuffix(tmp);
     printf("Found float constant: %s\n", tmp);
 }
 
 ({DIGIT}+\.?{DIGIT}*|\.{DIGIT}+)(e|E)-?{DIGIT}+[fF]? {
     strcpy(tmp, yytext);
-    removeFloatSuffix(tmp)
+    removeFloatSuffix(tmp);
     printf("Found float constant: %s\n", tmp);
 }
 
@@ -96,14 +96,14 @@ NONDIGIT [A-Za-z_]
 "//" {tmp[0] = '\0'; BEGIN(LINE_COMMENT);}
 <LINE_COMMENT>[^\n*]+ {strcat(tmp, yytext);}
 <LINE_COMMENT>\\*\n[^\n]* {strcat(tmp, yytext);}
-<LINE_COMMENT>\n {BEGIN(INITIAL); printf("Found comment: %s\n", tmp)}
+<LINE_COMMENT>\n {BEGIN(INITIAL); printf("Found comment: %s\n", tmp);}
 
 "/*" {tmp[0] = '\0'; BEGIN(MULTILINE_COMMENT);}
 <MULTILINE_COMMENT>[^*]+ {strcat(tmp, yytext);}
 <MULTILINE_COMMENT>"*"+[^*/] {strcat(tmp, yytext);}
-<MULTILINE_COMMENT>"*"+"/" {BEGIN(INITIAL); printf("Found comment: %s\n", tmp)}
+<MULTILINE_COMMENT>"*"+"/" {BEGIN(INITIAL); printf("Found comment: %s\n", tmp);}
 
-<MULTILINE_COMMENT><<EOF>> {BEGIN(INITIAL); printf("ERROR! Multiline comment \"%s\" isn't close\n", tmp)}
+<MULTILINE_COMMENT><<EOF>> {BEGIN(INITIAL); printf("ERROR! Multiline comment \"%s\" isn't close\n", tmp);}
 
 %%
 

@@ -9,9 +9,13 @@ NONDIGIT [A-Za-z_]
 /*Подключение библиотек*/
 %{
     #include <stdio.h>
+    #include <string.h>
 %}
 
 %%
+%{
+    char tmp[10000];
+%}
 
 /*Ключевые слова*/
 
@@ -67,3 +71,50 @@ NONDIGIT [A-Za-z_]
 
 /*Идентификатор*/
 {NONDIGIT}({NONDIGIT}|{DIGIT})* {printf("Found identifier: %s", yytext);}
+
+/*Константы*/
+({DIGIT}+\.{DIGIT}*|\.{DIGIT}+)(f|F)? {
+    strcpy(tmp, yytext);
+    removeFloatSuffix(tmp)
+    printf("Found float constant: %s", tmp);
+}
+
+({DIGIT}+\.?{DIGIT}*|\.{DIGIT}+)(e|E)-?{DIGIT}+[fF]? {
+    strcpy(tmp, yytext);
+    removeFloatSuffix(tmp)
+    printf("Found float constant: %s", tmp);
+}
+
+%%
+
+//Проверка на содержание символа в строке
+int isContainsSymbol(char *string, char symbol)
+{
+    return strchr(string, symbol) != NULL;
+}
+
+//Удаление первого вхождения символа в строку
+void removeSymbol(char *string, char symbol)
+{
+    if (isContainsSymbol(string, symbol))
+    {
+        char* pointer = strchr(string, symbol);
+        int symbolPos = pointer - string;
+        int len = strlen(string);
+        for (i=symbolPos; i < len; i++)
+        {
+            string[i] = string[i+1];
+        }
+        string[len-2] = '\0';
+    }
+}
+
+//Удаление суффикса float
+void removeFloatSuffix(char *string)
+{
+    if (isContainsSymbol(string, 'f') || isContainsSymbol(tmp, 'F'))
+    {
+        removeSymbol(tmp, 'f');
+        removeSymbol(tmp, 'F');
+    }
+}

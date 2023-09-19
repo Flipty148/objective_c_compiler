@@ -23,55 +23,55 @@ NONDIGIT [A-Za-z_]
 
 /*Ключевые слова*/
 
-"int" {printf("Found keyword: %s", yytext);}
-"NSInteger" {printf("Found keyword: %s", yytext);}
-"char" {printf("Found keyword: %s", yytext);}
-"NSString" {printf("Found keyword: %s", yytext);}
-"if" {printf("Found keyword: %s", yytext);}
-"else" {printf("Found keyword: %s", yytext);}
-"while" {printf("Found keyword: %s", yytext);}
-"do" {printf("Found keyword: %s", yytext);}
-"for" {printf("Found keyword: %s", yytext);}
-"in" {printf("Found keyword: %s", yytext);}
-"@interface" {printf("Found keyword: %s", yytext);}
-"@end" {printf("Found keyword: %s", yytext);}
-"@implementation" {printf("Found keyword: %s", yytext);}
-"@property" {printf("Found keyword: %s", yytext);}
-"float" {printf("Found keyword: %s", yytext);}
-"readonly" {printf("Found keyword: %s", yytext);}
-"readwrite" {printf("Found keyword: %s", yytext);}
+"int" {printf("Found keyword: %s\n", yytext);}
+"NSInteger" {printf("Found keyword: %s\n", yytext);}
+"char" {printf("Found keyword: %s\n", yytext);}
+"NSString" {printf("Found keyword: %s\n", yytext);}
+"if" {printf("Found keyword: %s\n", yytext);}
+"else" {printf("Found keyword: %s\n", yytext);}
+"while" {printf("Found keyword: %s\n", yytext);}
+"do" {printf("Found keyword: %s\n", yytext);}
+"for" {printf("Found keyword: %s\n", yytext);}
+"in" {printf("Found keyword: %s\n", yytext);}
+"@interface" {printf("Found keyword: %s\n", yytext);}
+"@end" {printf("Found keyword: %s\n", yytext);}
+"@implementation" {printf("Found keyword: %s\n", yytext);}
+"@property" {printf("Found keyword: %s\n", yytext);}
+"float" {printf("Found keyword: %s\n", yytext);}
+"readonly" {printf("Found keyword: %s\n", yytext);}
+"readwrite" {printf("Found keyword: %s\n", yytext);}
 
 /*Арифметические опрерации*/
-"+" {printf("Found arithmetic operation: %s", yytext);}
-"-" {printf("Found arithmetic operation: %s", yytext);}
-"*" {printf("Found arithmetic operation: %s", yytext);}
-"/" {printf("Found arithmetic operation: %s", yytext);}
+"+" {printf("Found arithmetic operation: %s\n", yytext);}
+"-" {printf("Found arithmetic operation: %s\n", yytext);}
+"*" {printf("Found arithmetic operation: %s\n", yytext);}
+"/" {printf("Found arithmetic operation: %s\n", yytext);}
 
 /*Операции сравнения*/
-"==" {printf("Found comparison operation: %s", yytext);}
-"!=" {printf("Found comparison operation: %s", yytext);}
-">" {printf("Found comparison operation: %s", yytext);}
-"<" {printf("Found comparison operation: %s", yytext);}
-">=" {printf("Found comparison operation: %s", yytext);}
-"<=" {printf("Found comparison operation: %s", yytext);}
+"==" {printf("Found comparison operation: %s\n", yytext);}
+"!=" {printf("Found comparison operation: %s\n", yytext);}
+">" {printf("Found comparison operation: %s\n", yytext);}
+"<" {printf("Found comparison operation: %s\n", yytext);}
+">=" {printf("Found comparison operation: %s\n", yytext);}
+"<=" {printf("Found comparison operation: %s\n", yytext);}
 
 /*Операции присваивания*/
-"=" {printf("Found assignment operation: %s", yytext);}
-"+=" {printf("Found assignment operation: %s", yytext);}
-"-=" {printf("Found assignment operation: %s", yytext);}
-"*=" {printf("Found assignment operation: %s", yytext);}
-"/=" {printf("Found assignment operation: %s", yytext);}
+"=" {printf("Found assignment operation: %s\n", yytext);}
+"+=" {printf("Found assignment operation: %s\n", yytext);}
+"-=" {printf("Found assignment operation: %s\n", yytext);}
+"*=" {printf("Found assignment operation: %s\n", yytext);}
+"/=" {printf("Found assignment operation: %s\n", yytext);}
 
 /*Скобки*/
-"(" {printf("Found bracket: %s", yytext);}
-")" {printf("Found bracket: %s", yytext);}
-"{" {printf("Found bracket: %s", yytext);}
-"}" {printf("Found bracket: %s", yytext);}
+"(" {printf("Found bracket: %s\n", yytext);}
+")" {printf("Found bracket: %s\n", yytext);}
+"{" {printf("Found bracket: %s\n", yytext);}
+"}" {printf("Found bracket: %s\n", yytext);}
 
 /*Разделители*/
-";" {printf("Found delimiter: %s", yytext);}
-":" {printf("Found delimiter: %s", yytext);}
-"," {printf("Found delimiter: %s", yytext);}
+";" {printf("Found delimiter: %s\n", yytext);}
+":" {printf("Found delimiter: %s\n", yytext);}
+"," {printf("Found delimiter: %s\n", yytext);}
 
 /*Идентификатор*/
 {NONDIGIT}({NONDIGIT}|{DIGIT})* {printf("Found identifier: %s", yytext);}
@@ -80,27 +80,27 @@ NONDIGIT [A-Za-z_]
 ({DIGIT}+\.{DIGIT}*|\.{DIGIT}+)(f|F)? {
     strcpy(tmp, yytext);
     removeFloatSuffix(tmp)
-    printf("Found float constant: %s", tmp);
+    printf("Found float constant: %s\n", tmp);
 }
 
 ({DIGIT}+\.?{DIGIT}*|\.{DIGIT}+)(e|E)-?{DIGIT}+[fF]? {
     strcpy(tmp, yytext);
     removeFloatSuffix(tmp)
-    printf("Found float constant: %s", tmp);
+    printf("Found float constant: %s\n", tmp);
 }
 
 /*Комментарии*/
 "//" {tmp[0] = '\0'; BEGIN(LINE_COMMENT);}
 <LINE_COMMENT>[^\n*]+ {strcat(tmp, yytext);}
 <LINE_COMMENT>\\*\n[^\n]* {strcat(tmp, yytext);}
-<LINE_COMMENT>\n {BEGIN(INITIAL); printf("Found comment: %s", tmp)}
+<LINE_COMMENT>\n {BEGIN(INITIAL); printf("Found comment: %s\n", tmp)}
 
 "/*" {tmp[0] = '\0'; BEGIN(MULTILINE_COMMENT);}
 <MULTILINE_COMMENT>[^*]+ {strcat(tmp, yytext);}
 <MULTILINE_COMMENT>"*"+[^*/] {strcat(tmp, yytext);}
-<MULTILINE_COMMENT>"*"+"/" {BEGIN(INITIAL); printf("Found comment: %s", tmp)}
+<MULTILINE_COMMENT>"*"+"/" {BEGIN(INITIAL); printf("Found comment: %s\n", tmp)}
 
-<MULTILINE_COMMENT><<EOF>> {BEGIN(INITIAL); printf("ERROR! Multiline comment \"%s\" isn't close", tmp)}
+<MULTILINE_COMMENT><<EOF>> {BEGIN(INITIAL); printf("ERROR! Multiline comment \"%s\" isn't close\n", tmp)}
 
 %%
 

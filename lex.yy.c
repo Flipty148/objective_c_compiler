@@ -290,20 +290,20 @@ static yyconst short int yy_accept[160] =
     {   0,
         0,    0,    0,    0,    0,    0,   54,   52,   53,   52,
        33,   34,   20,   18,   39,   19,   52,   21,   52,   38,
-       37,   25,   28,   24,   52,   40,   40,   52,   40,   40,
-       40,   40,   40,   40,   40,   35,   36,   45,   46,   45,
-       49,   49,   52,   49,   23,   31,   29,   30,   42,   48,
-       44,   32,   42,   41,   41,   41,   27,   22,   26,    0,
-        0,    0,   40,   40,   52,   40,    8,   40,   40,   40,
-        5,   10,   40,   40,   45,   46,   46,   45,   45,   49,
-       50,    0,   51,   49,    0,   42,   42,    0,   41,    0,
-        0,    0,    0,   40,   40,   40,   40,   40,    9,    1,
+       37,   25,   28,   24,   52,   42,   42,   52,   42,   42,
+       42,   42,   42,   42,   42,   35,   36,   45,   46,   45,
+       49,   49,   52,   49,   23,   31,   29,   30,   40,   48,
+       44,   32,   40,   43,   43,   43,   27,   22,   26,    0,
+        0,    0,   42,   42,   52,   42,    8,   42,   42,   42,
+        5,   10,   42,   42,   45,   46,   46,   45,   45,   49,
+       50,    0,   51,   49,    0,   40,   40,    0,   41,    0,
+        0,    0,    0,   42,   42,   42,   42,   42,    9,    1,
 
-       40,   40,   43,   41,   12,    0,    0,    0,   40,   40,
-        3,    6,   40,   40,   40,   43,    0,    0,    0,   40,
-       40,   15,   40,   40,    7,    0,    0,    0,   40,   40,
-       40,   40,    0,    0,    0,   40,   40,   40,   40,    0,
-        0,    0,   40,    4,   16,   40,    0,    0,   14,    2,
+       42,   42,   41,   41,   12,    0,    0,    0,   42,   42,
+        3,    6,   42,   42,   42,   41,    0,    0,    0,   42,
+       42,   15,   42,   42,    7,    0,    0,    0,   42,   42,
+       42,   42,    0,    0,    0,   42,   42,   42,   42,    0,
+        0,    0,   42,    4,   16,   42,    0,    0,   14,    2,
        17,    0,   11,    0,    0,    0,    0,   13,    0
     } ;
 
@@ -484,7 +484,8 @@ char *yytext;
 #line 15 "flex_rules.l"
     #include <stdio.h>
     #include <string.h>
-#line 488 "lex.yy.c"
+    #include <stdlib.h>
+#line 489 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -631,7 +632,7 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 19 "flex_rules.l"
+#line 20 "flex_rules.l"
 
 
     int isContainsSymbol(char *string, char symbol);
@@ -642,7 +643,7 @@ YY_DECL
 
 
 
-#line 646 "lex.yy.c"
+#line 647 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -727,282 +728,282 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 29 "flex_rules.l"
+#line 30 "flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 30 "flex_rules.l"
+#line 31 "flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 31 "flex_rules.l"
+#line 32 "flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 32 "flex_rules.l"
+#line 33 "flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 33 "flex_rules.l"
+#line 34 "flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 34 "flex_rules.l"
+#line 35 "flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 35 "flex_rules.l"
+#line 36 "flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 36 "flex_rules.l"
+#line 37 "flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 37 "flex_rules.l"
+#line 38 "flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 38 "flex_rules.l"
+#line 39 "flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 39 "flex_rules.l"
+#line 40 "flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 40 "flex_rules.l"
+#line 41 "flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 41 "flex_rules.l"
+#line 42 "flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 42 "flex_rules.l"
+#line 43 "flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 43 "flex_rules.l"
+#line 44 "flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 44 "flex_rules.l"
+#line 45 "flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 45 "flex_rules.l"
+#line 46 "flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 48 "flex_rules.l"
+#line 49 "flex_rules.l"
 {printf("Found arithmetic operation: %s\n", yytext);}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 49 "flex_rules.l"
+#line 50 "flex_rules.l"
 {printf("Found arithmetic operation: %s\n", yytext);}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 50 "flex_rules.l"
+#line 51 "flex_rules.l"
 {printf("Found arithmetic operation: %s\n", yytext);}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 51 "flex_rules.l"
+#line 52 "flex_rules.l"
 {printf("Found arithmetic operation: %s\n", yytext);}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 54 "flex_rules.l"
+#line 55 "flex_rules.l"
 {printf("Found comparison operation: %s\n", yytext);}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 55 "flex_rules.l"
+#line 56 "flex_rules.l"
 {printf("Found comparison operation: %s\n", yytext);}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 56 "flex_rules.l"
+#line 57 "flex_rules.l"
 {printf("Found comparison operation: %s\n", yytext);}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 57 "flex_rules.l"
+#line 58 "flex_rules.l"
 {printf("Found comparison operation: %s\n", yytext);}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 58 "flex_rules.l"
+#line 59 "flex_rules.l"
 {printf("Found comparison operation: %s\n", yytext);}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 59 "flex_rules.l"
+#line 60 "flex_rules.l"
 {printf("Found comparison operation: %s\n", yytext);}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 62 "flex_rules.l"
+#line 63 "flex_rules.l"
 {printf("Found assignment operation: %s\n", yytext);}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 63 "flex_rules.l"
+#line 64 "flex_rules.l"
 {printf("Found assignment operation: %s\n", yytext);}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 64 "flex_rules.l"
+#line 65 "flex_rules.l"
 {printf("Found assignment operation: %s\n", yytext);}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 65 "flex_rules.l"
+#line 66 "flex_rules.l"
 {printf("Found assignment operation: %s\n", yytext);}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 66 "flex_rules.l"
+#line 67 "flex_rules.l"
 {printf("Found assignment operation: %s\n", yytext);}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 69 "flex_rules.l"
+#line 70 "flex_rules.l"
 {printf("Found bracket: %s\n", yytext);}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 70 "flex_rules.l"
+#line 71 "flex_rules.l"
 {printf("Found bracket: %s\n", yytext);}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 71 "flex_rules.l"
+#line 72 "flex_rules.l"
 {printf("Found bracket: %s\n", yytext);}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 72 "flex_rules.l"
+#line 73 "flex_rules.l"
 {printf("Found bracket: %s\n", yytext);}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 75 "flex_rules.l"
+#line 76 "flex_rules.l"
 {printf("Found delimiter: %s\n", yytext);}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 76 "flex_rules.l"
+#line 77 "flex_rules.l"
 {printf("Found delimiter: %s\n", yytext);}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 77 "flex_rules.l"
+#line 78 "flex_rules.l"
 {printf("Found delimiter: %s\n", yytext);}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 80 "flex_rules.l"
-{printf("Found identifier: %s\n", yytext);}
+#line 81 "flex_rules.l"
+{
+    strcpy(tmp, yytext);
+    removeFloatSuffix(tmp);
+    printf("Found float constant: %f\n", (float)atof(tmp));
+}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 81 "flex_rules.l"
-{printf("ERROR! Incorrect identifier name: %s\n", yytext);}
+#line 87 "flex_rules.l"
+{
+    strcpy(tmp, yytext);
+    removeFloatSuffix(tmp);
+    printf("Found float constant: %f\n", (float)atof(tmp));
+}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 85 "flex_rules.l"
-{
-    strcpy(tmp, yytext);
-    removeFloatSuffix(tmp);
-    printf("Found float constant: %s\n", tmp);
-}
+#line 93 "flex_rules.l"
+{printf("Found identifier: %s\n", yytext);}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 91 "flex_rules.l"
-{
-    strcpy(tmp, yytext);
-    removeFloatSuffix(tmp);
-    printf("Found float constant: %s\n", tmp);
-}
+#line 94 "flex_rules.l"
+{printf("ERROR! Incorrect identifier name: %s\n", yytext);}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 98 "flex_rules.l"
+#line 99 "flex_rules.l"
 {tmp[0] = '\0'; BEGIN(LINE_COMMENT);}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 99 "flex_rules.l"
+#line 100 "flex_rules.l"
 {strcat(tmp, yytext);}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 100 "flex_rules.l"
+#line 101 "flex_rules.l"
 {strcat(tmp, yytext);}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 101 "flex_rules.l"
+#line 102 "flex_rules.l"
 {BEGIN(INITIAL); printf("Found comment: %s\n", tmp);}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 103 "flex_rules.l"
+#line 104 "flex_rules.l"
 {tmp[0] = '\0'; BEGIN(MULTILINE_COMMENT);}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 104 "flex_rules.l"
+#line 105 "flex_rules.l"
 {strcat(tmp, yytext);}
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 105 "flex_rules.l"
+#line 106 "flex_rules.l"
 {strcat(tmp, yytext);}
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 106 "flex_rules.l"
+#line 107 "flex_rules.l"
 {BEGIN(INITIAL); printf("Found comment: %s\n", tmp);}
 	YY_BREAK
 case YY_STATE_EOF(MULTILINE_COMMENT):
-#line 108 "flex_rules.l"
+#line 109 "flex_rules.l"
 {BEGIN(INITIAL); printf("ERROR! Multiline comment \"%s\" isn't close\n", tmp);}
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 111 "flex_rules.l"
+#line 112 "flex_rules.l"
 {printf("unrecognized element: %s\n", yytext);}
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 113 "flex_rules.l"
+#line 114 "flex_rules.l"
 ECHO;
 	YY_BREAK
-#line 1006 "lex.yy.c"
+#line 1007 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(LINE_COMMENT):
 	yyterminate();
@@ -1863,7 +1864,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 113 "flex_rules.l"
+#line 114 "flex_rules.l"
 
 
 //Проверка на содержание символа в строке

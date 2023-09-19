@@ -14,6 +14,7 @@ NONDIGIT [A-Za-z_]
 %{
     #include <stdio.h>
     #include <string.h>
+    #include <stdlib.h>
 %}
 
 %%
@@ -77,22 +78,22 @@ NONDIGIT [A-Za-z_]
 "," {printf("Found delimiter: %s\n", yytext);}
 
 
-{NONDIGIT}({NONDIGIT}|{DIGIT})* {printf("Found identifier: %s\n", yytext);}
-{DIGIT}({NONDIGIT}|{DIGIT})+ {printf("ERROR! Incorrect identifier name: %s\n", yytext);}
-
-
-
 ({DIGIT}+\.{DIGIT}*|\.{DIGIT}+)(f|F)? {
     strcpy(tmp, yytext);
     removeFloatSuffix(tmp);
-    printf("Found float constant: %s\n", tmp);
+    printf("Found float constant: %f\n", (float)atof(tmp));
 }
 
 ({DIGIT}+\.?{DIGIT}*|\.{DIGIT}+)(e|E)-?{DIGIT}+[fF]? {
     strcpy(tmp, yytext);
     removeFloatSuffix(tmp);
-    printf("Found float constant: %s\n", tmp);
+    printf("Found float constant: %f\n", (float)atof(tmp));
 }
+
+{NONDIGIT}({NONDIGIT}|{DIGIT})* {printf("Found identifier: %s\n", yytext);}
+{DIGIT}({NONDIGIT}|{DIGIT})+ {printf("ERROR! Incorrect identifier name: %s\n", yytext);}
+
+
 
 
 "//" {tmp[0] = '\0'; BEGIN(LINE_COMMENT);}

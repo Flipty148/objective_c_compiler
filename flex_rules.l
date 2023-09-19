@@ -105,6 +105,9 @@ NONDIGIT [A-Za-z_]
 
 <MULTILINE_COMMENT><<EOF>> {BEGIN(INITIAL); printf("ERROR! Multiline comment \"%s\" isn't close\n", tmp);}
 
+
+<*>.|\\n {printf("unrecognized element: %s\n", yytext);}
+
 %%
 
 //Проверка на содержание символа в строке

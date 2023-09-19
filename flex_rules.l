@@ -37,3 +37,11 @@ DIGIT [0-9]
 "-" {printf("Found arithmetic operation: %s", yytext);}
 "*" {printf("Found arithmetic operation: %s", yytext);}
 "/" {printf("Found arithmetic operation: %s", yytext);}
+
+/*Операции сравнения*/
+"==" {printf("Found comparison operation: %s", yytext);}
+"!=" {printf("Found comparison operation: %s", yytext);}
+">" {printf("Found comparison operation: %s", yytext);}
+"<" {printf("Found comparison operation: %s", yytext);}
+">=" {printf("Found comparison operation: %s", yytext);}
+"<=" {printf("Found comparison operation: %s", yytext);}

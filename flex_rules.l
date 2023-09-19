@@ -6,6 +6,10 @@
 DIGIT [0-9]
 NONDIGIT [A-Za-z_]
 
+/*Стартовые состояния*/
+%x LINE_COMMENT
+%x MULTILINE_COMMENT
+
 /*Подключение библиотек*/
 %{
     #include <stdio.h>
@@ -84,6 +88,19 @@ NONDIGIT [A-Za-z_]
     removeFloatSuffix(tmp)
     printf("Found float constant: %s", tmp);
 }
+
+/*Комментарии*/
+"//" {tmp[0] = '\0'; BEGIN(LINE_COMMENT);}
+<LINE_COMMENT>[^\n*]+ {strcat(tmp, yytext);}
+<LINE_COMMENT>\\*\n[^\n]* {strcat(tmp, yytext);}
+<LINE_COMMENT>\n {BEGIN(INITIAL); printf("Found comment: %s", tmp)}
+
+"/*" {tmp[0] = '\0'; BEGIN(MULTILINE_COMMENT);}
+<MULTILINE_COMMENT>[^*]+ {strcat(tmp, yytext);}
+<MULTILINE_COMMENT>"*"+[^*/] {strcat(tmp, yytext);}
+<MULTILINE_COMMENT>"*"+"/" {BEGIN(INITIAL); printf("Found comment: %s", tmp)}
+
+<MULTILINE_COMMENT><<EOF>> {BEGIN(INITIAL); printf("ERROR! Multiline comment \"%s\" isn't close", tmp)}
 
 %%
 

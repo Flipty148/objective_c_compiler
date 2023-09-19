@@ -78,6 +78,8 @@ NONDIGIT [A-Za-z_]
 
 
 {NONDIGIT}({NONDIGIT}|{DIGIT})* {printf("Found identifier: %s\n", yytext);}
+{DIGIT}({NONDIGIT}|{DIGIT})+ {printf("ERROR! Incorrect identifier name: %s\n", yytext);}
+
 
 
 ({DIGIT}+\.{DIGIT}*|\.{DIGIT}+)(f|F)? {

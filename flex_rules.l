@@ -31,3 +31,9 @@ DIGIT [0-9]
 "float" {printf("Found keyword: %s", yytext);}
 "readonly" {printf("Found keyword: %s", yytext);}
 "readwrite" {printf("Found keyword: %s", yytext);}
+
+/*Арифметические опрерации*/
+"+" {printf("Found arithmetic operation: %s", yytext);}
+"-" {printf("Found arithmetic operation: %s", yytext);}
+"*" {printf("Found arithmetic operation: %s", yytext);}
+"/" {printf("Found arithmetic operation: %s", yytext);}

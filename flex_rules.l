@@ -45,3 +45,10 @@ DIGIT [0-9]
 "<" {printf("Found comparison operation: %s", yytext);}
 ">=" {printf("Found comparison operation: %s", yytext);}
 "<=" {printf("Found comparison operation: %s", yytext);}
+
+/*Операции присваивания*/
+"=" {printf("Found assignment operation: %s", yytext);}
+"+=" {printf("Found assignment operation: %s", yytext);}
+"-=" {printf("Found assignment operation: %s", yytext);}
+"*=" {printf("Found assignment operation: %s", yytext);}
+"/=" {printf("Found assignment operation: %s", yytext);}

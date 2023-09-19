@@ -914,7 +914,7 @@ YY_RULE_SETUP
 case 40:
 YY_RULE_SETUP
 #line 80 "flex_rules.l"
-{printf("Found identifier: %s", yytext);}
+{printf("Found identifier: %s\n", yytext);}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP

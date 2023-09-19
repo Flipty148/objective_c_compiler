@@ -77,7 +77,7 @@ NONDIGIT [A-Za-z_]
 "," {printf("Found delimiter: %s\n", yytext);}
 
 
-{NONDIGIT}({NONDIGIT}|{DIGIT})* {printf("Found identifier: %s", yytext);}
+{NONDIGIT}({NONDIGIT}|{DIGIT})* {printf("Found identifier: %s\n", yytext);}
 
 
 ({DIGIT}+\.{DIGIT}*|\.{DIGIT}+)(f|F)? {

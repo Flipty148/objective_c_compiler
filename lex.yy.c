@@ -1884,7 +1884,7 @@ void removeSymbol(char *string, char symbol)
         {
             string[i] = string[i+1];
         }
-        string[len-2] = '\0';
+        string[len-1] = '\0';
     }
 }
 

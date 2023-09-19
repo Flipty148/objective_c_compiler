@@ -54,5 +54,11 @@ NONDIGIT [A-Za-z_]
 "*=" {printf("Found assignment operation: %s", yytext);}
 "/=" {printf("Found assignment operation: %s", yytext);}
 
+/*Скобки*/
+"(" {printf("Found bracket: %s", yytext);}
+")" {printf("Found bracket: %s", yytext);}
+"{" {printf("Found bracket: %s", yytext);}
+"}" {printf("Found bracket: %s", yytext);}
+
 /*Идентификатор*/
 {NONDIGIT}({NONDIGIT}|{DIGIT})* {printf("Found identifier: %s", yytext);}

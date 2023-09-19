@@ -60,5 +60,10 @@ NONDIGIT [A-Za-z_]
 "{" {printf("Found bracket: %s", yytext);}
 "}" {printf("Found bracket: %s", yytext);}
 
+/*Разделители*/
+";" {printf("Found delimiter: %s", yytext);}
+":" {printf("Found delimiter: %s", yytext);}
+"," {printf("Found delimiter: %s", yytext);}
+
 /*Идентификатор*/
 {NONDIGIT}({NONDIGIT}|{DIGIT})* {printf("Found identifier: %s", yytext);}

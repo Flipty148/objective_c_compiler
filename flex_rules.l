@@ -106,7 +106,7 @@ NONDIGIT [A-Za-z_]
 <MULTILINE_COMMENT>"*"+[^*/] {strcat(tmp, yytext);}
 <MULTILINE_COMMENT>"*"+"/" {printf("Found comment: %s\n", tmp);BEGIN(INITIAL);}
 
-<MULTILINE_COMMENT><<EOF>> {BEGIN(INITIAL); printf("ERROR! Multiline comment \"%s\" isn't close\n", tmp);}
+<MULTILINE_COMMENT><<EOF>> {printf("ERROR! Multiline comment \"%s\" isn't close\n", tmp); BEGIN(INITIAL);}
 
 
 <*>.|\\n {printf("unrecognized element: %s\n", yytext);}

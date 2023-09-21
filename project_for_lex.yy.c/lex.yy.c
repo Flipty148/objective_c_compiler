@@ -992,7 +992,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case YY_STATE_EOF(MULTILINE_COMMENT):
 #line 109 "flex_rules.l"
-{BEGIN(INITIAL); printf("ERROR! Multiline comment \"%s\" isn't close\n", tmp);}
+{printf("ERROR! Multiline comment \"%s\" isn't close\n", tmp); BEGIN(INITIAL);}
 	YY_BREAK
 case 52:
 YY_RULE_SETUP

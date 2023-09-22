@@ -113,113 +113,44 @@ UNDERLINE_LITERAL [A-Za-z_]
     printf("ERROR! Incorrect octal number: %s\n", yytext);
 }
 
-
-\'\\b\' {
-strcpy(tmp, yytext);
-removeSymbol(tmp, '\'');
-removeSymbol(tmp, '\'');
-printf("Found char literal: \\b %s\n", "\b");
-}
-
-
-\'\\f\' {
-strcpy(tmp, yytext);
-removeSymbol(tmp, '\'');
-removeSymbol(tmp, '\'');
-printf("Found char literal: \\f %s\n", "\f");
-}
-
-
-\'\\n\' {
-strcpy(tmp, yytext);
-removeSymbol(tmp, '\'');
-removeSymbol(tmp, '\'');
-printf("Found char literal: \\n %s\n", "\n");
-}
-
-
-\'\\r\' {
-strcpy(tmp, yytext);
-removeSymbol(tmp, '\'');
-removeSymbol(tmp, '\'');
-printf("Found char literal: \\r %s\n", "\r");
-}
-
-
-\'\\t\' {
-strcpy(tmp, yytext);
-removeSymbol(tmp, '\'');
-removeSymbol(tmp, '\'');
-printf("Found char literal: \\t %s\n", "\t");
-}
-
-
-\'\\v\' {
-strcpy(tmp, yytext);
-removeSymbol(tmp, '\'');
-removeSymbol(tmp, '\'');
-printf("Found char literal: \\v %s\n", "\v");
-}
-
-
-\'\\\'\' {
-strcpy(tmp, yytext);
-removeSymbol(tmp, '\'');
-removeSymbol(tmp, '\'');
-printf("Found char literal: \\%s\n", "\'");
-}
-
-
-\'\\\\\' {
-strcpy(tmp, yytext);
-removeSymbol(tmp, '\'');
-removeSymbol(tmp, '\'');
-printf("Found char literal: \\%s\n", "\\");
-}
-
-
-\'\\\?\' {
-strcpy(tmp, yytext);
-removeSymbol(tmp, '\'');
-removeSymbol(tmp, '\'');
-printf("Found char literal: \\%s\n", "\?");
-}
-
-
-\'[^\\\']\' {
-strcpy(tmp, yytext);
-removeSymbol(tmp, '\'');
-removeSymbol(tmp, '\'');
-printf("Found char literal: %s\n", tmp);
-}
-
-
+\' strcpy(tmp,""); BEGIN(CHAR);
 @\" strcpy(tmp,""); BEGIN(STRING);
 <STRING>[^\\\n\"]+ strcat(tmp,yytext);
-<STRING>\\b strcat(tmp,"\b");
-<STRING>\\f strcat(tmp,"\f");
-<STRING>\\n strcat(tmp,"\n");
-<STRING>\\r strcat(tmp,"\r");
-<STRING>\\t strcat(tmp,"\t");
-<STRING>\\v strcat(tmp,"\v");
-<STRING>\\\' strcat(tmp,"\'");
-<STRING>\\\" strcat(tmp,"\"");
-<STRING>\\\\ strcat(tmp,"\\");
-<STRING>\\\? strcat(tmp,"\?");
-<STRING>\\x[0-9a-fA-F]{1,2} {
+<CHAR>[^\\\n\'] strcat(tmp,yytext);
+<STRING,CHAR>\\b strcat(tmp,"\b");
+<STRING,CHAR>\\f strcat(tmp,"\f");
+<STRING,CHAR>\\n strcat(tmp,"\n");
+<STRING,CHAR>\\r strcat(tmp,"\r");
+<STRING,CHAR>\\t strcat(tmp,"\t");
+<STRING,CHAR>\\v strcat(tmp,"\v");
+<STRING,CHAR>\\\' strcat(tmp,"\'");
+<STRING,CHAR>\\\" strcat(tmp,"\"");
+<STRING,CHAR>\\\\ strcat(tmp,"\\");
+<STRING,CHAR>\\\? strcat(tmp,"\?");
+<STRING,CHAR>\\x[0-9a-fA-F]{1,2} {
     char dig[2];
     char *a;
     dig[0]=strtol(yytext+2, &a, 16);
     dig[1]='\0';
     strcat(tmp, dig);}
-    <STRING>\\o[0-7]{1,2} {
+<STRING,CHAR>\\[0-7]{1,3} {
     char dig[2];
     char *a;
-    dig[0]=strtol(yytext+2, &a, 8);
+    dig[0]=strtol(yytext+1, &a, 8);
     dig[1]='\0';
-    strcat(tmp, dig);}
-<STRING><<EOF>> {printf("ERROR haven't found closing \"\n"); BEGIN(INITIAL);}
+strcat(tmp, dig);}
+<STRING,CHAR><<EOF>> {printf("ERROR! haven't found closing quotes \n"); BEGIN(INITIAL);}
 <STRING>\" {printf("Found String literal: %s\n",tmp);BEGIN(INITIAL);}
+<CHAR>\' {
+    if(strlen(tmp) != 1)
+    {
+        printf("ERROR! char length != 1 \n");BEGIN(INITIAL);
+    }
+    else
+    {
+        printf("Found Char literal: %s\n",tmp);BEGIN(INITIAL);
+    }
+}
 
 
 

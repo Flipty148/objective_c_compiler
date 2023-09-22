@@ -4,7 +4,7 @@
 
 /*Именованные шаблоны*/
 DIGIT [0-9]
-NONDIGIT [A-Za-z_]
+UNDERLINE_LITERAL [A-Za-z_]
 
 /*Стартовые состояния*/
 %x LINE_COMMENT
@@ -234,8 +234,8 @@ printf("Found char literal: %s\n", tmp);
     printf("Found float constant: %f\n", (float)atof(tmp));
 }
 
-{NONDIGIT}({NONDIGIT}|{DIGIT})* {printf("Found identifier: %s\n", yytext);}
-{DIGIT}({NONDIGIT}|{DIGIT})+ {printf("ERROR! Incorrect identifier name: %s\n", yytext);}
+{UNDERLINE_LITERAL}({UNDERLINE_LITERAL}|{DIGIT})* {printf("Found identifier: %s\n", yytext);}
+{DIGIT}({UNDERLINE_LITERAL}|{DIGIT})+ {printf("ERROR! Incorrect identifier name: %s\n", yytext);}
 
 
 

@@ -17,13 +17,14 @@ UNDERLINE_LITERAL [A-Za-z_]
     #include <stdio.h>
     #include <string.h>
     #include <stdlib.h>
+
+    int isContainsSymbol(char *string, char symbol);
+    void removeSymbol(char *string, char symbol);
+    void removeFloatSuffix(char *string);
 %}
 
 %%
 %{
-    int isContainsSymbol(char *string, char symbol);
-    void removeSymbol(char *string, char symbol);
-    void removeFloatSuffix(char *string);
     char tmp[10000];
 %}
 

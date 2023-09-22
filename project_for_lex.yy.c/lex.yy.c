@@ -579,7 +579,11 @@ char *yytext;
     #include <stdio.h>
     #include <string.h>
     #include <stdlib.h>
-#line 583 "lex.yy.c"
+
+    int isContainsSymbol(char *string, char symbol);
+    void removeSymbol(char *string, char symbol);
+    void removeFloatSuffix(char *string);
+#line 587 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -729,18 +733,15 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 22 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 26 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 
 
-    int isContainsSymbol(char *string, char symbol);
-    void removeSymbol(char *string, char symbol);
-    void removeFloatSuffix(char *string);
     char tmp[10000];
 
 
 
 
-#line 744 "lex.yy.c"
+#line 745 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -826,282 +827,282 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 32 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 33 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 33 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 34 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 34 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 35 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 35 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 36 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 36 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 37 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 37 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 38 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 38 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 39 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 39 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 40 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 40 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 41 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 41 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 42 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 42 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 43 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 43 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 44 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 44 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 45 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 45 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 46 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 46 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 47 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 47 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 48 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 48 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 49 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 49 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 50 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 50 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 51 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 51 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 52 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 52 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 53 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 53 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 54 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 54 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 55 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 55 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 56 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 56 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 57 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 57 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 58 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 58 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 59 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 59 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 60 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword: %s\n", yytext);}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 62 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 63 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found execution identifier: %s\n", yytext);}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 63 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 64 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found execution identifier: %s\n", yytext);}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 66 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 67 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found arithmetic operation: %s\n", yytext);}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 67 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 68 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found arithmetic operation: %s\n", yytext);}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 68 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 69 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found arithmetic operation: %s\n", yytext);}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 69 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 70 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found arithmetic operation: %s\n", yytext);}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 72 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 73 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found comparison operation: %s\n", yytext);}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 73 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 74 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found comparison operation: %s\n", yytext);}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 74 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 75 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found comparison operation: %s\n", yytext);}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 75 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 76 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found comparison operation: %s\n", yytext);}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 76 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 77 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found comparison operation: %s\n", yytext);}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 77 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 78 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found comparison operation: %s\n", yytext);}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 80 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 81 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found assignment operation: %s\n", yytext);}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 81 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 82 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found assignment operation: %s\n", yytext);}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 82 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 83 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found assignment operation: %s\n", yytext);}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 83 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 84 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found assignment operation: %s\n", yytext);}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 84 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 85 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found assignment operation: %s\n", yytext);}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 87 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 88 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found bracket: %s\n", yytext);}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 88 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 89 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found bracket: %s\n", yytext);}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 89 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 90 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found bracket: %s\n", yytext);}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 90 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 91 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found bracket: %s\n", yytext);}
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 91 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 92 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found bracket: %s\n", yytext);}
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 92 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 93 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found bracket: %s\n", yytext);}
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 95 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 96 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found delimiter: %s\n", yytext);}
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 96 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 97 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found delimiter: %s\n", yytext);}
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 97 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 98 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found delimiter: %s\n", yytext);}
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 100 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 101 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found integer: %d\n", atoi(yytext));}
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 101 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 102 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {
     char* a;
     long number = strtol(yytext+2, &a,16);
@@ -1110,7 +1111,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 106 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 107 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {
     char *a;
     long number = strtol(yytext+2, &a,8);
@@ -1119,14 +1120,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 111 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 112 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {
     printf("ERROR! Incorrect octal number: %s\n", yytext);
 }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 116 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 117 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {
 strcpy(tmp, yytext);
 removeSymbol(tmp, '\'');
@@ -1136,7 +1137,7 @@ printf("Found char literal: \\b %s\n", "\b");
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 124 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 125 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {
 strcpy(tmp, yytext);
 removeSymbol(tmp, '\'');
@@ -1146,7 +1147,7 @@ printf("Found char literal: \\f %s\n", "\f");
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 132 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 133 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {
 strcpy(tmp, yytext);
 removeSymbol(tmp, '\'');
@@ -1156,7 +1157,7 @@ printf("Found char literal: \\n %s\n", "\n");
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 140 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 141 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {
 strcpy(tmp, yytext);
 removeSymbol(tmp, '\'');
@@ -1166,7 +1167,7 @@ printf("Found char literal: \\r %s\n", "\r");
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 148 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 149 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {
 strcpy(tmp, yytext);
 removeSymbol(tmp, '\'');
@@ -1176,7 +1177,7 @@ printf("Found char literal: \\t %s\n", "\t");
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 156 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 157 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {
 strcpy(tmp, yytext);
 removeSymbol(tmp, '\'');
@@ -1186,7 +1187,7 @@ printf("Found char literal: \\v %s\n", "\v");
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 164 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 165 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {
 strcpy(tmp, yytext);
 removeSymbol(tmp, '\'');
@@ -1196,7 +1197,7 @@ printf("Found char literal: \\%s\n", "\'");
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 172 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 173 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {
 strcpy(tmp, yytext);
 removeSymbol(tmp, '\'');
@@ -1206,7 +1207,7 @@ printf("Found char literal: \\%s\n", "\\");
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 180 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 181 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {
 strcpy(tmp, yytext);
 removeSymbol(tmp, '\'');
@@ -1216,7 +1217,7 @@ printf("Found char literal: \\%s\n", "\?");
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 188 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 189 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {
 strcpy(tmp, yytext);
 removeSymbol(tmp, '\'');
@@ -1226,67 +1227,67 @@ printf("Found char literal: %s\n", tmp);
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 196 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 197 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 strcpy(tmp,""); BEGIN(STRING);
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 197 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 198 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 strcat(tmp,yytext);
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 198 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 199 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 strcat(tmp,"\b");
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 199 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 200 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 strcat(tmp,"\f");
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 200 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 201 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 strcat(tmp,"\n");
 	YY_BREAK
 case 74:
 YY_RULE_SETUP
-#line 201 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 202 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 strcat(tmp,"\r");
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 202 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 203 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 strcat(tmp,"\t");
 	YY_BREAK
 case 76:
 YY_RULE_SETUP
-#line 203 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 204 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 strcat(tmp,"\v");
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 204 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 205 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 strcat(tmp,"\'");
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 205 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 206 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 strcat(tmp,"\"");
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
-#line 206 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 207 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 strcat(tmp,"\\");
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 207 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 208 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 strcat(tmp,"\?");
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
-#line 208 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 209 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {
     char dig[2];
     char *a;
@@ -1296,7 +1297,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
-#line 214 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 215 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {
     char dig[2];
     char *a;
@@ -1305,17 +1306,17 @@ YY_RULE_SETUP
     strcat(tmp, dig);}
 	YY_BREAK
 case YY_STATE_EOF(STRING):
-#line 220 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 221 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("ERROR haven't found closing \"\n"); BEGIN(INITIAL);}
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
-#line 221 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 222 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found String literal: %s\n",tmp);BEGIN(INITIAL);}
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
-#line 225 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 226 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {
     strcpy(tmp, yytext);
     removeFloatSuffix(tmp);
@@ -1324,7 +1325,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
-#line 231 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 232 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {
     strcpy(tmp, yytext);
     removeFloatSuffix(tmp);
@@ -1333,74 +1334,74 @@ YY_RULE_SETUP
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 237 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 238 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found identifier: %s\n", yytext);}
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 238 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 239 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("ERROR! Incorrect identifier name: %s\n", yytext);}
 	YY_BREAK
 case 88:
 YY_RULE_SETUP
-#line 243 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 244 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {tmp[0] = '\0'; BEGIN(LINE_COMMENT);}
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
-#line 244 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 245 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {strcat(tmp, yytext);}
 	YY_BREAK
 case 90:
 YY_RULE_SETUP
-#line 245 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 246 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {strcat(tmp, yytext);}
 	YY_BREAK
 case 91:
 YY_RULE_SETUP
-#line 246 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 247 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found comment: %s\n", tmp); BEGIN(INITIAL);}
 	YY_BREAK
 case 92:
 YY_RULE_SETUP
-#line 248 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 249 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {tmp[0] = '\0'; BEGIN(MULTILINE_COMMENT);}
 	YY_BREAK
 case 93:
 YY_RULE_SETUP
-#line 249 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 250 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {strcat(tmp, yytext);}
 	YY_BREAK
 case 94:
 YY_RULE_SETUP
-#line 250 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 251 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {strcat(tmp, yytext);}
 	YY_BREAK
 case 95:
 YY_RULE_SETUP
-#line 251 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 252 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("Found comment: %s\n", tmp);BEGIN(INITIAL);}
 	YY_BREAK
 case YY_STATE_EOF(MULTILINE_COMMENT):
-#line 253 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 254 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("ERROR! Multiline comment \"%s\" isn't close\n", tmp); BEGIN(INITIAL);}
 	YY_BREAK
 case 96:
 YY_RULE_SETUP
-#line 255 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 256 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("", yytext);}
 	YY_BREAK
 case 97:
 YY_RULE_SETUP
-#line 258 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 259 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 {printf("unrecognized element: %s\n", yytext);}
 	YY_BREAK
 case 98:
 YY_RULE_SETUP
-#line 260 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 261 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 ECHO;
 	YY_BREAK
-#line 1404 "lex.yy.c"
+#line 1405 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(LINE_COMMENT):
 case YY_STATE_EOF(CHAR):
@@ -2264,7 +2265,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 260 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 261 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
 
 
 //Проверка на содержание символа в строке

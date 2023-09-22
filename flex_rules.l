@@ -9,6 +9,8 @@ NONDIGIT [A-Za-z_]
 /*Стартовые состояния*/
 %x LINE_COMMENT
 %x MULTILINE_COMMENT
+%x STRING
+%x CHAR
 
 /*Подключение библиотек*/
 %{
@@ -31,6 +33,9 @@ NONDIGIT [A-Za-z_]
 "NSInteger" {printf("Found keyword: %s\n", yytext);}
 "char" {printf("Found keyword: %s\n", yytext);}
 "NSString" {printf("Found keyword: %s\n", yytext);}
+"NSArray" {printf("Found keyword: %s\n", yytext);}
+"NSSet" {printf("Found keyword: %s\n", yytext);}
+"NSDictionary" {printf("Found keyword: %s\n", yytext);}
 "if" {printf("Found keyword: %s\n", yytext);}
 "else" {printf("Found keyword: %s\n", yytext);}
 "while" {printf("Found keyword: %s\n", yytext);}
@@ -44,6 +49,18 @@ NONDIGIT [A-Za-z_]
 "float" {printf("Found keyword: %s\n", yytext);}
 "readonly" {printf("Found keyword: %s\n", yytext);}
 "readwrite" {printf("Found keyword: %s\n", yytext);}
+"enum" {printf("Found keyword: %s\n", yytext);}
+"printf" {printf("Found keyword: %s\n", yytext);}
+"scanf" {printf("Found keyword: %s\n", yytext);}
+"NSLog" {printf("Found keyword: %s\n", yytext);}
+"unsigned" {printf("Found keyword: %s\n", yytext);}
+"u" {printf("Found keyword: %s\n", yytext);}
+"long" {printf("Found keyword: %s\n", yytext);}
+"l" {printf("Found keyword: %s\n", yytext);}
+
+
+^\+ {printf("Found execution identifier: %s\n", yytext);}
+^\- {printf("Found execution identifier: %s\n", yytext);}
 
 
 "+" {printf("Found arithmetic operation: %s\n", yytext);}
@@ -71,11 +88,50 @@ NONDIGIT [A-Za-z_]
 ")" {printf("Found bracket: %s\n", yytext);}
 "{" {printf("Found bracket: %s\n", yytext);}
 "}" {printf("Found bracket: %s\n", yytext);}
+"[" {printf("Found bracket: %s\n", yytext);}
+"]" {printf("Found bracket: %s\n", yytext);}
 
 
 ";" {printf("Found delimiter: %s\n", yytext);}
 ":" {printf("Found delimiter: %s\n", yytext);}
 "," {printf("Found delimiter: %s\n", yytext);}
+
+
+{DIGIT}+ {printf("Found integer: %d\n", atoi(yytext));}
+(0x|0X)?[0-9a-fA-F]+ {printf("Found hexadecimal number: %s\n", yytext);}
+(0o|0O)?[0-7]+ {printf("Found octal number: %s\n", yytext);}
+
+
+\'(\\b|\\f|\\n|\\r|\\t|\\v|\\\'|\\\"|\\\\|\\\?)\' {
+	strcpy(tmp, yytext);
+	removeSymbol(tmp, '\'');
+	removeSymbol(tmp, '\'');
+	printf("Found char literal: %s\n", tmp);
+}
+
+
+\'[^\\\'\"]\' {
+	strcpy(tmp, yytext);
+	removeSymbol(tmp, '\'');
+	removeSymbol(tmp, '\'');
+	printf("Found char literal: %s\n", tmp);
+}
+
+
+\" strcpy(tmp,""); BEGIN(STRING);
+<STRING>[^\\\n\"]+ strcat(tmp,yytext);
+<STRING>\\b strcat(tmp,"\b");
+<STRING>\\f strcat(tmp,"\f");
+<STRING>\\n strcat(tmp,"\n");
+<STRING>\\r strcat(tmp,"\r");
+<STRING>\\t strcat(tmp,"\t");
+<STRING>\\v strcat(tmp,"\v");
+<STRING>\\\' strcat(tmp,"\'");
+<STRING>\\\" strcat(tmp,"\"");
+<STRING>\\\\ strcat(tmp,"\\");
+<STRING>\\\? strcat(tmp,"\?");
+<STRING>\" {printf("Found String literal: %s\n",tmp);BEGIN(INITIAL);}
+
 
 
 ({DIGIT}+\.{DIGIT}*|\.{DIGIT}+)(f|F)? {
@@ -107,6 +163,8 @@ NONDIGIT [A-Za-z_]
 <MULTILINE_COMMENT>"*"+"/" {printf("Found comment: %s\n", tmp);BEGIN(INITIAL);}
 
 <MULTILINE_COMMENT><<EOF>> {printf("ERROR! Multiline comment \"%s\" isn't close\n", tmp); BEGIN(INITIAL);}
+
+" " {printf("", yytext);}
 
 
 <*>.|\\n {printf("unrecognized element: %s\n", yytext);}

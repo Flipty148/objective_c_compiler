@@ -60,10 +60,6 @@ UNDERLINE_LITERAL [A-Za-z_]
 "l" {printf("Found keyword: %s\n", yytext);}
 
 
-^\+ {printf("Found execution identifier: %s\n", yytext);}
-^\- {printf("Found execution identifier: %s\n", yytext);}
-
-
 "+" {printf("Found arithmetic operation: %s\n", yytext);}
 "-" {printf("Found arithmetic operation: %s\n", yytext);}
 "*" {printf("Found arithmetic operation: %s\n", yytext);}

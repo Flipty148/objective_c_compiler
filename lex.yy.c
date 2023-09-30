@@ -806,242 +806,242 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 34 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found keyword INT: %s\n", yytext);}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
 #line 35 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found keyword NSINTEGER: %s\n", yytext);}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 36 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found keyword CHAR: %s\n", yytext);}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 37 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found keyword NSSTRING: %s\n", yytext);}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 38 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found keyword NSARRAY: %s\n", yytext);}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 39 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found keyword NSSET: %s\n", yytext);}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 40 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found keyword NSDICTIONARY: %s\n", yytext);}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 41 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found keyword IF: %s\n", yytext);}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 42 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found keyword ELSE: %s\n", yytext);}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 43 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found keyword WHILE: %s\n", yytext);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 44 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found keyword DO: %s\n", yytext);}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 45 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found keyword FOR: %s\n", yytext);}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 46 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found keyword IN: %s\n", yytext);}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 47 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found keyword INTERFACE: %s\n", yytext);}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 48 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found keyword END: %s\n", yytext);}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 49 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found keyword IMPLEMENTATION: %s\n", yytext);}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 50 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found keyword PROPERTY: %s\n", yytext);}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 51 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found keyword FLOAT: %s\n", yytext);}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 52 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found keyword READONLY: %s\n", yytext);}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 53 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found keyword READWRITE: %s\n", yytext);}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 54 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found keyword ENUM: %s\n", yytext);}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 55 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found keyword NSLOG: %s\n", yytext);}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
 #line 56 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found keyword UNSIGNED: %s\n", yytext);}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 57 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found suffix U: %s\n", yytext);}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
 #line 58 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found keyword LONG: %s\n", yytext);}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
 #line 59 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found suffix L: %s\n", yytext);}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 60 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found keyword RETURN: %s\n", yytext);}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
 #line 61 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found keyword: %s\n", yytext);}
+{printf("Found keyword SELF: %s\n", yytext);}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
 #line 64 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found arithmetic operation: %s\n", yytext);}
+{printf("Found arithmetic operation +: %s\n", yytext);}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 65 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found arithmetic operation: %s\n", yytext);}
+{printf("Found arithmetic operation -: %s\n", yytext);}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 66 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found arithmetic operation: %s\n", yytext);}
+{printf("Found arithmetic operation *: %s\n", yytext);}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
 #line 67 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found arithmetic operation: %s\n", yytext);}
+{printf("Found arithmetic operation /: %s\n", yytext);}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
 #line 70 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found comparison operation: %s\n", yytext);}
+{printf("Found comparison operation ==: %s\n", yytext);}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
 #line 71 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found comparison operation: %s\n", yytext);}
+{printf("Found comparison operation !=: %s\n", yytext);}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
 #line 72 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found comparison operation: %s\n", yytext);}
+{printf("Found comparison operation >: %s\n", yytext);}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
 #line 73 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found comparison operation: %s\n", yytext);}
+{printf("Found comparison operation <: %s\n", yytext);}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
 #line 74 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found comparison operation: %s\n", yytext);}
+{printf("Found comparison operation >=: %s\n", yytext);}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
 #line 75 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found comparison operation: %s\n", yytext);}
+{printf("Found comparison operation <=: %s\n", yytext);}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
 #line 78 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found assignment operation: %s\n", yytext);}
+{printf("Found assignment operation =: %s\n", yytext);}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
 #line 81 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found bracket: %s\n", yytext);}
+{printf("Found bracket (: %s\n", yytext);}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
 #line 82 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found bracket: %s\n", yytext);}
+{printf("Found bracket ): %s\n", yytext);}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
 #line 83 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found bracket: %s\n", yytext);}
+{printf("Found bracket {: %s\n", yytext);}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
 #line 84 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found bracket: %s\n", yytext);}
+{printf("Found bracket }: %s\n", yytext);}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
 #line 85 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found bracket: %s\n", yytext);}
+{printf("Found bracket [: %s\n", yytext);}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
 #line 86 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found bracket: %s\n", yytext);}
+{printf("Found bracket ]: %s\n", yytext);}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
 #line 89 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found delimiter: %s\n", yytext);}
+{printf("Found delimiter ;: %s\n", yytext);}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
 #line 90 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found delimiter: %s\n", yytext);}
+{printf("Found delimiter :: %s\n", yytext);}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
 #line 91 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found delimiter: %s\n", yytext);}
+{printf("Found delimiter ,: %s\n", yytext);}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
@@ -1233,7 +1233,7 @@ YY_RULE_SETUP
 case 78:
 YY_RULE_SETUP
 #line 169 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found comment: %s\n", tmp); BEGIN(INITIAL); rowCount++; }
+{printf("Found line comment: %s\n", tmp); BEGIN(INITIAL); rowCount++; }
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
@@ -1263,7 +1263,7 @@ YY_RULE_SETUP
 case 84:
 YY_RULE_SETUP
 #line 176 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("Found comment: %s\n", tmp);BEGIN(INITIAL);}
+{printf("Found multiline comment: %s\n", tmp);BEGIN(INITIAL);}
 	YY_BREAK
 case YY_STATE_EOF(MULTILINE_COMMENT):
 #line 178 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"

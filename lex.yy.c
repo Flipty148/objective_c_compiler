@@ -1281,7 +1281,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case YY_STATE_EOF(MULTILINE_COMMENT):
 #line 181 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("ERROR! Multiline comment \"%s\" isn't close\n", tmp); BEGIN(INITIAL);}
+{printf("ERROR! Multiline comment \"%s\" isn't closed\n", tmp); BEGIN(INITIAL);}
 	YY_BREAK
 case 87:
 YY_RULE_SETUP

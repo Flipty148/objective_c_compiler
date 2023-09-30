@@ -178,7 +178,7 @@ strcat(tmp, dig);}
 <MULTILINE_COMMENT>"*"+[^*/] {strcat(tmp, yytext);}
 <MULTILINE_COMMENT>"*"+"/" {printf("Found comment: %s\n", tmp);BEGIN(INITIAL);}
 
-<MULTILINE_COMMENT><<EOF>> {printf("ERROR! Multiline comment \"%s\" isn't close\n", tmp); BEGIN(INITIAL);}
+<MULTILINE_COMMENT><<EOF>> {printf("ERROR! Multiline comment \"%s\" isn't closed\n", tmp); BEGIN(INITIAL);}
 
 " " {printf("", yytext);}
 

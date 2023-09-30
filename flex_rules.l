@@ -26,6 +26,7 @@ UNDERLINE_LITERAL [A-Za-z_]
 %%
 %{
     char tmp[10000];
+    int rowCount = 1;
 %}
 
 
@@ -100,7 +101,7 @@ UNDERLINE_LITERAL [A-Za-z_]
     printf("Found octal number: %d\n", number);
     }
 0[0-9]+ {
-    printf("ERROR! Incorrect octal number: %s\n", yytext);
+    printf("ERROR! Incorrect octal number: %s in row: %d\n", yytext, rowCount);
 }
 
 \' strcpy(tmp,""); BEGIN(CHAR);
@@ -129,12 +130,12 @@ UNDERLINE_LITERAL [A-Za-z_]
     dig[0]=strtol(yytext+1, &a, 8);
     dig[1]='\0';
 strcat(tmp, dig);}
-<STRING,CHAR><<EOF>> {printf("ERROR! haven't found closing quotes \n"); BEGIN(INITIAL);}
+<STRING,CHAR><<EOF>> {printf("ERROR! haven't found closing quotes in row: %d\n", rowCount); BEGIN(INITIAL);}
 <STRING>\" {printf("Found String literal: %s\n",tmp);BEGIN(INITIAL);}
 <CHAR>\' {
     if(strlen(tmp) != 1)
     {
-        printf("ERROR! char length != 1 \n");BEGIN(INITIAL);
+        printf("ERROR! char length != 1 in row: %d\n", rowCount);BEGIN(INITIAL);
     }
     else
     {
@@ -157,25 +158,26 @@ strcat(tmp, dig);}
 }
 
 {UNDERLINE_LITERAL}({UNDERLINE_LITERAL}|{DIGIT})* {printf("Found identifier: %s\n", yytext);}
-{DIGIT}({UNDERLINE_LITERAL}|{DIGIT})+ {printf("ERROR! Incorrect identifier name: %s\n", yytext);}
-
-
+{DIGIT}({UNDERLINE_LITERAL}|{DIGIT})+ {printf("ERROR! Incorrect identifier name: %s in row: %d\n", yytext, rowCount);}
 
 
 "//" {tmp[0] = '\0'; BEGIN(LINE_COMMENT);}
-<LINE_COMMENT>[^\n*]+ {strcat(tmp, yytext);}
-<LINE_COMMENT>\\*\n[^\n]* {strcat(tmp, yytext);}
-<LINE_COMMENT>[^\\]\n {printf("Found comment: %s\n", tmp); BEGIN(INITIAL);}
+<LINE_COMMENT>[^\n\\]+ {strcat(tmp, yytext);}
+<LINE_COMMENT>\\\n { rowCount++; }
+<LINE_COMMENT>\n {printf("Found comment: %s\n", tmp); BEGIN(INITIAL); rowCount++; }
 
 "/*" {tmp[0] = '\0'; BEGIN(MULTILINE_COMMENT);}
 <MULTILINE_COMMENT>[^*]+ {strcat(tmp, yytext);}
+<MULTILINE_COMMENT>[^*]+\n {rowCount++; strcat(tmp, yytext);}
 <MULTILINE_COMMENT>"*"+[^*/] {strcat(tmp, yytext);}
+<MULTILINE_COMMENT>"*"+\n {rowCount++; strcat(tmp, yytext);}
 <MULTILINE_COMMENT>"*"+"/" {printf("Found comment: %s\n", tmp);BEGIN(INITIAL);}
 
-<MULTILINE_COMMENT><<EOF>> {printf("ERROR! Multiline comment \"%s\" isn't closed\n", tmp); BEGIN(INITIAL);}
+<MULTILINE_COMMENT><<EOF>> {printf("ERROR! Multiline comment \"%s\" isn't closed in row: %d\n", tmp, rowCount); BEGIN(INITIAL);}
+
+<*>\n {rowCount++;}
 
 " " {printf("", yytext);}
-
 
 <*>.|\\n {printf("unrecognized element: %s\n", yytext);}
 

@@ -73,10 +73,6 @@ UNDERLINE_LITERAL [A-Za-z_]
 
 
 "=" {printf("Found assignment operation: %s\n", yytext);}
-"+=" {printf("Found assignment operation: %s\n", yytext);}
-"-=" {printf("Found assignment operation: %s\n", yytext);}
-"*=" {printf("Found assignment operation: %s\n", yytext);}
-"/=" {printf("Found assignment operation: %s\n", yytext);}
 
 
 "(" {printf("Found bracket: %s\n", yytext);}

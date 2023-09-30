@@ -57,6 +57,8 @@ UNDERLINE_LITERAL [A-Za-z_]
 "u" {printf("Found keyword: %s\n", yytext);}
 "long" {printf("Found keyword: %s\n", yytext);}
 "l" {printf("Found keyword: %s\n", yytext);}
+"return" {printf("Found keyword: %s\n", yytext);}
+"self" {printf("Found keyword: %s\n", yytext);}
 
 
 "+" {printf("Found arithmetic operation: %s\n", yytext);}

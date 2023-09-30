@@ -51,8 +51,6 @@ UNDERLINE_LITERAL [A-Za-z_]
 "readonly" {printf("Found keyword: %s\n", yytext);}
 "readwrite" {printf("Found keyword: %s\n", yytext);}
 "enum" {printf("Found keyword: %s\n", yytext);}
-"printf" {printf("Found keyword: %s\n", yytext);}
-"scanf" {printf("Found keyword: %s\n", yytext);}
 "NSLog" {printf("Found keyword: %s\n", yytext);}
 "unsigned" {printf("Found keyword: %s\n", yytext);}
 "u" {printf("Found keyword: %s\n", yytext);}

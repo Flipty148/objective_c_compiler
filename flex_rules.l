@@ -132,6 +132,7 @@ UNDERLINE_LITERAL [A-Za-z_]
     dig[0]=strtol(yytext+1, &a, 8);
     dig[1]='\0';
 strcat(tmp, dig);}
+<STRING,CHAR>\n {printf("ERROR! String Breakes in row: %d\n", rowCount); rowCount++;}
 <STRING,CHAR><<EOF>> {printf("ERROR! haven't found closing quotes in row: %d\n", rowCount); BEGIN(INITIAL);}
 <STRING>\" {printf("Found String literal: %s\n",tmp);BEGIN(INITIAL);}
 <CHAR>\' {

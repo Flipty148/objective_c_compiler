@@ -7,7 +7,6 @@ DIGIT [0-9]
 UNDERLINE_LITERAL [A-Za-z_]
 
 /*Стартовые состояния*/
-%x LINE_COMMENT
 %x MULTILINE_COMMENT
 %x STRING
 %x CHAR
@@ -21,6 +20,7 @@ UNDERLINE_LITERAL [A-Za-z_]
     int isContainsSymbol(char *string, char symbol);
     void removeSymbol(char *string, char symbol);
     void removeFloatSuffix(char *string);
+    int countChar(const char *str, char character);
 %}
 
 %%
@@ -90,6 +90,7 @@ UNDERLINE_LITERAL [A-Za-z_]
 ":" {printf("Found delimiter :: %s\n", yytext);}
 "," {printf("Found delimiter ,: %s\n", yytext);}
 
+<*>\\\n {rowCount++;}
 
 0|[1-9]{DIGIT}* {printf("Found integer: %d\n", atoi(yytext));}
 (0x|0X)[0-9a-fA-F]+ {
@@ -163,15 +164,15 @@ strcat(tmp, dig);}
 {UNDERLINE_LITERAL}({UNDERLINE_LITERAL}|{DIGIT})* {printf("Found identifier: %s\n", yytext);}
 {DIGIT}({UNDERLINE_LITERAL}|{DIGIT})+ {printf("ERROR! Incorrect identifier name: %s in row: %d\n", yytext, rowCount);}
 
+"//"([^\n]|\\\n)* {printf("Found line comment: %s\n", yytext);
+    strcpy(tmp, yytext);
+    rowCount += countChar(tmp, '\n');
+}
 
-"//" {tmp[0] = '\0'; BEGIN(LINE_COMMENT);}
-<LINE_COMMENT>[^\n\\]+ {strcat(tmp, yytext);}
-<LINE_COMMENT>\\\n { rowCount++; }
-<LINE_COMMENT>\n {printf("Found line comment: %s\n", tmp); BEGIN(INITIAL); rowCount++; }
 
 "/*" {tmp[0] = '\0'; BEGIN(MULTILINE_COMMENT);}
-<MULTILINE_COMMENT>[^*]+ {strcat(tmp, yytext);}
-<MULTILINE_COMMENT>[^*]+\n {rowCount++; strcat(tmp, yytext);}
+<MULTILINE_COMMENT>[^*\n]+ {strcat(tmp, yytext);}
+<MULTILINE_COMMENT>[^*\n]+\n {rowCount++; strcat(tmp, yytext);}
 <MULTILINE_COMMENT>"*"+[^*/] {strcat(tmp, yytext);}
 <MULTILINE_COMMENT>"*"+\n {rowCount++; strcat(tmp, yytext);}
 <MULTILINE_COMMENT>"*"+"/" {printf("Found multiline comment: %s\n", tmp);BEGIN(INITIAL);}
@@ -216,6 +217,19 @@ void removeFloatSuffix(char *string)
         removeSymbol(string, 'f');
         removeSymbol(string, 'F');
     }
+}
+
+//Количество вхождения символа в строку
+int countChar(const char *str, char character)
+{
+    int count = 0;
+    int len = strlen(str);
+    for (int i=0; i<len; i++)
+    {
+        if (str[i] == character)
+            count++;
+    }
+    return count;
 }
 
 int main(int argc, char* argv[])

@@ -59,6 +59,10 @@ UNDERLINE_LITERAL [A-Za-z_]
 "l" {printf("Found suffix L: %s\n", yytext);}
 "return" {printf("Found keyword RETURN: %s\n", yytext);}
 "self" {printf("Found keyword SELF: %s\n", yytext);}
+"super" {printf("Found keyword SUPER: %s\n", yytext);}
+"id" {printf("Found keyword ID: %s\n", yytext);}
+"@class" {printf("Found keyword CLASS: %s\n", yytext);}
+
 
 
 "+" {printf("Found arithmetic operation +: %s\n", yytext);}

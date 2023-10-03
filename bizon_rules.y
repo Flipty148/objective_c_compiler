@@ -149,4 +149,23 @@ if_statement: IF '(' expression ')' statement
 			| IF '(' expression ')' ELSE statement
 			;
 
+// ---------- Управляющие структуры: циклы ----------
+while_statement: WHILE '(' expression ')' statement
+			   ;
+
+do_while_statement: DO statement WHILE '(' expression ')' ';'
+				  ;
+
+for_statement: FOR '(' expression ';' expression ';' expression ')' statement
+			 | FOR '(' ';' ';' ')' statement
+			 | FOR '(' ';' ';' expression ')' statement
+			 | FOR '(' ';' expression ';' ')' statement
+			 | FOR '(' expression ';' ';' ')' statement
+			 | FOR '(' ';' expression ';' expression ')' statement
+			 | FOR '(' expression ';' ';' expression ')' statement
+			 | FOR '(' expression ';' expression ';' ')' statement
+			 | FOR '(' identifier IN expression ')' statement
+			 | FOR '(' type identifier IN expression ')' statement
+			 ;
+
 %%

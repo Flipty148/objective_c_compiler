@@ -144,4 +144,9 @@ keyword_argument: identifier ':' expression
 				| ':' expression
 				;
 
+// ---------- Управляющие структуры: развилки ----------
+if_statement: IF '(' expression ')' statement
+			| IF '(' expression ')' ELSE statement
+			;
+
 %%

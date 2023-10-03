@@ -131,12 +131,12 @@ assignment_expression: unary_expression
 					 ;
 
 unary_expression: primary_expression
-				| '*' identifier
-				| '-' identifier
-				| '+' identifier
-				| '&' identifier
-				| '-' numeric_constant
-				| '+' numeric_constant
+				| '*' identifier %prec UASTERISK
+				| '-' identifier %prec UMINUS
+				| '+' identifier %prec UPLUS
+				| '&' identifier %prec UAMPERSAND
+				| '-' numeric_constant %prec UMINUS
+				| '+' numeric_constant %prec UPLUS
 				;
 
 message_expression: '[' receiver message_selector ']'

@@ -20,3 +20,16 @@
 %token RETURN
 %token INTEGER_CONSTANT STRING_CONSTANT CHAR_CONSTANT FLOAT_CONSTANT
 %token IDENTIFIER
+
+%%
+
+// ---------- Типы ----------
+type: INT
+    | NSINTEGER
+    | CHAR
+    | NSSTRING
+    | FLOAT
+    | ID
+    ;
+
+%%

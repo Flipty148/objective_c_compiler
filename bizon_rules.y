@@ -58,8 +58,12 @@ declaration: declaration_specifiers init_declarator_list
            | declaration_specifiers
            ;
 
+declaration_list: declaration
+				| declaration_list declaration
+
 declaration_specifiers: type
 					  | type declaration_specifiers
+					  | method_type
 					  ;
 
 init_declarator_list: init_declarator
@@ -80,6 +84,17 @@ direct_declarator: identifier
 
 initializer: assignment_expression
 		   ;
+
+parameter_type_list: parameter_list
+				   | parameter_list ',' parameter_list
+				   ;
+
+parameter_list: parameter_declaration
+			  | parameter_list ',' parameter_declaration
+			  ;
+
+parameter_declaration: declaration_specifiers declarator
+					 ;
 
 // ---------- Выражения ----------
 arithmetic_expression: numeric_constant
@@ -186,5 +201,117 @@ compound_statement: '{' statement '}'
 statement_list: statement
 			  | statement_list statement
 			  ;
+
+// ---------- Классы ----------
+class_interface: INTERFACE class_name ':' superclass_name
+			   | INTERFACE class_name
+			   | instance_variables
+			   | interface_declaration_list
+			   | END
+			   ;
+
+class_implementation: IMPLEMENTATION class_name
+					| IMPLEMENTATION class_name ':' superclass_name
+					| instance_variables
+					| implementation_definition_list
+					| END
+					;
+
+class_declaration_list: CLASS class_list
+					  ;
+
+class_list: class_name
+		  | class_list ',' class_name
+		  ;
+
+class_name: identifier
+		  ;
+
+superclass_name: identifier
+			   ;
+
+instance_variables: '{' struct_declaration_list '}'
+				   | '{' struct_declaration_list instance_variables '}'
+				   ;
+
+struct_declaration_list: struct_declaration
+					   | struct_declaration_list struct_declaration
+					   ;
+
+struct_declaration: type struct_declarator_list
+				  ;
+
+struct_declarator_list: struct_declarator
+					  | struct_declarator_list struct_declarator
+					  ;
+
+struct_declarator: declarator
+				 ;
+
+interface_declaration_list: declaration
+						  | method_declaration
+						  | interface_declaration_list declaration
+						  | interface_declaration_list method_declaration
+						  ;
+
+method_declaration: class_method_declaration
+				  | instance_method_declaration
+				  ;
+
+class_method_declaration: '+' method_type method_selector
+						| '+' method_selector ';'
+						;
+
+instance_method_declaration: '-' method_type method_selector
+						   | '-' method_selector ';'
+						   ;
+
+implementation_definition_list: declaration
+							  | method_definition
+							  | implementation_definition_list declaration
+							  | implementation_definition_list method_definition
+							  ;
+
+method_definition: class_method_definition
+				 | instance_method_definition
+				 ;
+
+class_method_definition: '+' method_type method_selector declaration_list compound_statement
+					   | '+' method_selector compound_statement
+					   | '+' method_selector declaration_list compound_statement
+					   | '+' method_type method_selector compound_statement
+					   ;
+
+instance_method_definition: '-' method_type method_selector declaration_list compound_statement
+					   	  | '-' method_selector compound_statement
+					   	  | '-' method_selector declaration_list compound_statement
+					   	  | '-' method_type method_selector compound_statement
+					   	  ;
+
+method_selector: identifier
+			   | keyword_selector ','
+			   | keyword_selector ',' parameter_type_list
+			   | keyword_selector
+			   ;
+
+keyword_selector: keyword_declaration
+				| keyword_selector keyword_declaration
+				;
+
+keyword_declaration: ':' method_type identifier
+				   | ':' identifier
+				   | identifier ':' method_type identifier
+				   | identifier ':' identifier
+				   ;
+
+method_type: '(' type ')'
+		   ;
+
+property: PROPERTY '(' attribute ')' type identifier ';'
+		;
+
+attribute: READONLY
+		 | READWRITE
+		 ;
 
 %%

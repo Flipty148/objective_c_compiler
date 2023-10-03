@@ -21,7 +21,12 @@
 %token INTEGER_CONSTANT STRING_CONSTANT CHAR_CONSTANT FLOAT_CONSTANT
 %token IDENTIFIER
 
+%start program
+
 %%
+
+program: statement_list
+	   ;
 
 // ---------- Типы ----------
 type: INT

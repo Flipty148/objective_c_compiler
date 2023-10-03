@@ -53,5 +53,32 @@ literal: STRING_CONSTANT
        | CHAR_CONSTANT
        ;
 
+// ---------- Объявления ----------
+declaration: declaration_specifiers init_declarator_list
+           | declaration_specifiers
+           ;
+
+declaration_specifiers: type
+					  | type declaration_specifiers
+					  ;
+
+init_declarator_list: init_declarator
+					| init_declarator_list ',' init_declarator
+					;
+
+init_declarator: declarator
+			   | declarator '=' initializer
+			   ;
+
+declarator: direct_declarator
+		  | '*' direct_declarator %prec UASTERISK
+		  ;
+
+direct_declarator: identifier
+				 | '(' declarator ')'
+				 ;
+
+initializer: assignment_expression
+		   ;
 
 %%

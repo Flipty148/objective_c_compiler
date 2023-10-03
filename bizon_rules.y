@@ -4,7 +4,7 @@
 %left '<' '>' LESS_EQUAL GREATER_EQUAL
 %left '+' '-'
 %left '*' '/'
-%left UMINUS UPLUS UASTERISK UAMPERSAND
+%right UMINUS UPLUS UASTERISK UAMPERSAND
 %nonassoc '(' ')' '[' ']'
 
 //---------- Терминальные символы ----------

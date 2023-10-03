@@ -81,4 +81,67 @@ direct_declarator: identifier
 initializer: assignment_expression
 		   ;
 
+// ---------- Выражения ----------
+arithmetic_expression: numeric_constant
+					 | arithmetic_expression '+' arithmetic_expression
+					 | arithmetic_expression '-' arithmetic_expression
+					 | arithmetic_expression '*' arithmetic_expression
+					 | arithmetic_expression '/' arithmetic_expression
+					 | '(' arithmetic_expression ')'
+					 ;
+
+comparation_expression: arithmetic_expression
+					  | comparation_expression EQUAL comparation_expression
+					  | comparation_expression NOT_EQUAL comparation_expression
+					  | comparation_expression '>' comparation_expression
+					  | comparation_expression '<' comparation_expression
+					  | comparation_expression LESS_EQUAL comparation_expression
+					  | comparation_expression GREATER_EQUAL comparation_expression
+					  ;
+
+primary_expression: identifier
+				  | constant
+				  | '(' expression ')'
+				  | SELF
+				  | message_expression
+				  ;
+
+expression: arithmetic_expression
+		  | comparation_expression
+		  | assignment_expression
+		  ;
+
+assignment_expression: unary_expression
+					 | unary_expression '=' assignment_expression
+					 ;
+
+unary_expression: primary_expression
+				| '*' identifier
+				| '-' identifier
+				| '+' identifier
+				| '&' identifier
+				| '-' numeric_constant
+				| '+' numeric_constant
+				;
+
+message_expression: '[' receiver message_selector ']'
+				  ;
+
+receiver: SUPER
+		| SELF
+		| identifier
+		;
+
+message_selector: identifier
+				| keyword_argument_list
+				;
+
+keyword_argument_list: keyword_argument
+					 | keyword_argument_list keyword_argument
+					 ;
+
+keyword_argument: identifier ':' expression
+				| ':' expression
+				;
+
 %%

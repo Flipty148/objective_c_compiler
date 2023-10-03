@@ -40,5 +40,18 @@ pointer: '*' identifier %prec UASTERISK
        | '*' pointer %prec UASTERISK
        ;
 
+// ---------- Константы ----------
+constant: numeric_constant
+        | literal
+        ;
+
+numeric_constant: FLOAT_CONSTANT
+                | INTEGER_CONSTANT
+                ;
+
+literal: STRING_CONSTANT
+       | CHAR_CONSTANT
+       ;
+
 
 %%

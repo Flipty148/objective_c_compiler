@@ -20,6 +20,7 @@
 %token RETURN
 %token INTEGER_CONSTANT STRING_CONSTANT CHAR_CONSTANT FLOAT_CONSTANT
 %token IDENTIFIER
+%token ELIPSIS
 
 %start program
 
@@ -46,10 +47,6 @@ pointer: '*' identifier %prec UASTERISK
        ;
 
 // ---------- Константы ----------
-constant: numeric_constant
-        | literal
-        ;
-
 numeric_constant: FLOAT_CONSTANT
                 | INTEGER_CONSTANT
                 ;
@@ -59,20 +56,24 @@ literal: STRING_CONSTANT
        ;
 
 // ---------- Объявления ----------
-declaration: declaration_specifiers init_declarator_list
-           | declaration_specifiers
+declaration: declaration_specifiers init_declarator_list ';'
            ;
 
 declaration_list: declaration
 				| declaration_list declaration
+				| class_declaration_list
+				;
 
 declaration_specifiers: type
-					  | type declaration_specifiers
 					  | method_type
 					  ;
 
-init_declarator_list: init_declarator
-					| init_declarator_list ',' init_declarator
+init_declarator_list:
+					| init_declarator_listE
+					;
+
+init_declarator_listE: init_declarator
+					| init_declarator_listE ',' init_declarator
 					;
 
 init_declarator: declarator
@@ -80,18 +81,18 @@ init_declarator: declarator
 			   ;
 
 declarator: direct_declarator
-		  | '*' direct_declarator %prec UASTERISK
 		  ;
 
 direct_declarator: identifier
 				 | '(' declarator ')'
+				 | '*' direct_declarator %prec UASTERISK
 				 ;
 
 initializer: assignment_expression
 		   ;
 
 parameter_type_list: parameter_list
-				   | parameter_list ',' parameter_list
+				   | parameter_list ',' ELIPSIS
 				   ;
 
 parameter_list: parameter_declaration
@@ -107,7 +108,6 @@ arithmetic_expression: numeric_constant
 					 | arithmetic_expression '-' arithmetic_expression
 					 | arithmetic_expression '*' arithmetic_expression
 					 | arithmetic_expression '/' arithmetic_expression
-					 | '(' arithmetic_expression ')'
 					 ;
 
 comparation_expression: arithmetic_expression
@@ -120,14 +120,14 @@ comparation_expression: arithmetic_expression
 					  ;
 
 primary_expression: identifier
-				  | constant
+				  | pointer
+				  | literal
 				  | '(' expression ')'
 				  | SELF
 				  | message_expression
 				  ;
 
-expression: arithmetic_expression
-		  | comparation_expression
+expression: comparation_expression
 		  | assignment_expression
 		  ;
 
@@ -136,7 +136,6 @@ assignment_expression: unary_expression
 					 ;
 
 unary_expression: primary_expression
-				| '*' identifier %prec UASTERISK
 				| '-' identifier %prec UMINUS
 				| '+' identifier %prec UPLUS
 				| '&' identifier %prec UAMPERSAND
@@ -198,6 +197,7 @@ statement: expression ';'
 		 | cycle_statement
 		 | if_statement
 		 | compound_statement
+		 | class_statement
 		 ;
 
 compound_statement: '{' statement '}'
@@ -207,19 +207,25 @@ statement_list: statement
 			  | statement_list statement
 			  ;
 
-// ---------- Классы ----------
-class_interface: INTERFACE class_name ':' superclass_name
-			   | INTERFACE class_name
-			   | instance_variables
-			   | interface_declaration_list
-			   | END
+class_statement: class_interface
+			   | class_implementation
 			   ;
 
-class_implementation: IMPLEMENTATION class_name
-					| IMPLEMENTATION class_name ':' superclass_name
-					| instance_variables
-					| implementation_definition_list
-					| END
+// ---------- Классы ----------
+class_interface: INTERFACE class_name ':' superclass_name interface_statement END
+			   | INTERFACE class_name interface_statement END
+			   ;
+
+interface_statement: instance_variables interface_declaration_list
+				   | interface_declaration_list
+				   ;
+
+implementation_statement: instance_variables implementation_definition_list
+						| implementation_definition_list
+						;
+
+class_implementation: IMPLEMENTATION class_name implementation_statement END
+					| IMPLEMENTATION class_name ':' superclass_name implementation_statement END
 					;
 
 class_declaration_list: CLASS class_list
@@ -253,7 +259,9 @@ struct_declarator_list: struct_declarator
 struct_declarator: declarator
 				 ;
 
+
 interface_declaration_list: declaration
+						  | property
 						  | method_declaration
 						  | interface_declaration_list declaration
 						  | interface_declaration_list method_declaration
@@ -272,6 +280,7 @@ instance_method_declaration: '-' method_type method_selector
 						   ;
 
 implementation_definition_list: declaration
+							  | property
 							  | method_definition
 							  | implementation_definition_list declaration
 							  | implementation_definition_list method_definition
@@ -294,7 +303,6 @@ instance_method_definition: '-' method_type method_selector declaration_list com
 					   	  ;
 
 method_selector: identifier
-			   | keyword_selector ','
 			   | keyword_selector ',' parameter_type_list
 			   | keyword_selector
 			   ;

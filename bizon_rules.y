@@ -32,4 +32,13 @@ type: INT
     | ID
     ;
 
+// ----------  Идентификаторы ----------
+identifier: IDENTIFIER
+          ;
+
+pointer: '*' identifier %prec UASTERISK
+       | '*' pointer %prec UASTERISK
+       ;
+
+
 %%

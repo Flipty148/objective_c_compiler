@@ -200,7 +200,7 @@ statement: expression ';'
 		 | class_statement
 		 ;
 
-compound_statement: '{' statement '}'
+compound_statement: '{' statement_list '}'
 				  ;
 
 statement_list: statement

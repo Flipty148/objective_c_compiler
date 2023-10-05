@@ -103,25 +103,26 @@ parameter_declaration: declaration_specifiers declarator
 					 ;
 
 // ---------- Выражения ----------
-arithmetic_expression: numeric_constant
-					 | arithmetic_expression '+' arithmetic_expression
-					 | arithmetic_expression '-' arithmetic_expression
-					 | arithmetic_expression '*' arithmetic_expression
-					 | arithmetic_expression '/' arithmetic_expression
+arithmetic_expression: unary_expression
+					 | arithmetic_expression '+' unary_expression
+					 | arithmetic_expression '-' unary_expression
+					 | arithmetic_expression '*' unary_expression
+					 | arithmetic_expression '/' unary_expression
 					 ;
 
 comparation_expression: arithmetic_expression
-					  | comparation_expression EQUAL comparation_expression
-					  | comparation_expression NOT_EQUAL comparation_expression
-					  | comparation_expression '>' comparation_expression
-					  | comparation_expression '<' comparation_expression
-					  | comparation_expression LESS_EQUAL comparation_expression
-					  | comparation_expression GREATER_EQUAL comparation_expression
+					  | comparation_expression EQUAL unary_expression
+					  | comparation_expression NOT_EQUAL unary_expression
+					  | comparation_expression '>' unary_expression
+					  | comparation_expression '<' unary_expression
+					  | comparation_expression LESS_EQUAL unary_expression
+					  | comparation_expression GREATER_EQUAL unary_expression
 					  ;
 
 primary_expression: identifier
 				  | pointer
 				  | literal
+				  | numeric_constant
 				  | '(' expression ')'
 				  | SELF
 				  | message_expression
@@ -131,8 +132,7 @@ expression: comparation_expression
 		  | assignment_expression
 		  ;
 
-assignment_expression: unary_expression
-					 | unary_expression '=' assignment_expression
+assignment_expression: unary_expression '=' expression
 					 ;
 
 unary_expression: primary_expression

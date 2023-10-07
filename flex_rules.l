@@ -4,19 +4,20 @@
 
 /*Именованные шаблоны*/
 DIGIT [0-9]
-UNDERLINE_LITERAL [A-Za-z_]
+UNDERLINE_LETTER [A-Za-z_]
 
 /*Стартовые состояния*/
 %x MULTILINE_COMMENT
 %x STRING
 %x CHAR
+%x NSSTRING
 
 /*Подключение библиотек*/
 %{
     #include <stdio.h>
     #include <string.h>
     #include <stdlib.h>
-
+    #include <iostream>
     int isContainsSymbol(char *string, char symbol);
     void removeSymbol(char *string, char symbol);
     void removeFloatSuffix(char *string);
@@ -26,18 +27,14 @@ UNDERLINE_LITERAL [A-Za-z_]
 %%
 %{
     char tmp[10000];
-    int rowCount = 1;
+    int lineCount = 1;
+    std::string str = "";
 %}
 
 
 
 "int" {printf("Found keyword INT: %s\n", yytext);}
-"NSInteger" {printf("Found keyword NSINTEGER: %s\n", yytext);}
 "char" {printf("Found keyword CHAR: %s\n", yytext);}
-"NSString" {printf("Found keyword NSSTRING: %s\n", yytext);}
-"NSArray" {printf("Found keyword NSARRAY: %s\n", yytext);}
-"NSSet" {printf("Found keyword NSSET: %s\n", yytext);}
-"NSDictionary" {printf("Found keyword NSDICTIONARY: %s\n", yytext);}
 "if" {printf("Found keyword IF: %s\n", yytext);}
 "else" {printf("Found keyword ELSE: %s\n", yytext);}
 "while" {printf("Found keyword WHILE: %s\n", yytext);}
@@ -52,7 +49,6 @@ UNDERLINE_LITERAL [A-Za-z_]
 "readonly" {printf("Found keyword READONLY: %s\n", yytext);}
 "readwrite" {printf("Found keyword READWRITE: %s\n", yytext);}
 "enum" {printf("Found keyword ENUM: %s\n", yytext);}
-"NSLog" {printf("Found keyword NSLOG: %s\n", yytext);}
 "unsigned" {printf("Found keyword UNSIGNED: %s\n", yytext);}
 "u" {printf("Found suffix U: %s\n", yytext);}
 "long" {printf("Found keyword LONG: %s\n", yytext);}
@@ -94,7 +90,8 @@ UNDERLINE_LITERAL [A-Za-z_]
 ":" {printf("Found delimiter :: %s\n", yytext);}
 "," {printf("Found delimiter ,: %s\n", yytext);}
 
-<*>\\\n {rowCount++;}
+<*>\\\n {lineCount++;}
+<*>\n {lineCount++;}
 
 0|[1-9]{DIGIT}* {printf("Found integer: %d\n", atoi(yytext));}
 (0x|0X)[0-9a-fA-F]+ {
@@ -102,52 +99,55 @@ UNDERLINE_LITERAL [A-Za-z_]
     long number = strtol(yytext+2, &a,16);
     printf("Found hexadecimal number: %d\n", number);
     }
+(0x|0X)[0-9a-zA-Z]+ {
+    printf("ERROR! Incorrect hex number: %s in row: %d\n", yytext, lineCount);
+}
 0[0-7]+ {
     char *a;
     long number = strtol(yytext+2, &a,8);
     printf("Found octal number: %d\n", number);
     }
 0[0-9]+ {
-    printf("ERROR! Incorrect octal number: %s in row: %d\n", yytext, rowCount);
+    printf("ERROR! Incorrect octal number: %s in row: %d\n", yytext, lineCount);
 }
 
-\' strcpy(tmp,""); BEGIN(CHAR);
-@\" strcpy(tmp,""); BEGIN(STRING);
-<STRING>[^\\\n\"]+ strcat(tmp,yytext);
-<CHAR>[^\\\n\'] strcat(tmp,yytext);
-<STRING,CHAR>\\b strcat(tmp,"\b");
-<STRING,CHAR>\\f strcat(tmp,"\f");
-<STRING,CHAR>\\n strcat(tmp,"\n");
-<STRING,CHAR>\\r strcat(tmp,"\r");
-<STRING,CHAR>\\t strcat(tmp,"\t");
-<STRING,CHAR>\\v strcat(tmp,"\v");
-<STRING,CHAR>\\\' strcat(tmp,"\'");
-<STRING,CHAR>\\\" strcat(tmp,"\"");
-<STRING,CHAR>\\\\ strcat(tmp,"\\");
-<STRING,CHAR>\\\? strcat(tmp,"\?");
-<STRING,CHAR>\\x[0-9a-fA-F]{1,2} {
-    char dig[2];
+\' str = ""; BEGIN(CHAR);
+\" str = ""; BEGIN(STRING);
+@\" str = ""; BEGIN(NSSTRING);
+<STRING,NSSTRING>[^\\\n\"]+ str += yytext;
+<CHAR>[^\\\n\'] str += yytext;
+<STRING,CHAR,NSSTRING>\\b str += "\b";
+<STRING,CHAR,NSSTRING>\\f str += "\f";
+<STRING,CHAR,NSSTRING>\\n str += "\n";
+<STRING,CHAR,NSSTRING>\\r str += "\r";
+<STRING,CHAR,NSSTRING>\\t str += "\t";
+<STRING,CHAR,NSSTRING>\\v str += "\v";
+<STRING,CHAR,NSSTRING>\\\' str += "\'";
+<STRING,CHAR,NSSTRING>\\\" str += "\"";
+<STRING,CHAR,NSSTRING>\\\\ str += "\\";
+<STRING,CHAR,NSSTRING>\\0 str += '\0';
+<STRING,CHAR,NSSTRING>\\x0 str += '\0';
+<STRING,CHAR,NSSTRING>\\x00 str += '\0';
+<STRING,CHAR,NSSTRING>\\x[0-9a-fA-F]{1,2} {
     char *a;
-    dig[0]=strtol(yytext+2, &a, 16);
-    dig[1]='\0';
-    strcat(tmp, dig);}
-<STRING,CHAR>\\[0-7]{1,3} {
-    char dig[2];
+    char c =strtol(yytext+2, &a, 16);
+    str += c;}
+<STRING,CHAR,NSSTRING>\\x[^0-9a-fA-F]? {printf("ERROR! Incorrect hex digit in string.\n");}
+<STRING,CHAR,NSSTRING>\\[0-7]{1,3} {
     char *a;
-    dig[0]=strtol(yytext+1, &a, 8);
-    dig[1]='\0';
-strcat(tmp, dig);}
-<STRING,CHAR>\n {printf("ERROR! String Breakes in row: %d\n", rowCount); rowCount++;}
-<STRING,CHAR><<EOF>> {printf("ERROR! haven't found closing quotes in row: %d\n", rowCount); BEGIN(INITIAL);}
-<STRING>\" {printf("Found String literal: %s\n",tmp);BEGIN(INITIAL);}
+    char c =strtol(yytext+1, &a, 8);
+    str += c;}
+<STRING,CHAR,NSSTRING>\n {printf("ERROR! Multiline string\n", lineCount); lineCount++;}
+<STRING,CHAR,NSSTRING><<EOF>> {printf("ERROR! haven't found closing quotes.\n"); BEGIN(INITIAL);}
+<STRING,NSSTRING>\" {std::cout << "Found String literal: " << str.c_str() << std::endl;BEGIN(INITIAL);}
 <CHAR>\' {
-    if(strlen(tmp) != 1)
+    if(str.size() != 1)
     {
-        printf("ERROR! char length != 1 in row: %d\n", rowCount);BEGIN(INITIAL);
+        printf("ERROR! char length != 1 in row: %d. Char length: %d\n", lineCount, str.size());BEGIN(INITIAL);
     }
     else
     {
-        printf("Found Char literal: %s\n",tmp);BEGIN(INITIAL);
+        std::cout << "Found char: " + str << std::endl;BEGIN(INITIAL);
     }
 }
 
@@ -159,35 +159,34 @@ strcat(tmp, dig);}
     printf("Found float constant: %f\n", (float)atof(tmp));
 }
 
-({DIGIT}+\.?{DIGIT}*|\.{DIGIT}+)(e|E)-?{DIGIT}+[fF]? {
+({DIGIT}+\.?{DIGIT}*|\.{DIGIT}+)(e|E)[+-]?{DIGIT}+[fF]? {
     strcpy(tmp, yytext);
     removeFloatSuffix(tmp);
     printf("Found float constant: %f\n", (float)atof(tmp));
 }
 
-{UNDERLINE_LITERAL}({UNDERLINE_LITERAL}|{DIGIT})* {printf("Found identifier: %s\n", yytext);}
-{DIGIT}({UNDERLINE_LITERAL}|{DIGIT})+ {printf("ERROR! Incorrect identifier name: %s in row: %d\n", yytext, rowCount);}
+{UNDERLINE_LETTER}({UNDERLINE_LETTER}|{DIGIT})* {printf("Found identifier: %s\n", yytext);}
+{DIGIT}({UNDERLINE_LETTER}|{DIGIT})* {printf("ERROR! Incorrect identifier: %s\n", yytext);}
+
 
 "//"([^\n]|\\\n)* {printf("Found line comment: %s\n", yytext);
     strcpy(tmp, yytext);
-    rowCount += countChar(tmp, '\n');
+    lineCount += countChar(tmp, '\n');
 }
 
 
 "/*" {tmp[0] = '\0'; BEGIN(MULTILINE_COMMENT);}
 <MULTILINE_COMMENT>[^*\n]+ {strcat(tmp, yytext);}
-<MULTILINE_COMMENT>[^*\n]+\n {rowCount++; strcat(tmp, yytext);}
+<MULTILINE_COMMENT>[^*\n]+\n {lineCount++; strcat(tmp, yytext);}
 <MULTILINE_COMMENT>"*"+[^*/] {strcat(tmp, yytext);}
-<MULTILINE_COMMENT>"*"+\n {rowCount++; strcat(tmp, yytext);}
+<MULTILINE_COMMENT>"*"+\n {lineCount++; strcat(tmp, yytext);}
 <MULTILINE_COMMENT>"*"+"/" {printf("Found multiline comment: %s\n", tmp);BEGIN(INITIAL);}
 
-<MULTILINE_COMMENT><<EOF>> {printf("ERROR! Multiline comment \"%s\" isn't closed in row: %d\n", tmp, rowCount); BEGIN(INITIAL);}
+<MULTILINE_COMMENT><<EOF>> {printf("ERROR! Multiline comment \"%s\" isn't closed in row: %d\n", tmp, lineCount); BEGIN(INITIAL);}
 
-<*>\n {rowCount++;}
+\s+ {printf("", yytext);}
 
-" " {printf("", yytext);}
-
-<*>.|\\n {printf("unrecognized element: %s\n", yytext);}
+<*>. {printf("unrecognized element: %s\n", yytext);}
 
 %%
 

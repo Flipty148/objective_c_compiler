@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="lex.yy.c">
+    <ClCompile Include="lex.yy.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

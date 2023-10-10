@@ -151,7 +151,8 @@ for_statement: FOR '(' expression_e ';' expression_e ';' expression_e ')' statem
 
 // ---------- Операторы ----------
 
-statement: expression ';'
+statement: ';'
+		 | expression ';'
 		 | if_statement
 		 | while_statement
 		 | do_while_statement

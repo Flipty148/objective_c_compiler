@@ -109,6 +109,9 @@ expression: IDENTIFIER
 		  | expression GREATER_EQUAL expression
 		  ;
 
+expression_e: /*empty*/
+			| expression;
+
 message_expression: '[' receiver message_selector ']'
 				  ;
 

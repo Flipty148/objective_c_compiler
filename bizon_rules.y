@@ -68,15 +68,12 @@ init_declarator_listE: init_declarator
 					;
 
 init_declarator: declarator
-			   | declarator '=' initializer
+			   | declarator '=' expression
 			   ;
 
 declarator: IDENTIFIER
 				 | IDENTIFIER '*'
 				 ;
-
-initializer: assignment_expression
-		   ;
 
 parameter_type_list: parameter_list
 				   | parameter_list ',' ELIPSIS
@@ -90,44 +87,27 @@ parameter_declaration: declaration_specifiers declarator
 					 ;
 
 // ---------- Выражения ----------
-arithmetic_expression: unary_expression
-					 | arithmetic_expression '+' unary_expression
-					 | arithmetic_expression '-' unary_expression
-					 | arithmetic_expression '*' unary_expression
-					 | arithmetic_expression '/' unary_expression
-					 ;
 
-comparation_expression: arithmetic_expression
-					  | comparation_expression EQUAL unary_expression
-					  | comparation_expression NOT_EQUAL unary_expression
-					  | comparation_expression '>' unary_expression
-					  | comparation_expression '<' unary_expression
-					  | comparation_expression LESS_EQUAL unary_expression
-					  | comparation_expression GREATER_EQUAL unary_expression
-					  ;
-
-primary_expression: IDENTIFIER
-				  | literal
-				  | numeric_constant
-				  | '(' expression ')'
-				  | SELF
-				  | message_expression
-				  ;
-
-expression: comparation_expression
-		  | assignment_expression
+expression: IDENTIFIER
+		  | literal
+		  | numeric_constant
+		  | '(' expression ')'
+		  | SELF
+		  | message_expression
+		  | '-' expression %prec UMINUS
+		  | '+' expression %prec UPLUS
+		  | '&' expression %prec UAMPERSAND
+		  | expression '+' expression
+		  | expression '-' expression
+		  | expression '*' expression
+		  | expression '/' expression
+		  | expression EQUAL expression
+		  | expression NOT_EQUAL expression
+		  | expression '>' expression
+		  | expression '<' expression
+		  | expression LESS_EQUAL expression
+		  | expression GREATER_EQUAL expression
 		  ;
-
-assignment_expression: unary_expression '=' expression
-					 ;
-
-unary_expression: primary_expression
-				| '-' IDENTIFIER %prec UMINUS
-				| '+' IDENTIFIER %prec UPLUS
-				| '&' IDENTIFIER %prec UAMPERSAND
-				| '-' numeric_constant %prec UMINUS
-				| '+' numeric_constant %prec UPLUS
-				;
 
 message_expression: '[' receiver message_selector ']'
 				  ;

@@ -144,14 +144,7 @@ while_statement: WHILE '(' expression ')' statement
 do_while_statement: DO statement WHILE '(' expression ')' ';'
 				  ;
 
-for_statement: FOR '(' expression ';' expression ';' expression ')' statement
-			 | FOR '(' ';' ';' ')' statement
-			 | FOR '(' ';' ';' expression ')' statement
-			 | FOR '(' ';' expression ';' ')' statement
-			 | FOR '(' expression ';' ';' ')' statement
-			 | FOR '(' ';' expression ';' expression ')' statement
-			 | FOR '(' expression ';' ';' expression ')' statement
-			 | FOR '(' expression ';' expression ';' ')' statement
+for_statement: FOR '(' expression_e ';' expression_e ';' expression_e ')' statement
 			 | FOR '(' IDENTIFIER IN expression ')' statement
 			 | FOR '(' type IDENTIFIER IN expression ')' statement
 			 ;

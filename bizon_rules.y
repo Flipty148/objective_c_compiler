@@ -150,14 +150,12 @@ for_statement: FOR '(' expression_e ';' expression_e ';' expression_e ')' statem
 			 ;
 
 // ---------- Операторы ----------
-cycle_statement: while_statement
-			   | do_while_statement
-			   | for_statement
-			   ;
 
 statement: expression ';'
-		 | cycle_statement
 		 | if_statement
+		 | while_statement
+		 | do_while_statement
+		 | for_statement
 		 | compound_statement
 		 | class_statement
 		 ;

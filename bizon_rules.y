@@ -27,6 +27,9 @@
 %%
 
 program: statement_list
+	   | class_statement_list
+	   | statement_list class_statement_list
+	   | class_statement_list statement_list
 	   ;
 
 // ---------- Типы ----------
@@ -158,7 +161,6 @@ statement: ';'
 		 | do_while_statement
 		 | for_statement
 		 | compound_statement
-		 | class_statement
 		 ;
 
 compound_statement: '{' statement_list '}'
@@ -171,6 +173,10 @@ statement_list: statement
 class_statement: class_interface
 			   | class_implementation
 			   ;
+
+class_statement_list: class_statement
+					| class_statement_list class_statement
+					;
 
 // ---------- Классы ----------
 class_interface: INTERFACE IDENTIFIER ':' IDENTIFIER interface_statement END

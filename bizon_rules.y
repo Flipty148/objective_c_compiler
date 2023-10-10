@@ -50,7 +50,7 @@ literal: STRING_CONSTANT
        ;
 
 // ---------- Объявления ----------
-declaration: declaration_specifiers init_declarator_list ';'
+declaration: declaration_specifiers init_declarator_list_e ';'
            ;
 
 declaration_list: declaration
@@ -62,12 +62,12 @@ declaration_specifiers: type
 					  | method_type
 					  ;
 
-init_declarator_list:
-					| init_declarator_listE
+init_declarator_list_e: /* empty */
+					| init_declarator_list
 					;
 
-init_declarator_listE: init_declarator
-					| init_declarator_listE ',' init_declarator
+init_declarator_list: init_declarator
+					| init_declarator_list ',' init_declarator
 					;
 
 init_declarator: declarator

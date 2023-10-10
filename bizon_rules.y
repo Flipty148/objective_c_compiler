@@ -134,7 +134,7 @@ keyword_argument: IDENTIFIER ':' expression
 
 // ---------- Управляющие структуры: развилки ----------
 if_statement: IF '(' expression ')' statement
-			| IF '(' expression ')' ELSE statement
+			| IF '(' expression ')' statement ELSE statement
 			;
 
 // ---------- Управляющие структуры: циклы ----------

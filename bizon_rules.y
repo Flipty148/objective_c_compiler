@@ -39,10 +39,9 @@ type: INT
     ;
 
 // ----------  Идентификаторы ----------
-identifier: IDENTIFIER
-          ;
 
-pointer: '*' identifier %prec UASTERISK
+
+pointer: '*' IDENTIFIER %prec UASTERISK
        | '*' pointer %prec UASTERISK
        ;
 
@@ -83,7 +82,7 @@ init_declarator: declarator
 declarator: direct_declarator
 		  ;
 
-direct_declarator: identifier
+direct_declarator: IDENTIFIER
 				 | '(' declarator ')'
 				 | '*' direct_declarator %prec UASTERISK
 				 ;
@@ -119,7 +118,7 @@ comparation_expression: arithmetic_expression
 					  | comparation_expression GREATER_EQUAL unary_expression
 					  ;
 
-primary_expression: identifier
+primary_expression: IDENTIFIER
 				  | pointer
 				  | literal
 				  | numeric_constant
@@ -136,9 +135,9 @@ assignment_expression: unary_expression '=' expression
 					 ;
 
 unary_expression: primary_expression
-				| '-' identifier %prec UMINUS
-				| '+' identifier %prec UPLUS
-				| '&' identifier %prec UAMPERSAND
+				| '-' IDENTIFIER %prec UMINUS
+				| '+' IDENTIFIER %prec UPLUS
+				| '&' IDENTIFIER %prec UAMPERSAND
 				| '-' numeric_constant %prec UMINUS
 				| '+' numeric_constant %prec UPLUS
 				;
@@ -148,10 +147,10 @@ message_expression: '[' receiver message_selector ']'
 
 receiver: SUPER
 		| SELF
-		| identifier
+		| IDENTIFIER
 		;
 
-message_selector: identifier
+message_selector: IDENTIFIER
 				| keyword_argument_list
 				;
 
@@ -159,7 +158,7 @@ keyword_argument_list: keyword_argument
 					 | keyword_argument_list keyword_argument
 					 ;
 
-keyword_argument: identifier ':' expression
+keyword_argument: IDENTIFIER ':' expression
 				| ':' expression
 				;
 
@@ -183,8 +182,8 @@ for_statement: FOR '(' expression ';' expression ';' expression ')' statement
 			 | FOR '(' ';' expression ';' expression ')' statement
 			 | FOR '(' expression ';' ';' expression ')' statement
 			 | FOR '(' expression ';' expression ';' ')' statement
-			 | FOR '(' identifier IN expression ')' statement
-			 | FOR '(' type identifier IN expression ')' statement
+			 | FOR '(' IDENTIFIER IN expression ')' statement
+			 | FOR '(' type IDENTIFIER IN expression ')' statement
 			 ;
 
 // ---------- Операторы ----------
@@ -235,10 +234,10 @@ class_list: class_name
 		  | class_list ',' class_name
 		  ;
 
-class_name: identifier
+class_name: IDENTIFIER
 		  ;
 
-superclass_name: identifier
+superclass_name: IDENTIFIER
 			   ;
 
 instance_variables: '{' struct_declaration_list '}'
@@ -302,7 +301,7 @@ instance_method_definition: '-' method_type method_selector declaration_list com
 					   	  | '-' method_type method_selector compound_statement
 					   	  ;
 
-method_selector: identifier
+method_selector: IDENTIFIER
 			   | keyword_selector ',' parameter_type_list
 			   | keyword_selector
 			   ;
@@ -311,16 +310,16 @@ keyword_selector: keyword_declaration
 				| keyword_selector keyword_declaration
 				;
 
-keyword_declaration: ':' method_type identifier
-				   | ':' identifier
-				   | identifier ':' method_type identifier
-				   | identifier ':' identifier
+keyword_declaration: ':' method_type IDENTIFIER
+				   | ':' IDENTIFIER
+				   | IDENTIFIER ':' method_type IDENTIFIER
+				   | IDENTIFIER ':' IDENTIFIER
 				   ;
 
 method_type: '(' type ')'
 		   ;
 
-property: PROPERTY '(' attribute ')' type identifier ';'
+property: PROPERTY '(' attribute ')' type IDENTIFIER ';'
 		;
 
 attribute: READONLY

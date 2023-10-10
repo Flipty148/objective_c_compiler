@@ -173,8 +173,8 @@ class_statement: class_interface
 			   ;
 
 // ---------- Классы ----------
-class_interface: INTERFACE class_name ':' superclass_name interface_statement END
-			   | INTERFACE class_name interface_statement END
+class_interface: INTERFACE IDENTIFIER ':' IDENTIFIER interface_statement END
+			   | INTERFACE IDENTIFIER interface_statement END
 			   ;
 
 interface_statement: instance_variables interface_declaration_list
@@ -185,22 +185,16 @@ implementation_statement: instance_variables implementation_definition_list
 						| implementation_definition_list
 						;
 
-class_implementation: IMPLEMENTATION class_name implementation_statement END
-					| IMPLEMENTATION class_name ':' superclass_name implementation_statement END
+class_implementation: IMPLEMENTATION IDENTIFIER implementation_statement END
+					| IMPLEMENTATION IDENTIFIER ':' IDENTIFIER implementation_statement END
 					;
 
 class_declaration_list: CLASS class_list
 					  ;
 
-class_list: class_name
-		  | class_list ',' class_name
+class_list: IDENTIFIER
+		  | class_list ',' IDENTIFIER
 		  ;
-
-class_name: IDENTIFIER
-		  ;
-
-superclass_name: IDENTIFIER
-			   ;
 
 instance_variables: '{' struct_declaration_list '}'
 				   | '{' struct_declaration_list instance_variables '}'

@@ -4,7 +4,7 @@
 %left '<' '>' LESS_EQUAL GREATER_EQUAL
 %left '+' '-'
 %left '*' '/'
-%right UMINUS UPLUS UASTERISK UAMPERSAND
+%right UMINUS UPLUS UAMPERSAND
 %nonassoc '(' ')' '[' ']'
 
 //---------- Терминальные символы ----------
@@ -35,13 +35,6 @@ type: INT
     | FLOAT
     | ID
     ;
-
-// ----------  Идентификаторы ----------
-
-
-pointer: '*' IDENTIFIER %prec UASTERISK
-       | '*' pointer %prec UASTERISK
-       ;
 
 // ---------- Константы ----------
 numeric_constant: FLOAT_CONSTANT
@@ -82,8 +75,7 @@ declarator: direct_declarator
 		  ;
 
 direct_declarator: IDENTIFIER
-				 | '(' declarator ')'
-				 | '*' direct_declarator %prec UASTERISK
+				 | IDENTIFIER '*'
 				 ;
 
 initializer: assignment_expression
@@ -118,7 +110,6 @@ comparation_expression: arithmetic_expression
 					  ;
 
 primary_expression: IDENTIFIER
-				  | pointer
 				  | literal
 				  | numeric_constant
 				  | '(' expression ')'
@@ -250,12 +241,9 @@ struct_declaration_list: struct_declaration
 struct_declaration: type struct_declarator_list
 				  ;
 
-struct_declarator_list: struct_declarator
-					  | struct_declarator_list struct_declarator
+struct_declarator_list: declarator
+					  | struct_declarator_list declarator
 					  ;
-
-struct_declarator: declarator
-				 ;
 
 
 interface_declaration_list: declaration

@@ -52,7 +52,7 @@ declaration: declaration_specifiers init_declarator_list ';'
 
 declaration_list: declaration
 				| declaration_list declaration
-				| class_declaration_list
+				| declaration_list class_declaration_list
 				;
 
 declaration_specifiers: type

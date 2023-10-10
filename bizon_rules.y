@@ -8,7 +8,7 @@
 %nonassoc '(' ')' '[' ']'
 
 //---------- Терминальные символы ----------
-%token INT NSINTEGER CHAR NSSTRING FLOAT NSARRAY NSSET NSDICTIONARY ENUM NSLOG
+%token INT CHAR FLOAT ENUM
 %token IF ELSE WHILE DO FOR
 %token IN
 %token INTERFACE IMPLEMENTATION 
@@ -31,9 +31,7 @@ program: statement_list
 
 // ---------- Типы ----------
 type: INT
-    | NSINTEGER
     | CHAR
-    | NSSTRING
     | FLOAT
     | ID
     ;

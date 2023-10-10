@@ -71,10 +71,7 @@ init_declarator: declarator
 			   | declarator '=' initializer
 			   ;
 
-declarator: direct_declarator
-		  ;
-
-direct_declarator: IDENTIFIER
+declarator: IDENTIFIER
 				 | IDENTIFIER '*'
 				 ;
 

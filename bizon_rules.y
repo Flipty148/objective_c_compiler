@@ -50,7 +50,7 @@ literal: STRING_CONSTANT
        ;
 
 // ---------- Объявления ----------
-declaration: declaration_specifiers init_declarator_list_e ';'
+declaration: type init_declarator_list_e ';'
            ;
 
 declaration_list: declaration
@@ -58,9 +58,9 @@ declaration_list: declaration
 				| declaration_list class_declaration_list
 				;
 
-declaration_specifiers: type
-					  | method_type
-					  ;
+declaration_list_e: /*empty*/
+				  | declaration_list
+				  ;
 
 init_declarator_list_e: /* empty */
 					| init_declarator_list
@@ -75,8 +75,8 @@ init_declarator: declarator
 			   ;
 
 declarator: IDENTIFIER
-				 | IDENTIFIER '*'
-				 ;
+		  | IDENTIFIER '*'
+		  ;
 
 parameter_type_list: parameter_list
 				   | parameter_list ',' ELIPSIS
@@ -86,7 +86,7 @@ parameter_list: parameter_declaration
 			  | parameter_list ',' parameter_declaration
 			  ;
 
-parameter_declaration: declaration_specifiers declarator
+parameter_declaration: type declarator
 					 ;
 
 // ---------- Выражения ----------
@@ -110,6 +110,7 @@ expression: IDENTIFIER
 		  | expression '<' expression
 		  | expression LESS_EQUAL expression
 		  | expression GREATER_EQUAL expression
+		  | expression '=' expression
 		  ;
 
 expression_e: /*empty*/
@@ -163,12 +164,16 @@ statement: ';'
 		 | compound_statement
 		 ;
 
-compound_statement: '{' statement_list '}'
+compound_statement: '{' declaration_list_e statement_list_e '}'
 				  ;
 
 statement_list: statement
 			  | statement_list statement
 			  ;
+
+statement_list_e: /*empty*/
+				| statement_list
+				;
 
 class_statement: class_interface
 			   | class_implementation
@@ -229,11 +234,11 @@ method_declaration: class_method_declaration
 				  | instance_method_declaration
 				  ;
 
-class_method_declaration: '+' method_type method_selector
+class_method_declaration: '+' method_type method_selector ';'
 						| '+' method_selector ';'
 						;
 
-instance_method_declaration: '-' method_type method_selector
+instance_method_declaration: '-' method_type method_selector ';'
 						   | '-' method_selector ';'
 						   ;
 

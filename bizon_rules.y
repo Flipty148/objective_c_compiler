@@ -8,7 +8,7 @@
 %nonassoc '(' ')' '[' ']'
 
 //---------- Терминальные символы ----------
-%token INT CHAR FLOAT ENUM
+%token INT CHAR FLOAT ENUM CLASS_NAME
 %token IF ELSE WHILE DO FOR
 %token IN
 %token INTERFACE IMPLEMENTATION 
@@ -37,6 +37,7 @@ type: INT
     | CHAR
     | FLOAT
     | ID
+	| CLASS_NAME '*'
     ;
 
 // ---------- Константы ----------
@@ -55,7 +56,6 @@ declaration: type init_declarator_list_e ';'
 
 declaration_list: declaration
 				| declaration_list declaration
-				| declaration_list class_declaration_list
 				;
 
 declaration_list_e: /*empty*/
@@ -75,7 +75,6 @@ init_declarator: declarator
 			   ;
 
 declarator: IDENTIFIER
-		  | IDENTIFIER '*'
 		  ;
 
 parameter_type_list: parameter_list
@@ -87,6 +86,7 @@ parameter_list: parameter_declaration
 			  ;
 
 parameter_declaration: type declarator
+					 | IDENTIFIER declarator
 					 ;
 
 // ---------- Выражения ----------
@@ -162,9 +162,11 @@ statement: ';'
 		 | do_while_statement
 		 | for_statement
 		 | compound_statement
+		 | declaration
+		 | class_declaration_list
 		 ;
 
-compound_statement: '{' declaration_list_e statement_list_e '}'
+compound_statement: '{' statement_list_e '}'
 				  ;
 
 statement_list: statement
@@ -200,7 +202,7 @@ class_implementation: IMPLEMENTATION IDENTIFIER implementation_statement END
 					| IMPLEMENTATION IDENTIFIER ':' IDENTIFIER implementation_statement END
 					;
 
-class_declaration_list: CLASS class_list
+class_declaration_list: CLASS class_list ';'
 					  ;
 
 class_list: IDENTIFIER
@@ -211,16 +213,9 @@ instance_variables: '{' struct_declaration_list '}'
 				   | '{' struct_declaration_list instance_variables '}'
 				   ;
 
-struct_declaration_list: struct_declaration
-					   | struct_declaration_list struct_declaration
+struct_declaration_list: declaration
+					   | declaration_list declaration
 					   ;
-
-struct_declaration: type struct_declarator_list
-				  ;
-
-struct_declarator_list: declarator
-					  | struct_declarator_list declarator
-					  ;
 
 
 interface_declaration_list: declaration
@@ -253,21 +248,17 @@ method_definition: class_method_definition
 				 | instance_method_definition
 				 ;
 
-class_method_definition: '+' method_type method_selector declaration_list compound_statement
-					   | '+' method_selector compound_statement
-					   | '+' method_selector declaration_list compound_statement
-					   | '+' method_type method_selector compound_statement
+class_method_definition: '+' method_type method_selector declaration_list_e compound_statement
+					   | '+' method_selector declaration_list_e compound_statement
 					   ;
 
-instance_method_definition: '-' method_type method_selector declaration_list compound_statement
-					   	  | '-' method_selector compound_statement
-					   	  | '-' method_selector declaration_list compound_statement
-					   	  | '-' method_type method_selector compound_statement
+instance_method_definition: '-' method_type method_selector declaration_list_e compound_statement
+					   	  | '-' method_selector declaration_list_e compound_statement
 					   	  ;
 
 method_selector: IDENTIFIER
-			   | keyword_selector ',' parameter_type_list
 			   | keyword_selector
+			   | keyword_selector ',' parameter_type_list
 			   ;
 
 keyword_selector: keyword_declaration

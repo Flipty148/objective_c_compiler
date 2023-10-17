@@ -1,3 +1,5 @@
+// -------------------- Типы --------------------
+
 // ---------- Int keyword ----------
 
 class Int_node
@@ -40,6 +42,7 @@ class Type_node
         enum type_type type;
 };
 
+// -------------------- Константы --------------------
 
 // ---------- numeric_constant ----------
 
@@ -77,6 +80,7 @@ class Literal_node
         char *value;
 };
 
+// -------------------- Объявления --------------------
 
 // ---------- declaration ----------
 
@@ -147,6 +151,8 @@ class Parameter_declaration_node
         char *name;
         Parameter_declaration_node *Next;
 };
+
+// -------------------- Выражения --------------------
 
 // ---------- expression ----------
 
@@ -250,6 +256,8 @@ class Keyword_argument_node
         Expression_node *expression;
 };
 
+// -------------------- Управляющие структуры: развилки --------------------
+
 // ------------ if_statement ----------
 
 enum if_type {
@@ -266,6 +274,8 @@ class If_statement_node : public Statement_node
         Statement_node *TrueBranch;
         Statement_node *FalseBranch;
 };
+
+// -------------------- Управляющие структуры: циклы --------------------
 
 // ----------- while_stasement ----------
 
@@ -307,6 +317,8 @@ class For_statement_node : public Statement_node
         char *name;
         Type_node *NameType;
 };
+
+// -------------------- Операторы --------------------
 
 // ---------- statement ----------
 
@@ -381,3 +393,6 @@ class Class_statement_list_node
         Class_statement_node *First;
         Class_statement_node *Last;
 };
+
+
+// -------------------- Классы --------------------

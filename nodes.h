@@ -266,3 +266,44 @@ class If_statement_node : public Statement_node
         Statement_node *TrueBranch;
         Statement_node *FalseBranch;
 };
+
+// ----------- while_stasement ----------
+
+class While_statement_node : public Statement_node
+{
+    public:
+        int id;
+        Expression_node *LoopCondition;
+        Statement_node *LoopBody;
+};
+
+// ---------- do_while_statement ----------
+
+class Do_while_statement_node : public Statement_node
+{
+    public:
+        int id;
+        Expression_node *LoopCondition;
+        Statement_node *LoopBody;
+};
+
+// ---------- for_statement ----------
+
+enum for_type {
+    FOR,
+    FOREACH,
+    FOREACH_WITH_DECLARATION
+};
+
+class For_statement_node : public Statement_node
+{
+    public:
+        int id;
+        enum for_type type;
+        Expression_node *InitExpression;
+        Expression_node *ConditionExpression;
+        Expression_node *LoopExpression;
+        Statement_node *LoopBody;
+        char *name;
+        Type_node *NameType;
+};

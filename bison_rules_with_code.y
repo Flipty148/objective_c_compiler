@@ -29,6 +29,9 @@
 	Keyword_argument_list_node *Keyword_argument_list;
 	Keyword_argument_node *Keyword_argument;
 	If_statement_node *If;
+	While_statement_node *While;
+	Do_while_statement_node *Do_while;
+	For_statement_node *For;
 }
 
 // ---------- Операции с их приоритетом ----------
@@ -79,6 +82,9 @@
 %type <Keyword_argument_list> keyword_argument_list
 %type <Keyword_argument> keyword_argument
 %type <If> if_statement
+%type <While> while_statement
+%type <Do_while> do_while_statement
+%type <For> for_statement
 
 
 %start program

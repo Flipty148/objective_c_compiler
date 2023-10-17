@@ -118,7 +118,7 @@ message_expression: '[' receiver message_selector ']'
 
 receiver: SUPER
 		| SELF
-		| IDENTIFIER
+		| CLASS_NAME
 		;
 
 message_selector: IDENTIFIER

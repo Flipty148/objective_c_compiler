@@ -22,6 +22,12 @@
 	Init_declarator_node *Init_declarator;
 	Parameter_list_node *Parameter_list;
 	Parameter_declaration_node *Parameter_declaration;
+	Expression_node *Expression;
+	Message_expression_node *Message_expression;
+	Receiver_node *Receiver;
+	Message_selector_node *Message_selector;
+	Keyword_argument_list_node *Keyword_argument_list;
+	Keyword_argument_node *Keyword_argument;
 }
 
 // ---------- Операции с их приоритетом ----------
@@ -65,6 +71,13 @@
 %type <Init_declarator> init_declarator
 %type <Parameter_list> parameter_list
 %type <Parameter_declaration> parameter_declaration
+%type <Expression> expression expression_e
+%type <Message_expression> message_expression
+%type <Receiver> receiver
+%type <Message_selector> message_selector
+%type <Keyword_argument_list> keyword_argument_list
+%type <Keyword_argument> keyword_argument
+
 
 %start program
 
@@ -162,7 +175,7 @@ message_expression: '[' receiver message_selector ']'
 
 receiver: SUPER
 		| SELF
-		| IDENTIFIER
+		| CLASS_NAME
 		;
 
 message_selector: IDENTIFIER

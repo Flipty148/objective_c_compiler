@@ -147,3 +147,105 @@ class Parameter_declaration_node
         char *name;
         Parameter_declaration_node *Next;
 };
+
+// ---------- expression ----------
+
+enum expression_type
+{
+    IDENTIFIER,
+    LITERAL,
+    NUMERIIC_CONSTANT,
+    PRIORITY,
+    SELF,
+    MESSAGE_EXPRESSION,
+    UMINUS,
+    UPLUS,
+    UAMPERSAND,
+    PLUS,
+    MINUS,
+    MUL,
+    DIV,
+    EQUAL,
+    NOT_EQUAL,
+    GREATER,
+    LESS,
+    LESS_EQUAL,
+    GREATER_EQUAL,
+    ASSIGNMENT
+};
+
+class Expression_node
+{
+    public:
+        int id;
+        enum expression_type *type;
+        char *name;
+        union constant
+        {
+            Numeric_constant_node *num;
+            Literal_node *literal;
+        } constant;
+        Expression_node *Left;
+        Expression_node *Right;
+};
+
+// ---------- message_expression ----------
+
+class Message_expression_node : public Expression_node
+{
+    public:
+        int id;
+        Receiver_node *Receiver;
+        Message_selector_node *Arguments;
+};
+
+// ---------- receiver ----------
+enum receiver_type {
+    SuPER,
+    SELF,
+    CLASS_NAME
+};
+
+
+class Receiver_node
+{
+    public:
+        int id;
+        char *name;
+};
+
+// ---------- message_selector -----------
+
+class Message_selector_node
+{
+    public:
+        int id;
+        char *MethodName;
+        Keyword_argument_list_node *Arguments;
+};
+
+// ---------- keyword_argument_list ----------
+
+class Keyword_argument_list_node
+{
+    public:
+        int id;
+        Keyword_argument_node *First;
+        Keyword_argument_node *Last;
+};
+
+// ---------- keyword_argument ----------
+
+enum keyword_argument_type {
+    WITH_IDENTIFIER,
+    WITHOUT_IDENTIFIER
+};
+
+class Keyword_argument_node
+{
+    public:
+        int id;
+        enum keyword_argument_type type;
+        char *name;
+        Expression_node *expression;
+};

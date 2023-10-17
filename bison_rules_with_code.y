@@ -85,12 +85,9 @@ init_declarator_list: init_declarator
 					| init_declarator_list ',' init_declarator
 					;
 
-init_declarator: declarator
-			   | declarator '=' expression
+init_declarator: IDENTIFIER
+			   | IDENTIFIER '=' expression
 			   ;
-
-declarator: IDENTIFIER
-		  ;
 
 parameter_type_list: parameter_list
 				   | parameter_list ',' ELIPSIS
@@ -100,8 +97,8 @@ parameter_list: parameter_declaration
 			  | parameter_list ',' parameter_declaration
 			  ;
 
-parameter_declaration: type declarator
-					 | IDENTIFIER declarator
+parameter_declaration: type IDENTIFIER
+					 | CLASS_NAME IDENTIFIER
 					 ;
 
 // ---------- Выражения ----------

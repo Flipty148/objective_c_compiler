@@ -249,3 +249,20 @@ class Keyword_argument_node
         char *name;
         Expression_node *expression;
 };
+
+// ------------ if_statement ----------
+
+enum if_type {
+    WITH_ALTERNATIVE,
+    WITHOUT_ALTERNATIVE
+};
+
+class If_statement_node : public Statement_node
+{
+    public:
+        int id;
+        enum if_type type;
+        Expression_node *Condition;
+        Statement_node *TrueBranch;
+        Statement_node *FalseBranch;
+};

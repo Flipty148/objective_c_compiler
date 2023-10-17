@@ -28,6 +28,7 @@
 	Message_selector_node *Message_selector;
 	Keyword_argument_list_node *Keyword_argument_list;
 	Keyword_argument_node *Keyword_argument;
+	If_statement_node *If;
 }
 
 // ---------- Операции с их приоритетом ----------
@@ -77,6 +78,7 @@
 %type <Message_selector> message_selector
 %type <Keyword_argument_list> keyword_argument_list
 %type <Keyword_argument> keyword_argument
+%type <If> if_statement
 
 
 %start program

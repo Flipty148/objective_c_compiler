@@ -32,6 +32,11 @@
 	While_statement_node *While;
 	Do_while_statement_node *Do_while;
 	For_statement_node *For;
+	Statement_node *Statement;
+	Compound_statement_node *Compound_statement;
+	Statement_list_node *Statement_list;
+	Class_statement_node *Class_statement;
+	Class_statement_list_node *Class_statement_list;
 }
 
 // ---------- Операции с их приоритетом ----------
@@ -85,6 +90,12 @@
 %type <While> while_statement
 %type <Do_while> do_while_statement
 %type <For> for_statement
+%type <Statement> statement
+%type <Compound_statement> compound_statement
+%type <Statement_list> statement_list_e statement_list
+%type <Class_statement> class_statement
+%type <Class_statement_list> class_statement_list
+
 
 
 %start program

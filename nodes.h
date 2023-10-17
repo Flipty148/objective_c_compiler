@@ -307,3 +307,77 @@ class For_statement_node : public Statement_node
         char *name;
         Type_node *NameType;
 };
+
+// ---------- statement ----------
+
+enum statement_type {
+    EMPTY,
+    SIMPLE,
+    IF,
+    WHILE,
+    DO_WHILE,
+    FOR,
+    COMPOUND,
+    DECLARATION,
+    CLASS_DECLARATION_LIST
+};
+
+class Statement_node
+{
+    public:
+        int id;
+        enum statement_type type;
+        Expression_node *Expression;
+        Statement_list_node *Block;
+        Declaration_node *Declaration;
+        Class_declaration_list_node *Class_declaration;
+        Statement_node *Next;
+};
+
+// ---------- compound_statement ----------
+
+class Compound_statement_node : public Statement_node
+{
+    public:
+        int id;
+        Statement_list_node *Statements;
+};
+
+// ---------- statement_list ----------
+
+class Statement_list_node
+{
+    public:
+        int id;
+        Statement_node *First;
+        Statement_node *Last;
+};
+
+// ---------- class_statement ----------
+
+enum class_statement_type {
+    INTERFACE,
+    IMPLEMENTATION
+};
+
+class Class_statement_node {
+    public:
+        int id;
+        enum class_statement_type type;
+        union statement
+        {
+            Class_interface_node *Interface;
+            Class_implementation_node *Implementation;
+        } statement; 
+        Class_statement_node *Next;     
+};
+
+// ---------- class_statement_list ----------
+
+class Class_statement_list_node
+{
+    public:
+        int id;
+        Class_statement_node *First;
+        Class_statement_node *Last;
+};

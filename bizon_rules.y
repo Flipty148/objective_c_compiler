@@ -15,7 +15,7 @@
 %token END
 %token PROPERTY
 %token READONLY READWRITE
-%token SELF SUPER ID
+%token SELF SUPER ID  /* НУЖНО ЛИ SUPER добавлять в expression */
 %token CLASS
 %token RETURN
 %token INTEGER_CONSTANT STRING_CONSTANT CHAR_CONSTANT FLOAT_CONSTANT NSSTRING_CONSTANT
@@ -70,12 +70,9 @@ init_declarator_list: init_declarator
 					| init_declarator_list ',' init_declarator
 					;
 
-init_declarator: declarator
-			   | declarator '=' expression
+init_declarator: IDENTIFIER
+			   | IDENTIFIER '=' expression
 			   ;
-
-declarator: IDENTIFIER
-		  ;
 
 parameter_type_list: parameter_list
 				   | parameter_list ',' ELIPSIS
@@ -85,8 +82,8 @@ parameter_list: parameter_declaration
 			  | parameter_list ',' parameter_declaration
 			  ;
 
-parameter_declaration: type declarator
-					 | IDENTIFIER declarator
+parameter_declaration: type IDENTIFIER
+					 | CLASS_NAME IDENTIFIER
 					 ;
 
 // ---------- Выражения ----------
@@ -223,6 +220,7 @@ interface_declaration_list: declaration
 						  | method_declaration
 						  | interface_declaration_list declaration
 						  | interface_declaration_list method_declaration
+						  | interface_declaration_list property
 						  ;
 
 method_declaration: class_method_declaration
@@ -242,6 +240,7 @@ implementation_definition_list: declaration
 							  | method_definition
 							  | implementation_definition_list declaration
 							  | implementation_definition_list method_definition
+							  | implementation_definition_list property
 							  ;
 
 method_definition: class_method_definition

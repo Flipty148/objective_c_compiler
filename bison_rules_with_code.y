@@ -255,6 +255,7 @@ implementation_definition_list: declaration
 							  | method_definition
 							  | implementation_definition_list declaration
 							  | implementation_definition_list method_definition
+							  | implementation_definition_list property
 							  ;
 
 method_definition: class_method_definition

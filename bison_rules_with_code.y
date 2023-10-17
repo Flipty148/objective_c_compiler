@@ -25,7 +25,7 @@
 %token END
 %token PROPERTY
 %token READONLY READWRITE
-%token SELF SUPER ID
+%token SELF SUPER ID /* НУЖНО ЛИ SUPER добавлять в expression */
 %token CLASS
 %token RETURN
 %token <Integer_constant> INTEGER_CONSTANT
@@ -235,6 +235,7 @@ interface_declaration_list: declaration
 						  | method_declaration
 						  | interface_declaration_list declaration
 						  | interface_declaration_list method_declaration
+						  | interface_declaration_list property
 						  ;
 
 method_declaration: class_method_declaration

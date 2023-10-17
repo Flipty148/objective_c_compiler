@@ -1,3 +1,7 @@
+%{
+	#include <nodes.h>	
+%}
+
 // ---------- Объединение ----------
 %union {
 	int Integer_constant;
@@ -6,6 +10,9 @@
 	float Float_constant;
 	char * NSString_constant;
 	char * Identifier;
+	Int_node * Int;
+	Char_node * Char;
+	Float_node * Float;
 }
 
 // ---------- Операции с их приоритетом ----------
@@ -18,7 +25,10 @@
 %nonassoc '(' ')' '[' ']'
 
 //---------- Терминальные символы ----------
-%token INT CHAR FLOAT ENUM
+%token <Int> INT 
+%token <Char> CHAR 
+%token <Float> FLOAT
+%token ENUM
 %token IF ELSE WHILE DO FOR
 %token IN
 %token INTERFACE IMPLEMENTATION 

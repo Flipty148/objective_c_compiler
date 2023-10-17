@@ -9,6 +9,7 @@
 
 //---------- Терминальные символы ----------
 %token INT CHAR FLOAT ENUM CLASS_NAME
+%token VOID
 %token IF ELSE WHILE DO FOR
 %token IN
 %token INTERFACE IMPLEMENTATION 
@@ -206,13 +207,9 @@ class_list: IDENTIFIER
 		  | class_list ',' IDENTIFIER
 		  ;
 
-instance_variables: '{' struct_declaration_list '}'
-				   | '{' struct_declaration_list instance_variables '}'
+instance_variables: '{' declaration_list '}'
+				   | '{' declaration_list instance_variables '}'
 				   ;
-
-struct_declaration_list: declaration
-					   | declaration_list declaration
-					   ;
 
 
 interface_declaration_list: declaration
@@ -228,10 +225,12 @@ method_declaration: class_method_declaration
 				  ;
 
 class_method_declaration: '+' method_type method_selector ';'
+						| '+' '(' VOID ')' method_selector ';'
 						| '+' method_selector ';'
 						;
 
 instance_method_declaration: '-' method_type method_selector ';'
+						   | '-' '(' VOID ')' method_selector ';'
 						   | '-' method_selector ';'
 						   ;
 
@@ -248,11 +247,13 @@ method_definition: class_method_definition
 				 ;
 
 class_method_definition: '+' method_type method_selector declaration_list_e compound_statement
+					   | '+' '(' VOID ')' method_selector declaration_list_e compound_statement
 					   | '+' method_selector declaration_list_e compound_statement
 					   ;
 
 instance_method_definition: '-' method_type method_selector declaration_list_e compound_statement
-					   	  | '-' method_selector declaration_list_e compound_statement
+					   	  | '-' '(' VOID ')' method_selector declaration_list_e compound_statement
+						  | '-' method_selector declaration_list_e compound_statement
 					   	  ;
 
 method_selector: IDENTIFIER

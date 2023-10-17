@@ -37,6 +37,21 @@
 	Statement_list_node *Statement_list;
 	Class_statement_node *Class_statement;
 	Class_statement_list_node *Class_statement_list;
+	Class_interface_node *Class_interface;
+	Interface_statement_node *Interface_statement;
+	Implementation_statement_node *Implementation_statement;
+	Class_implementation_node *Class_implementation;
+	Class_declaration_list_node *Class_declaration_list;
+	Instance_variables_node *Instance_variables;
+	Interface_declaration_list_node *Interface_declaration_list;
+	Method_declaration_node *Method_declaration;
+	Implementation_definition_list_node *Implementation_definition_list;
+	Method_definition_node *Method_definition;
+	Method_selector_node *Method_selector;
+	Keyword_selector_node *Keyword_selector;
+	Keyword_declaration_node *Keyword_declaration;
+	Property_node *Property;
+	Attribute_node *Attribute;
 }
 
 // ---------- Операции с их приоритетом ----------
@@ -52,6 +67,7 @@
 %token <Int> INT 
 %token <Char> CHAR 
 %token <Float> FLOAT
+%token VOID
 %token ENUM
 %token IF ELSE WHILE DO FOR
 %token IN
@@ -71,7 +87,7 @@
 %token <Identifier> CLASS_NAME
 %token ELIPSIS
 
-%type <Type> type
+%type <Type> type method_type
 %type <Numeric_constant> numeric_constant
 %type <Literal> literal
 %type <Declaration> declaration
@@ -95,7 +111,21 @@
 %type <Statement_list> statement_list_e statement_list
 %type <Class_statement> class_statement
 %type <Class_statement_list> class_statement_list
-
+%type <Class_interface> class_interface
+%type <Interface_statement> interface_statement
+%type <Implementation_statement> implementation_statement
+%type <Class_implementation> class_implementation
+%type <Class_declaration_list> class_declaration_list class_list
+%type <Instance_variables> instance_variables
+%type <Interface_declaration_list> interface_declaration_list
+%type <Method_declaration> method_declaration class_method_declaration instance_method_declaration
+%type <Implementation_definition_list> implementation_definition_list
+%type <Method_definition> method_definition class_method_definition instance_method_definition
+%type <Method_selector> method_selector
+%type <Keyword_selector> keyword_selector
+%type <Keyword_declaration> keyword_declaration
+%type <Property> property
+%type <Attribute> attribute
 
 
 %start program
@@ -282,14 +312,9 @@ class_list: IDENTIFIER
 		  | class_list ',' IDENTIFIER
 		  ;
 
-instance_variables: '{' struct_declaration_list '}'
-				   | '{' struct_declaration_list instance_variables '}'
+instance_variables: '{' declaration_list '}'
+				   | '{' declaration_list instance_variables '}'
 				   ;
-
-struct_declaration_list: declaration
-					   | declaration_list declaration
-					   ;
-
 
 interface_declaration_list: declaration
 						  | property
@@ -304,10 +329,12 @@ method_declaration: class_method_declaration
 				  ;
 
 class_method_declaration: '+' method_type method_selector ';'
+						| '+' '(' VOID ')' method_selector ';'
 						| '+' method_selector ';'
 						;
 
 instance_method_declaration: '-' method_type method_selector ';'
+						   | '-' '(' VOID ')' method_selector ';'
 						   | '-' method_selector ';'
 						   ;
 
@@ -324,11 +351,13 @@ method_definition: class_method_definition
 				 ;
 
 class_method_definition: '+' method_type method_selector declaration_list_e compound_statement
+					   | '+' '(' VOID ')' method_selector declaration_list_e compound_statement
 					   | '+' method_selector declaration_list_e compound_statement
 					   ;
 
 instance_method_definition: '-' method_type method_selector declaration_list_e compound_statement
-					   	  | '-' method_selector declaration_list_e compound_statement
+					   	  | '-' '(' VOID ')' method_selector declaration_list_e compound_statement
+						  | '-' method_selector declaration_list_e compound_statement
 					   	  ;
 
 method_selector: IDENTIFIER

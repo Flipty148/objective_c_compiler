@@ -22,7 +22,6 @@
 #ifdef __cplusplus
 
 #include <stdlib.h>
-#include "unistd.h"
 
 /* Use prototypes in function declarations. */
 #define YY_USE_PROTOS
@@ -284,33 +283,34 @@ static void yy_fatal_error YY_PROTO(( yyconst char msg[] ));
 	*yy_cp = '\0'; \
 	yy_c_buf_p = yy_cp;
 
-#define YY_NUM_RULES 89
-#define YY_END_OF_BUFFER 90
-static yyconst short int yy_accept[211] =
+#define YY_NUM_RULES 90
+#define YY_END_OF_BUFFER 91
+static yyconst short int yy_accept[215] =
     {   0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-       90,   88,   47,   88,   54,   53,   37,   38,   28,   26,
-       45,   27,   88,   29,   48,   48,   44,   43,   33,   36,
-       32,   88,   78,   41,   88,   42,   78,   78,   78,   78,
-       78,   20,   78,   78,   18,   78,   39,   40,   82,   88,
-       82,   56,   47,   74,   88,   57,   75,   31,   76,   81,
-       80,   76,   51,   52,   79,   79,   79,   48,   35,   30,
-       34,   55,    0,    0,    0,    0,   78,   46,   78,    6,
-       78,   78,   78,   78,   24,    3,    8,   78,   78,   78,
-       78,   78,   78,   78,   82,   83,   84,   84,    0,   86,
+       91,   89,   48,   89,   55,   54,   38,   39,   29,   27,
+       46,   28,   89,   30,   49,   49,   45,   44,   34,   37,
+       33,   89,   79,   42,   89,   43,   79,   79,   79,   79,
+       79,   20,   79,   79,   18,   79,   79,   40,   41,   83,
+       89,   83,   57,   48,   75,   89,   58,   76,   32,   77,
+       82,   81,   77,   52,   53,   80,   80,   80,   49,   36,
+       31,   35,   56,    0,    0,    0,    0,   79,   47,   79,
+        6,   79,   79,   79,   79,   24,    3,    8,   79,   79,
+       79,   79,   79,   79,   79,   79,   83,   84,   85,   85,
 
-       46,   56,   65,   64,   67,   72,   66,   58,   59,   60,
-       61,   62,   63,   71,    0,   76,   80,   80,   76,    0,
-       77,   49,   50,    0,    0,    0,    0,    0,   78,   78,
-       78,   78,    7,    1,   78,   78,   78,   78,   78,   78,
-       78,   72,   71,   68,   70,   77,   77,    0,   10,    0,
-        0,    0,    2,    4,   16,   78,   19,   78,   78,   22,
-       78,   78,   78,   72,   69,   70,   77,    0,    0,    0,
-        0,   13,   78,   78,   78,   23,   78,    5,   25,    0,
-        0,    0,   78,   78,   21,   78,    0,    0,    0,   78,
-       78,   78,    0,    0,    0,   14,   78,   17,    0,    0,
+        0,   87,   47,   57,   66,   65,   68,   73,   67,   59,
+       60,   61,   62,   63,   64,   72,    0,   77,   81,   81,
+       77,    0,   78,   50,   51,    0,    0,    0,    0,    0,
+       79,   79,   79,   79,    7,    1,   79,   79,   79,   79,
+       79,   79,   79,   79,   73,   72,   69,   71,   78,   78,
+        0,   10,    0,    0,    0,    2,    4,   16,   79,   19,
+       79,   79,   22,   79,   79,   26,   79,   73,   70,   71,
+       78,    0,    0,    0,    0,   13,   79,   79,   79,   23,
+       79,    5,   25,    0,    0,    0,   79,   79,   21,   79,
+        0,    0,    0,   79,   79,   79,    0,    0,    0,   14,
 
-       12,   15,    0,    9,    0,    0,    0,    0,   11,    0
+       79,   17,    0,    0,   12,   15,    0,    9,    0,    0,
+        0,    0,   11,    0
     } ;
 
 static yyconst int yy_ec[256] =
@@ -355,120 +355,121 @@ static yyconst int yy_meta[56] =
         7,    7,    7,    1,    1
     } ;
 
-static yyconst short int yy_base[222] =
+static yyconst short int yy_base[226] =
     {   0,
         0,    0,   54,   55,   56,   57,   62,   63,   67,   68,
-      414,  415,  415,  393,  415,  415,  415,  415,  415,  415,
-      415,  415,   59,   68,   86,   91,  415,  415,  392,  391,
-      390,   78,    0,  415,  407,  415,  369,  363,   36,   46,
-       74,  362,  369,   72,  361,  364,  415,  415,  400,   86,
-      399,    0,  415,  415,  137,  415,  415,  415,  110,  415,
-      371,  139,  145,  176,  387,  187,  199,  192,  415,  415,
-      415,  415,  357,  354,   86,  350,    0,  415,  351,    0,
-      330,  327,  320,  282,    0,    0,  279,  283,   72,  284,
-      277,  278,  272,  278,  315,  415,  415,  415,  135,  415,
+      417,  418,  418,  396,  418,  418,  418,  418,  418,  418,
+      418,  418,   59,   68,   86,   91,  418,  418,  395,  394,
+      393,   78,    0,  418,  410,  418,  372,  366,   36,   46,
+       74,  365,  372,   72,  364,  362,  366,  418,  418,  402,
+       86,  401,    0,  418,  418,  137,  418,  418,  418,  110,
+      418,  373,  139,  145,  176,  389,  187,  199,  192,  418,
+      418,  418,  418,  359,  356,   86,  352,    0,  418,  365,
+        0,  349,  334,  333,  330,    0,    0,  316,  285,   72,
+      286,  279,  280,  277,  283,  279,  316,  418,  418,  418,
 
-      415,    0,  415,  415,  116,  118,  415,  415,  415,  415,
-      415,  415,  415,  239,  268,  415,  287,   64,  244,  157,
-      273,    0,  297,  283,  274,  263,  259,  262,  259,  268,
-      261,  269,    0,    0,  262,  264,  248,  259,  259,  254,
-      249,  130,  415,  272,    0,  277,  266,  223,  415,  226,
-      230,  220,    0,    0,    0,  213,    0,  105,  211,    0,
-      210,  191,  191,  415,  415,  415,  415,  174,  184,  173,
-      182,    0,  174,  165,  167,    0,  166,    0,  415,  163,
-      160,  149,  153,  153,    0,  150,  148,  150,  131,  125,
-      129,  133,  124,  131,  109,    0,  122,    0,  102,  104,
+      135,  418,  418,    0,  418,  418,  116,  118,  418,  418,
+      418,  418,  418,  418,  418,  239,  268,  418,  288,   64,
+      244,  157,  273,    0,  297,  284,  280,  264,  260,  263,
+      260,  269,  262,  271,    0,    0,  263,  265,  250,  260,
+      260,  255,  259,  249,  130,  418,  272,    0,  277,  266,
+      223,  418,  226,  230,  220,    0,    0,    0,  213,    0,
+      105,  211,    0,  210,  191,    0,  191,  418,  418,  418,
+      418,  174,  184,  173,  182,    0,  174,  165,  167,    0,
+      166,    0,  418,  163,  160,  149,  153,  153,    0,  150,
+      148,  150,  131,  125,  129,  133,  124,  131,  109,    0,
 
-      415,    0,  104,  415,   68,   55,   45,   37,  415,  415,
-      334,  341,  348,  351,  353,  360,  367,  374,  381,  388,
-       72
+      122,    0,  102,  104,  418,    0,  104,  418,   68,   55,
+       45,   37,  418,  418,  334,  341,  348,  351,  353,  360,
+      367,  374,  381,  388,   72
     } ;
 
-static yyconst short int yy_def[222] =
+static yyconst short int yy_def[226] =
     {   0,
-      210,    1,  211,  211,  212,  212,  213,  213,  212,  212,
-      210,  210,  210,  210,  210,  210,  210,  210,  210,  210,
-      210,  210,  210,  210,  214,  214,  210,  210,  210,  210,
-      210,  210,  215,  210,  210,  210,  215,  215,  215,  215,
-      215,  215,  215,  215,  215,  215,  210,  210,  216,  217,
-      216,  218,  210,  210,  210,  210,  210,  210,  210,  210,
-      219,  210,  214,  214,  214,  214,  210,  214,  210,  210,
-      210,  210,  210,  210,  210,  210,  215,  210,  215,  215,
-      215,  215,  215,  215,  215,  215,  215,  215,  215,  215,
-      215,  215,  215,  215,  216,  210,  210,  210,  217,  210,
+      214,    1,  215,  215,  216,  216,  217,  217,  216,  216,
+      214,  214,  214,  214,  214,  214,  214,  214,  214,  214,
+      214,  214,  214,  214,  218,  218,  214,  214,  214,  214,
+      214,  214,  219,  214,  214,  214,  219,  219,  219,  219,
+      219,  219,  219,  219,  219,  219,  219,  214,  214,  220,
+      221,  220,  222,  214,  214,  214,  214,  214,  214,  214,
+      214,  223,  214,  218,  218,  218,  218,  214,  218,  214,
+      214,  214,  214,  214,  214,  214,  214,  219,  214,  219,
+      219,  219,  219,  219,  219,  219,  219,  219,  219,  219,
+      219,  219,  219,  219,  219,  219,  220,  214,  214,  214,
 
-      210,  218,  210,  210,  210,  210,  210,  210,  210,  210,
-      210,  210,  210,  220,  210,  210,  219,  219,  210,  210,
-      214,   67,   67,  210,  210,  210,  210,  210,  215,  215,
-      215,  215,  215,  215,  215,  215,  215,  215,  215,  215,
-      215,  210,  210,  221,  221,  210,  214,  210,  210,  210,
-      210,  210,  215,  215,  215,  215,  215,  215,  215,  215,
-      215,  215,  215,  210,  210,  210,  210,  210,  210,  210,
-      210,  215,  215,  215,  215,  215,  215,  215,  210,  210,
-      210,  210,  215,  215,  215,  215,  210,  210,  210,  215,
-      215,  215,  210,  210,  210,  215,  215,  215,  210,  210,
+      221,  214,  214,  222,  214,  214,  214,  214,  214,  214,
+      214,  214,  214,  214,  214,  224,  214,  214,  223,  223,
+      214,  214,  218,   68,   68,  214,  214,  214,  214,  214,
+      219,  219,  219,  219,  219,  219,  219,  219,  219,  219,
+      219,  219,  219,  219,  214,  214,  225,  225,  214,  218,
+      214,  214,  214,  214,  214,  219,  219,  219,  219,  219,
+      219,  219,  219,  219,  219,  219,  219,  214,  214,  214,
+      214,  214,  214,  214,  214,  219,  219,  219,  219,  219,
+      219,  219,  214,  214,  214,  214,  219,  219,  219,  219,
+      214,  214,  214,  219,  219,  219,  214,  214,  214,  219,
 
-      210,  215,  210,  210,  210,  210,  210,  210,  210,    0,
-      210,  210,  210,  210,  210,  210,  210,  210,  210,  210,
-      210
+      219,  219,  214,  214,  214,  219,  214,  214,  214,  214,
+      214,  214,  214,    0,  214,  214,  214,  214,  214,  214,
+      214,  214,  214,  214,  214
     } ;
 
-static yyconst short int yy_nxt[471] =
+static yyconst short int yy_nxt[474] =
     {   0,
        12,   13,   14,   15,   16,   17,   18,   19,   20,   21,
        22,   23,   24,   25,   26,   26,   27,   28,   29,   30,
        31,   32,   33,   33,   33,   33,   33,   34,   35,   36,
        33,   33,   33,   37,   38,   39,   40,   33,   33,   41,
-       42,   33,   33,   33,   33,   43,   44,   33,   45,   33,
-       46,   33,   33,   47,   48,   13,   13,   53,   53,   54,
-       54,   50,   50,   53,   53,  117,   57,   57,   53,   53,
-       54,   54,   59,   59,   59,   60,   81,  166,   82,  209,
-       61,   72,   51,   51,   55,   55,   83,   98,  208,   84,
-       55,   55,  118,   99,  207,   55,   55,   62,  100,   63,
+       42,   33,   33,   33,   33,   43,   44,   33,   45,   46,
+       47,   33,   33,   48,   49,   13,   13,   54,   54,   55,
+       55,   51,   51,   54,   54,  119,   58,   58,   54,   54,
+       55,   55,   60,   60,   60,   61,   82,  170,   83,  213,
+       62,   73,   52,   52,   56,   56,   84,  100,  212,   85,
+       56,   56,  120,  101,  211,   56,   56,   63,  102,   64,
 
-       63,   64,   62,  136,   68,   68,   68,   90,   85,   66,
-       86,   73,   67,   74,   66,  206,   87,   75,   91,  137,
-       92,   66,   76,   59,   59,   59,   66,  126,  127,  142,
-      142,  142,  142,  115,  116,  205,   98,   67,   78,  204,
-      103,  104,   99,  164,  164,  115,  116,  100,  173,  203,
-      105,  106,  119,  119,  119,  174,   62,  202,   63,   63,
-       64,  201,  115,  116,  200,  107,  199,  198,   66,  108,
-      146,  146,  146,  109,  115,  116,  197,  196,  195,  110,
-       66,  194,  111,  193,  112,  192,  113,   62,  114,   64,
-       64,   64,  191,  190,  189,  120,  188,  120,  210,   66,
+       64,   65,   63,  138,   69,   69,   69,   91,   86,   67,
+       87,   74,   68,   75,   67,  210,   88,   76,   92,  139,
+       93,   67,   77,   60,   60,   60,   67,  128,  129,  145,
+      145,  145,  145,  117,  118,  209,  100,   68,   79,  208,
+      105,  106,  101,  168,  168,  117,  118,  102,  177,  207,
+      107,  108,  121,  121,  121,  178,   63,  206,   64,   64,
+       65,  205,  117,  118,  204,  109,  203,  202,   67,  110,
+      149,  149,  149,  111,  117,  118,  201,  200,  199,  112,
+       67,  198,  113,  197,  114,  196,  115,   63,  116,   65,
+       65,   65,  195,  194,  193,  122,  192,  122,  214,   67,
 
-      121,  121,  121,   62,  187,   68,   68,   68,  186,  185,
-      184,   66,  122,  122,  122,   66,  183,  182,  181,  180,
-      179,  122,  122,  122,  123,  123,  178,   66,  177,   65,
-      122,  122,  122,  122,  122,  122,  123,  123,  123,  123,
-      123,  123,  123,  123,  123,  123,  123,  123,  123,  123,
-      123,  123,  144,  145,  145,  176,  175,  119,  119,  119,
-      172,  145,  145,  145,  171,  170,  169,  115,  116,  168,
-      145,  145,  145,  145,  145,  145,  120,  210,  120,  115,
-      116,  146,  146,  146,  210,  165,  121,  121,  121,  163,
-      146,  146,  146,  162,  161,  160,  159,  147,  158,  157,
+      123,  123,  123,   63,  191,   69,   69,   69,  190,  189,
+      188,   67,  124,  124,  124,   67,  187,  186,  185,  184,
+      183,  124,  124,  124,  125,  125,  182,   67,  181,   66,
+      124,  124,  124,  124,  124,  124,  125,  125,  125,  125,
+      125,  125,  125,  125,  125,  125,  125,  125,  125,  125,
+      125,  125,  147,  148,  148,  180,  179,  121,  121,  121,
+      176,  148,  148,  148,  175,  174,  173,  117,  118,  172,
+      148,  148,  148,  148,  148,  148,  122,  214,  122,  117,
+      118,  149,  149,  149,  214,  169,  123,  123,  123,  167,
+      149,  149,  149,  166,  165,  164,  163,  150,  162,  161,
 
-      156,  167,  155,  154,  153,  152,  151,  150,  149,  147,
-      123,  123,  123,  167,  148,  118,   96,  141,  140,  123,
-      123,  123,  139,   91,  138,  135,  134,  133,  123,  123,
-      123,  123,  123,  123,   49,   49,   49,   49,   49,   49,
-       49,   52,   52,   52,   52,   52,   52,   52,   56,   56,
-       56,   56,   56,   56,   56,   65,   65,   65,   77,   77,
-       95,   95,   95,  132,   95,   95,   95,   97,   97,   97,
-       97,   97,   97,   97,  102,  131,  130,  102,  102,  102,
-      102,  117,  129,  117,  117,  117,  117,  117,  143,  143,
-      143,  143,  143,  143,  143,  128,  125,  124,  210,  118,
+      160,  171,  159,  158,  157,  156,  155,  154,  153,  150,
+      125,  125,  125,  171,  152,  151,  120,   98,  144,  125,
+      125,  125,  143,  142,  141,   92,  140,  137,  125,  125,
+      125,  125,  125,  125,   50,   50,   50,   50,   50,   50,
+       50,   53,   53,   53,   53,   53,   53,   53,   57,   57,
+       57,   57,   57,   57,   57,   66,   66,   66,   78,   78,
+       97,   97,   97,  136,   97,   97,   97,   99,   99,   99,
+       99,   99,   99,   99,  104,  135,  134,  104,  104,  104,
+      104,  119,  133,  119,  119,  119,  119,  119,  146,  146,
+      146,  146,  146,  146,  146,  132,  131,  130,  127,  126,
 
-      101,   96,   94,   93,   89,   88,   80,   79,   78,   71,
-       70,   69,   58,  210,   11,  210,  210,  210,  210,  210,
-      210,  210,  210,  210,  210,  210,  210,  210,  210,  210,
-      210,  210,  210,  210,  210,  210,  210,  210,  210,  210,
-      210,  210,  210,  210,  210,  210,  210,  210,  210,  210,
-      210,  210,  210,  210,  210,  210,  210,  210,  210,  210,
-      210,  210,  210,  210,  210,  210,  210,  210,  210,  210
+      214,  120,  103,   98,   96,   95,   94,   90,   89,   81,
+       80,   79,   72,   71,   70,   59,  214,   11,  214,  214,
+      214,  214,  214,  214,  214,  214,  214,  214,  214,  214,
+      214,  214,  214,  214,  214,  214,  214,  214,  214,  214,
+      214,  214,  214,  214,  214,  214,  214,  214,  214,  214,
+      214,  214,  214,  214,  214,  214,  214,  214,  214,  214,
+      214,  214,  214,  214,  214,  214,  214,  214,  214,  214,
+      214,  214,  214
     } ;
 
-static yyconst short int yy_chk[471] =
+static yyconst short int yy_chk[474] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -476,51 +477,52 @@ static yyconst short int yy_chk[471] =
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    3,    4,    5,    6,    5,
-        6,    3,    4,    7,    8,  118,    7,    8,    9,   10,
-        9,   10,   23,   23,   23,   24,   39,  221,   39,  208,
-       24,   32,    3,    4,    5,    6,   40,   50,  207,   40,
-        7,    8,  118,   50,  206,    9,   10,   25,   50,   25,
+        6,    3,    4,    7,    8,  120,    7,    8,    9,   10,
+        9,   10,   23,   23,   23,   24,   39,  225,   39,  212,
+       24,   32,    3,    4,    5,    6,   40,   51,  211,   40,
+        7,    8,  120,   51,  210,    9,   10,   25,   51,   25,
 
-       25,   25,   26,   89,   26,   26,   26,   44,   41,   25,
-       41,   32,   25,   32,   26,  205,   41,   32,   44,   89,
-       44,   25,   32,   59,   59,   59,   26,   75,   75,  105,
-      105,  106,  106,   59,   59,  203,   99,   25,   55,  200,
-       55,   55,   99,  142,  142,   59,   59,   99,  158,  199,
-       55,   55,   62,   62,   62,  158,   63,  197,   63,   63,
-       63,  195,   62,   62,  194,   55,  193,  192,   63,   55,
-      120,  120,  120,   55,   62,   62,  191,  190,  189,   55,
-       63,  188,   55,  187,   55,  186,   55,   64,   55,   64,
-       64,   64,  184,  183,  182,   66,  181,   66,   66,   64,
+       25,   25,   26,   90,   26,   26,   26,   44,   41,   25,
+       41,   32,   25,   32,   26,  209,   41,   32,   44,   90,
+       44,   25,   32,   60,   60,   60,   26,   76,   76,  107,
+      107,  108,  108,   60,   60,  207,  101,   25,   56,  204,
+       56,   56,  101,  145,  145,   60,   60,  101,  161,  203,
+       56,   56,   63,   63,   63,  161,   64,  201,   64,   64,
+       64,  199,   63,   63,  198,   56,  197,  196,   64,   56,
+      122,  122,  122,   56,   63,   63,  195,  194,  193,   56,
+       64,  192,   56,  191,   56,  190,   56,   65,   56,   65,
+       65,   65,  188,  187,  186,   67,  185,   67,   67,   65,
 
-       66,   66,   66,   68,  180,   68,   68,   68,  177,  175,
-      174,   64,   67,   67,   67,   68,  173,  171,  170,  169,
-      168,   67,   67,   67,   67,   67,  163,   68,  162,   67,
-       67,   67,   67,   67,   67,   67,   67,   67,   67,   67,
-       67,   67,   67,   67,   67,   67,   67,   67,   67,   67,
-       67,   67,  114,  114,  114,  161,  159,  119,  119,  119,
-      156,  114,  114,  114,  152,  151,  150,  119,  119,  148,
-      114,  114,  114,  114,  114,  114,  115,  147,  115,  119,
-      119,  115,  115,  115,  121,  144,  121,  121,  121,  141,
-      146,  146,  146,  140,  139,  138,  137,  121,  136,  135,
+       67,   67,   67,   69,  184,   69,   69,   69,  181,  179,
+      178,   65,   68,   68,   68,   69,  177,  175,  174,  173,
+      172,   68,   68,   68,   68,   68,  167,   69,  165,   68,
+       68,   68,   68,   68,   68,   68,   68,   68,   68,   68,
+       68,   68,   68,   68,   68,   68,   68,   68,   68,   68,
+       68,   68,  116,  116,  116,  164,  162,  121,  121,  121,
+      159,  116,  116,  116,  155,  154,  153,  121,  121,  151,
+      116,  116,  116,  116,  116,  116,  117,  150,  117,  121,
+      121,  117,  117,  117,  123,  147,  123,  123,  123,  144,
+      149,  149,  149,  143,  142,  141,  140,  123,  139,  138,
 
-      132,  146,  131,  130,  129,  128,  127,  126,  125,  121,
-      123,  123,  123,  146,  124,  117,   95,   94,   93,  123,
-      123,  123,   92,   91,   90,   88,   87,   84,  123,  123,
-      123,  123,  123,  123,  211,  211,  211,  211,  211,  211,
-      211,  212,  212,  212,  212,  212,  212,  212,  213,  213,
-      213,  213,  213,  213,  213,  214,  214,  214,  215,  215,
-      216,  216,  216,   83,  216,  216,  216,  217,  217,  217,
-      217,  217,  217,  217,  218,   82,   81,  218,  218,  218,
-      218,  219,   79,  219,  219,  219,  219,  219,  220,  220,
-      220,  220,  220,  220,  220,   76,   74,   73,   65,   61,
+      137,  149,  134,  133,  132,  131,  130,  129,  128,  123,
+      125,  125,  125,  149,  127,  126,  119,   97,   96,  125,
+      125,  125,   95,   94,   93,   92,   91,   89,  125,  125,
+      125,  125,  125,  125,  215,  215,  215,  215,  215,  215,
+      215,  216,  216,  216,  216,  216,  216,  216,  217,  217,
+      217,  217,  217,  217,  217,  218,  218,  218,  219,  219,
+      220,  220,  220,   88,  220,  220,  220,  221,  221,  221,
+      221,  221,  221,  221,  222,   85,   84,  222,  222,  222,
+      222,  223,   83,  223,  223,  223,  223,  223,  224,  224,
+      224,  224,  224,  224,  224,   82,   80,   77,   75,   74,
 
-       51,   49,   46,   45,   43,   42,   38,   37,   35,   31,
-       30,   29,   14,   11,  210,  210,  210,  210,  210,  210,
-      210,  210,  210,  210,  210,  210,  210,  210,  210,  210,
-      210,  210,  210,  210,  210,  210,  210,  210,  210,  210,
-      210,  210,  210,  210,  210,  210,  210,  210,  210,  210,
-      210,  210,  210,  210,  210,  210,  210,  210,  210,  210,
-      210,  210,  210,  210,  210,  210,  210,  210,  210,  210
+       66,   62,   52,   50,   47,   46,   45,   43,   42,   38,
+       37,   35,   31,   30,   29,   14,   11,  214,  214,  214,
+      214,  214,  214,  214,  214,  214,  214,  214,  214,  214,
+      214,  214,  214,  214,  214,  214,  214,  214,  214,  214,
+      214,  214,  214,  214,  214,  214,  214,  214,  214,  214,
+      214,  214,  214,  214,  214,  214,  214,  214,  214,  214,
+      214,  214,  214,  214,  214,  214,  214,  214,  214,  214,
+      214,  214,  214
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -533,7 +535,7 @@ static char *yy_last_accepting_cpos;
 #define yymore() yymore_used_but_not_detected
 #define YY_MORE_ADJ 0
 char *yytext;
-#line 1 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 1 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 #define INITIAL 0
 /*Опции*/
 #define YY_NEVER_INTERACTIVE 1
@@ -548,7 +550,7 @@ char *yytext;
 #define NSSTRING 4
 
 /*Подключение библиотек*/
-#line 17 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 17 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
     #include <stdio.h>
     #include <string.h>
     #include <stdlib.h>
@@ -557,7 +559,7 @@ char *yytext;
     void removeSymbol(char *string, char symbol);
     void removeFloatSuffix(char *string);
     int countChar(const char *str, char character);
-#line 561 "lex.yy.c"
+#line 564 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -704,7 +706,7 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 27 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 27 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 
 
     char tmp[10000];
@@ -714,7 +716,7 @@ YY_DECL
 
 
 
-#line 718 "lex.yy.c"
+#line 721 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -765,13 +767,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 211 )
+				if ( yy_current_state >= 215 )
 					yy_c = yy_meta[(unsigned int) yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 415 );
+		while ( yy_base[yy_current_state] != 418 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -799,401 +801,406 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 36 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 36 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword INT: %s\n", yytext);}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 37 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 37 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword CHAR: %s\n", yytext);}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 38 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 38 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword IF: %s\n", yytext);}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 39 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 39 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword ELSE: %s\n", yytext);}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 40 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 40 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword WHILE: %s\n", yytext);}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 41 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 41 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword DO: %s\n", yytext);}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 42 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 42 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword FOR: %s\n", yytext);}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 43 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 43 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword IN: %s\n", yytext);}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 44 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 44 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword INTERFACE: %s\n", yytext);}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 45 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 45 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword END: %s\n", yytext);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 46 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 46 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword IMPLEMENTATION: %s\n", yytext);}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 47 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 47 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword PROPERTY: %s\n", yytext);}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 48 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 48 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword FLOAT: %s\n", yytext);}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 49 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 49 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword READONLY: %s\n", yytext);}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 50 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 50 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword READWRITE: %s\n", yytext);}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 51 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 51 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword ENUM: %s\n", yytext);}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 52 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 52 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword UNSIGNED: %s\n", yytext);}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 53 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 53 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("Found suffix U: %s\n", yytext);}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 54 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 54 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword LONG: %s\n", yytext);}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 55 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 55 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("Found suffix L: %s\n", yytext);}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 56 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 56 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword RETURN: %s\n", yytext);}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 57 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 57 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword SELF: %s\n", yytext);}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 58 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 58 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword SUPER: %s\n", yytext);}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 59 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 59 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword ID: %s\n", yytext);}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 60 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 60 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("Found keyword CLASS: %s\n", yytext);}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 64 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("Found arithmetic operation +: %s\n", yytext);}
+#line 61 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("Found keyword VOID: %s\n", yytext);}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 65 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("Found arithmetic operation -: %s\n", yytext);}
+#line 65 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("Found arithmetic operation +: %s\n", yytext);}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 66 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("Found arithmetic operation *: %s\n", yytext);}
+#line 66 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("Found arithmetic operation -: %s\n", yytext);}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 67 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("Found arithmetic operation /: %s\n", yytext);}
+#line 67 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("Found arithmetic operation *: %s\n", yytext);}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 70 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("Found comparison operation ==: %s\n", yytext);}
+#line 68 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("Found arithmetic operation /: %s\n", yytext);}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 71 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("Found comparison operation !=: %s\n", yytext);}
+#line 71 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("Found comparison operation ==: %s\n", yytext);}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 72 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("Found comparison operation >: %s\n", yytext);}
+#line 72 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("Found comparison operation !=: %s\n", yytext);}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 73 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("Found comparison operation <: %s\n", yytext);}
+#line 73 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("Found comparison operation >: %s\n", yytext);}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 74 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("Found comparison operation >=: %s\n", yytext);}
+#line 74 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("Found comparison operation <: %s\n", yytext);}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 75 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("Found comparison operation <=: %s\n", yytext);}
+#line 75 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("Found comparison operation >=: %s\n", yytext);}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 78 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("Found assignment operation =: %s\n", yytext);}
+#line 76 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("Found comparison operation <=: %s\n", yytext);}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 81 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("Found bracket (: %s\n", yytext);}
+#line 79 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("Found assignment operation =: %s\n", yytext);}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 82 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("Found bracket ): %s\n", yytext);}
+#line 82 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("Found bracket (: %s\n", yytext);}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 83 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("Found bracket {: %s\n", yytext);}
+#line 83 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("Found bracket ): %s\n", yytext);}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 84 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("Found bracket }: %s\n", yytext);}
+#line 84 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("Found bracket {: %s\n", yytext);}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 85 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("Found bracket [: %s\n", yytext);}
+#line 85 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("Found bracket }: %s\n", yytext);}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 86 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("Found bracket ]: %s\n", yytext);}
+#line 86 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("Found bracket [: %s\n", yytext);}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 89 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("Found delimiter ;: %s\n", yytext);}
+#line 87 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("Found bracket ]: %s\n", yytext);}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 90 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("Found delimiter :: %s\n", yytext);}
+#line 90 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("Found delimiter ;: %s\n", yytext);}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 91 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("Found delimiter ,: %s\n", yytext);}
+#line 91 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("Found delimiter :: %s\n", yytext);}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 93 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{lineCount++;}
+#line 92 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("Found delimiter ,: %s\n", yytext);}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 94 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 94 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {lineCount++;}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 96 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("Found integer: %d\n", atoi(yytext));}
+#line 95 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{lineCount++;}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 97 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 97 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("Found integer: %d\n", atoi(yytext));}
+	YY_BREAK
+case 50:
+YY_RULE_SETUP
+#line 98 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {
     char* a;
     long number = strtol(yytext+2, &a,16);
     printf("Found hexadecimal number: %d\n", number);
     }
 	YY_BREAK
-case 50:
+case 51:
 YY_RULE_SETUP
-#line 102 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 103 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {
     printf("ERROR! Incorrect hex number: %s in row: %d\n", yytext, lineCount);
 }
 	YY_BREAK
-case 51:
+case 52:
 YY_RULE_SETUP
-#line 105 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 106 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {
     char *a;
     long number = strtol(yytext+2, &a,8);
     printf("Found octal number: %d\n", number);
     }
 	YY_BREAK
-case 52:
+case 53:
 YY_RULE_SETUP
-#line 110 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 111 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {
     printf("ERROR! Incorrect octal number: %s in row: %d\n", yytext, lineCount);
 }
 	YY_BREAK
-case 53:
-YY_RULE_SETUP
-#line 114 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-str = ""; BEGIN(CHAR);
-	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 115 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-str = ""; BEGIN(STRING);
+#line 115 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+str = ""; BEGIN(CHAR);
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 116 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-str = ""; BEGIN(NSSTRING);
+#line 116 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+str = ""; BEGIN(STRING);
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 117 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-str += yytext;
+#line 117 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+str = ""; BEGIN(NSSTRING);
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 118 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 118 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 str += yytext;
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 119 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-str += "\b";
+#line 119 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+str += yytext;
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 120 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-str += "\f";
+#line 120 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+str += "\b";
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 121 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-str += "\n";
+#line 121 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+str += "\f";
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 122 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-str += "\r";
+#line 122 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+str += "\n";
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 123 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-str += "\t";
+#line 123 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+str += "\r";
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 124 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-str += "\v";
+#line 124 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+str += "\t";
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 125 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-str += "\'";
+#line 125 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+str += "\v";
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 126 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-str += "\"";
+#line 126 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+str += "\'";
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 127 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-str += "\\";
+#line 127 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+str += "\"";
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 128 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-str += '\0';
+#line 128 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+str += "\\";
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 129 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 129 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 str += '\0';
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 130 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 130 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 str += '\0';
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 131 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 131 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+str += '\0';
+	YY_BREAK
+case 71:
+YY_RULE_SETUP
+#line 132 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {
     char *a;
     char c =strtol(yytext+2, &a, 16);
     str += c;}
 	YY_BREAK
-case 71:
-YY_RULE_SETUP
-#line 135 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("ERROR! Incorrect hex digit in string.\n"); BEGIN(INITIAL);}
-	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 136 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 136 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("ERROR! Incorrect hex digit in string.\n");}
+	YY_BREAK
+case 73:
+YY_RULE_SETUP
+#line 137 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {
     char *a;
     char c =strtol(yytext+1, &a, 8);
     str += c;}
 	YY_BREAK
-case 73:
+case 74:
 YY_RULE_SETUP
-#line 140 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("ERROR! Multiline string\n", lineCount); lineCount++; BEGIN(INITIAL);}
+#line 141 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("ERROR! Multiline string\n", lineCount); lineCount++;}
 	YY_BREAK
 case YY_STATE_EOF(STRING):
 case YY_STATE_EOF(CHAR):
 case YY_STATE_EOF(NSSTRING):
-#line 141 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 142 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("ERROR! haven't found closing quotes.\n"); BEGIN(INITIAL);}
-	YY_BREAK
-case 74:
-YY_RULE_SETUP
-#line 142 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{std::cout << "Found String literal: " << str.c_str() << std::endl;BEGIN(INITIAL);}
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 143 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 143 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{std::cout << "Found String literal: " << str.c_str() << std::endl;BEGIN(INITIAL);}
+	YY_BREAK
+case 76:
+YY_RULE_SETUP
+#line 144 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {
     if(str.size() != 1)
     {
@@ -1205,18 +1212,9 @@ YY_RULE_SETUP
     }
 }
 	YY_BREAK
-case 76:
-YY_RULE_SETUP
-#line 156 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{
-    strcpy(tmp, yytext);
-    removeFloatSuffix(tmp);
-    printf("Found float constant: %f\n", (float)atof(tmp));
-}
-	YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 162 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 157 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {
     strcpy(tmp, yytext);
     removeFloatSuffix(tmp);
@@ -1225,72 +1223,81 @@ YY_RULE_SETUP
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 168 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("Found identifier: %s\n", yytext);}
+#line 163 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{
+    strcpy(tmp, yytext);
+    removeFloatSuffix(tmp);
+    printf("Found float constant: %f\n", (float)atof(tmp));
+}
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
-#line 169 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("ERROR! Incorrect identifier: %s\n", yytext);}
+#line 169 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("Found identifier: %s\n", yytext);}
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 172 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 170 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("ERROR! Incorrect identifier: %s\n", yytext);}
+	YY_BREAK
+case 81:
+YY_RULE_SETUP
+#line 173 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("Found line comment: %s\n", yytext);
     strcpy(tmp, yytext);
     lineCount += countChar(tmp, '\n');
 }
 	YY_BREAK
-case 81:
-YY_RULE_SETUP
-#line 178 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{tmp[0] = '\0'; BEGIN(MULTILINE_COMMENT);}
-	YY_BREAK
 case 82:
 YY_RULE_SETUP
-#line 179 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{strcat(tmp, yytext);}
+#line 179 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{tmp[0] = '\0'; BEGIN(MULTILINE_COMMENT);}
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
-#line 180 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{lineCount++; strcat(tmp, yytext);}
+#line 180 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{strcat(tmp, yytext);}
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
-#line 181 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{strcat(tmp, yytext);}
+#line 181 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{lineCount++; strcat(tmp, yytext);}
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
-#line 182 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{lineCount++; strcat(tmp, yytext);}
+#line 182 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{strcat(tmp, yytext);}
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 183 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("Found multiline comment: %s\n", tmp);BEGIN(INITIAL);}
-	YY_BREAK
-case YY_STATE_EOF(MULTILINE_COMMENT):
-#line 185 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("ERROR! Multiline comment \"%s\" isn't closed in row: %d\n", tmp, lineCount); BEGIN(INITIAL);}
+#line 183 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{lineCount++; strcat(tmp, yytext);}
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 187 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("", yytext);}
+#line 184 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("Found multiline comment: %s\n", tmp);BEGIN(INITIAL);}
+	YY_BREAK
+case YY_STATE_EOF(MULTILINE_COMMENT):
+#line 186 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("ERROR! Multiline comment \"%s\" isn't closed in row: %d\n", tmp, lineCount); BEGIN(INITIAL);}
 	YY_BREAK
 case 88:
 YY_RULE_SETUP
-#line 189 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
-{printf("unrecognized element: %s\n", yytext);}
+#line 188 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("", yytext);}
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
-#line 191 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 190 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("unrecognized element: %s\n", yytext);}
+	YY_BREAK
+case 90:
+YY_RULE_SETUP
+#line 192 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 ECHO;
 	YY_BREAK
-#line 1294 "lex.yy.c"
+#line 1302 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1579,7 +1586,7 @@ static yy_state_type yy_get_previous_state()
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 211 )
+			if ( yy_current_state >= 215 )
 				yy_c = yy_meta[(unsigned int) yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
@@ -1614,11 +1621,11 @@ yy_state_type yy_current_state;
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 211 )
+		if ( yy_current_state >= 215 )
 			yy_c = yy_meta[(unsigned int) yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
-	yy_is_jam = (yy_current_state == 210);
+	yy_is_jam = (yy_current_state == 214);
 
 	return yy_is_jam ? 0 : yy_current_state;
 	}
@@ -2150,7 +2157,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 191 "D:\\C projects\\objective_c_compiler\\flex_rules.l"
+#line 192 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 
 
 //Проверка на содержание символа в строке

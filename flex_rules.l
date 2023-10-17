@@ -58,6 +58,7 @@ UNDERLINE_LETTER [A-Za-z_]
 "super" {printf("Found keyword SUPER: %s\n", yytext);}
 "id" {printf("Found keyword ID: %s\n", yytext);}
 "@class" {printf("Found keyword CLASS: %s\n", yytext);}
+"void" {printf("Found keyword VOID: %s\n", yytext);}
 
 
 

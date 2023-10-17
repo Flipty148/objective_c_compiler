@@ -1,3 +1,5 @@
+#include <vector>
+
 // -------------------- Типы --------------------
 
 // ---------- Int keyword ----------
@@ -32,7 +34,8 @@ enum type_type {
     CHAR,
     FLOAT,
     ID,
-    CLASS_NAME
+    CLASS_NAME,
+    VOID
 };
 
 class Type_node
@@ -396,3 +399,196 @@ class Class_statement_list_node
 
 
 // -------------------- Классы --------------------
+
+// ---------- class_interface ----------
+
+enum class_interface_type {
+    WITH_INHERITANCE,
+    WITHOUT_INHERITANCE
+};
+
+class Class_interface_node : public Class_statement_node
+{
+    public:
+        int id;
+        char *ClassName;
+        char *SuperclassName;
+        Interface_statement_node *Statement;
+};
+
+// ---------- interface_statement ----------
+
+class Interface_statement_node
+{
+    public:
+        int id;
+        Instance_variables_node *Variables;
+        Interface_declaration_list_node *Declaration_list;
+};
+
+// ---------- implementation_statement ----------
+
+class Implementation_statement_node
+{
+    public:
+        int id;
+        Instance_variables_node *Variables;
+        Implementation_definition_list_node *Declaration_list;
+};
+
+// ---------- class_implementation ----------
+
+enum class_implementation_type {
+    WITH_INHERITANCE,
+    WITHOUT_INHERITANCE
+};
+
+class Class_implementation_node : public Class_statement_node
+{
+    public:
+        int id;
+        char *ClassName;
+        char *SuperclassName;
+        Implementation_statement_node *Staetment;
+};
+
+// ---------- class_declaration_list и class_list ----------
+
+class Class_declaration_list_node
+{
+    public:
+        int id;
+        std::vector<char*> *Class_names;
+};
+
+// ---------- instance_variables ----------
+
+class Instance_variables_node
+{
+    public:
+        int id;
+        Declaration_list_node *First;
+        Declaration_list_node *Last;
+};
+
+// ---------- interface_declaration_list ----------
+
+class Interface_declaration_list_node
+{
+    public:
+        int id;
+        union interface_declaration {
+            Declaration_node *declaration;
+            Property_node *property;
+            Method_declaration_node *method_declaration;
+        } First, Last;
+};
+
+// ---------- method_declaration, class_method_declaration, instance_method_declaration ----------
+
+enum method_declaration_type {
+    CLASS,
+    INSTANCE
+};
+
+class Method_declaration_node
+{
+    public:
+        int id;
+        enum method_declaration_type type;
+        Type_node *MethodType;
+        Method_selector_node *MethodSelector;
+        Method_declaration_node *Next;
+};
+
+
+// ---------- implementation_definition_list ----------
+
+class Implementation_definition_list_node
+{
+    public:
+        int id;
+        union interface_declaration {
+            Declaration_node *declaration;
+            Property_node *property;
+            Method_definition_node *method_definition;
+        } First, Last;
+};
+
+// ---------- method_definition, class_method_definition, instance_method_definition
+
+enum method_definition_type {
+    CLASS,
+    INSTANCE
+};
+
+class Method_definition_node
+{
+    public:
+        int id;
+        enum method_definition_type type;
+        Type_node *MethodType;
+        Method_selector_node *MethodSelector;
+        Declaration_list_node *DeclarationList;
+        Compound_statement_node *MethodBody;
+        Method_definition_node *Next;
+};
+
+// ---------- method_selector ----------
+
+class Method_selector_node
+{
+    public:
+        int id;
+        char *MethodName;
+        Keyword_selector_node *KeywordSelector;
+        Parameter_list_node *Parameter_list_node;
+};
+
+// ---------- keyword_selector ----------
+
+class Keyword_selector_node
+{
+    public:
+        int id;
+        Keyword_declaration_node *First;
+        Keyword_declaration_node *Last;
+};
+
+// ---------- keyword_declaration ----------
+
+class Keyword_declaration_node
+{
+    public:
+        int id;
+        Type_node *KeywordType;
+        char *Identifier;
+        char *KeywordName;
+        Keyword_declaration_node *Next;
+};
+
+// ---------- property ----------
+
+class Property_node
+{
+    public:
+        int id;
+        Attribute_node *Attribute;
+        Type_node *type;
+        char *Name;
+        Property_node *Next;
+};
+
+// ----------- attribute ----------
+
+enum attrribute_type {
+    READONLY,
+    READWRITE
+};
+
+class Attribute_node
+{
+    public:
+        int id;
+        enum attrribute_type type;
+};

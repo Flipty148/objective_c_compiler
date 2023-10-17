@@ -13,6 +13,7 @@
 	Int_node * Int;
 	Char_node * Char;
 	Float_node * Float;
+	Type_node * Type;
 }
 
 // ---------- Операции с их приоритетом ----------
@@ -46,6 +47,8 @@
 %token <Identifier> IDENTIFIER
 %token <Identifier> CLASS_NAME
 %token ELIPSIS
+
+%type <Type> type
 
 %start program
 

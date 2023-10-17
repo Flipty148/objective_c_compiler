@@ -22,3 +22,20 @@ class Float_node
         int id;
 };
 
+
+// ---------- type ----------
+
+enum type_type {
+    INT,
+    CHAR,
+    FLOAT,
+    ID,
+    CLASS_NAME
+};
+
+class Type_node
+{
+    public:
+        int id;
+        enum type_type type;
+};

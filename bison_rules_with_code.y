@@ -14,6 +14,8 @@
 	Char_node * Char;
 	Float_node * Float;
 	Type_node * Type;
+	Numeric_constant_node * Numeric_constant;
+	Literal_node * Literal;
 }
 
 // ---------- Операции с их приоритетом ----------
@@ -49,6 +51,8 @@
 %token ELIPSIS
 
 %type <Type> type
+%type <Numeric_constant> numeric_constant
+%type <Literal> literal
 
 %start program
 

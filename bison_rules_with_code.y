@@ -5,17 +5,23 @@
 // ---------- Объединение ----------
 %union {
 	int Integer_constant;
-	char * String_constant;
+	char *String_constant;
 	char Char_constant;
 	float Float_constant;
-	char * NSString_constant;
-	char * Identifier;
-	Int_node * Int;
-	Char_node * Char;
-	Float_node * Float;
-	Type_node * Type;
-	Numeric_constant_node * Numeric_constant;
-	Literal_node * Literal;
+	char *NSString_constant;
+	char *Identifier;
+	Int_node *Int;
+	Char_node *Char;
+	Float_node *Float;
+	Type_node *Type;
+	Numeric_constant_node *Numeric_constant;
+	Literal_node *Literal;
+	Declaration_node *Declaration;
+	Declaration_list_node *Declaration_list;
+	Init_declarator_list_node *Init_declarator_list;
+	Init_declarator_node *Init_declarator;
+	Parameter_list_node *Parameter_list;
+	Parameter_declaration_node *Parameter_declaration;
 }
 
 // ---------- Операции с их приоритетом ----------
@@ -53,6 +59,12 @@
 %type <Type> type
 %type <Numeric_constant> numeric_constant
 %type <Literal> literal
+%type <Declaration> declaration
+%type <Declaration_list> declaration_list_e declaration_list
+%type <Init_declarator_list> init_declarator_list_e init_declarator_list
+%type <Init_declarator> init_declarator
+%type <Parameter_list> parameter_list
+%type <Parameter_declaration> parameter_declaration
 
 %start program
 
@@ -106,7 +118,7 @@ init_declarator: IDENTIFIER
 			   | IDENTIFIER '=' expression
 			   ;
 
-parameter_type_list: parameter_list
+parameter_type_list: parameter_list /* Не знаю, нужно ли делать класс для узла */
 				   | parameter_list ',' ELIPSIS
 				   ;
 

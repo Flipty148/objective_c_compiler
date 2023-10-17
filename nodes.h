@@ -74,5 +74,76 @@ class Literal_node
     public:
         int id;
         enum literal_type type;
-        char * value;
+        char *value;
+};
+
+
+// ---------- declaration ----------
+
+class Declaration_node 
+{
+    public:
+        int id;
+        Type_node *type;
+        Init_declarator_list_node *init_declarator_list;
+        Declaration_node *Next;
+};
+
+
+// ---------- declaration_list ----------
+
+class Declaration_list_node
+{
+    public:
+        int id;
+        Declaration_node *First;
+        Declaration_node *Last;        
+};
+
+// ---------- init_declarator_list ----------
+
+class Init_declarator_list_node
+{
+    public:
+        int id;
+        Init_declarator_node *First;
+        Init_declarator_node *Last;
+};
+
+// ---------- init_declarator ----------
+
+enum init_declarator_type {
+    SIMPLE_DECLARATOR,
+    DECLARATOR_WITH_INITIALIZING
+};
+
+class Init_declarator_node
+{
+    public:
+        int id;
+        enum init_declarator_type type;
+        char *name;
+        char *expression;
+        Init_declarator_node *Next;
+};
+
+// ---------- parameter_list ----------
+
+class Parameter_list_node
+{
+    public:
+        int id;
+        Parameter_declaration_node *First;
+        Parameter_declaration_node *Last;
+};
+
+// ---------- parameter_declaration ----------
+
+class Parameter_declaration_node
+{
+    public:
+        int id;
+        Type_node *type;
+        char *name;
+        Parameter_declaration_node *Next;
 };

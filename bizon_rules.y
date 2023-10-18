@@ -155,6 +155,7 @@ for_statement: FOR '(' expression_e ';' expression_e ';' expression_e ')' statem
 
 statement: ';'
 		 | expression ';'
+		 | RETURN expression_e ';'
 		 | if_statement
 		 | while_statement
 		 | do_while_statement

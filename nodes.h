@@ -593,3 +593,14 @@ class Attribute_node
         int id;
         enum attrribute_type type;
 };
+
+
+// ---------- program ----------
+
+class Program_node
+{
+    public:
+        int id;
+        Statement_list_node *Statements;
+        Class_statement_list_node *ClassStatements;
+};

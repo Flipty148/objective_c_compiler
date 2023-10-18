@@ -52,6 +52,7 @@
 	Keyword_declaration_node *Keyword_declaration;
 	Property_node *Property;
 	Attribute_node *Attribute;
+	Program_node *Program;
 }
 
 // ---------- Операции с их приоритетом ----------
@@ -126,6 +127,7 @@
 %type <Keyword_declaration> keyword_declaration
 %type <Property> property
 %type <Attribute> attribute
+%type <Program> program
 
 
 %start program

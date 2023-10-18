@@ -147,7 +147,7 @@ type: INT				{$$ = createTypeNode(INT);}
     | CHAR				{$$ = createTypeNode(CHAR);}
     | FLOAT				{$$ = createTypeNode(FLOAT);}
     | ID				{$$ = createTypeNode(ID);}
-	| CLASS_NAME '*'	{$$ = createTypeNode(CLASS_NAME);}
+	| CLASS_NAME '*'	{$$ = createClassTypeNode(CLASS_NAME, $1);}
     ;
 
 // ---------- Константы ----------
@@ -161,39 +161,39 @@ literal: STRING_CONSTANT	{$$ = createLiteralNode(STRING_CONSTANT, $1);}
        ;
 
 // ---------- Объявления ----------
-declaration: type init_declarator_list_e ';'
+declaration: type init_declarator_list_e ';'	{$$ = createDeclarationNode($1, $2);}
            ;
 
-declaration_list: declaration
-				| declaration_list declaration
+declaration_list: declaration 					{$$ = createDeclarationListNode($1);}
+				| declaration_list declaration	{$$ = addDeclarationListNode($1, $2);}
 				;
 
-declaration_list_e: /*empty*/
-				  | declaration_list
+declaration_list_e: /*empty*/			{$$ = NULL;}
+				  | declaration_list	{$$ = $1;}
 				  ;
 
-init_declarator_list_e: /* empty */
-					| init_declarator_list
+init_declarator_list_e: /* empty */			{$$ = NULL;}
+					| init_declarator_list	{$$ = $1;}
 					;
 
-init_declarator_list: init_declarator
-					| init_declarator_list ',' init_declarator
+init_declarator_list: init_declarator							{$$ = createInitDeclaratorListNode($1);}
+					| init_declarator_list ',' init_declarator	{$$ = addInitDeclaratorListNode($1, $3);}
 					;
 
-init_declarator: IDENTIFIER
-			   | IDENTIFIER '=' expression
+init_declarator: IDENTIFIER					{$$ = createInitDeclaratorNode(SIMPLE_DECLARATOR, $1, NULL);}
+			   | IDENTIFIER '=' expression	{$$ = createInitDeclaratorNode(DECLARATOR_WITH_INITIALIZING, $1, $3);}
 			   ;
 
 parameter_type_list: parameter_list /* Не знаю, нужно ли делать класс для узла */
 				   | parameter_list ',' ELIPSIS
 				   ;
 
-parameter_list: parameter_declaration
-			  | parameter_list ',' parameter_declaration
+parameter_list: parameter_declaration						{$$ = createParameterListNode($1);}
+			  | parameter_list ',' parameter_declaration	{$$ = addParameterListNode($1, $3);}
 			  ;
 
-parameter_declaration: type IDENTIFIER
-					 | CLASS_NAME IDENTIFIER
+parameter_declaration: type IDENTIFIER			{$$ = createParameterDeclarationNode($1, $2);}
+					 | CLASS_NAME IDENTIFIER	{$$ = createParameterDeclarationNode($1, $2);}
 					 ;
 
 // ---------- Выражения ----------

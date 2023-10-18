@@ -43,6 +43,7 @@ class Type_node
     public:
         int id;
         enum type_type type;
+        char *ClassName;
 };
 
 // -------------------- Константы --------------------
@@ -130,7 +131,7 @@ class Init_declarator_node
         int id;
         enum init_declarator_type type;
         char *name;
-        char *expression;
+        Expression_node *expression;
         Init_declarator_node *Next;
 };
 

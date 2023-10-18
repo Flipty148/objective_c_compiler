@@ -328,6 +328,7 @@ class For_statement_node : public Statement_node
 enum statement_type {
     EMPTY,
     SIMPLE,
+    RETURN,
     IF,
     WHILE,
     DO_WHILE,

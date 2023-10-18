@@ -1,5 +1,7 @@
 %{
-	#include <nodes.h>	
+	#include "classes_nodes.h"
+	#include "user_functions.h"
+	Program_node *root;
 %}
 
 // ---------- Объединение ----------
@@ -134,10 +136,10 @@
 
 %%
 
-program: statement_list
-	   | class_statement_list
-	   | statement_list class_statement_list
-	   | class_statement_list statement_list
+program: statement_list							{$$ = root = createProgramNode($1, NULL);}
+	   | class_statement_list					{$$ = root = createProgramNode(NULL, $1);}
+	   | statement_list class_statement_list	{$$ = root = createProgramNode($1, $2);}
+	   | class_statement_list statement_list	{$$ = root = createProgramNode($2, $1);}
 	   ;
 
 // ---------- Типы ----------
@@ -389,3 +391,4 @@ attribute: READONLY
 		 ;
 
 %%
+

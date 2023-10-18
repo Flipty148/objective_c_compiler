@@ -151,13 +151,13 @@ type: INT				{$$ = createTypeNode(INT);}
     ;
 
 // ---------- Константы ----------
-numeric_constant: FLOAT_CONSTANT
-                | INTEGER_CONSTANT
+numeric_constant: FLOAT_CONSTANT	{$$ = createFloatConstantNode($1);}
+                | INTEGER_CONSTANT	{$$ = createIntegerConstantNode($1);}
                 ;
 
-literal: STRING_CONSTANT
-       | CHAR_CONSTANT
-	   | NSSTRING_CONSTANT
+literal: STRING_CONSTANT	{$$ = createLiteralNode(STRING_CONSTANT, $1);}
+       | CHAR_CONSTANT		{$$ = createLiteralNode(CHAR_CONSTANT, $1);}
+	   | NSSTRING_CONSTANT	{$$ = createLiteralNode(NSSTRING_CONSTANT, $1);}
        ;
 
 // ---------- Объявления ----------

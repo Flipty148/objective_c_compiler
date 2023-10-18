@@ -61,8 +61,8 @@ class Numeric_constant_node
         enum numeric_constant_type type;
         union number
         {
-            int numver;
-            float number;
+            int Int;
+            float Float;
         } number;
         
 };

@@ -22,3 +22,33 @@ Type_node* createTypeNode(type_type type)
     res->id = id++;
     res->type = type;
 }
+
+//-------------------- Константы --------------------
+
+// ---------- numeric_constant ----------
+
+Numeric_constant_node* createIntegerConstantNode(int number)
+{
+    Numeric_constant_node *res = new Numeric_constant_node;
+    res->id = id++;
+    res->type = INTEGER_CONSTANT;
+    res->number.Int = number;
+}
+
+Numeric_constant_node* createFloatConstantNode(float number)
+{
+    Numeric_constant_node *res = new Numeric_constant_node;
+    res->id = id++;
+    res->type = FLOAT_CONSTANT;
+    res->number.Float = number;
+}
+
+// ---------- literal ----------
+
+Literal_node* createLiteralNode(literal_type type, char *value)
+{
+    Literal_node *res = new Literal_node;
+    res->id = id++;
+    res->type = type;
+    res->value = value;
+}

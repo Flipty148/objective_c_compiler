@@ -29,3 +29,27 @@ Parameter_list_node* createParameterListNode(Parameter_declaration_node *paramet
 Parameter_list_node* addParameterListNode(Parameter_list_node *list, Parameter_declaration_node *parameter);
 
 Parameter_declaration_node* createParameterDeclarationNode(Type_node *type, char *name);
+
+Expression_node* createIdentifierExpressionNode(char *name);
+
+Expression_node* createLiteralExpressionNode(Literal_node *value);
+
+Expression_node* createNumericConstantExpressionNode(Numeric_constant_node *value);
+
+Expression_node* createSimpleExpressionNode(expression_type type, Expression_node *expression);
+
+Expression_node* createSelfExpressionNode();
+
+Expression_node* createOperationExpressionNode(expression_type type, Expression_node *leftExpression, Expression_node *rightExpression);
+
+Message_expression_node* createMessageExpressionNode(Receiver_node *receiver, Message_selector_node *arguments);
+
+Receiver_node* createReceiverNode(receiver_type type, char *name);
+
+Message_selector_node* createMethodSelectorNode(char *methodName, Keyword_argument_list_node *arguments);
+
+Keyword_argument_list_node* createKeywordArgumentListNode(Keyword_argument_node *argument);
+
+Keyword_argument_list_node* addKeywordArgumentListNode(Keyword_argument_list_node *list, Keyword_argument_node *argument);
+
+Keyword_argument_node* createKeywordArgumentNode(keyword_argument_type type, char *identifier, Expression_node *expression);

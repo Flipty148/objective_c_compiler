@@ -64,7 +64,7 @@ class Numeric_constant_node
         {
             int Int;
             float Float;
-        } number;
+        } *number;
         
 };
 
@@ -188,13 +188,13 @@ class Expression_node
 {
     public:
         int id;
-        enum expression_type *type;
+        enum expression_type type;
         char *name;
         union constant
         {
             Numeric_constant_node *num;
             Literal_node *literal;
-        } constant;
+        } *constant;
         Expression_node *Left;
         Expression_node *Right;
 };
@@ -211,7 +211,7 @@ class Message_expression_node : public Expression_node
 
 // ---------- receiver ----------
 enum receiver_type {
-    SuPER,
+    SUPER,
     SELF,
     CLASS_NAME
 };
@@ -258,6 +258,7 @@ class Keyword_argument_node
         enum keyword_argument_type type;
         char *name;
         Expression_node *expression;
+        Keyword_argument_node *Next;
 };
 
 // -------------------- Управляющие структуры: развилки --------------------

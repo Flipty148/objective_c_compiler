@@ -198,49 +198,50 @@ parameter_declaration: type IDENTIFIER			{$$ = createParameterDeclarationNode($1
 
 // ---------- Выражения ----------
 
-expression: IDENTIFIER
-		  | literal
-		  | numeric_constant
-		  | '(' expression ')'
-		  | SELF
-		  | message_expression
-		  | '-' expression %prec UMINUS
-		  | '+' expression %prec UPLUS
-		  | '&' expression %prec UAMPERSAND
-		  | expression '+' expression
-		  | expression '-' expression
-		  | expression '*' expression
-		  | expression '/' expression
-		  | expression EQUAL expression
-		  | expression NOT_EQUAL expression
-		  | expression '>' expression
-		  | expression '<' expression
-		  | expression LESS_EQUAL expression
-		  | expression GREATER_EQUAL expression
-		  | expression '=' expression
+expression: IDENTIFIER							{$$ = createIdentifierExpressionNode($1);}
+		  | literal								{$$ = createLiteralExpressionNode($1);}
+		  | numeric_constant					{$$ = createNumericConstantExpressionNode($1);}
+		  | '(' expression ')'					{$$ = createSimpleExpressionNode(PRIORITY, $2);}
+		  | SELF								{$$ = createSelfExpressionNode();}
+		  | message_expression					{$$ = createSimpleExpressionNode(MESSAGE_EXPRESSION, $1);}
+		  | '-' expression %prec UMINUS			{$$ = createOperationExpressionNode(UMINUS, NULL, $2);}
+		  | '+' expression %prec UPLUS			{$$ = createOperationExpressionNode(UPLUS, NULL, $2);}
+		  | '&' expression %prec UAMPERSAND		{$$ = createOperationExpressionNode(UAMPERSAND, NULL, $2);}
+		  | expression '+' expression			{$$ = createOperationExpressionNode(PLUS, $1, $3);}
+		  | expression '-' expression			{$$ = createOperationExpressionNode(MINUS, $1, $3);}
+		  | expression '*' expression			{$$ = createOperationExpressionNode(MUL, $1, $3);}
+		  | expression '/' expression			{$$ = createOperationExpressionNode(DIV, $1, $3);}
+		  | expression EQUAL expression			{$$ = createOperationExpressionNode(EQUAL, $1, $3);}
+		  | expression NOT_EQUAL expression		{$$ = createOperationExpressionNode(NOT_EQUAL, $1, $3);}
+		  | expression '>' expression			{$$ = createOperationExpressionNode(GREATER, $1, $3);}
+		  | expression '<' expression			{$$ = createOperationExpressionNode(LESS, $1, $3);}
+		  | expression LESS_EQUAL expression	{$$ = createOperationExpressionNode(LESS_EQUAL, $1, $3);}
+		  | expression GREATER_EQUAL expression	{$$ = createOperationExpressionNode(GREATER_EQUAL, $1, $3);}
+		  | expression '=' expression			{$$ = createOperationExpressionNode(ASSIGNMENT, $1, $3);}
 		  ;
 
-expression_e: /*empty*/
-			| expression;
+expression_e: /*empty*/		{$$ = NULL;}
+			| expression	{$$ = $1;}
+			;
 
-message_expression: '[' receiver message_selector ']'
+message_expression: '[' receiver message_selector ']'	{$$ = createMessageExpressionNode($2, $3);}
 				  ;
 
-receiver: SUPER
-		| SELF
-		| CLASS_NAME
+receiver: SUPER			{$$ = createReceiverNode(SUPER, NULL);}
+		| SELF			{$$ = createReceiverNode(SELF, NULL);}
+		| CLASS_NAME	{$$ = createReceiverNode(CLASS_NAME, $1);}
 		;
 
-message_selector: IDENTIFIER
-				| keyword_argument_list
+message_selector: IDENTIFIER				{$$ = createMethodSelectorNode($1, NULL);}
+				| keyword_argument_list		{$$ = createMethodSelectorNode(NULL, $1);}
 				;
 
-keyword_argument_list: keyword_argument
-					 | keyword_argument_list keyword_argument
+keyword_argument_list: keyword_argument							{$$ = createKeywordArgumentListNode($1);}
+					 | keyword_argument_list keyword_argument	{$$ = addKeywordArgumentListNode($1, $2);}
 					 ;
 
-keyword_argument: IDENTIFIER ':' expression
-				| ':' expression
+keyword_argument: IDENTIFIER ':' expression		{$$ = createKeywordArgumentNode(WITH_IDENTIFIER, $1, $3);}
+				| ':' expression				{$$ = createKeywordArgumentNode(WITHOUT_IDENTIFIER, NULL, $2);}
 				;
 
 // ---------- Управляющие структуры: развилки ----------

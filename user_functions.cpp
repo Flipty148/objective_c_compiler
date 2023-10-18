@@ -11,3 +11,14 @@ Program_node* createProgramNode(Statement_list_node *Statements, Class_statement
     res->ClassStatements = ClassStatements;
     return res;
 }
+
+// -------------------- Типы --------------------
+
+// ---------- type ----------
+
+Type_node* createTypeNode(type_type type)
+{
+    Type_node *res = new Type_node;
+    res->id = id++;
+    res->type = type;
+}

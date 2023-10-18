@@ -143,11 +143,11 @@ program: statement_list							{$$ = root = createProgramNode($1, NULL);}
 	   ;
 
 // ---------- Типы ----------
-type: INT
-    | CHAR
-    | FLOAT
-    | ID
-	| CLASS_NAME '*'
+type: INT				{$$ = createTypeNode(INT);}
+    | CHAR				{$$ = createTypeNode(CHAR);}
+    | FLOAT				{$$ = createTypeNode(FLOAT);}
+    | ID				{$$ = createTypeNode(ID);}
+	| CLASS_NAME '*'	{$$ = createTypeNode(CLASS_NAME);}
     ;
 
 // ---------- Константы ----------

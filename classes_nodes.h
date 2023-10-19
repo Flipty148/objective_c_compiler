@@ -346,7 +346,7 @@ class Statement_node
         int id;
         enum statement_type type;
         Expression_node *Expression;
-        Statement_list_node *Block;
+        Statement_node *Statement;
         Declaration_node *Declaration;
         Class_declaration_list_node *Class_declaration;
         Statement_node *Next;

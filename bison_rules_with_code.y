@@ -263,35 +263,35 @@ for_statement: FOR '(' expression_e ';' expression_e ';' expression_e ')' statem
 
 // ---------- Операторы ----------
 
-statement: ';'
-		 | expression ';'
-		 | RETURN expression_e ';'
-		 | if_statement
-		 | while_statement
-		 | do_while_statement
-		 | for_statement
-		 | compound_statement
-		 | declaration
-		 | class_declaration_list
+statement: ';'							{$$ = createSimpleStatementNode(EMPTY, NULL);}
+		 | expression ';'				{$$ = createSimpleStatementNode(SIMPLE, $1);}
+		 | RETURN expression_e ';'		{$$ = createSimpleStatementNode(RETURN, $2);}
+		 | if_statement					{$$ = createComplexStatementNode(statement_type::IF, $1);}
+		 | while_statement				{$$ = createComplexStatementNode(statement_type::WHILE, $1);}
+		 | do_while_statement			{$$ = createComplexStatementNode(statement_type::DO_WHILE, $1);}
+		 | for_statement				{$$ = createComplexStatementNode(statement_type::FOR, $1);}
+		 | compound_statement			{$$ = createComplexStatementNode(statement_type::COMPOUND, $1);}
+		 | declaration					{$$ = createDeclarationStatementNode($1);}
+		 | class_declaration_list		{$$ = createClassDeclarationStatementNode($1);}
 		 ;
 
-compound_statement: '{' statement_list_e '}'
+compound_statement: '{' statement_list_e '}'	{$$ = createCompoundStatementNode($2);}
 				  ;
 
-statement_list: statement
-			  | statement_list statement
+statement_list: statement					{$$ = createStatementListNode($1);}
+			  | statement_list statement	{$$ = addStatementListNode($1, $2);}
 			  ;
 
-statement_list_e: /*empty*/
-				| statement_list
+statement_list_e: /*empty*/			{$$ = NULL;}
+				| statement_list	{$$ = $1;}
 				;
 
-class_statement: class_interface
-			   | class_implementation
+class_statement: class_interface		{$$ = createInterfaceClassStatementNode($1);}
+			   | class_implementation	{$$ = createImplementationClassStatementNode($1);}
 			   ;
 
-class_statement_list: class_statement
-					| class_statement_list class_statement
+class_statement_list: class_statement							{$$ = createClassStatementListNode($1);}
+					| class_statement_list class_statement		{$$ = addClassStatementListNode($1, $2);}
 					;
 
 // ---------- Классы ----------

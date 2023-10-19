@@ -63,3 +63,25 @@ Do_while_statement_node* createDoWhileStatementNode(Expression_node *condition, 
 For_statement_node* createForStatementNode(Expression_node *initExpression, Expression_node *condition, Expression_node *loopExpression, Statement_node *body);
 
 For_statement_node* createForeachStatementNode(for_type type, Type_node *varType, char *loopVar, Expression_node *expression, Statement_node *body);
+
+Statement_node* createSimpleStatementNode(statement_type type, Expression_node *expression);
+
+Statement_node* createComplexStatementNode(Statement_node *statement);
+
+Statement_node* createDeclarationStatementNode(Declaration_node *declaration);
+
+Statement_node* createClassDeclarationStatementNode(Class_declaration_list_node *classDeclarationList);
+
+Compound_statement_node* createCompoundStatementNode(Statement_list_node *statements);
+
+Statement_list_node* createStatementListNode(Statement_node *statement);
+
+Statement_list_node* addStatementListNode(Statement_list_node *list, Statement_node *statement);
+
+Class_statement_node* createInterfaceClassStatementNode(Class_interface_node *interface);
+
+Class_statement_node* createImplementationClassStatementNode(Class_implementation_node *implementation);
+
+Class_statement_list_node* createClassStatementListNode(Class_statement_node *ClassStatement);
+
+Class_statement_list_node* addClassStatementListNode(Class_statement_list_node *list, Class_statement_node *ClassStatement);

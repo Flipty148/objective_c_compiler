@@ -368,3 +368,127 @@ For_statement_node* createForeachStatementNode(for_type type, Type_node *varType
     res->NameType = varType;
     return res;
 }
+
+// -------------------- Операторы --------------------
+
+// ---------- statement ----------
+
+Statement_node* createSimpleStatementNode(statement_type type, Expression_node *expression)
+{
+    Statement_node *res = new Statement_node;
+    res->id = id++;
+    res->type = type;
+    res->Expression = expression;
+    res->Statement = NULL;
+    res->Declaration = NULL;
+    res->Class_declaration = NULL;
+    res->Next = NULL;
+    return res;
+}
+
+Statement_node* createComplexStatementNode(statement_type type, Statement_node *statement)
+{
+    Statement_node *res = new Statement_node;
+    res->id = id++;
+    res->type = type;
+    res->Expression = NULL;
+    res->Statement = statement;
+    res->Declaration = NULL;
+    res->Class_declaration = NULL;
+    res->Next = NULL;
+    return res;
+}
+
+Statement_node* createDeclarationStatementNode(Declaration_node *declaration)
+{
+    Statement_node *res = new Statement_node;
+    res->id = id++;
+    res->type = DECLARATION;
+    res->Expression = NULL;
+    res->Statement = NULL;
+    res->Declaration = declaration;
+    res->Class_declaration = NULL;
+    res->Next = NULL;
+    return res;
+}
+
+Statement_node* createClassDeclarationStatementNode(Class_declaration_list_node *classDeclarationList)
+{
+    Statement_node *res = new Statement_node;
+    res->id = id++;
+    res->type = CLASS_DECLARATION_LIST;
+    res->Expression = NULL;
+    res->Statement = NULL;
+    res->Declaration = NULL;
+    res->Class_declaration = classDeclarationList;
+    res->Next = NULL;
+    return res;
+}
+
+// ---------- compound_statement ----------
+
+Compound_statement_node* createCompoundStatementNode(Statement_list_node *statements)
+{
+    Compound_statement_node *res = new Compound_statement_node;
+    res->id = id++;
+    res->Statements = statements;
+    return res;
+}
+
+// ---------- statement_list ----------
+
+Statement_list_node* createStatementListNode(Statement_node *statement)
+{
+    Statement_list_node *res = new Statement_list_node;
+    res->id = id++;
+    res->First = statement;
+    res->Last = statement;
+    return res;
+}
+
+Statement_list_node* addStatementListNode(Statement_list_node *list, Statement_node *statement)
+{
+    list->Last->Next = statement;
+    list->Last = statement;
+    return list;
+}
+
+// ----------- class_statement ----------
+
+Class_statement_node* createInterfaceClassStatementNode(Class_interface_node *interface)
+{
+    Class_statement_node *res = new Class_statement_node;
+    res->id = id++;
+    res->type = INTERFACE;
+    res->statement.Interface = interface;
+    res->Next = NULL;
+    return res;
+}
+
+Class_statement_node* createImplementationClassStatementNode(Class_implementation_node *implementation)
+{
+    Class_statement_node *res = new Class_statement_node;
+    res->id = id++;
+    res->type = IMPLEMENTATION;
+    res->statement.Implementation = implementation;
+    res->Next = NULL;
+    return res;
+}
+
+// ---------- Class_statement_list ----------
+
+Class_statement_list_node* createClassStatementListNode(Class_statement_node *ClassStatement)
+{
+    Class_statement_list_node *res = new Class_statement_list_node;
+    res->id = id++;
+    res->First = ClassStatement;
+    res->Last = ClassStatement;
+    return res;
+}
+
+Class_statement_list_node* addClassStatementListNode(Class_statement_list_node *list, Class_statement_node *ClassStatement)
+{
+    list->Last->Next = ClassStatement;
+    list->Last = ClassStatement;
+    return list;
+}

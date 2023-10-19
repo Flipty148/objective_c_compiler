@@ -300,7 +300,9 @@ Keyword_argument_node* createKeywordArgumentNode(keyword_argument_type type, cha
     return res;
 }
 
-// ---------- Управляющие структуры: развилки ----------
+// -------------------- Управляющие структуры: развилки --------------------
+
+// ---------- if_statement ----------
 
 If_statement_node* createIfStatementNode(if_type type, Expression_node *condition, Statement_node *trueBranch, Statement_node *falseBranch)
 {
@@ -310,5 +312,59 @@ If_statement_node* createIfStatementNode(if_type type, Expression_node *conditio
     res->Condition = condition;
     res->TrueBranch = trueBranch;
     res->FalseBranch = falseBranch;
+    return res;
+}
+
+// -------------------- Управляющие структуры: циклы --------------------
+
+// ---------- while_statement ----------
+
+While_statement_node* createWhileStatementNode(Expression_node *condition, Statement_node *body)
+{
+    While_statement_node *res = new While_statement_node;
+    res->id = id++;
+    res->LoopCondition = condition;
+    res->LoopBody = body;
+    return res;
+}
+
+// ---------- do_while_statement ----------
+
+Do_while_statement_node* createDoWhileStatementNode(Expression_node *condition, Statement_node *body)
+{
+    Do_while_statement_node *res = new Do_while_statement_node;
+    res->id = id++;
+    res->LoopCondition = condition;
+    res->LoopBody = body;
+    return res;
+}
+
+// ---------- for_statement ----------
+
+For_statement_node* createForStatementNode(Expression_node *initExpression, Expression_node *condition, Expression_node *loopExpression, Statement_node *body)
+{
+    For_statement_node *res = new For_statement_node;
+    res->id = id++;
+    res->type = for_type::FOR;
+    res->InitExpression = initExpression;
+    res->ConditionExpression = condition;
+    res->LoopExpression = loopExpression;
+    res->LoopBody = body;
+    res->name = NULL;
+    res->NameType = NULL;
+    return res;
+}
+
+For_statement_node* createForeachStatementNode(for_type type, Type_node *varType, char *loopVar, Expression_node *expression, Statement_node *body)
+{
+    For_statement_node *res = new For_statement_node;
+    res->id = id++;
+    res->type = type;
+    res->InitExpression = NULL;
+    res->ConditionExpression = NULL;
+    res->LoopExpression = expression;
+    res->LoopBody = body;
+    res->name = loopVar;
+    res->NameType = varType;
     return res;
 }

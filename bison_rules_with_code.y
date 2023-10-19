@@ -250,15 +250,15 @@ if_statement: IF '(' expression ')' statement					{$$ = createIfStatementNode(WI
 			;
 
 // ---------- Управляющие структуры: циклы ----------
-while_statement: WHILE '(' expression ')' statement
+while_statement: WHILE '(' expression ')' statement		{$$  = createWhileStatementNode($3, $5);}
 			   ;
 
-do_while_statement: DO statement WHILE '(' expression ')' ';'
+do_while_statement: DO statement WHILE '(' expression ')' ';'	{$$ = createDoWhileStatementNode($5, $2);}
 				  ;
 
-for_statement: FOR '(' expression_e ';' expression_e ';' expression_e ')' statement
-			 | FOR '(' IDENTIFIER IN expression ')' statement
-			 | FOR '(' type IDENTIFIER IN expression ')' statement
+for_statement: FOR '(' expression_e ';' expression_e ';' expression_e ')' statement		{$$ = createForStatementNode($3, $5, $7, $9);}
+			 | FOR '(' IDENTIFIER IN expression ')' statement							{$$ = createForeachStatementNode(FOREACH, NULL, $3, $5, $7);}
+			 | FOR '(' type IDENTIFIER IN expression ')' statement						{$$ = createForeachStatementNode(FOREACH_WITH_DECLARATION, $3, $4, $6, $8);}
 			 ;
 
 // ---------- Операторы ----------

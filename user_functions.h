@@ -55,3 +55,11 @@ Keyword_argument_list_node* addKeywordArgumentListNode(Keyword_argument_list_nod
 Keyword_argument_node* createKeywordArgumentNode(keyword_argument_type type, char *identifier, Expression_node *expression);
 
 If_statement_node* createIfStatementNode(if_type type, Expression_node *condition, Statement_node *trueBranch, Statement_node *falseBranch);
+
+While_statement_node* createWhileStatementNode(Expression_node *condition, Statement_node *body);
+
+Do_while_statement_node* createDoWhileStatementNode(Expression_node *condition, Statement_node *body);
+
+For_statement_node* createForStatementNode(Expression_node *initExpression, Expression_node *condition, Expression_node *loopExpression, Statement_node *body);
+
+For_statement_node* createForeachStatementNode(for_type type, Type_node *varType, char *loopVar, Expression_node *expression, Statement_node *body);

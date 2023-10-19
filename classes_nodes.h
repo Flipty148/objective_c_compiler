@@ -2,31 +2,6 @@
 
 // -------------------- Типы --------------------
 
-// ---------- Int keyword ----------
-
-class Int_node
-{
-    public:
-        int id;
-};
-
-// ---------- Char keyword ----------
-
-class Char_node
-{
-    public:
-        int id;
-};
-
-// ---------- Float keyword -----------
-
-class Float_node
-{
-    public:
-        int id;
-};
-
-
 // ---------- type ----------
 
 enum type_type {
@@ -133,6 +108,16 @@ class Init_declarator_node
         char *name;
         Expression_node *expression;
         Init_declarator_node *Next;
+};
+
+// ---------- parameter_type_list ----------
+
+class Parameter_type_list_node
+{
+    public:
+        int id;
+        Parameter_list_node *ParameterList;
+        bool includeElipsis = false;
 };
 
 // ---------- parameter_list ----------

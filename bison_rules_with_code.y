@@ -12,9 +12,6 @@
 	float Float_constant;
 	char *NSString_constant;
 	char *Identifier;
-	Int_node *Int;
-	Char_node *Char;
-	Float_node *Float;
 	Type_node *Type;
 	Numeric_constant_node *Numeric_constant;
 	Literal_node *Literal;
@@ -22,6 +19,7 @@
 	Declaration_list_node *Declaration_list;
 	Init_declarator_list_node *Init_declarator_list;
 	Init_declarator_node *Init_declarator;
+	Parameter_type_list_node *Parameter_type_list;
 	Parameter_list_node *Parameter_list;
 	Parameter_declaration_node *Parameter_declaration;
 	Expression_node *Expression;
@@ -68,10 +66,10 @@
 %nonassoc '(' ')' '[' ']'
 
 //---------- Терминальные символы ----------
-%token <Int> INT 
-%token <Char> CHAR 
-%token <Float> FLOAT
-%token VOID
+%token <Type> INT 
+%token <Type> CHAR 
+%token <Type> FLOAT
+%token <Type> VOID
 %token ENUM
 %token IF ELSE WHILE DO FOR
 %token IN
@@ -98,6 +96,7 @@
 %type <Declaration_list> declaration_list_e declaration_list
 %type <Init_declarator_list> init_declarator_list_e init_declarator_list
 %type <Init_declarator> init_declarator
+%type <Parameter_type_list> parameter_type_list
 %type <Parameter_list> parameter_list
 %type <Parameter_declaration> parameter_declaration
 %type <Expression> expression expression_e
@@ -186,8 +185,8 @@ init_declarator: IDENTIFIER					{$$ = createInitDeclaratorNode(SIMPLE_DECLARATOR
 			   | IDENTIFIER '=' expression	{$$ = createInitDeclaratorNode(DECLARATOR_WITH_INITIALIZING, $1, $3);}
 			   ;
 
-parameter_type_list: parameter_list /* Не знаю, нужно ли делать класс для узла */
-				   | parameter_list ',' ELIPSIS
+parameter_type_list: parameter_list					{$$ = createParameterTypeListNode($1, false);}
+				   | parameter_list ',' ELIPSIS		{$$ = createParameterTypeListNode($1, true);}
 				   ;
 
 parameter_list: parameter_declaration						{$$ = createParameterListNode($1);}

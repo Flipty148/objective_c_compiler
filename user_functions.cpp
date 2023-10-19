@@ -299,3 +299,16 @@ Keyword_argument_node* createKeywordArgumentNode(keyword_argument_type type, cha
     res->Next = NULL;
     return res;
 }
+
+// ---------- Управляющие структуры: развилки ----------
+
+If_statement_node* createIfStatementNode(if_type type, Expression_node *condition, Statement_node *trueBranch, Statement_node *falseBranch)
+{
+    If_statement_node *res = new If_statement_node;
+    res->id = id++;
+    res->type = type;
+    res->Condition = condition;
+    res->TrueBranch = trueBranch;
+    res->FalseBranch = falseBranch;
+    return res;
+}

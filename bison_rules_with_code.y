@@ -245,8 +245,8 @@ keyword_argument: IDENTIFIER ':' expression		{$$ = createKeywordArgumentNode(WIT
 				;
 
 // ---------- Управляющие структуры: развилки ----------
-if_statement: IF '(' expression ')' statement
-			| IF '(' expression ')' statement ELSE statement
+if_statement: IF '(' expression ')' statement					{$$ = createIfStatementNode(WITHOUT_ALTERNATIVE, $3, $5, NULL);}
+			| IF '(' expression ')' statement ELSE statement	{$$ = createIfStatementNode(WITHOUT_ALTERNATIVE, $3, $5, $7);}
 			;
 
 // ---------- Управляющие структуры: циклы ----------

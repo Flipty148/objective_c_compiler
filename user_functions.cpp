@@ -1,6 +1,4 @@
 #include "user_functions.h"
-#include <iostream>
-int id = 0;
 
 //---------- program ----------
 
@@ -460,7 +458,7 @@ Class_statement_node* createInterfaceClassStatementNode(Class_interface_node *in
     Class_statement_node *res = new Class_statement_node;
     res->id = id++;
     res->type = INTERFACE;
-    res->statement.Interface = interface;
+    res->statement->Interface = interface;
     res->Next = NULL;
     return res;
 }
@@ -470,7 +468,7 @@ Class_statement_node* createImplementationClassStatementNode(Class_implementatio
     Class_statement_node *res = new Class_statement_node;
     res->id = id++;
     res->type = IMPLEMENTATION;
-    res->statement.Implementation = implementation;
+    res->statement->Implementation = implementation;
     res->Next = NULL;
     return res;
 }
@@ -491,4 +489,289 @@ Class_statement_list_node* addClassStatementListNode(Class_statement_list_node *
     list->Last->Next = ClassStatement;
     list->Last = ClassStatement;
     return list;
+}
+
+// -------------------- Классы --------------------
+
+// ---------- class_interface ----------
+
+Class_interface_node* createClassInterfaceNode(class_interface_type type, char *className, char *superclassName, Interface_statement_node *statement)
+{
+    Class_interface_node *res = new Class_interface_node;
+    res->id = id++;
+    res->type = type;
+    res->ClassName = className;
+    res->SuperclassName = superclassName;
+    res->Statement = statement;
+
+    ClassNames.insert(className);
+    ClassNames.insert(superclassName);
+    return res;
+}
+
+// ---------- interface_statement ----------
+
+Interface_statement_node* createInterfaceStatementNode(Instance_variables_node *variables, Interface_declaration_list_node *declarationList)
+{
+    Interface_statement_node *res= new Interface_statement_node;
+    res->id = id++;
+    res->Variables = variables;
+    res->Declaration_list = declarationList;
+    return res;
+}
+
+// ---------- implementation_statement ----------
+
+Implementation_statement_node* createImplementationStatementNode(Instance_variables_node *variables, Implementation_definition_list_node *definitionList)
+{
+    Implementation_statement_node *res= new Implementation_statement_node;
+    res->id = id++;
+    res->Variables = variables;
+    res->Declaration_list = definitionList;
+    return res;
+}
+
+// ---------- class_implementation ----------
+
+Class_implementation_node* createClassImplementationNode(class_implementation_type type, char *className, char *superclassName, Implementation_statement_node *statement)
+{
+    Class_implementation_node *res = new Class_implementation_node;
+    res->id = id++;
+    res->type = type;
+    res->ClassName = className;
+    res->SuperclassName = superclassName;
+    res->Staetment = statement;
+
+    ClassNames.insert(className);
+    ClassNames.insert(superclassName);
+    return res;
+}
+
+// ---------- class_declaration_list, class_list ----------
+
+Class_list_node* createClassListNode(char *className)
+{
+    Class_list_node *res = new Class_list_node;
+    res->id = id++;
+    res->Class_names->push_back(className);
+    ClassNames.insert(className);
+    return res;
+}
+
+Class_list_node* addClassListNode(Class_list_node *list, char *className)
+{
+    list->Class_names->push_back(className);
+    ClassNames.insert(className);
+    return list;
+}
+
+Class_declaration_list_node* createClassDeclarationListNode(Class_list_node *list)
+{
+    Class_declaration_list_node *res = new Class_declaration_list_node;
+    res->id = id++;
+    res->List = list;
+    return res;
+}
+
+// ---------- instance_variables ----------
+
+Instance_variables_node* createInstanceVariablesNode(Declaration_list_node *declarationList)
+{
+    Instance_variables_node *res= new Instance_variables_node;
+    res->id = id++;
+    res->DeclarationList = declarationList;
+    return res;
+}
+
+// ---------- interface_declaration_list ----------
+
+Interface_declaration_list_node* createDeclarationInterfaceDeclarationListNode(Declaration_node *interfaceDeclaration)
+{
+    Interface_declaration_list_node *res = new Interface_declaration_list_node;
+    res->id = id++;
+    res->First->declaration = interfaceDeclaration;
+    res->Last->declaration = interfaceDeclaration;
+    return res;
+}
+
+Interface_declaration_list_node* createPropertyInterfaceDeclarationListNode(Property_node *interfaceDeclaration)
+{
+    Interface_declaration_list_node *res = new Interface_declaration_list_node;
+    res->id = id++;
+    res->First->property = interfaceDeclaration;
+    res->Last->property = interfaceDeclaration;
+    return res;
+}
+
+Interface_declaration_list_node* createMethodDeclarationInterfaceDeclarationListNode(Method_declaration_node *interfaceDeclaration)
+{
+    Interface_declaration_list_node *res = new Interface_declaration_list_node;
+    res->id = id++;
+    res->First->method_declaration = interfaceDeclaration;
+    res->Last->method_declaration = interfaceDeclaration;
+    return res;
+}
+
+Interface_declaration_list_node* addDeclarationInterfaceDeclarationListNode(Interface_declaration_list_node *list, Declaration_node *interfaceDeclaration)
+{
+    list->Last->declaration->Next = interfaceDeclaration;
+    list->Last->declaration = interfaceDeclaration;
+    return list;
+}
+
+Interface_declaration_list_node* addPropertyInterfaceDeclarationListNode(Interface_declaration_list_node *list, Property_node *interfaceDeclaration)
+{
+    list->Last->property->Next = interfaceDeclaration;
+    list->Last->property = interfaceDeclaration;
+    return list;
+}
+
+Interface_declaration_list_node* addMethodDeclarationInterfaceDeclarationListNode(Interface_declaration_list_node *list, Method_declaration_node *interfaceDeclaration)
+{
+    list->Last->method_declaration->Next = interfaceDeclaration;
+    list->Last->method_declaration = interfaceDeclaration;
+    return list;
+}
+
+// ---------- method_declaration, class_method_declaration, instance_method_declaration ----------
+
+Method_declaration_node* createMethodDeclarationNode(method_declaration_type type, Type_node *methodType, Method_selector_node *selector)
+{
+    Method_declaration_node *res = new Method_declaration_node;
+    res->id = id++;
+    res->type = type;
+    res->MethodType = methodType;
+    res->MethodSelector = selector;
+    return res;
+}
+
+// ---------- implementation_definition_list ----------
+
+Implementation_definition_list_node* createDeclarationImplementationDefinitionListNode(Declaration_node *interfaceDeclaration)
+{
+    Implementation_definition_list_node *res = new Implementation_definition_list_node;
+    res->id = id++;
+    res->First->declaration = interfaceDeclaration;
+    res->Last->declaration = interfaceDeclaration;
+    return res;
+}
+
+Implementation_definition_list_node* createPropertyImplementationDefinitionListNode(Property_node *interfaceDeclaration)
+{
+    Implementation_definition_list_node *res = new Implementation_definition_list_node;
+    res->id = id++;
+    res->First->property = interfaceDeclaration;
+    res->Last->property = interfaceDeclaration;
+    return res;
+}
+
+Implementation_definition_list_node* createMethodDeclarationImplementationDefinitionListNode(Method_definition_node *interfaceDeclaration)
+{
+    Implementation_definition_list_node *res = new Implementation_definition_list_node;
+    res->id = id++;
+    res->First->method_definition = interfaceDeclaration;
+    res->Last->method_definition = interfaceDeclaration;
+    return res;
+}
+
+Implementation_definition_list_node* addDeclarationImplementationDefinitionListNode(Implementation_definition_list_node *list, Declaration_node *interfaceDeclaration)
+{
+    list->Last->declaration->Next = interfaceDeclaration;
+    list->Last->declaration = interfaceDeclaration;
+    return list;
+}
+
+Implementation_definition_list_node* addPropertyImplementationDefinitionListNode(Implementation_definition_list_node *list, Property_node *interfaceDeclaration)
+{
+    list->Last->property->Next = interfaceDeclaration;
+    list->Last->property = interfaceDeclaration;
+    return list;
+}
+
+Implementation_definition_list_node* addMethodDeclarationImplementationDefinitionListNode(Implementation_definition_list_node *list, Method_definition_node *interfaceDeclaration)
+{
+    list->Last->method_definition->Next = interfaceDeclaration;
+    list->Last->method_definition = interfaceDeclaration;
+    return list;
+}
+
+// ---------- method_definition, class_method_definition, instance_method_definition ----------
+
+Method_definition_node* createMethodDefinitionNode(method_definition_type type, Type_node *methodType, Method_selector_node *selector, Declaration_list_node *declarationList, Compound_statement_node *methodBody)
+{
+    Method_definition_node *res = new Method_definition_node;
+    res->id = id++;
+    res->type = type;
+    res->MethodType = methodType;
+    res->MethodSelector = selector;
+    res->DeclarationList = declarationList;
+    res->MethodBody = methodBody;
+    res->Next = NULL;
+    return res;
+}
+
+// ---------- method_selector ----------
+
+Method_selector_node* createMethodSelectorNode(char *methodName, Keyword_selector_node *selector, Parameter_list_node *parameters)
+{
+    Method_selector_node *res = new Method_selector_node;
+    res->id = id++;
+    res->MethodName = methodName;
+    res->KeywordSelector = selector;
+    res->Parameter_list_node = parameters;
+    return res;
+}
+
+// ---------- keyword_selector ----------
+
+Keyword_selector_node* createKeywordSelectorNode(Keyword_declaration_node *declaration)
+{
+    Keyword_selector_node *res = new Keyword_selector_node;
+    res->id = id++;
+    res->First = declaration;
+    res->Last = declaration;
+    return res;
+}
+
+Keyword_selector_node* addKeywordSelectorNode(Keyword_selector_node *list, Keyword_declaration_node *declaration)
+{
+    list->Last->Next = declaration;
+    list->Last = declaration;
+    return list;
+}
+
+// ---------- keyword_declaration ----------
+
+Keyword_declaration_node* createKeywordDeclarationNode(Type_node *type, char *identifier, char *keywordName)
+{
+    Keyword_declaration_node *res = new Keyword_declaration_node;
+    res->id = id++;
+    res->KeywordType = type;
+    res->Identifier = identifier;
+    res->KeywordName = keywordName;
+    res->Next = NULL;
+    return res;
+}
+
+// ---------- property ----------
+
+Property_node* createPropertyNode(Attribute_node *attribute, Type_node *type, char *name)
+{
+    Property_node *res = new Property_node;
+    res->id = id++;
+    res->Attribute = attribute;
+    res->type = type;
+    res->Name = name;
+    res->Next = NULL;
+    return res;
+}
+
+// ---------- attribute ----------
+
+Attribute_node* createAttributeNode(attrribute_type type)
+{
+    Attribute_node *res = new Attribute_node;
+    res->id = id++;
+    res->type = type;
+    return res;
 }

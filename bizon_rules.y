@@ -187,6 +187,7 @@ class_statement_list: class_statement
 // ---------- Классы ----------
 class_interface: INTERFACE IDENTIFIER ':' IDENTIFIER interface_statement END
 			   | INTERFACE IDENTIFIER interface_statement END
+			   | INTERFACE IDENTIFIER ':' CLASS_NAME interface_statement END
 			   ;
 
 interface_statement: instance_variables interface_declaration_list
@@ -199,6 +200,10 @@ implementation_statement: instance_variables implementation_definition_list
 
 class_implementation: IMPLEMENTATION IDENTIFIER implementation_statement END
 					| IMPLEMENTATION IDENTIFIER ':' IDENTIFIER implementation_statement END
+					| IMPLEMENTATION CLASS_NAME implementation_statement END
+					| IMPLEMENTATION CLASS_NAME ':' IDENTIFIER implementation_statement END
+					| IMPLEMENTATION IDENTIFIER ':' CLASS_NAME implementation_statement END
+					| IMPLEMENTATION CLASS_NAME ':' CLASS_NAME implementation_statement END
 					;
 
 class_declaration_list: CLASS class_list ';'
@@ -209,7 +214,6 @@ class_list: IDENTIFIER
 		  ;
 
 instance_variables: '{' declaration_list '}'
-				   | '{' declaration_list instance_variables '}'
 				   ;
 
 

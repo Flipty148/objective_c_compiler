@@ -55,6 +55,7 @@
 	Property_node *Property;
 	Attribute_node *Attribute;
 	Program_node *Program;
+	Class_list *Class_list;
 }
 
 // ---------- Операции с их приоритетом ----------
@@ -118,7 +119,8 @@
 %type <Interface_statement> interface_statement
 %type <Implementation_statement> implementation_statement
 %type <Class_implementation> class_implementation
-%type <Class_declaration_list> class_declaration_list class_list
+%type <Class_declaration_list> class_declaration_list 
+%type <Class_list> class_list
 %type <Instance_variables> instance_variables
 %type <Interface_declaration_list> interface_declaration_list
 %type <Method_declaration> method_declaration class_method_declaration instance_method_declaration
@@ -295,100 +297,104 @@ class_statement_list: class_statement							{$$ = createClassStatementListNode($
 					;
 
 // ---------- Классы ----------
-class_interface: INTERFACE IDENTIFIER ':' IDENTIFIER interface_statement END
-			   | INTERFACE IDENTIFIER interface_statement END
+class_interface: INTERFACE IDENTIFIER ':' IDENTIFIER interface_statement END	{$$ = createClassInterfaceNode(class_interface_type::WITH_INHERITANCE, $2, $4, $5);}
+			   | INTERFACE IDENTIFIER interface_statement END					{$$ = createClassInterfaceNode(class_interface_type::WITHOUT_INHERITANCE, $2, NULL, $3);}
+			   | INTERFACE IDENTIFIER ':' CLASS_NAME interface_statement END	{$$ = createClassInterfaceNode(class_interface_type::WITH_INHERITANCE, $2, $4, $5);}
 			   ;
 
-interface_statement: instance_variables interface_declaration_list
-				   | interface_declaration_list
+interface_statement: instance_variables interface_declaration_list	{$$ = createInterfaceStatementNode($1, $2);}
+				   | interface_declaration_list						{$$ = createInterfaceStatementNode(NULL, $1);}
 				   ;
 
-implementation_statement: instance_variables implementation_definition_list
-						| implementation_definition_list
+implementation_statement: instance_variables implementation_definition_list	{$$ = createImplementationStatementNode($1, $2);}
+						| implementation_definition_list					{$$ = createImplementationStatementNode(NULL, $1);}
 						;
 
-class_implementation: IMPLEMENTATION IDENTIFIER implementation_statement END
-					| IMPLEMENTATION IDENTIFIER ':' IDENTIFIER implementation_statement END
+class_implementation: IMPLEMENTATION IDENTIFIER implementation_statement END					{$$ = createClassImplementationNode(class_implementation_type::WITHOUT_INHERITANCE, $2, NULL, $3);}
+					| IMPLEMENTATION IDENTIFIER ':' IDENTIFIER implementation_statement END		{$$ = createClassImplementationNode(class_implementation_type::WITH_INHERITANCE, $2, $4, $5);}
+					| IMPLEMENTATION CLASS_NAME implementation_statement END					{$$ = createClassImplementationNode(class_implementation_type::WITHOUT_INHERITANCE, $2, NULL, $3);}
+					| IMPLEMENTATION CLASS_NAME ':' IDENTIFIER implementation_statement END		{$$ = createClassImplementationNode(class_implementation_type::WITH_INHERITANCE, $2, $4, $5);}
+					| IMPLEMENTATION IDENTIFIER ':' CLASS_NAME implementation_statement END		{$$ = createClassImplementationNode(class_implementation_type::WITH_INHERITANCE, $2, $4, $5);}
+					| IMPLEMENTATION CLASS_NAME ':' CLASS_NAME implementation_statement END		{$$ = createClassImplementationNode(class_implementation_type::WITH_INHERITANCE, $2, $4, $5);}
 					;
 
-class_declaration_list: CLASS class_list ';'
+class_declaration_list: CLASS class_list ';'	{$$ = createClassDeclarationListNode($2);}
 					  ;
 
-class_list: IDENTIFIER
-		  | class_list ',' IDENTIFIER
+class_list: IDENTIFIER					{$$ = createClassListNode($1);}
+		  | class_list ',' IDENTIFIER	{$$ = addClassListNode($1, $3);}
 		  ;
 
-instance_variables: '{' declaration_list '}'
-				   | '{' declaration_list instance_variables '}'
+instance_variables: '{' declaration_list '}'	{$$ = createInstanceVariablesNode($2);}
 				   ;
 
-interface_declaration_list: declaration
-						  | property
-						  | method_declaration
-						  | interface_declaration_list declaration
-						  | interface_declaration_list method_declaration
-						  | interface_declaration_list property
+interface_declaration_list: declaration										{$$ = createDeclarationInterfaceDeclarationListNode($1);}
+						  | property										{$$ = createPropertyInterfaceDeclarationListNode($1);}
+						  | method_declaration								{$$ = createMethodDeclarationInterfaceDeclarationListNode($1);}
+						  | interface_declaration_list declaration			{$$ = addDeclarationInterfaceDeclarationListNode($1, $2);}
+						  | interface_declaration_list method_declaration	{$$ = addMethodDeclarationInterfaceDeclarationListNode($1, $2);}
+						  | interface_declaration_list property				{$$ = addPropertyInterfaceDeclarationListNode($1, $2);}
 						  ;
 
-method_declaration: class_method_declaration
-				  | instance_method_declaration
+method_declaration: class_method_declaration		{$$ = $1;}
+				  | instance_method_declaration		{$$ = $1;}
 				  ;
 
-class_method_declaration: '+' method_type method_selector ';'
-						| '+' '(' VOID ')' method_selector ';'
-						| '+' method_selector ';'
+class_method_declaration: '+' method_type method_selector ';'	{$$ = createMethodDeclarationNode(method_declaration_type::CLASS, $2, $3);}
+						| '+' '(' VOID ')' method_selector ';'	{$$ = createMethodDeclarationNode(method_declaration_type::CLASS, $3, $5);}
+						| '+' method_selector ';'				{$$ = createMethodDeclarationNode(method_declaration_type::CLASS, NULL, $2);}
 						;
 
-instance_method_declaration: '-' method_type method_selector ';'
-						   | '-' '(' VOID ')' method_selector ';'
-						   | '-' method_selector ';'
+instance_method_declaration: '-' method_type method_selector ';' 	{$$ = createMethodDeclarationNode(method_declaration_type::INSTANCE, $2, $3);}
+						   | '-' '(' VOID ')' method_selector ';'	{$$ = createMethodDeclarationNode(method_declaration_type::INSTANCE, $3, $5);}
+						   | '-' method_selector ';'				{$$ = createMethodDeclarationNode(method_declaration_type::INSTANCE, NULL, $2);}
 						   ;
 
-implementation_definition_list: declaration
-							  | property
-							  | method_definition
-							  | implementation_definition_list declaration
-							  | implementation_definition_list method_definition
-							  | implementation_definition_list property
+implementation_definition_list: declaration											{$$ = createDeclarationImplementationDefinitionListNode($1);}
+							  | property											{$$ = createPropertyImplementationDefinitionListNode($1);}
+							  | method_definition									{$$ = createMethodDeclarationImplementationDefinitionListNode($1);}
+							  | implementation_definition_list declaration			{$$ = addDeclarationImplementationDefinitionListNode($1, $2);}
+							  | implementation_definition_list method_definition	{$$ = addMethodDeclarationImplementationDefinitionListNode($1, $2);}
+							  | implementation_definition_list property				{$$ = addPropertyImplementationDefinitionListNode($1, $2);}
 							  ;
 
-method_definition: class_method_definition
-				 | instance_method_definition
+method_definition: class_method_definition		{$$ = $1;}
+				 | instance_method_definition	{$$ = $1;}
 				 ;
 
-class_method_definition: '+' method_type method_selector declaration_list_e compound_statement
-					   | '+' '(' VOID ')' method_selector declaration_list_e compound_statement
-					   | '+' method_selector declaration_list_e compound_statement
+class_method_definition: '+' method_type method_selector declaration_list_e compound_statement		{$$ = createMethodDefinitionNode(method_definition_type::CLASS, $2, $3, $4, $5);}
+					   | '+' '(' VOID ')' method_selector declaration_list_e compound_statement		{$$ = createMethodDefinitionNode(method_definition_type::CLASS, $3, $5, $6, $7);}
+					   | '+' method_selector declaration_list_e compound_statement					{$$ = createMethodDefinitionNode(method_definition_type::CLASS, NULL, $2, $3, $4);}
 					   ;
 
-instance_method_definition: '-' method_type method_selector declaration_list_e compound_statement
-					   	  | '-' '(' VOID ')' method_selector declaration_list_e compound_statement
-						  | '-' method_selector declaration_list_e compound_statement
+instance_method_definition: '-' method_type method_selector declaration_list_e compound_statement	{$$ = createMethodDefinitionNode(method_definition_type::INSTANCE, $2, $3, $4, $5);}
+					   	  | '-' '(' VOID ')' method_selector declaration_list_e compound_statement	{$$ = createMethodDefinitionNode(method_definition_type::INSTANCE, $3, $5, $6, $7);}
+						  | '-' method_selector declaration_list_e compound_statement				{$$ = createMethodDefinitionNode(method_definition_type::INSTANCE, NULL, $2, $3, $4);}
 					   	  ;
 
-method_selector: IDENTIFIER
-			   | keyword_selector
-			   | keyword_selector ',' parameter_type_list
+method_selector: IDENTIFIER									{$$ = createMethodSelectorNode($1, NULL, NULL);}
+			   | keyword_selector							{$$ = createMethodSelectorNode(NULL, $1, NULL);}
+			   | keyword_selector ',' parameter_type_list	{$$ = createMethodSelectorNode(NULL, $1, $3);}
 			   ;
 
-keyword_selector: keyword_declaration
-				| keyword_selector keyword_declaration
+keyword_selector: keyword_declaration						{$$ = createKeywordSelectorNode($1);}
+				| keyword_selector keyword_declaration		{$$ = addKeywordSelectorNode($1, $2);}
 				;
 
-keyword_declaration: ':' method_type IDENTIFIER
-				   | ':' IDENTIFIER
-				   | IDENTIFIER ':' method_type IDENTIFIER
-				   | IDENTIFIER ':' IDENTIFIER
+keyword_declaration: ':' method_type IDENTIFIER					{$$ = createKeywordDeclarationNode($2, NULL, $3);}
+				   | ':' IDENTIFIER								{$$ = createKeywordDeclarationNode(NULL, NULL, $2);}
+				   | IDENTIFIER ':' method_type IDENTIFIER		{$$ = createKeywordDeclarationNode($3, $1, $4);}
+				   | IDENTIFIER ':' IDENTIFIER					{$$ = createKeywordDeclarationNode(NULL, $1, $3);}
 				   ;
 
-method_type: '(' type ')'
+method_type: '(' type ')'	{$$ = createTypeNode($2);}
 		   ;
 
-property: PROPERTY '(' attribute ')' type IDENTIFIER ';'
+property: PROPERTY '(' attribute ')' type IDENTIFIER ';'	{$$ = createPropertyNode($3, $5, $6);}
 		;
 
-attribute: READONLY
-		 | READWRITE
+attribute: READONLY		{$$ = createAttributeNode(READONLY);}
+		 | READWRITE	{$$ = createAttributeNode(READWRITE);}
 		 ;
 
 %%

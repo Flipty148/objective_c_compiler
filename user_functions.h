@@ -1,4 +1,9 @@
 #include "classes_nodes.h"
+#include <set>
+#include <iostream>
+using namespace std;
+int id = 0;
+set<string> ClassNames;
 
 Program_node* createProgramNode(Statement_list_node *Statements, Class_statement_list_node *ClassStatements);
 
@@ -85,3 +90,59 @@ Class_statement_node* createImplementationClassStatementNode(Class_implementatio
 Class_statement_list_node* createClassStatementListNode(Class_statement_node *ClassStatement);
 
 Class_statement_list_node* addClassStatementListNode(Class_statement_list_node *list, Class_statement_node *ClassStatement);
+
+Class_interface_node* createClassInterfaceNode(class_interface_type type, char *className, char *superclassName, Interface_statement_node *statement);
+
+Interface_statement_node* createInterfaceStatementNode(Instance_variables_node *variables, Interface_declaration_list_node *declarationList);
+
+Implementation_statement_node* createImplementationStatementNode(Instance_variables_node *variables, Implementation_definition_list_node *definitionList);
+
+Class_implementation_node* createClassImplementationNode(class_implementation_type type, char *className, char *superclassName, Implementation_statement_node *statement);
+
+Class_list_node* createClassListNode(char *className);
+
+Class_list_node* addClassListNode(Class_list_node *list, char *className);
+
+Class_declaration_list_node* createClassDeclarationListNode(Class_list_node *list);
+
+Instance_variables_node* createInstanceVariablesNode(Declaration_list_node *declarationList);
+
+Interface_declaration_list_node* createDeclarationInterfaceDeclarationListNode(Declaration_node *interfaceDeclaration);
+
+Interface_declaration_list_node* createPropertyInterfaceDeclarationListNode(Property_node *interfaceDeclaration);
+
+Interface_declaration_list_node* createMethodDeclarationInterfaceDeclarationListNode(Method_declaration_node *interfaceDeclaration);
+
+Interface_declaration_list_node* addDeclarationInterfaceDeclarationListNode(Interface_declaration_list_node *list, Declaration_node *interfaceDeclaration);
+
+Interface_declaration_list_node* addPropertyInterfaceDeclarationListNode(Interface_declaration_list_node *list, Property_node *interfaceDeclaration);
+
+Interface_declaration_list_node* addMethodDeclarationInterfaceDeclarationListNode(Interface_declaration_list_node *list, Method_declaration_node *interfaceDeclaration);
+
+Method_declaration_node* createMethodDeclarationNode(method_declaration_type type, Type_node *methodType, Method_selector_node *selector);
+
+Implementation_definition_list_node* createDeclarationImplementationDefinitionListNode(Declaration_node *interfaceDeclaration);
+
+Implementation_definition_list_node* createPropertyImplementationDefinitionListNode(Property_node *interfaceDeclaration);
+
+Implementation_definition_list_node* createMethodDeclarationImplementationDefinitionListNode(Method_definition_node *interfaceDeclaration);
+
+Implementation_definition_list_node* addDeclarationImplementationDefinitionListNode(Implementation_definition_list_node *list, Declaration_node *interfaceDeclaration);
+
+Implementation_definition_list_node* addPropertyImplementationDefinitionListNode(Implementation_definition_list_node *list, Property_node *interfaceDeclaration);
+
+Implementation_definition_list_node* addMethodDeclarationImplementationDefinitionListNode(Implementation_definition_list_node *list, Method_definition_node *interfaceDeclaration);
+
+Method_definition_node* createMethodDefinitionNode(method_definition_type type, Type_node *methodType, Method_selector_node *selector, Declaration_list_node *declarationList, Compound_statement_node *methodBody);
+
+Method_selector_node* createMethodSelectorNode(char *methodName, Keyword_selector_node *selector, Parameter_list_node *parameters);
+
+Keyword_selector_node* createKeywordSelectorNode(Keyword_declaration_node *declaration);
+
+Keyword_selector_node* addKeywordSelectorNode(Keyword_selector_node *list, Keyword_declaration_node *declaration);
+
+Keyword_declaration_node* createKeywordDeclarationNode(Type_node *type, char *identifier, char *keywordName);
+
+Property_node* createPropertyNode(Attribute_node *attribute, Type_node *type, char *name);
+
+Attribute_node* createAttributeNode(attrribute_type type);

@@ -5,12 +5,12 @@
 // ---------- type ----------
 
 enum type_type {
-    INT,
-    CHAR,
-    FLOAT,
-    ID,
-    CLASS_NAME,
-    VOID
+    INT_TYPE,
+    CHAR_TYPE,
+    FLOAT_TYPE,
+    ID_TYPE,
+    CLASS_NAME_TYPE,
+    VOID_TYPE
 };
 
 class Type_node
@@ -26,8 +26,8 @@ class Type_node
 // ---------- numeric_constant ----------
 
 enum numeric_constant_type {
-    FLOAT_CONSTANT,
-    INTEGER_CONSTANT
+    FLOAT_CONSTANT_TYPE,
+    INTEGER_CONSTANT_TYPE
 };
 
 class Numeric_constant_node
@@ -46,9 +46,9 @@ class Numeric_constant_node
 // ---------- literal ----------
 
 enum literal_type {
-    STRING_CONSTANT,
-    CHAR_CONSTANT,
-    NSSTRING_CONSTANT
+    STRING_CONSTANT_TYPE,
+    CHAR_CONSTANT_TYPE,
+    NSSTRING_CONSTANT_TYPE
 };
 
 class Literal_node
@@ -96,8 +96,8 @@ class Init_declarator_list_node
 // ---------- init_declarator ----------
 
 enum init_declarator_type {
-    SIMPLE_DECLARATOR,
-    DECLARATOR_WITH_INITIALIZING
+    SIMPLE_DECLARATOR_TYPE,
+    DECLARATOR_WITH_INITIALIZING_TYPE
 };
 
 class Init_declarator_node
@@ -147,26 +147,26 @@ class Parameter_declaration_node
 
 enum expression_type
 {
-    IDENTIFIER,
-    LITERAL,
-    NUMERIIC_CONSTANT,
-    PRIORITY,
-    SELF,
-    MESSAGE_EXPRESSION,
-    UMINUS,
-    UPLUS,
-    UAMPERSAND,
-    PLUS,
-    MINUS,
-    MUL,
-    DIV,
-    EQUAL,
-    NOT_EQUAL,
-    GREATER,
-    LESS,
-    LESS_EQUAL,
-    GREATER_EQUAL,
-    ASSIGNMENT
+    IDENTIFIER_EXPRESSION_TYPE,
+    LITERAL_EXPRESSION_TYPE,
+    NUMERIIC_CONSTANT_EXPRESSION_TYPE,
+    PRIORITY_EXPRESSION_TYPE,
+    SELF_EXPRESSION_TYPE,
+    MESSAGE_EXPRESSION_EXPRESSION_TYPE,
+    UMINUS_EXPRESSION_TYPE,
+    UPLUS_EXPRESSION_TYPE,
+    UAMPERSAND_EXPRESSION_TYPE,
+    PLUS_EXPRESSION_TYPE,
+    MINUS_EXPRESSION_TYPE,
+    MUL_EXPRESSION_TYPE,
+    DIV_EXPRESSION_TYPE,
+    EQUAL_EXPRESSION_TYPE,
+    NOT_EQUAL_EXPRESSION_TYPE,
+    GREATER_EXPRESSION_TYPE,
+    LESS_EXPRESSION_TYPE,
+    LESS_EQUAL_EXPRESSION_TYPE,
+    GREATER_EQUAL_EXPRESSION_TYPE,
+    ASSIGNMENT_EXPRESSION_TYPE
 };
 
 class Expression_node
@@ -196,9 +196,9 @@ class Message_expression_node : public Expression_node
 
 // ---------- receiver ----------
 enum receiver_type {
-    SUPER,
-    SELF,
-    CLASS_NAME
+    SUPER_RECEIVER_TYPE,
+    SELF_RECEIVER_TYPE,
+    CLASS_NAME_RECEIVER_TYPE
 };
 
 
@@ -232,8 +232,8 @@ class Keyword_argument_list_node
 // ---------- keyword_argument ----------
 
 enum keyword_argument_type {
-    WITH_IDENTIFIER,
-    WITHOUT_IDENTIFIER
+    WITH_IDENTIFIER_KW_ARGUMENT_TYPE,
+    WITHOUT_IDENTIFIER_KW_ARGUMENT_TYPE
 };
 
 class Keyword_argument_node
@@ -251,8 +251,8 @@ class Keyword_argument_node
 // ------------ if_statement ----------
 
 enum if_type {
-    WITH_ALTERNATIVE,
-    WITHOUT_ALTERNATIVE
+    WITH_ALTERNATIVE_IF_TYPE,
+    WITHOUT_ALTERNATIVE_IF_TYPE
 };
 
 class If_statement_node : public Statement_node
@@ -290,9 +290,9 @@ class Do_while_statement_node : public Statement_node
 // ---------- for_statement ----------
 
 enum for_type {
-    FOR,
-    FOREACH,
-    FOREACH_WITH_DECLARATION
+    FOR_FOR_TYPE,
+    FOREACH_FOR_TYPE,
+    FOREACH_WITH_DECLARATION_FOR_TYPE
 };
 
 class For_statement_node : public Statement_node
@@ -313,16 +313,16 @@ class For_statement_node : public Statement_node
 // ---------- statement ----------
 
 enum statement_type {
-    EMPTY,
-    SIMPLE,
-    RETURN,
-    IF,
-    WHILE,
-    DO_WHILE,
-    FOR,
-    COMPOUND,
-    DECLARATION,
-    CLASS_DECLARATION_LIST
+    EMPTY_STATEMENT_TYPE,
+    SIMPLE_STATEMENT_TYPE,
+    RETURN_STATEMENT_TYPE,
+    IF_STATEMENT_TYPE,
+    WHILE_STATEMENT_TYPE,
+    DO_WHILE_STATEMENT_TYPE,
+    FOR_STATEMENT_TYPE,
+    COMPOUND_STATEMENT_TYPE,
+    DECLARATION_STATEMENT_TYPE,
+    CLASS_DECLARATION_LIST_STATEMENT_TYPE
 };
 
 class Statement_node
@@ -359,8 +359,8 @@ class Statement_list_node
 // ---------- class_statement ----------
 
 enum class_statement_type {
-    INTERFACE,
-    IMPLEMENTATION
+    INTERFACE_CLASS_STATEMENT_TYPE,
+    IMPLEMENTATION_CLASS_STATEMENT_TYPE
 };
 
 class Class_statement_node {
@@ -390,16 +390,10 @@ class Class_statement_list_node
 
 // ---------- class_interface ----------
 
-enum class_interface_type {
-    WITH_INHERITANCE,
-    WITHOUT_INHERITANCE
-};
-
 class Class_interface_node : public Class_statement_node
 {
     public:
         int id;
-        enum class_interface_type type;
         char *ClassName;
         char *SuperclassName;
         Interface_statement_node *Statement;
@@ -427,16 +421,10 @@ class Implementation_statement_node
 
 // ---------- class_implementation ----------
 
-enum class_implementation_type {
-    WITH_INHERITANCE,
-    WITHOUT_INHERITANCE
-};
-
 class Class_implementation_node : public Class_statement_node
 {
     public:
         int id;
-        enum class_implementation_type type;
         char *ClassName;
         char *SuperclassName;
         Implementation_statement_node *Staetment;
@@ -483,8 +471,8 @@ class Interface_declaration_list_node
 // ---------- method_declaration, class_method_declaration, instance_method_declaration ----------
 
 enum method_declaration_type {
-    CLASS,
-    INSTANCE
+    CLASS_METHOD_DECLARATION_TYPE,
+    INSTANCE_METHOD_DECLARATION_TYPE
 };
 
 class Method_declaration_node
@@ -514,8 +502,8 @@ class Implementation_definition_list_node
 // ---------- method_definition, class_method_definition, instance_method_definition ----------
 
 enum method_definition_type {
-    CLASS,
-    INSTANCE
+    CLASS_METHOD_DEFINITION_TYPE,
+    INSTANCE_METHOD_DEFINITION_TYPE
 };
 
 class Method_definition_node
@@ -578,8 +566,8 @@ class Property_node
 // ----------- attribute ----------
 
 enum attrribute_type {
-    READONLY,
-    READWRITE
+    READONLY_ATTRIBUTE_TYPE,
+    READWRITE_ATTRIBUTE_TYPE
 };
 
 class Attribute_node

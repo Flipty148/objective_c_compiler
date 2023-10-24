@@ -41,7 +41,7 @@ Numeric_constant_node* createIntegerConstantNode(int number)
 {
     Numeric_constant_node *res = new Numeric_constant_node;
     res->id = id++;
-    res->type = INTEGER_CONSTANT;
+    res->type = INTEGER_CONSTANT_TYPE;
     res->number->Int = number;
     return res;
 }
@@ -50,7 +50,7 @@ Numeric_constant_node* createFloatConstantNode(float number)
 {
     Numeric_constant_node *res = new Numeric_constant_node;
     res->id = id++;
-    res->type = FLOAT_CONSTANT;
+    res->type = FLOAT_CONSTANT_TYPE;
     res->number->Float = number;
     return res;
 }
@@ -178,7 +178,7 @@ Expression_node* createIdentifierExpressionNode(char *name)
 {
     Expression_node *res = new Expression_node;
     res->id = id++;
-    res->type = IDENTIFIER;
+    res->type = IDENTIFIER_EXPRESSION_TYPE;
     res->name = name;
     res->constant = NULL;
     res->Left = NULL;
@@ -190,7 +190,7 @@ Expression_node* createLiteralExpressionNode(Literal_node *value)
 {
     Expression_node *res = new Expression_node;
     res->id = id++;
-    res->type = LITERAL;
+    res->type = LITERAL_EXPRESSION_TYPE;
     res->name = NULL;
     res->constant->literal = value;
     res->Left = NULL;
@@ -202,7 +202,7 @@ Expression_node* createNumericConstantExpressionNode(Numeric_constant_node *valu
 {
     Expression_node *res = new Expression_node;
     res->id = id++;
-    res->type = NUMERIIC_CONSTANT;
+    res->type = NUMERIIC_CONSTANT_EXPRESSION_TYPE;
     res->name = NULL;
     res->constant->num = value;
     res->Left = NULL;
@@ -226,7 +226,7 @@ Expression_node* createSelfExpressionNode()
 {
     Expression_node *res = new Expression_node;
     res->id = id++;
-    res->type = expression_type::SELF;
+    res->type = SELF_EXPRESSION_TYPE;
     res->name = NULL;
     res->constant = NULL;
     res->Left = NULL;
@@ -354,7 +354,7 @@ For_statement_node* createForStatementNode(Expression_node *initExpression, Expr
 {
     For_statement_node *res = new For_statement_node;
     res->id = id++;
-    res->type = for_type::FOR;
+    res->type = FOR_FOR_TYPE;
     res->InitExpression = initExpression;
     res->ConditionExpression = condition;
     res->LoopExpression = loopExpression;
@@ -412,7 +412,7 @@ Statement_node* createDeclarationStatementNode(Declaration_node *declaration)
 {
     Statement_node *res = new Statement_node;
     res->id = id++;
-    res->type = DECLARATION;
+    res->type = DECLARATION_STATEMENT_TYPE;
     res->Expression = NULL;
     res->Statement = NULL;
     res->Declaration = declaration;
@@ -425,7 +425,7 @@ Statement_node* createClassDeclarationStatementNode(Class_declaration_list_node 
 {
     Statement_node *res = new Statement_node;
     res->id = id++;
-    res->type = CLASS_DECLARATION_LIST;
+    res->type = CLASS_DECLARATION_LIST_STATEMENT_TYPE;
     res->Expression = NULL;
     res->Statement = NULL;
     res->Declaration = NULL;
@@ -468,7 +468,7 @@ Class_statement_node* createInterfaceClassStatementNode(Class_interface_node *in
 {
     Class_statement_node *res = new Class_statement_node;
     res->id = id++;
-    res->type = INTERFACE;
+    res->type = INTERFACE_CLASS_STATEMENT_TYPE;
     res->statement->Interface = interface;
     res->Next = NULL;
     return res;
@@ -478,7 +478,7 @@ Class_statement_node* createImplementationClassStatementNode(Class_implementatio
 {
     Class_statement_node *res = new Class_statement_node;
     res->id = id++;
-    res->type = IMPLEMENTATION;
+    res->type = IMPLEMENTATION_CLASS_STATEMENT_TYPE;
     res->statement->Implementation = implementation;
     res->Next = NULL;
     return res;
@@ -506,11 +506,10 @@ Class_statement_list_node* addClassStatementListNode(Class_statement_list_node *
 
 // ---------- class_interface ----------
 
-Class_interface_node* createClassInterfaceNode(class_interface_type type, char *className, char *superclassName, Interface_statement_node *statement)
+Class_interface_node* createClassInterfaceNode(char *className, char *superclassName, Interface_statement_node *statement)
 {
     Class_interface_node *res = new Class_interface_node;
     res->id = id++;
-    res->type = type;
     res->ClassName = className;
     res->SuperclassName = superclassName;
     res->Statement = statement;
@@ -544,11 +543,10 @@ Implementation_statement_node* createImplementationStatementNode(Instance_variab
 
 // ---------- class_implementation ----------
 
-Class_implementation_node* createClassImplementationNode(class_implementation_type type, char *className, char *superclassName, Implementation_statement_node *statement)
+Class_implementation_node* createClassImplementationNode(char *className, char *superclassName, Implementation_statement_node *statement)
 {
     Class_implementation_node *res = new Class_implementation_node;
     res->id = id++;
-    res->type = type;
     res->ClassName = className;
     res->SuperclassName = superclassName;
     res->Staetment = statement;

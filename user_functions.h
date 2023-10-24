@@ -110,7 +110,7 @@ Class_statement_list_node* addClassStatementListNode(Class_statement_list_node *
 
 // -------------------- Классы --------------------
 // ---------- class_interface ----------
-Class_interface_node* createClassInterfaceNode(class_interface_type type, char *className, char *superclassName, Interface_statement_node *statement);
+Class_interface_node* createClassInterfaceNode(char *className, char *superclassName, Interface_statement_node *statement);
 
 // ---------- interface_statement ----------
 Interface_statement_node* createInterfaceStatementNode(Instance_variables_node *variables, Interface_declaration_list_node *declarationList);
@@ -119,7 +119,7 @@ Interface_statement_node* createInterfaceStatementNode(Instance_variables_node *
 Implementation_statement_node* createImplementationStatementNode(Instance_variables_node *variables, Implementation_definition_list_node *definitionList);
 
 // ---------- class_implementation ----------
-Class_implementation_node* createClassImplementationNode(class_implementation_type type, char *className, char *superclassName, Implementation_statement_node *statement);
+Class_implementation_node* createClassImplementationNode(char *className, char *superclassName, Implementation_statement_node *statement);
 
 // ---------- class_declaration_list, class_list ----------
 Class_list_node* createClassListNode(char *className);

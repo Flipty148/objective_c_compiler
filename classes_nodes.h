@@ -1,4 +1,10 @@
 #include <vector>
+#include <set>
+#include <iostream>
+using namespace std;
+int maxId = 0; // Глобальный id узла
+set<string> ClassNames; //Множество имен объявленных классов
+
 
 // -------------------- Типы --------------------
 
@@ -19,6 +25,9 @@ class Type_node
         int id;
         enum type_type type;
         char *ClassName;
+
+        static Type_node* createTypeNode(type_type type);
+        static Type_node* createClassTypeNode(type_type type, char *name);
 };
 
 // -------------------- Константы --------------------
@@ -40,7 +49,9 @@ class Numeric_constant_node
             int Int;
             float Float;
         } *number;
-        
+
+        static Numeric_constant_node* createIntegerConstantNode(int number);
+        static Numeric_constant_node* createFloatConstantNode(float number);
 };
 
 // ---------- literal ----------
@@ -57,6 +68,8 @@ class Literal_node
         int id;
         enum literal_type type;
         char *value;
+
+        static Literal_node* createLiteralNode(literal_type type, char *value);
 };
 
 // -------------------- Объявления --------------------
@@ -70,6 +83,8 @@ class Declaration_node
         Type_node *type;
         Init_declarator_list_node *init_declarator_list;
         Declaration_node *Next;
+
+        static Declaration_node* createDeclarationNode(Type_node *type, Init_declarator_list_node *initDeclarators);
 };
 
 
@@ -80,7 +95,10 @@ class Declaration_list_node
     public:
         int id;
         Declaration_node *First;
-        Declaration_node *Last;        
+        Declaration_node *Last;
+
+        static Declaration_list_node* createDeclarationListNode(Declaration_node *declaration);
+        static Declaration_list_node* addDeclarationListNode(Declaration_list_node *list, Declaration_node *declaration);        
 };
 
 // ---------- init_declarator_list ----------
@@ -91,6 +109,9 @@ class Init_declarator_list_node
         int id;
         Init_declarator_node *First;
         Init_declarator_node *Last;
+
+        static Init_declarator_list_node* createInitDeclaratorListNode(Init_declarator_node *initDeclarator);
+        static Init_declarator_list_node* addInitDeclaratorListNode(Init_declarator_list_node *list, Init_declarator_node *initDeclarator);
 };
 
 // ---------- init_declarator ----------
@@ -108,6 +129,8 @@ class Init_declarator_node
         char *name;
         Expression_node *expression;
         Init_declarator_node *Next;
+
+        static Init_declarator_node* createInitDeclaratorNode(init_declarator_type type, char *name, Expression_node *expression);
 };
 
 // ---------- parameter_type_list ----------
@@ -118,6 +141,8 @@ class Parameter_type_list_node
         int id;
         Parameter_list_node *ParameterList;
         bool includeElipsis = false;
+
+        static Parameter_type_list_node* createParameterTypeListNode(Parameter_list_node *list, bool includeElipsis);
 };
 
 // ---------- parameter_list ----------
@@ -128,6 +153,9 @@ class Parameter_list_node
         int id;
         Parameter_declaration_node *First;
         Parameter_declaration_node *Last;
+
+        static Parameter_list_node* createParameterListNode(Parameter_declaration_node *parameter);
+        static Parameter_list_node* addParameterListNode(Parameter_list_node *list, Parameter_declaration_node *parameter);
 };
 
 // ---------- parameter_declaration ----------
@@ -139,6 +167,8 @@ class Parameter_declaration_node
         Type_node *type;
         char *name;
         Parameter_declaration_node *Next;
+
+        static Parameter_declaration_node* createParameterDeclarationNode(Type_node *type, char *name);
 };
 
 // -------------------- Выражения --------------------
@@ -182,6 +212,13 @@ class Expression_node
         } *constant;
         Expression_node *Left;
         Expression_node *Right;
+
+        static Expression_node* createIdentifierExpressionNode(char *name);
+        static Expression_node* createLiteralExpressionNode(Literal_node *value);
+        static Expression_node* createNumericConstantExpressionNode(Numeric_constant_node *value);
+        static Expression_node* createSimpleExpressionNode(expression_type type, Expression_node *expression);
+        static Expression_node* createSelfExpressionNode();
+        static Expression_node* createOperationExpressionNode(expression_type type, Expression_node *leftExpression, Expression_node *rightExpression);
 };
 
 // ---------- message_expression ----------
@@ -192,6 +229,8 @@ class Message_expression_node : public Expression_node
         int id;
         Receiver_node *Receiver;
         Message_selector_node *Arguments;
+
+        static Message_expression_node* createMessageExpressionNode(Receiver_node *receiver, Message_selector_node *arguments);
 };
 
 // ---------- receiver ----------
@@ -207,6 +246,8 @@ class Receiver_node
     public:
         int id;
         char *name;
+
+        static Receiver_node* createReceiverNode(receiver_type type, char *name);
 };
 
 // ---------- message_selector -----------
@@ -217,6 +258,8 @@ class Message_selector_node
         int id;
         char *MethodName;
         Keyword_argument_list_node *Arguments;
+
+        static Message_selector_node* createMethodSelectorNode(char *methodName, Keyword_argument_list_node *arguments);
 };
 
 // ---------- keyword_argument_list ----------
@@ -227,6 +270,9 @@ class Keyword_argument_list_node
         int id;
         Keyword_argument_node *First;
         Keyword_argument_node *Last;
+
+        static Keyword_argument_list_node* createKeywordArgumentListNode(Keyword_argument_node *argument);
+        static Keyword_argument_list_node* addKeywordArgumentListNode(Keyword_argument_list_node *list, Keyword_argument_node *argument);
 };
 
 // ---------- keyword_argument ----------
@@ -244,6 +290,8 @@ class Keyword_argument_node
         char *name;
         Expression_node *expression;
         Keyword_argument_node *Next;
+
+        static Keyword_argument_node* createKeywordArgumentNode(keyword_argument_type type, char *identifier, Expression_node *expression);
 };
 
 // -------------------- Управляющие структуры: развилки --------------------
@@ -263,6 +311,8 @@ class If_statement_node : public Statement_node
         Expression_node *Condition;
         Statement_node *TrueBranch;
         Statement_node *FalseBranch;
+
+        static If_statement_node* createIfStatementNode(if_type type, Expression_node *condition, Statement_node *trueBranch, Statement_node *falseBranch);
 };
 
 // -------------------- Управляющие структуры: циклы --------------------
@@ -275,6 +325,8 @@ class While_statement_node : public Statement_node
         int id;
         Expression_node *LoopCondition;
         Statement_node *LoopBody;
+
+        static While_statement_node* createWhileStatementNode(Expression_node *condition, Statement_node *body);
 };
 
 // ---------- do_while_statement ----------
@@ -285,6 +337,8 @@ class Do_while_statement_node : public Statement_node
         int id;
         Expression_node *LoopCondition;
         Statement_node *LoopBody;
+
+        static Do_while_statement_node* createDoWhileStatementNode(Expression_node *condition, Statement_node *body);
 };
 
 // ---------- for_statement ----------
@@ -306,6 +360,9 @@ class For_statement_node : public Statement_node
         Statement_node *LoopBody;
         char *name;
         Type_node *NameType;
+
+        static For_statement_node* createForStatementNode(Expression_node *initExpression, Expression_node *condition, Expression_node *loopExpression, Statement_node *body);
+        static For_statement_node* createForeachStatementNode(for_type type, Type_node *varType, char *loopVar, Expression_node *expression, Statement_node *body);
 };
 
 // -------------------- Операторы --------------------
@@ -335,6 +392,11 @@ class Statement_node
         Declaration_node *Declaration;
         Class_declaration_list_node *Class_declaration;
         Statement_node *Next;
+
+        static Statement_node* createSimpleStatementNode(statement_type type, Expression_node *expression);
+        static Statement_node* createComplexStatementNode(statement_type type, Statement_node *statement);
+        static Statement_node* createDeclarationStatementNode(Declaration_node *declaration);
+        static Statement_node* createClassDeclarationStatementNode(Class_declaration_list_node *classDeclarationList);
 };
 
 // ---------- compound_statement ----------
@@ -344,6 +406,8 @@ class Compound_statement_node : public Statement_node
     public:
         int id;
         Statement_list_node *Statements;
+
+        static Compound_statement_node* createCompoundStatementNode(Statement_list_node *statements);
 };
 
 // ---------- statement_list ----------
@@ -354,6 +418,9 @@ class Statement_list_node
         int id;
         Statement_node *First;
         Statement_node *Last;
+
+        static Statement_list_node* createStatementListNode(Statement_node *statement);
+        static Statement_list_node* addStatementListNode(Statement_list_node *list, Statement_node *statement);
 };
 
 // ---------- class_statement ----------
@@ -372,7 +439,10 @@ class Class_statement_node {
             Class_interface_node *Interface;
             Class_implementation_node *Implementation;
         } *statement; 
-        Class_statement_node *Next;     
+        Class_statement_node *Next;
+
+        static Class_statement_node* createInterfaceClassStatementNode(Class_interface_node *interface);
+        static Class_statement_node* createImplementationClassStatementNode(Class_implementation_node *implementation);     
 };
 
 // ---------- class_statement_list ----------
@@ -383,6 +453,9 @@ class Class_statement_list_node
         int id;
         Class_statement_node *First;
         Class_statement_node *Last;
+
+        static Class_statement_list_node* createClassStatementListNode(Class_statement_node *ClassStatement);
+        static Class_statement_list_node* addClassStatementListNode(Class_statement_list_node *list, Class_statement_node *ClassStatement);
 };
 
 
@@ -397,6 +470,8 @@ class Class_interface_node : public Class_statement_node
         char *ClassName;
         char *SuperclassName;
         Interface_statement_node *Statement;
+
+        static Class_interface_node* createClassInterfaceNode(char *className, char *superclassName, Interface_statement_node *statement);
 };
 
 // ---------- interface_statement ----------
@@ -407,6 +482,8 @@ class Interface_statement_node
         int id;
         Instance_variables_node *Variables;
         Interface_declaration_list_node *Declaration_list;
+
+        static Interface_statement_node* createInterfaceStatementNode(Instance_variables_node *variables, Interface_declaration_list_node *declarationList);
 };
 
 // ---------- implementation_statement ----------
@@ -417,6 +494,8 @@ class Implementation_statement_node
         int id;
         Instance_variables_node *Variables;
         Implementation_definition_list_node *Declaration_list;
+
+        static Implementation_statement_node* createImplementationStatementNode(Instance_variables_node *variables, Implementation_definition_list_node *definitionList);
 };
 
 // ---------- class_implementation ----------
@@ -428,6 +507,8 @@ class Class_implementation_node : public Class_statement_node
         char *ClassName;
         char *SuperclassName;
         Implementation_statement_node *Staetment;
+
+        static Class_implementation_node* createClassImplementationNode(char *className, char *superclassName, Implementation_statement_node *statement);
 };
 
 // ---------- class_declaration_list и class_list ----------
@@ -437,6 +518,8 @@ class Class_declaration_list_node
     public:
         int id;
         Class_list_node *List;
+
+        static Class_declaration_list_node* createClassDeclarationListNode(Class_list_node *list);
 };
 
 class Class_list_node
@@ -444,6 +527,9 @@ class Class_list_node
     public:
         int id;
     std::vector<char*> *Class_names;
+
+    static Class_list_node* createClassListNode(char *className);
+    static Class_list_node* addClassListNode(Class_list_node *list, char *className);
 };
 
 // ---------- instance_variables ----------
@@ -453,6 +539,8 @@ class Instance_variables_node
     public:
         int id;
         Declaration_list_node *DeclarationList;
+
+        static Instance_variables_node* createInstanceVariablesNode(Declaration_list_node *declarationList);
 };
 
 // ---------- interface_declaration_list ----------
@@ -466,6 +554,13 @@ class Interface_declaration_list_node
             Property_node *property;
             Method_declaration_node *method_declaration;
         } *First, *Last;
+
+        static Interface_declaration_list_node* createDeclarationInterfaceDeclarationListNode(Declaration_node *interfaceDeclaration);
+        static Interface_declaration_list_node* createPropertyInterfaceDeclarationListNode(Property_node *interfaceDeclaration);
+        static Interface_declaration_list_node* createMethodDeclarationInterfaceDeclarationListNode(Method_declaration_node *interfaceDeclaration);
+        static Interface_declaration_list_node* addDeclarationInterfaceDeclarationListNode(Interface_declaration_list_node *list, Declaration_node *interfaceDeclaration);
+        static Interface_declaration_list_node* addPropertyInterfaceDeclarationListNode(Interface_declaration_list_node *list, Property_node *interfaceDeclaration);
+        static Interface_declaration_list_node* addMethodDeclarationInterfaceDeclarationListNode(Interface_declaration_list_node *list, Method_declaration_node *interfaceDeclaration);
 };
 
 // ---------- method_declaration, class_method_declaration, instance_method_declaration ----------
@@ -483,6 +578,8 @@ class Method_declaration_node
         Type_node *MethodType;
         Method_selector_node *MethodSelector;
         Method_declaration_node *Next;
+
+        static Method_declaration_node* createMethodDeclarationNode(method_declaration_type type, Type_node *methodType, Method_selector_node *selector);
 };
 
 
@@ -497,6 +594,13 @@ class Implementation_definition_list_node
             Property_node *property;
             Method_definition_node *method_definition;
         } *First, *Last;
+
+        static Implementation_definition_list_node* createDeclarationImplementationDefinitionListNode(Declaration_node *interfaceDeclaration);
+        static Implementation_definition_list_node* createPropertyImplementationDefinitionListNode(Property_node *interfaceDeclaration);
+        static Implementation_definition_list_node* createMethodDeclarationImplementationDefinitionListNode(Method_definition_node *interfaceDeclaration);
+        static Implementation_definition_list_node* addDeclarationImplementationDefinitionListNode(Implementation_definition_list_node *list, Declaration_node *interfaceDeclaration);
+        static Implementation_definition_list_node* addPropertyImplementationDefinitionListNode(Implementation_definition_list_node *list, Property_node *interfaceDeclaration);
+        static Implementation_definition_list_node* addMethodDeclarationImplementationDefinitionListNode(Implementation_definition_list_node *list, Method_definition_node *interfaceDeclaration);
 };
 
 // ---------- method_definition, class_method_definition, instance_method_definition ----------
@@ -516,6 +620,8 @@ class Method_definition_node
         Declaration_list_node *DeclarationList;
         Compound_statement_node *MethodBody;
         Method_definition_node *Next;
+
+        static Method_definition_node* createMethodDefinitionNode(method_definition_type type, Type_node *methodType, Method_selector_node *selector, Declaration_list_node *declarationList, Compound_statement_node *methodBody);
 };
 
 // ---------- method_selector ----------
@@ -526,7 +632,9 @@ class Method_selector_node
         int id;
         char *MethodName;
         Keyword_selector_node *KeywordSelector;
-        Parameter_list_node *Parameter_list_node;
+        Parameter_list_node *ParameterListNode;
+
+        static Method_selector_node* createMethodSelectorNode(char *methodName, Keyword_selector_node *selector, Parameter_list_node *parameters);
 };
 
 // ---------- keyword_selector ----------
@@ -537,6 +645,9 @@ class Keyword_selector_node
         int id;
         Keyword_declaration_node *First;
         Keyword_declaration_node *Last;
+
+        static Keyword_selector_node* createKeywordSelectorNode(Keyword_declaration_node *declaration);
+        static Keyword_selector_node* addKeywordSelectorNode(Keyword_selector_node *list, Keyword_declaration_node *declaration);
 };
 
 // ---------- keyword_declaration ----------
@@ -549,6 +660,8 @@ class Keyword_declaration_node
         char *Identifier;
         char *KeywordName;
         Keyword_declaration_node *Next;
+
+        static Keyword_declaration_node* createKeywordDeclarationNode(Type_node *type, char *identifier, char *keywordName);
 };
 
 // ---------- property ----------
@@ -561,6 +674,8 @@ class Property_node
         Type_node *type;
         char *Name;
         Property_node *Next;
+
+        static Property_node* createPropertyNode(Attribute_node *attribute, Type_node *type, char *name);
 };
 
 // ----------- attribute ----------
@@ -575,6 +690,8 @@ class Attribute_node
     public:
         int id;
         enum attrribute_type type;
+
+        static Attribute_node* createAttributeNode(attrribute_type type);
 };
 
 
@@ -586,4 +703,6 @@ class Program_node
         int id;
         Statement_list_node *Statements;
         Class_statement_list_node *ClassStatements;
+
+        static Program_node* createProgramNode(Statement_list_node *Statements, Class_statement_list_node *ClassStatements);
 };

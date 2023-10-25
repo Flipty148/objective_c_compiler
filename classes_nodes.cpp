@@ -24,7 +24,7 @@ Type_node* Type_node::createTypeNode(type_type type)
     return res;
 }
 
-Type_node* Type_node::createClassTypeNode(type_type type, char *name)
+Type_node* Type_node::createTypeNodeFromClassName(type_type type, char *name)
 {
     Type_node *res = new Type_node;
     res->id = maxId++;
@@ -37,7 +37,7 @@ Type_node* Type_node::createClassTypeNode(type_type type, char *name)
 
 // ---------- numeric_constant ----------
 
-Numeric_constant_node* Numeric_constant_node::createIntegerConstantNode(int number)
+Numeric_constant_node* Numeric_constant_node::createNumericConstantNodeFromInteger(int number)
 {
     Numeric_constant_node *res = new Numeric_constant_node;
     res->id = maxId++;
@@ -46,7 +46,7 @@ Numeric_constant_node* Numeric_constant_node::createIntegerConstantNode(int numb
     return res;
 }
 
-Numeric_constant_node* Numeric_constant_node::createFloatConstantNode(float number)
+Numeric_constant_node* Numeric_constant_node::createNumericConstantNodeFromFloat(float number)
 {
     Numeric_constant_node *res = new Numeric_constant_node;
     res->id = maxId++;
@@ -91,7 +91,7 @@ Declaration_list_node* Declaration_list_node::createDeclarationListNode(Declarat
     return res;
 }
 
-Declaration_list_node* Declaration_list_node::addDeclarationListNode(Declaration_list_node *list, Declaration_node *declaration)
+Declaration_list_node* Declaration_list_node::addToDeclarationListNode(Declaration_list_node *list, Declaration_node *declaration)
 {
     list->Last->Next = declaration;
     list->Last = declaration;
@@ -109,7 +109,7 @@ Init_declarator_list_node* Init_declarator_list_node::createInitDeclaratorListNo
     return res;
 }
 
-Init_declarator_list_node* Init_declarator_list_node::addInitDeclaratorListNode(Init_declarator_list_node *list, Init_declarator_node *initDeclarator)
+Init_declarator_list_node* Init_declarator_list_node::addToInitDeclaratorListNode(Init_declarator_list_node *list, Init_declarator_node *initDeclarator)
 {
     list->Last->Next = initDeclarator;
     list->Last = initDeclarator;
@@ -151,7 +151,7 @@ Parameter_list_node* Parameter_list_node::createParameterListNode(Parameter_decl
     return res;
 }
 
-Parameter_list_node* Parameter_list_node::addParameterListNode(Parameter_list_node *list, Parameter_declaration_node *parameter)
+Parameter_list_node* Parameter_list_node::addToParameterListNode(Parameter_list_node *list, Parameter_declaration_node *parameter)
 {
     list->Last->Next = parameter;
     list->Last = parameter;
@@ -174,7 +174,7 @@ Parameter_declaration_node* Parameter_declaration_node::createParameterDeclarati
 
 // ---------- expression ----------
 
-Expression_node* Expression_node::createIdentifierExpressionNode(char *name)
+Expression_node* Expression_node::createExpressionNodeFromIdentifier(char *name)
 {
     Expression_node *res = new Expression_node;
     res->id = maxId++;
@@ -186,7 +186,7 @@ Expression_node* Expression_node::createIdentifierExpressionNode(char *name)
     return res;
 }
 
-Expression_node* Expression_node::createLiteralExpressionNode(Literal_node *value)
+Expression_node* Expression_node::createExpressionNodeFromLiteral(Literal_node *value)
 {
     Expression_node *res = new Expression_node;
     res->id = maxId++;
@@ -198,7 +198,7 @@ Expression_node* Expression_node::createLiteralExpressionNode(Literal_node *valu
     return res;
 }
 
-Expression_node* Expression_node::createNumericConstantExpressionNode(Numeric_constant_node *value)
+Expression_node* Expression_node::createExpressionNodeFromNumericConstant(Numeric_constant_node *value)
 {
     Expression_node *res = new Expression_node;
     res->id = maxId++;
@@ -210,7 +210,7 @@ Expression_node* Expression_node::createNumericConstantExpressionNode(Numeric_co
     return res;
 }
 
-Expression_node* Expression_node::createSimpleExpressionNode(expression_type type, Expression_node *expression)
+Expression_node* Expression_node::createExpressionNodeFromSimpleExpression(expression_type type, Expression_node *expression)
 {
     Expression_node *res = new Expression_node;
     res->id = maxId++;
@@ -222,7 +222,7 @@ Expression_node* Expression_node::createSimpleExpressionNode(expression_type typ
     return res;
 }
 
-Expression_node* Expression_node::createSelfExpressionNode()
+Expression_node* Expression_node::createExpressionNodeFromSelf()
 {
     Expression_node *res = new Expression_node;
     res->id = maxId++;
@@ -234,7 +234,7 @@ Expression_node* Expression_node::createSelfExpressionNode()
     return res;
 }
 
-Expression_node* Expression_node::createOperationExpressionNode(expression_type type, Expression_node *leftExpression, Expression_node *rightExpression)
+Expression_node* Expression_node::createExpressionNodeFromOperator(expression_type type, Expression_node *leftExpression, Expression_node *rightExpression)
 {
     Expression_node *res = new Expression_node;
     res->id = maxId++;
@@ -269,7 +269,7 @@ Receiver_node* Receiver_node::createReceiverNode(receiver_type type, char *name)
 
 // ---------- message_selector ----------
 
-Message_selector_node* Message_selector_node::createMethodSelectorNode(char *methodName, Keyword_argument_list_node *arguments)
+Message_selector_node* Message_selector_node::createMessageSelectorNode(char *methodName, Keyword_argument_list_node *arguments)
 {
     Message_selector_node *res = new Message_selector_node;
     res->id = maxId++;
@@ -289,7 +289,7 @@ Keyword_argument_list_node* Keyword_argument_list_node::createKeywordArgumentLis
     return res;
 }
 
-Keyword_argument_list_node* Keyword_argument_list_node::addKeywordArgumentListNode(Keyword_argument_list_node *list, Keyword_argument_node *argument)
+Keyword_argument_list_node* Keyword_argument_list_node::addToKeywordArgumentListNode(Keyword_argument_list_node *list, Keyword_argument_node *argument)
 {
     list->Last->Next = argument;
     list->Last = argument;
@@ -364,7 +364,7 @@ For_statement_node* For_statement_node::createForStatementNode(Expression_node *
     return res;
 }
 
-For_statement_node* For_statement_node::createForeachStatementNode(for_type type, Type_node *varType, char *loopVar, Expression_node *expression, Statement_node *body)
+For_statement_node* For_statement_node::createForStatementNodeFromForeach(for_type type, Type_node *varType, char *loopVar, Expression_node *expression, Statement_node *body)
 {
     For_statement_node *res = new For_statement_node;
     res->id = maxId++;
@@ -382,7 +382,7 @@ For_statement_node* For_statement_node::createForeachStatementNode(for_type type
 
 // ---------- statement ----------
 
-Statement_node* Statement_node::createSimpleStatementNode(statement_type type, Expression_node *expression)
+Statement_node* Statement_node::createStatementNodeFromSimpleStatement(statement_type type, Expression_node *expression)
 {
     Statement_node *res = new Statement_node;
     res->id = maxId++;
@@ -395,7 +395,7 @@ Statement_node* Statement_node::createSimpleStatementNode(statement_type type, E
     return res;
 }
 
-Statement_node* Statement_node::createComplexStatementNode(statement_type type, Statement_node *statement)
+Statement_node* Statement_node::createStatementNodeFromComplexStatement(statement_type type, Statement_node *statement)
 {
     Statement_node *res = new Statement_node;
     res->id = maxId++;
@@ -408,7 +408,7 @@ Statement_node* Statement_node::createComplexStatementNode(statement_type type, 
     return res;
 }
 
-Statement_node* Statement_node::createDeclarationStatementNode(Declaration_node *declaration)
+Statement_node* Statement_node::createStatementNodeFromDeclaration(Declaration_node *declaration)
 {
     Statement_node *res = new Statement_node;
     res->id = maxId++;
@@ -421,7 +421,7 @@ Statement_node* Statement_node::createDeclarationStatementNode(Declaration_node 
     return res;
 }
 
-Statement_node* Statement_node::createClassDeclarationStatementNode(Class_declaration_list_node *classDeclarationList)
+Statement_node* Statement_node::createStatementNodeFromClassDeclaration(Class_declaration_list_node *classDeclarationList)
 {
     Statement_node *res = new Statement_node;
     res->id = maxId++;
@@ -455,7 +455,7 @@ Statement_list_node* Statement_list_node::createStatementListNode(Statement_node
     return res;
 }
 
-Statement_list_node* Statement_list_node::addStatementListNode(Statement_list_node *list, Statement_node *statement)
+Statement_list_node* Statement_list_node::addToStatementListNode(Statement_list_node *list, Statement_node *statement)
 {
     list->Last->Next = statement;
     list->Last = statement;
@@ -464,7 +464,7 @@ Statement_list_node* Statement_list_node::addStatementListNode(Statement_list_no
 
 // ----------- class_statement ----------
 
-Class_statement_node* Class_statement_node::createInterfaceClassStatementNode(Class_interface_node *interface)
+Class_statement_node* Class_statement_node::createClassStatementNodeFromInterface(Class_interface_node *interface)
 {
     Class_statement_node *res = new Class_statement_node;
     res->id = maxId++;
@@ -474,7 +474,7 @@ Class_statement_node* Class_statement_node::createInterfaceClassStatementNode(Cl
     return res;
 }
 
-Class_statement_node* Class_statement_node::createImplementationClassStatementNode(Class_implementation_node *implementation)
+Class_statement_node* Class_statement_node::createClassStatementNodeFromImplementation(Class_implementation_node *implementation)
 {
     Class_statement_node *res = new Class_statement_node;
     res->id = maxId++;
@@ -495,7 +495,7 @@ Class_statement_list_node* Class_statement_list_node::createClassStatementListNo
     return res;
 }
 
-Class_statement_list_node* Class_statement_list_node::addClassStatementListNode(Class_statement_list_node *list, Class_statement_node *ClassStatement)
+Class_statement_list_node* Class_statement_list_node::addToClassStatementListNode(Class_statement_list_node *list, Class_statement_node *ClassStatement)
 {
     list->Last->Next = ClassStatement;
     list->Last = ClassStatement;
@@ -567,7 +567,7 @@ Class_list_node* Class_list_node::createClassListNode(char *className)
     return res;
 }
 
-Class_list_node* Class_list_node::addClassListNode(Class_list_node *list, char *className)
+Class_list_node* Class_list_node::addToClassListNode(Class_list_node *list, char *className)
 {
     list->Class_names->push_back(className);
     ClassNames.insert(className);
@@ -594,7 +594,7 @@ Instance_variables_node* Instance_variables_node::createInstanceVariablesNode(De
 
 // ---------- interface_declaration_list ----------
 
-Interface_declaration_list_node* Interface_declaration_list_node::createDeclarationInterfaceDeclarationListNode(Declaration_node *interfaceDeclaration)
+Interface_declaration_list_node* Interface_declaration_list_node::createInterfaceDeclarationListNodeFromDeclaration(Declaration_node *interfaceDeclaration)
 {
     Interface_declaration_list_node *res = new Interface_declaration_list_node;
     res->id = maxId++;
@@ -603,7 +603,7 @@ Interface_declaration_list_node* Interface_declaration_list_node::createDeclarat
     return res;
 }
 
-Interface_declaration_list_node* Interface_declaration_list_node::createPropertyInterfaceDeclarationListNode(Property_node *interfaceDeclaration)
+Interface_declaration_list_node* Interface_declaration_list_node::createInterfaceDeclarationListNodeFromProperty(Property_node *interfaceDeclaration)
 {
     Interface_declaration_list_node *res = new Interface_declaration_list_node;
     res->id = maxId++;
@@ -612,7 +612,7 @@ Interface_declaration_list_node* Interface_declaration_list_node::createProperty
     return res;
 }
 
-Interface_declaration_list_node* Interface_declaration_list_node::createMethodDeclarationInterfaceDeclarationListNode(Method_declaration_node *interfaceDeclaration)
+Interface_declaration_list_node* Interface_declaration_list_node::createInterfaceDeclarationListNodeFromMethodDeclaration(Method_declaration_node *interfaceDeclaration)
 {
     Interface_declaration_list_node *res = new Interface_declaration_list_node;
     res->id = maxId++;
@@ -621,21 +621,21 @@ Interface_declaration_list_node* Interface_declaration_list_node::createMethodDe
     return res;
 }
 
-Interface_declaration_list_node* Interface_declaration_list_node::addDeclarationInterfaceDeclarationListNode(Interface_declaration_list_node *list, Declaration_node *interfaceDeclaration)
+Interface_declaration_list_node* Interface_declaration_list_node::addDeclarationToInterfaceDeclarationListNode(Interface_declaration_list_node *list, Declaration_node *interfaceDeclaration)
 {
     list->Last->declaration->Next = interfaceDeclaration;
     list->Last->declaration = interfaceDeclaration;
     return list;
 }
 
-Interface_declaration_list_node* Interface_declaration_list_node::addPropertyInterfaceDeclarationListNode(Interface_declaration_list_node *list, Property_node *interfaceDeclaration)
+Interface_declaration_list_node* Interface_declaration_list_node::addPropertyToInterfaceDeclarationListNode(Interface_declaration_list_node *list, Property_node *interfaceDeclaration)
 {
     list->Last->property->Next = interfaceDeclaration;
     list->Last->property = interfaceDeclaration;
     return list;
 }
 
-Interface_declaration_list_node* Interface_declaration_list_node::addMethodDeclarationInterfaceDeclarationListNode(Interface_declaration_list_node *list, Method_declaration_node *interfaceDeclaration)
+Interface_declaration_list_node* Interface_declaration_list_node::addMethodDeclarationToInterfaceDeclarationListNode(Interface_declaration_list_node *list, Method_declaration_node *interfaceDeclaration)
 {
     list->Last->method_declaration->Next = interfaceDeclaration;
     list->Last->method_declaration = interfaceDeclaration;
@@ -656,7 +656,7 @@ Method_declaration_node* Method_declaration_node::createMethodDeclarationNode(me
 
 // ---------- implementation_definition_list ----------
 
-Implementation_definition_list_node* Implementation_definition_list_node::createDeclarationImplementationDefinitionListNode(Declaration_node *interfaceDeclaration)
+Implementation_definition_list_node* Implementation_definition_list_node::createImplementationDefinitionListNodeFromDeclaration(Declaration_node *interfaceDeclaration)
 {
     Implementation_definition_list_node *res = new Implementation_definition_list_node;
     res->id = maxId++;
@@ -665,7 +665,7 @@ Implementation_definition_list_node* Implementation_definition_list_node::create
     return res;
 }
 
-Implementation_definition_list_node* Implementation_definition_list_node::createPropertyImplementationDefinitionListNode(Property_node *interfaceDeclaration)
+Implementation_definition_list_node* Implementation_definition_list_node::createImplementationDefinitionListNodeFromProperty(Property_node *interfaceDeclaration)
 {
     Implementation_definition_list_node *res = new Implementation_definition_list_node;
     res->id = maxId++;
@@ -674,7 +674,7 @@ Implementation_definition_list_node* Implementation_definition_list_node::create
     return res;
 }
 
-Implementation_definition_list_node* Implementation_definition_list_node::createMethodDeclarationImplementationDefinitionListNode(Method_definition_node *interfaceDeclaration)
+Implementation_definition_list_node* Implementation_definition_list_node::createImplementationDefinitionListNodeFromMethodDeclaration(Method_definition_node *interfaceDeclaration)
 {
     Implementation_definition_list_node *res = new Implementation_definition_list_node;
     res->id = maxId++;
@@ -683,21 +683,21 @@ Implementation_definition_list_node* Implementation_definition_list_node::create
     return res;
 }
 
-Implementation_definition_list_node* Implementation_definition_list_node::addDeclarationImplementationDefinitionListNode(Implementation_definition_list_node *list, Declaration_node *interfaceDeclaration)
+Implementation_definition_list_node* Implementation_definition_list_node::addDeclarationToImplementationDefinitionListNode(Implementation_definition_list_node *list, Declaration_node *interfaceDeclaration)
 {
     list->Last->declaration->Next = interfaceDeclaration;
     list->Last->declaration = interfaceDeclaration;
     return list;
 }
 
-Implementation_definition_list_node* Implementation_definition_list_node::addPropertyImplementationDefinitionListNode(Implementation_definition_list_node *list, Property_node *interfaceDeclaration)
+Implementation_definition_list_node* Implementation_definition_list_node::addPropertyToImplementationDefinitionListNode(Implementation_definition_list_node *list, Property_node *interfaceDeclaration)
 {
     list->Last->property->Next = interfaceDeclaration;
     list->Last->property = interfaceDeclaration;
     return list;
 }
 
-Implementation_definition_list_node* Implementation_definition_list_node::addMethodDeclarationImplementationDefinitionListNode(Implementation_definition_list_node *list, Method_definition_node *interfaceDeclaration)
+Implementation_definition_list_node* Implementation_definition_list_node::addMethodDeclarationToImplementationDefinitionListNode(Implementation_definition_list_node *list, Method_definition_node *interfaceDeclaration)
 {
     list->Last->method_definition->Next = interfaceDeclaration;
     list->Last->method_definition = interfaceDeclaration;
@@ -742,7 +742,7 @@ Keyword_selector_node* Keyword_selector_node::createKeywordSelectorNode(Keyword_
     return res;
 }
 
-Keyword_selector_node* Keyword_selector_node::addKeywordSelectorNode(Keyword_selector_node *list, Keyword_declaration_node *declaration)
+Keyword_selector_node* Keyword_selector_node::addToKeywordSelectorNode(Keyword_selector_node *list, Keyword_declaration_node *declaration)
 {
     list->Last->Next = declaration;
     list->Last = declaration;

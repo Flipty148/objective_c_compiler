@@ -129,17 +129,6 @@ Init_declarator_node* Init_declarator_node::createInitDeclaratorNode(init_declar
     return res;
 }
 
-// ---------- parameter_type_list ----------
-
-Parameter_type_list_node* Parameter_type_list_node::createParameterTypeListNode(Parameter_list_node *list, bool includeElipsis)
-{
-    Parameter_type_list_node *res = new Parameter_type_list_node;
-    res->id = maxId++;
-    res->ParameterList = list;
-    res->includeElipsis = includeElipsis;
-    return res;
-}
-
 // ---------- parameter_list ----------
 
 Parameter_list_node* Parameter_list_node::createParameterListNode(Parameter_declaration_node *parameter)

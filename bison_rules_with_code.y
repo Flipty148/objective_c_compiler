@@ -18,7 +18,6 @@
 	Declaration_list_node *Declaration_list;
 	Init_declarator_list_node *Init_declarator_list;
 	Init_declarator_node *Init_declarator;
-	Parameter_type_list_node *Parameter_type_list;
 	Parameter_list_node *Parameter_list;
 	Parameter_declaration_node *Parameter_declaration;
 	Expression_node *Expression;
@@ -86,7 +85,6 @@
 %token <NSString_constant> NSSTRING_CONSTANT
 %token <Identifier> IDENTIFIER
 %token <Identifier> CLASS_NAME
-%token ELIPSIS
 
 %type <Type> type method_type
 %type <Numeric_constant> numeric_constant
@@ -95,7 +93,6 @@
 %type <Declaration_list> declaration_list_e declaration_list
 %type <Init_declarator_list> init_declarator_list_e init_declarator_list
 %type <Init_declarator> init_declarator
-%type <Parameter_type_list> parameter_type_list
 %type <Parameter_list> parameter_list
 %type <Parameter_declaration> parameter_declaration
 %type <Expression> expression expression_e
@@ -183,10 +180,6 @@ init_declarator_list: init_declarator							{$$ = Init_declarator_list_node::cre
 init_declarator: IDENTIFIER					{$$ = Init_declarator_node::createInitDeclaratorNode(SIMPLE_DECLARATOR_TYPE, $1, NULL);}
 			   | IDENTIFIER '=' expression	{$$ = Init_declarator_node::createInitDeclaratorNode(DECLARATOR_WITH_INITIALIZING_TYPE, $1, $3);}
 			   ;
-
-parameter_type_list: parameter_list					{$$ = Parameter_type_list_node::createParameterTypeListNode($1, false);}
-				   | parameter_list ',' ELIPSIS		{$$ = Parameter_type_list_node::createParameterTypeListNode($1, true);}
-				   ;
 
 parameter_list: parameter_declaration						{$$ = Parameter_list_node::createParameterListNode($1);}
 			  | parameter_list ',' parameter_declaration	{$$ = Parameter_list_node::addToParameterListNode($1, $3);}
@@ -372,7 +365,7 @@ instance_method_definition: '-' method_type method_selector declaration_list_e c
 
 method_selector: IDENTIFIER									{$$ = Method_selector_node::createMethodSelectorNode($1, NULL, NULL);}
 			   | keyword_selector							{$$ = Method_selector_node::createMethodSelectorNode(NULL, $1, NULL);}
-			   | keyword_selector ',' parameter_type_list	{$$ = Method_selector_node::createMethodSelectorNode(NULL, $1, $3);}
+			   | keyword_selector ',' parameter_list	{$$ = Method_selector_node::createMethodSelectorNode(NULL, $1, $3);}
 			   ;
 
 keyword_selector: keyword_declaration						{$$ = Keyword_selector_node::createKeywordSelectorNode($1);}

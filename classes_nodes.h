@@ -133,18 +133,6 @@ class Init_declarator_node
         static Init_declarator_node* createInitDeclaratorNode(init_declarator_type type, char *name, Expression_node *expression);
 };
 
-// ---------- parameter_type_list ----------
-
-class Parameter_type_list_node
-{
-    public:
-        int id;
-        Parameter_list_node *ParameterList;
-        bool includeElipsis = false;
-
-        static Parameter_type_list_node* createParameterTypeListNode(Parameter_list_node *list, bool includeElipsis);
-};
-
 // ---------- parameter_list ----------
 
 class Parameter_list_node

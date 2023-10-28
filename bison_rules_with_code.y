@@ -34,8 +34,8 @@
 	Statement_list_node *Statement_list;
 	Class_block_node *Class_block;
 	Class_interface_node *Class_interface;
-	Interface_statement_node *Interface_statement;
-	Implementation_statement_node *Implementation_statement;
+	Interface_body_node *Interface_body;
+	Implementation_body_node *Implementation_body;
 	Class_implementation_node *Class_implementation;
 	Class_declaration_list_node *Class_declaration_list;
 	Instance_variables_node *Instance_variables;
@@ -109,8 +109,8 @@
 %type <Statement_list> statement_list_e statement_list
 %type <Class_block> class_block
 %type <Class_interface> class_interface
-%type <Interface_statement> interface_statement
-%type <Implementation_statement> implementation_statement
+%type <Interface_body> interface_body
+%type <Implementation_body> implementation_body
 %type <Class_implementation> class_implementation
 %type <Class_declaration_list> class_declaration_list 
 %type <Class_list> class_list
@@ -288,25 +288,25 @@ class_block: class_interface		{$$ = Class_block_node::createClassBlockNodeFromIn
 		   ;
 
 // ---------- Классы ----------
-class_interface: INTERFACE IDENTIFIER ':' IDENTIFIER interface_statement END	{$$ = Class_interface_node::createClassInterfaceNode($2, $4, $5);}
-			   | INTERFACE IDENTIFIER interface_statement END					{$$ = Class_interface_node::createClassInterfaceNode($2, NULL, $3);}
-			   | INTERFACE IDENTIFIER ':' CLASS_NAME interface_statement END	{$$ = Class_interface_node::createClassInterfaceNode($2, $4, $5);}
+class_interface: INTERFACE IDENTIFIER ':' IDENTIFIER interface_body END	{$$ = Class_interface_node::createClassInterfaceNode($2, $4, $5);}
+			   | INTERFACE IDENTIFIER interface_body END					{$$ = Class_interface_node::createClassInterfaceNode($2, NULL, $3);}
+			   | INTERFACE IDENTIFIER ':' CLASS_NAME interface_body END	{$$ = Class_interface_node::createClassInterfaceNode($2, $4, $5);}
 			   ;
 
-interface_statement: instance_variables interface_declaration_list	{$$ = Interface_statement_node::createInterfaceStatementNode($1, $2);}
-				   | interface_declaration_list						{$$ = Interface_statement_node::createInterfaceStatementNode(NULL, $1);}
+interface_body: instance_variables interface_declaration_list	{$$ = Interface_body_node::createInterfaceBodyNode($1, $2);}
+			  | interface_declaration_list						{$$ = Interface_body_node::createInterfaceBodyNode(NULL, $1);}
+			  ;
+
+implementation_body: instance_variables implementation_definition_list	{$$ = Implementation_body_node::createImplementationBodyNode($1, $2);}
+			       | implementation_definition_list						{$$ = Implementation_body_node::createImplementationBodyNode(NULL, $1);}
 				   ;
 
-implementation_statement: instance_variables implementation_definition_list	{$$ = Implementation_statement_node::createImplementationStatementNode($1, $2);}
-						| implementation_definition_list					{$$ = Implementation_statement_node::createImplementationStatementNode(NULL, $1);}
-						;
-
-class_implementation: IMPLEMENTATION IDENTIFIER implementation_statement END					{$$ = Class_implementation_node::createClassImplementationNode($2, NULL, $3);}
-					| IMPLEMENTATION IDENTIFIER ':' IDENTIFIER implementation_statement END		{$$ = Class_implementation_node::createClassImplementationNode($2, $4, $5);}
-					| IMPLEMENTATION CLASS_NAME implementation_statement END					{$$ = Class_implementation_node::createClassImplementationNode($2, NULL, $3);}
-					| IMPLEMENTATION CLASS_NAME ':' IDENTIFIER implementation_statement END		{$$ = Class_implementation_node::createClassImplementationNode($2, $4, $5);}
-					| IMPLEMENTATION IDENTIFIER ':' CLASS_NAME implementation_statement END		{$$ = Class_implementation_node::createClassImplementationNode($2, $4, $5);}
-					| IMPLEMENTATION CLASS_NAME ':' CLASS_NAME implementation_statement END		{$$ = Class_implementation_node::createClassImplementationNode($2, $4, $5);}
+class_implementation: IMPLEMENTATION IDENTIFIER implementation_body END						{$$ = Class_implementation_node::createClassImplementationNode($2, NULL, $3);}
+					| IMPLEMENTATION IDENTIFIER ':' IDENTIFIER implementation_body END		{$$ = Class_implementation_node::createClassImplementationNode($2, $4, $5);}
+					| IMPLEMENTATION CLASS_NAME implementation_body END						{$$ = Class_implementation_node::createClassImplementationNode($2, NULL, $3);}
+					| IMPLEMENTATION CLASS_NAME ':' IDENTIFIER implementation_body END		{$$ = Class_implementation_node::createClassImplementationNode($2, $4, $5);}
+					| IMPLEMENTATION IDENTIFIER ':' CLASS_NAME implementation_body END		{$$ = Class_implementation_node::createClassImplementationNode($2, $4, $5);}
+					| IMPLEMENTATION CLASS_NAME ':' CLASS_NAME implementation_body END		{$$ = Class_implementation_node::createClassImplementationNode($2, $4, $5);}
 					;
 
 class_declaration_list: CLASS class_list ';'	{$$ = Class_declaration_list_node::createClassDeclarationListNode($2);}

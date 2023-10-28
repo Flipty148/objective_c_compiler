@@ -524,35 +524,35 @@ Class_block_node* Class_block_node::createClassBlockNodeFromImplementation(Class
 
 // ---------- class_interface ----------
 
-Class_interface_node* Class_interface_node::createClassInterfaceNode(char *className, char *superclassName, Interface_statement_node *statement)
+Class_interface_node* Class_interface_node::createClassInterfaceNode(char *className, char *superclassName, Interface_body_node *body)
 {
     Class_interface_node *res = new Class_interface_node;
     res->id = maxId++;
     res->ClassName = className;
     res->SuperclassName = superclassName;
-    res->Statement = statement;
+    res->Body = body;
 
     ClassNames.insert(className);
     ClassNames.insert(superclassName);
     return res;
 }
 
-// ---------- interface_statement ----------
+// ---------- interface_body ----------
 
-Interface_statement_node* Interface_statement_node::createInterfaceStatementNode(Instance_variables_node *variables, Interface_declaration_list_node *declarationList)
+Interface_body_node* Interface_body_node::createInterfaceBodyNode(Instance_variables_node *variables, Interface_declaration_list_node *declarationList)
 {
-    Interface_statement_node *res= new Interface_statement_node;
+    Interface_body_node *res= new Interface_body_node;
     res->id = maxId++;
     res->Variables = variables;
     res->Declaration_list = declarationList;
     return res;
 }
 
-// ---------- implementation_statement ----------
+// ---------- implementation_body ----------
 
-Implementation_statement_node* Implementation_statement_node::createImplementationStatementNode(Instance_variables_node *variables, Implementation_definition_list_node *definitionList)
+Implementation_body_node* Implementation_body_node::createImplementationBodyNode(Instance_variables_node *variables, Implementation_definition_list_node *definitionList)
 {
-    Implementation_statement_node *res= new Implementation_statement_node;
+    Implementation_body_node *res= new Implementation_body_node;
     res->id = maxId++;
     res->Variables = variables;
     res->Declaration_list = definitionList;
@@ -561,13 +561,13 @@ Implementation_statement_node* Implementation_statement_node::createImplementati
 
 // ---------- class_implementation ----------
 
-Class_implementation_node* Class_implementation_node::createClassImplementationNode(char *className, char *superclassName, Implementation_statement_node *statement)
+Class_implementation_node* Class_implementation_node::createClassImplementationNode(char *className, char *superclassName, Implementation_body_node *body)
 {
     Class_implementation_node *res = new Class_implementation_node;
     res->id = maxId++;
     res->ClassName = className;
     res->SuperclassName = superclassName;
-    res->Staetment = statement;
+    res->Body = body;
 
     ClassNames.insert(className);
     ClassNames.insert(superclassName);

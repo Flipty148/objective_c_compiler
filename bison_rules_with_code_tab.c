@@ -77,8 +77,8 @@ typedef union {
 	Statement_list_node *Statement_list;
 	Class_block_node *Class_block;
 	Class_interface_node *Class_interface;
-	Interface_statement_node *Interface_statement;
-	Implementation_statement_node *Implementation_statement;
+	Interface_body_node *Interface_body;
+	Implementation_body_node *Implementation_body;
 	Class_implementation_node *Class_implementation;
 	Class_declaration_list_node *Class_declaration_list;
 	Instance_variables_node *Instance_variables;
@@ -267,8 +267,8 @@ static const char * const yytname[] = {   "$","error","$undefined.","'='","EQUAL
 "parameter_list","parameter_declaration","expression","expression_e","receiver",
 "message_selector","keyword_argument_list","keyword_argument","if_statement",
 "while_statement","do_while_statement","for_statement","statement","compound_statement",
-"statement_list","statement_list_e","class_block","class_interface","interface_statement",
-"implementation_statement","class_implementation","class_declaration_list","class_list",
+"statement_list","statement_list_e","class_block","class_interface","interface_body",
+"implementation_body","class_implementation","class_declaration_list","class_list",
 "instance_variables","interface_declaration_list","method_declaration","class_method_declaration",
 "instance_method_declaration","implementation_definition_list","method_definition",
 "class_method_definition","instance_method_definition","method_selector","keyword_selector",
@@ -1359,55 +1359,55 @@ case 86:
     break;}
 case 87:
 #line 291 "bison_rules_with_code.y"
-{yyval.Class_interface = Class_interface_node::createClassInterfaceNode(yyvsp[-4].Identifier, yyvsp[-2].Identifier, yyvsp[-1].Interface_statement);;
+{yyval.Class_interface = Class_interface_node::createClassInterfaceNode(yyvsp[-4].Identifier, yyvsp[-2].Identifier, yyvsp[-1].Interface_body);;
     break;}
 case 88:
 #line 292 "bison_rules_with_code.y"
-{yyval.Class_interface = Class_interface_node::createClassInterfaceNode(yyvsp[-2].Identifier, NULL, yyvsp[-1].Interface_statement);;
+{yyval.Class_interface = Class_interface_node::createClassInterfaceNode(yyvsp[-2].Identifier, NULL, yyvsp[-1].Interface_body);;
     break;}
 case 89:
 #line 293 "bison_rules_with_code.y"
-{yyval.Class_interface = Class_interface_node::createClassInterfaceNode(yyvsp[-4].Identifier, yyvsp[-2].Identifier, yyvsp[-1].Interface_statement);;
+{yyval.Class_interface = Class_interface_node::createClassInterfaceNode(yyvsp[-4].Identifier, yyvsp[-2].Identifier, yyvsp[-1].Interface_body);;
     break;}
 case 90:
 #line 296 "bison_rules_with_code.y"
-{yyval.Interface_statement = Interface_statement_node::createInterfaceStatementNode(yyvsp[-1].Instance_variables, yyvsp[0].Interface_declaration_list);;
+{yyval.Interface_body = Interface_body_node::createInterfaceBodyNode(yyvsp[-1].Instance_variables, yyvsp[0].Interface_declaration_list);;
     break;}
 case 91:
 #line 297 "bison_rules_with_code.y"
-{yyval.Interface_statement = Interface_statement_node::createInterfaceStatementNode(NULL, yyvsp[0].Interface_declaration_list);;
+{yyval.Interface_body = Interface_body_node::createInterfaceBodyNode(NULL, yyvsp[0].Interface_declaration_list);;
     break;}
 case 92:
 #line 300 "bison_rules_with_code.y"
-{yyval.Implementation_statement = Implementation_statement_node::createImplementationStatementNode(yyvsp[-1].Instance_variables, yyvsp[0].Implementation_definition_list);;
+{yyval.Implementation_body = Implementation_body_node::createImplementationBodyNode(yyvsp[-1].Instance_variables, yyvsp[0].Implementation_definition_list);;
     break;}
 case 93:
 #line 301 "bison_rules_with_code.y"
-{yyval.Implementation_statement = Implementation_statement_node::createImplementationStatementNode(NULL, yyvsp[0].Implementation_definition_list);;
+{yyval.Implementation_body = Implementation_body_node::createImplementationBodyNode(NULL, yyvsp[0].Implementation_definition_list);;
     break;}
 case 94:
 #line 304 "bison_rules_with_code.y"
-{yyval.Class_implementation = Class_implementation_node::createClassImplementationNode(yyvsp[-2].Identifier, NULL, yyvsp[-1].Implementation_statement);;
+{yyval.Class_implementation = Class_implementation_node::createClassImplementationNode(yyvsp[-2].Identifier, NULL, yyvsp[-1].Implementation_body);;
     break;}
 case 95:
 #line 305 "bison_rules_with_code.y"
-{yyval.Class_implementation = Class_implementation_node::createClassImplementationNode(yyvsp[-4].Identifier, yyvsp[-2].Identifier, yyvsp[-1].Implementation_statement);;
+{yyval.Class_implementation = Class_implementation_node::createClassImplementationNode(yyvsp[-4].Identifier, yyvsp[-2].Identifier, yyvsp[-1].Implementation_body);;
     break;}
 case 96:
 #line 306 "bison_rules_with_code.y"
-{yyval.Class_implementation = Class_implementation_node::createClassImplementationNode(yyvsp[-2].Identifier, NULL, yyvsp[-1].Implementation_statement);;
+{yyval.Class_implementation = Class_implementation_node::createClassImplementationNode(yyvsp[-2].Identifier, NULL, yyvsp[-1].Implementation_body);;
     break;}
 case 97:
 #line 307 "bison_rules_with_code.y"
-{yyval.Class_implementation = Class_implementation_node::createClassImplementationNode(yyvsp[-4].Identifier, yyvsp[-2].Identifier, yyvsp[-1].Implementation_statement);;
+{yyval.Class_implementation = Class_implementation_node::createClassImplementationNode(yyvsp[-4].Identifier, yyvsp[-2].Identifier, yyvsp[-1].Implementation_body);;
     break;}
 case 98:
 #line 308 "bison_rules_with_code.y"
-{yyval.Class_implementation = Class_implementation_node::createClassImplementationNode(yyvsp[-4].Identifier, yyvsp[-2].Identifier, yyvsp[-1].Implementation_statement);;
+{yyval.Class_implementation = Class_implementation_node::createClassImplementationNode(yyvsp[-4].Identifier, yyvsp[-2].Identifier, yyvsp[-1].Implementation_body);;
     break;}
 case 99:
 #line 309 "bison_rules_with_code.y"
-{yyval.Class_implementation = Class_implementation_node::createClassImplementationNode(yyvsp[-4].Identifier, yyvsp[-2].Identifier, yyvsp[-1].Implementation_statement);;
+{yyval.Class_implementation = Class_implementation_node::createClassImplementationNode(yyvsp[-4].Identifier, yyvsp[-2].Identifier, yyvsp[-1].Implementation_body);;
     break;}
 case 100:
 #line 312 "bison_rules_with_code.y"

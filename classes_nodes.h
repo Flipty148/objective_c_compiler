@@ -433,33 +433,33 @@ class Class_interface_node : public Class_block_node
         int id;
         char *ClassName;
         char *SuperclassName;
-        Interface_statement_node *Statement;
+        Interface_body_node *Body;
 
-        static Class_interface_node* createClassInterfaceNode(char *className, char *superclassName, Interface_statement_node *statement);
+        static Class_interface_node* createClassInterfaceNode(char *className, char *superclassName, Interface_body_node *body);
 };
 
-// ---------- interface_statement ----------
+// ---------- interface_body ----------
 
-class Interface_statement_node
+class Interface_body_node
 {
     public:
         int id;
         Instance_variables_node *Variables;
         Interface_declaration_list_node *Declaration_list;
 
-        static Interface_statement_node* createInterfaceStatementNode(Instance_variables_node *variables, Interface_declaration_list_node *declarationList);
+        static Interface_body_node* createInterfaceBodyNode(Instance_variables_node *variables, Interface_declaration_list_node *declarationList);
 };
 
-// ---------- implementation_statement ----------
+// ---------- implementation_body ----------
 
-class Implementation_statement_node
+class Implementation_body_node
 {
     public:
         int id;
         Instance_variables_node *Variables;
         Implementation_definition_list_node *Declaration_list;
 
-        static Implementation_statement_node* createImplementationStatementNode(Instance_variables_node *variables, Implementation_definition_list_node *definitionList);
+        static Implementation_body_node* createImplementationBodyNode(Instance_variables_node *variables, Implementation_definition_list_node *definitionList);
 };
 
 // ---------- class_implementation ----------
@@ -470,9 +470,9 @@ class Class_implementation_node : public Class_block_node
         int id;
         char *ClassName;
         char *SuperclassName;
-        Implementation_statement_node *Staetment;
+        Implementation_body_node *Body;
 
-        static Class_implementation_node* createClassImplementationNode(char *className, char *superclassName, Implementation_statement_node *statement);
+        static Class_implementation_node* createClassImplementationNode(char *className, char *superclassName, Implementation_body_node *body);
 };
 
 // ---------- class_declaration_list и class_list ----------

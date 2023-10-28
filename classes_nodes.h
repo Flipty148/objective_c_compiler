@@ -400,26 +400,26 @@ class Statement_list_node
         static Statement_list_node* addToStatementListNode(Statement_list_node *list, Statement_node *statement);
 };
 
-// ---------- class_statement ----------
+// ---------- class_block ----------
 
-enum class_statement_type {
-    INTERFACE_CLASS_STATEMENT_TYPE,
-    IMPLEMENTATION_CLASS_STATEMENT_TYPE
+enum class_block_type {
+    INTERFACE_CLASS_BLOCK_TYPE,
+    IMPLEMENTATION_CLASS_BLOCK_TYPE
 };
 
-class Class_statement_node {
+class Class_block_node {
     public:
         int id;
-        enum class_statement_type type;
+        enum class_block_type type;
         union statement
         {
             Class_interface_node *Interface;
             Class_implementation_node *Implementation;
         } *statement; 
-        Class_statement_node *Next;
+        Class_block_node *Next;
 
-        static Class_statement_node* createClassStatementNodeFromInterface(Class_interface_node *interface);
-        static Class_statement_node* createClassStatementNodeFromImplementation(Class_implementation_node *implementation);     
+        static Class_block_node* createClassBlockNodeFromInterface(Class_interface_node *interface);
+        static Class_block_node* createClassBlockNodeFromImplementation(Class_implementation_node *implementation);     
 };
 
 
@@ -427,7 +427,7 @@ class Class_statement_node {
 
 // ---------- class_interface ----------
 
-class Class_interface_node : public Class_statement_node
+class Class_interface_node : public Class_block_node
 {
     public:
         int id;
@@ -464,7 +464,7 @@ class Implementation_statement_node
 
 // ---------- class_implementation ----------
 
-class Class_implementation_node : public Class_statement_node
+class Class_implementation_node : public Class_block_node
 {
     public:
         int id;
@@ -679,14 +679,14 @@ class Function_and_class_list_node
         int id;
         union function_and_class {
             Function_node *function;
-            Class_statement_node *class_statement;
+            Class_block_node *class_block;
             Class_declaration_list_node *class_declaration_list;
         } *First, *Last;
 
-        static Function_and_class_list_node* createFunctionAndClassListNodeFromClassStatement(Class_statement_node *classStatement);
+        static Function_and_class_list_node* createFunctionAndClassListNodeFromClassBlock(Class_block_node *classBlock);
         static Function_and_class_list_node* createFunctionAndClassListNodeFromFunction(Function_node *function);
         static Function_and_class_list_node* createFunctionAndClassListNodeFromClassDeclarationList(Class_declaration_list_node *classDeclarationList);
-        static Function_and_class_list_node* addToFunctionAndClassListNodeFromClassStatement(Function_and_class_list_node *list, Class_statement_node *classStatement);
+        static Function_and_class_list_node* addToFunctionAndClassListNodeFromClassBlock(Function_and_class_list_node *list, Class_block_node *classBlock);
         static Function_and_class_list_node* addToFunctionAndClassListNodeFromFunction(Function_and_class_list_node *list, Function_node *functionList);
         static Function_and_class_list_node* addToFunctionAndClassListNodeFromClassDeclarationList(Function_and_class_list_node *list, Class_declaration_list_node *classDeclarationList);
 };

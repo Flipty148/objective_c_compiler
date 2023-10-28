@@ -30,12 +30,12 @@ Function_and_class_list_node* Function_and_class_list_node::createFunctionAndCla
     return res;
 }
 
-Function_and_class_list_node* Function_and_class_list_node::createFunctionAndClassListNodeFromClassStatement(Class_statement_node *classStatement)
+Function_and_class_list_node* Function_and_class_list_node::createFunctionAndClassListNodeFromClassBlock(Class_block_node *classBlock)
 {
     Function_and_class_list_node *res = new Function_and_class_list_node;
     res->id = maxId++;
-    res->First->class_statement = classStatement;
-    res->Last->class_statement = classStatement;
+    res->First->class_block = classBlock;
+    res->Last->class_block = classBlock;
     return res;
 }
 
@@ -53,10 +53,10 @@ Function_and_class_list_node* Function_and_class_list_node::addToFunctionAndClas
     return list;
 }
 
-Function_and_class_list_node* Function_and_class_list_node::addToFunctionAndClassListNodeFromClassStatement(Function_and_class_list_node *list, Class_statement_node *classStatement)
+Function_and_class_list_node* Function_and_class_list_node::addToFunctionAndClassListNodeFromClassBlock(Function_and_class_list_node *list, Class_block_node *classStatement)
 {
-    list->Last->class_statement->Next = classStatement;
-    list->Last->class_statement = classStatement;
+    list->Last->class_block->Next = classStatement;
+    list->Last->class_block = classStatement;
     return list;
 }
 
@@ -500,21 +500,21 @@ Statement_list_node* Statement_list_node::addToStatementListNode(Statement_list_
 
 // ----------- class_statement ----------
 
-Class_statement_node* Class_statement_node::createClassStatementNodeFromInterface(Class_interface_node *interface)
+Class_block_node* Class_block_node::createClassBlockNodeFromInterface(Class_interface_node *interface)
 {
-    Class_statement_node *res = new Class_statement_node;
+    Class_block_node *res = new Class_block_node;
     res->id = maxId++;
-    res->type = INTERFACE_CLASS_STATEMENT_TYPE;
+    res->type = INTERFACE_CLASS_BLOCK_TYPE;
     res->statement->Interface = interface;
     res->Next = NULL;
     return res;
 }
 
-Class_statement_node* Class_statement_node::createClassStatementNodeFromImplementation(Class_implementation_node *implementation)
+Class_block_node* Class_block_node::createClassBlockNodeFromImplementation(Class_implementation_node *implementation)
 {
-    Class_statement_node *res = new Class_statement_node;
+    Class_block_node *res = new Class_block_node;
     res->id = maxId++;
-    res->type = IMPLEMENTATION_CLASS_STATEMENT_TYPE;
+    res->type = IMPLEMENTATION_CLASS_BLOCK_TYPE;
     res->statement->Implementation = implementation;
     res->Next = NULL;
     return res;

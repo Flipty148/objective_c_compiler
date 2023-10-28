@@ -75,7 +75,7 @@ typedef union {
 	Statement_node *Statement;
 	Compound_statement_node *Compound_statement;
 	Statement_list_node *Statement_list;
-	Class_statement_node *Class_statement;
+	Class_block_node *Class_block;
 	Class_interface_node *Class_interface;
 	Interface_statement_node *Interface_statement;
 	Implementation_statement_node *Implementation_statement;
@@ -267,7 +267,7 @@ static const char * const yytname[] = {   "$","error","$undefined.","'='","EQUAL
 "parameter_list","parameter_declaration","expression","expression_e","receiver",
 "message_selector","keyword_argument_list","keyword_argument","if_statement",
 "while_statement","do_while_statement","for_statement","statement","compound_statement",
-"statement_list","statement_list_e","class_statement","class_interface","interface_statement",
+"statement_list","statement_list_e","class_block","class_interface","interface_statement",
 "implementation_statement","class_implementation","class_declaration_list","class_list",
 "instance_variables","interface_declaration_list","method_declaration","class_method_declaration",
 "instance_method_declaration","implementation_definition_list","method_definition",
@@ -1019,7 +1019,7 @@ case 1:
     break;}
 case 2:
 #line 139 "bison_rules_with_code.y"
-{yyval.Function_and_class_list = Function_and_class_list_node::createFunctionAndClassListNodeFromClassStatement(yyvsp[0].Class_statement);;
+{yyval.Function_and_class_list = Function_and_class_list_node::createFunctionAndClassListNodeFromClassBlock(yyvsp[0].Class_block);;
     break;}
 case 3:
 #line 140 "bison_rules_with_code.y"
@@ -1031,7 +1031,7 @@ case 4:
     break;}
 case 5:
 #line 142 "bison_rules_with_code.y"
-{yyval.Function_and_class_list = Function_and_class_list_node::addToFunctionAndClassListNodeFromClassStatement(yyvsp[-1].Function_and_class_list, yyvsp[0].Class_statement);;
+{yyval.Function_and_class_list = Function_and_class_list_node::addToFunctionAndClassListNodeFromClassBlock(yyvsp[-1].Function_and_class_list, yyvsp[0].Class_block);;
     break;}
 case 6:
 #line 143 "bison_rules_with_code.y"
@@ -1351,11 +1351,11 @@ case 84:
     break;}
 case 85:
 #line 286 "bison_rules_with_code.y"
-{yyval.Class_statement = Class_statement_node::createClassStatementNodeFromInterface(yyvsp[0].Class_interface);;
+{yyval.Class_block = Class_block_node::createClassBlockNodeFromInterface(yyvsp[0].Class_interface);;
     break;}
 case 86:
 #line 287 "bison_rules_with_code.y"
-{yyval.Class_statement = Class_statement_node::createClassStatementNodeFromImplementation(yyvsp[0].Class_implementation);;
+{yyval.Class_block = Class_block_node::createClassBlcokNodeFromImplementation(yyvsp[0].Class_implementation);;
     break;}
 case 87:
 #line 291 "bison_rules_with_code.y"

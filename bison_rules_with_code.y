@@ -153,7 +153,7 @@ type: INT				{$$ = Type_node::createTypeNode(INT_TYPE);}
     | CHAR				{$$ = Type_node::createTypeNode(CHAR_TYPE);}
     | FLOAT				{$$ = Type_node::createTypeNode(FLOAT_TYPE);}
     | ID				{$$ = Type_node::createTypeNode(ID_TYPE);}
-	| CLASS_NAME '*'	{$$ = Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $1);}
+	| CLASS_NAME		{$$ = Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $1);}
     ;
 
 // ---------- Константы ----------
@@ -186,8 +186,10 @@ init_declarator_list: init_declarator							{$$ = Init_declarator_list_node::cre
 					| init_declarator_list ',' init_declarator	{$$ = Init_declarator_list_node::addToInitDeclaratorListNode($1, $3);}
 					;
 
-init_declarator: IDENTIFIER					{$$ = Init_declarator_node::createInitDeclaratorNode(SIMPLE_DECLARATOR_TYPE, $1, NULL);}
-			   | IDENTIFIER '=' expression	{$$ = Init_declarator_node::createInitDeclaratorNode(DECLARATOR_WITH_INITIALIZING_TYPE, $1, $3);}
+init_declarator: IDENTIFIER						{$$ = Init_declarator_node::createInitDeclaratorNode(SIMPLE_DECLARATOR_TYPE, $1, NULL);}
+			   | IDENTIFIER '=' expression		{$$ = Init_declarator_node::createInitDeclaratorNode(DECLARATOR_WITH_INITIALIZING_TYPE, $1, $3);}
+			   | '*' IDENTIFIER					{$$ = Init_declarator_node::createInitDeclaratorNode(SIMPLE_DECLARATOR_TYPE, $2, NULL);}
+			   | '*' IDENTIFIER '=' expression	{$$ = Init_declarator_node::createInitDeclaratorNode(DECLARATOR_WITH_INITIALIZING_TYPE, $2, $4);}
 			   ;
 
 parameter_list: parameter_declaration						{$$ = Parameter_list_node::createParameterListNode($1);}
@@ -195,6 +197,7 @@ parameter_list: parameter_declaration						{$$ = Parameter_list_node::createPara
 			  ;
 
 parameter_declaration: type IDENTIFIER			{$$ = Parameter_declaration_node::createParameterDeclarationNode($1, $2);}
+					 | CLASS_NAME '*' IDENTIFIER	{$$ = Parameter_declaration_node::createParameterDeclarationNode(Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $1),$3);}
 					 ;
 
 // ---------- Выражения ----------
@@ -257,6 +260,7 @@ do_while_statement: DO statement WHILE '(' expression ')' ';'	{$$ = Do_while_sta
 for_statement: FOR '(' expression_e ';' expression_e ';' expression_e ')' statement		{$$ = For_statement_node::createForStatementNode($3, $5, $7, $9);}
 			 | FOR '(' IDENTIFIER IN expression ')' statement							{$$ = For_statement_node::createForStatementNodeFromForeach(FOREACH_FOR_TYPE, NULL, $3, $5, $7);}
 			 | FOR '(' type IDENTIFIER IN expression ')' statement						{$$ = For_statement_node::createForStatementNodeFromForeach(FOREACH_WITH_DECLARATION_FOR_TYPE, $3, $4, $6, $8);}
+			 | FOR '(' CLASS_NAME '*' IDENTIFIER IN expression ')' statement			{$$ = For_statement_node::createForStatementNodeFromForeach(FOREACH_WITH_DECLARATION_FOR_TYPE, Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $3), $5, $7, $9);}
 			 ;
 
 // ---------- Операторы ----------
@@ -379,9 +383,11 @@ keyword_declaration: ':' method_type IDENTIFIER					{$$ = Keyword_declaration_no
 				   ;
 
 method_type: '(' type ')'	{$$ = Type_node::createTypeNode($2);}
+		   | '(' CLASS_NAME '*' ')' {$$ = Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $2);}
 		   ;
 
 property: PROPERTY '(' attribute ')' type IDENTIFIER ';'	{$$ = Property_node::createPropertyNode($3, $5, $6);}
+		| PROPERTY '(' attribute ')' CLASS_NAME '*' IDENTIFIER ';'	{$$ = Property_node::createPropertyNode($3, Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $5), $7);}
 		;
 
 attribute: READONLY		{$$ = Attribute_node::createAttributeNode(READONLY_ATTRIBUTE_TYPE);}

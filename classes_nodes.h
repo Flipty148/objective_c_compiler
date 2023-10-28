@@ -357,8 +357,7 @@ enum statement_type {
     DO_WHILE_STATEMENT_TYPE,
     FOR_STATEMENT_TYPE,
     COMPOUND_STATEMENT_TYPE,
-    DECLARATION_STATEMENT_TYPE,
-    CLASS_DECLARATION_LIST_STATEMENT_TYPE
+    DECLARATION_STATEMENT_TYPE
 };
 
 class Statement_node
@@ -375,7 +374,6 @@ class Statement_node
         static Statement_node* createStatementNodeFromSimpleStatement(statement_type type, Expression_node *expression);
         static Statement_node* createStatementNodeFromComplexStatement(statement_type type, Statement_node *statement);
         static Statement_node* createStatementNodeFromDeclaration(Declaration_node *declaration);
-        static Statement_node* createStatementNodeFromClassDeclaration(Class_declaration_list_node *classDeclarationList);
 };
 
 // ---------- compound_statement ----------
@@ -422,19 +420,6 @@ class Class_statement_node {
 
         static Class_statement_node* createClassStatementNodeFromInterface(Class_interface_node *interface);
         static Class_statement_node* createClassStatementNodeFromImplementation(Class_implementation_node *implementation);     
-};
-
-// ---------- class_statement_list ----------
-
-class Class_statement_list_node
-{
-    public:
-        int id;
-        Class_statement_node *First;
-        Class_statement_node *Last;
-
-        static Class_statement_list_node* createClassStatementListNode(Class_statement_node *ClassStatement);
-        static Class_statement_list_node* addToClassStatementListNode(Class_statement_list_node *list, Class_statement_node *ClassStatement);
 };
 
 
@@ -497,6 +482,7 @@ class Class_declaration_list_node
     public:
         int id;
         Class_list_node *List;
+        Class_declaration_list_node *Next;
 
         static Class_declaration_list_node* createClassDeclarationListNode(Class_list_node *list);
 };
@@ -680,8 +666,41 @@ class Program_node
 {
     public:
         int id;
-        Statement_list_node *Statements;
-        Class_statement_list_node *ClassStatements;
+        Function_and_class_list_node *list;
 
-        static Program_node* createProgramNode(Statement_list_node *Statements, Class_statement_list_node *ClassStatements);
+        static Program_node* createProgramNode(Function_and_class_list_node *list);
+};
+
+// ---------- function_and_class_list ----------
+
+class Function_and_class_list_node
+{
+    public:
+        int id;
+        union function_and_class {
+            Function_node *function;
+            Class_statement_node *class_statement;
+            Class_declaration_list_node *class_declaration_list;
+        } *First, *Last;
+
+        static Function_and_class_list_node* createFunctionAndClassListNodeFromClassStatement(Class_statement_node *classStatement);
+        static Function_and_class_list_node* createFunctionAndClassListNodeFromFunction(Function_node *function);
+        static Function_and_class_list_node* createFunctionAndClassListNodeFromClassDeclarationList(Class_declaration_list_node *classDeclarationList);
+        static Function_and_class_list_node* addToFunctionAndClassListNodeFromClassStatement(Function_and_class_list_node *list, Class_statement_node *classStatement);
+        static Function_and_class_list_node* addToFunctionAndClassListNodeFromFunction(Function_and_class_list_node *list, Function_node *functionList);
+        static Function_and_class_list_node* addToFunctionAndClassListNodeFromClassDeclarationList(Function_and_class_list_node *list, Class_declaration_list_node *classDeclarationList);
+};
+
+// ---------- function ----------
+
+class Function_node
+{ //ЗАГЛУШКА
+    public:
+        int id;
+        Type_node *Type;
+        char *Name;
+        Compound_statement_node *statement;
+        Function_node *Next;
+
+        static Function_node* createFunctionNode(Type_node *type, char *name, Compound_statement_node *statement);
 };

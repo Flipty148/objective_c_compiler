@@ -33,7 +33,6 @@
 	Compound_statement_node *Compound_statement;
 	Statement_list_node *Statement_list;
 	Class_statement_node *Class_statement;
-	Class_statement_list_node *Class_statement_list;
 	Class_interface_node *Class_interface;
 	Interface_statement_node *Interface_statement;
 	Implementation_statement_node *Implementation_statement;
@@ -51,6 +50,8 @@
 	Attribute_node *Attribute;
 	Program_node *Program;
 	Class_list *Class_list;
+	Function_and_class_list_node *Function_and_class_list;
+	Function_node *Function;
 }
 
 // ---------- Операции с их приоритетом ----------
@@ -107,7 +108,6 @@
 %type <Compound_statement> compound_statement
 %type <Statement_list> statement_list_e statement_list
 %type <Class_statement> class_statement
-%type <Class_statement_list> class_statement_list
 %type <Class_interface> class_interface
 %type <Interface_statement> interface_statement
 %type <Implementation_statement> implementation_statement
@@ -124,19 +124,30 @@
 %type <Keyword_declaration> keyword_declaration
 %type <Property> property
 %type <Attribute> attribute
-%type <Program> program
+%type <Program> program 
+%type <Function_and_class_list> function_and_class_list
+%type <Function> function
 
 
 %start program
 
 %%
 
-program: statement_list							{$$ = root = Program_node::createProgramNode($1, NULL);}
-	   | class_statement_list					{$$ = root = Program_node::createProgramNode(NULL, $1);}
-	   | statement_list class_statement_list	{$$ = root = Program_node::createProgramNode($1, $2);}
-	   | class_statement_list statement_list	{$$ = root = Program_node::createProgramNode($2, $1);}
+program: function_and_class_list	{$$ = Program_node::createProgramNode($1);}
 	   ;
 
+function_and_class_list: class_statement								{$$ = Function_and_class_list_node::createFunctionAndClassListNodeFromClassStatement($1);}
+					   | function										{$$ = Function_and_class_list_node::createFunctionAndClassListNodeFromFunction($1);}
+					   | class_declaration_list							{$$ = Function_and_class_list_node::createFunctionAndClassListNodeFromClassDeclarationList($1);}
+					   | function_and_class_list class_statement		{$$ = Function_and_class_list_node::addToFunctionAndClassListNodeFromClassStatement($1, $2);}
+					   | function_and_class_list function				{$$ = Function_and_class_list_node::addToFunctionAndClassListNodeFromFunction($1, $2);}
+					   | function_and_class_list class_declaration_list	{$$ = Function_and_class_list_node::addToFunctionAndClassListNodeFromClassDeclarationList($1, $2);}
+					   ;
+
+// ---------- Заглушки для списка функций ----------
+
+function: type IDENTIFIER '(' ')' compound_statement /*Заглушка, тут должно быть определение функции*/ {$$ = Function_node::createFunctionNode($1, $2, $5);}
+		;
 // ---------- Типы ----------
 type: INT				{$$ = Type_node::createTypeNode(INT_TYPE);}
     | CHAR				{$$ = Type_node::createTypeNode(CHAR_TYPE);}
@@ -259,7 +270,6 @@ statement: ';'							{$$ = Statement_node::createStatementNodeFromSimpleStatemen
 		 | for_statement				{$$ = Statement_node::createStatementNodeFromComplexStatement(FOR_STATEMENT_TYPE, $1);}
 		 | compound_statement			{$$ = Statement_node::createStatementNodeFromComplexStatement(COMPOUND_STATEMENT_TYPE, $1);}
 		 | declaration					{$$ = Statement_node::createStatementNodeFromDeclaration($1);}
-		 | class_declaration_list		{$$ = Statement_node::createStatementNodeFromClassDeclaration($1);}
 		 ;
 
 compound_statement: '{' statement_list_e '}'	{$$ = Compound_statement_node::createCompoundStatementNode($2);}
@@ -276,10 +286,6 @@ statement_list_e: /*empty*/			{$$ = NULL;}
 class_statement: class_interface		{$$ = Class_statement_node::createClassStatementNodeFromInterface($1);}
 			   | class_implementation	{$$ = Class_statement_node::createClassStatementNodeFromImplementation($1);}
 			   ;
-
-class_statement_list: class_statement							{$$ = Class_statement_list_node::createClassStatementListNode($1);}
-					| class_statement_list class_statement		{$$ = Class_statement_list_node::addToClassStatementListNode($1, $2);}
-					;
 
 // ---------- Классы ----------
 class_interface: INTERFACE IDENTIFIER ':' IDENTIFIER interface_statement END	{$$ = Class_interface_node::createClassInterfaceNode($2, $4, $5);}

@@ -2,12 +2,73 @@
 
 //---------- program ----------
 
-Program_node* Program_node::createProgramNode(Statement_list_node *Statements, Class_statement_list_node *ClassStatements)
+Program_node* Program_node::createProgramNode(Function_and_class_list_node* list)
 {
 	Program_node *res = new Program_node;
     res->id = maxId++;
-    res->Statements = Statements;
-    res->ClassStatements = ClassStatements;
+    res->list = list;
+    return res;
+}
+
+// ---------- function_and_class_list ----------
+
+Function_and_class_list_node* Function_and_class_list_node::createFunctionAndClassListNodeFromFunction(Function_node *functionList)
+{
+    Function_and_class_list_node *res = new Function_and_class_list_node;
+    res->id = maxId++;
+    res->First->function = functionList;
+    res->Last->function = functionList;
+    return res;
+}
+
+Function_and_class_list_node* Function_and_class_list_node::createFunctionAndClassListNodeFromClassDeclarationList(Class_declaration_list_node *classDeclarationList)
+{
+    Function_and_class_list_node *res = new Function_and_class_list_node;
+    res->id = maxId++;
+    res->First->class_declaration_list = classDeclarationList;
+    res->Last->class_declaration_list = classDeclarationList;
+    return res;
+}
+
+Function_and_class_list_node* Function_and_class_list_node::createFunctionAndClassListNodeFromClassStatement(Class_statement_node *classStatement)
+{
+    Function_and_class_list_node *res = new Function_and_class_list_node;
+    res->id = maxId++;
+    res->First->class_statement = classStatement;
+    res->Last->class_statement = classStatement;
+    return res;
+}
+
+Function_and_class_list_node* Function_and_class_list_node::addToFunctionAndClassListNodeFromFunction(Function_and_class_list_node *list, Function_node *function)
+{
+    list->Last->function->Next = function;
+    list->Last->function = function;
+    return list;
+}
+
+Function_and_class_list_node* Function_and_class_list_node::addToFunctionAndClassListNodeFromClassDeclarationList(Function_and_class_list_node *list, Class_declaration_list_node *classDeclarationList)
+{
+    list->Last->class_declaration_list->Next = classDeclarationList;
+    list->Last->class_declaration_list = classDeclarationList;
+    return list;
+}
+
+Function_and_class_list_node* Function_and_class_list_node::addToFunctionAndClassListNodeFromClassStatement(Function_and_class_list_node *list, Class_statement_node *classStatement)
+{
+    list->Last->class_statement->Next = classStatement;
+    list->Last->class_statement = classStatement;
+    return list;
+}
+
+// ---------- function ----------
+
+Function_node* Function_node::createFunctionNode(Type_node *type, char *name, Compound_statement_node *statement)
+{
+    Function_node *res = new Function_node;
+    res->id = maxId++;
+    res->Type = type;
+    res->Name = name;
+    res->statement = statement;
     return res;
 }
 
@@ -409,19 +470,6 @@ Statement_node* Statement_node::createStatementNodeFromDeclaration(Declaration_n
     return res;
 }
 
-Statement_node* Statement_node::createStatementNodeFromClassDeclaration(Class_declaration_list_node *classDeclarationList)
-{
-    Statement_node *res = new Statement_node;
-    res->id = maxId++;
-    res->type = CLASS_DECLARATION_LIST_STATEMENT_TYPE;
-    res->Expression = NULL;
-    res->Statement = NULL;
-    res->Declaration = NULL;
-    res->Class_declaration = classDeclarationList;
-    res->Next = NULL;
-    return res;
-}
-
 // ---------- compound_statement ----------
 
 Compound_statement_node* Compound_statement_node::createCompoundStatementNode(Statement_list_node *statements)
@@ -470,24 +518,6 @@ Class_statement_node* Class_statement_node::createClassStatementNodeFromImplemen
     res->statement->Implementation = implementation;
     res->Next = NULL;
     return res;
-}
-
-// ---------- Class_statement_list ----------
-
-Class_statement_list_node* Class_statement_list_node::createClassStatementListNode(Class_statement_node *ClassStatement)
-{
-    Class_statement_list_node *res = new Class_statement_list_node;
-    res->id = maxId++;
-    res->First = ClassStatement;
-    res->Last = ClassStatement;
-    return res;
-}
-
-Class_statement_list_node* Class_statement_list_node::addToClassStatementListNode(Class_statement_list_node *list, Class_statement_node *ClassStatement)
-{
-    list->Last->Next = ClassStatement;
-    list->Last = ClassStatement;
-    return list;
 }
 
 // -------------------- Классы --------------------
@@ -567,6 +597,10 @@ Class_declaration_list_node* Class_declaration_list_node::createClassDeclaration
     Class_declaration_list_node *res = new Class_declaration_list_node;
     res->id = maxId++;
     res->List = list;
+    for(char * className : *list->Class_names)
+    {
+        ClassNames.insert(className);
+    }
     return res;
 }
 

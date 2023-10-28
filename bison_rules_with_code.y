@@ -186,7 +186,6 @@ parameter_list: parameter_declaration						{$$ = Parameter_list_node::createPara
 			  ;
 
 parameter_declaration: type IDENTIFIER			{$$ = Parameter_declaration_node::createParameterDeclarationNode($1, $2);}
-					 | CLASS_NAME IDENTIFIER	{$$ = Parameter_declaration_node::createParameterDeclarationNode($1, $2);}
 					 ;
 
 // ---------- Выражения ----------

@@ -91,8 +91,8 @@
 %type <Literal> literal
 %type <Declaration> declaration
 %type <Declaration_list> declaration_list_e declaration_list
-%type <Init_declarator_list> init_declarator_list_e init_declarator_list
-%type <Init_declarator> init_declarator
+%type <Init_declarator_list> init_declarator_list_e init_declarator_list init_declarator_with_asterisk_list init_declarator_with_asterisk_list_e
+%type <Init_declarator> init_declarator init_declarator_with_asterisk
 %type <Parameter_list> parameter_list
 %type <Parameter_declaration> parameter_declaration
 %type <Expression> expression expression_e
@@ -153,7 +153,6 @@ type: INT				{$$ = Type_node::createTypeNode(INT_TYPE);}
     | CHAR				{$$ = Type_node::createTypeNode(CHAR_TYPE);}
     | FLOAT				{$$ = Type_node::createTypeNode(FLOAT_TYPE);}
     | ID				{$$ = Type_node::createTypeNode(ID_TYPE);}
-	| CLASS_NAME		{$$ = Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $1);}
     ;
 
 // ---------- Константы ----------
@@ -168,6 +167,7 @@ literal: STRING_CONSTANT	{$$ = Literal_node::createLiteralNode(STRING_CONSTANT_T
 
 // ---------- Объявления ----------
 declaration: type init_declarator_list_e ';'	{$$ = Declaration_node::createDeclarationNode($1, $2);}
+		   | CLASS_NAME init_declarator_with_asterisk_list_e ';' {$$ = Declaration_node::createDeclarationNode(Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $1), $2)}
            ;
 
 declaration_list: declaration 					{$$ = Declaration_list_node::createDeclarationListNode($1);}
@@ -188,9 +188,19 @@ init_declarator_list: init_declarator							{$$ = Init_declarator_list_node::cre
 
 init_declarator: IDENTIFIER						{$$ = Init_declarator_node::createInitDeclaratorNode(SIMPLE_DECLARATOR_TYPE, $1, NULL);}
 			   | IDENTIFIER '=' expression		{$$ = Init_declarator_node::createInitDeclaratorNode(DECLARATOR_WITH_INITIALIZING_TYPE, $1, $3);}
-			   | '*' IDENTIFIER					{$$ = Init_declarator_node::createInitDeclaratorNode(SIMPLE_DECLARATOR_TYPE, $2, NULL);}
-			   | '*' IDENTIFIER '=' expression	{$$ = Init_declarator_node::createInitDeclaratorNode(DECLARATOR_WITH_INITIALIZING_TYPE, $2, $4);}
 			   ;
+
+init_declarator_with_asterisk: '*' IDENTIFIER					{$$ = Init_declarator_node::createInitDeclaratorNode(SIMPLE_DECLARATOR_TYPE, $2, NULL);}
+			   				 | '*' IDENTIFIER '=' expression	{$$ = Init_declarator_node::createInitDeclaratorNode(DECLARATOR_WITH_INITIALIZING_TYPE, $2, $4);}
+							 ;
+
+init_declarator_with_asterisk_list: init_declarator_with_asterisk											{$$ = Init_declarator_list_node::createInitDeclaratorListNode($1);}								
+								  | init_declarator_with_asterisk_list ',' init_declarator_with_asterisk	{$$ = Init_declarator_list_node::addToInitDeclaratorListNode($1, $3);}
+								  ;
+
+init_declarator_with_asterisk_list_e: /*empty*/								{$$ = NULL;}
+									| init_declarator_with_asterisk_list	{$$ = $1;}
+									;
 
 parameter_list: parameter_declaration						{$$ = Parameter_list_node::createParameterListNode($1);}
 			  | parameter_list ',' parameter_declaration	{$$ = Parameter_list_node::addToParameterListNode($1, $3);}

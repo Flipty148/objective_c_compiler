@@ -21,7 +21,6 @@
 	Parameter_list_node *Parameter_list;
 	Parameter_declaration_node *Parameter_declaration;
 	Expression_node *Expression;
-	Message_expression_node *Message_expression;
 	Receiver_node *Receiver;
 	Message_selector_node *Message_selector;
 	Keyword_argument_list_node *Keyword_argument_list;
@@ -96,7 +95,6 @@
 %type <Parameter_list> parameter_list
 %type <Parameter_declaration> parameter_declaration
 %type <Expression> expression expression_e
-%type <Message_expression> message_expression
 %type <Receiver> receiver
 %type <Message_selector> message_selector
 %type <Keyword_argument_list> keyword_argument_list
@@ -195,7 +193,7 @@ expression: IDENTIFIER							{$$ = Expression_node::createExpressionNodeFromIden
 		  | numeric_constant					{$$ = Expression_node::createExpressionNodeFromNumericConstant($1);}
 		  | '(' expression ')'					{$$ = Expression_node::createSimpleExpressionNode(PRIORITY_EXPRESSION_TYPE, $2);}
 		  | SELF								{$$ = Expression_node::createExpressionNodeFromSelf();}
-		  | message_expression					{$$ = Expression_node::createExpressionNodeFromSimpleExpression(MESSAGE_EXPRESSION_EXPRESSION_TYPE, $1);}
+		  | '[' receiver message_selector ']'	{$$ = Expression_node::createExpressionNodeFromMessageExpression($2, $3);}
 		  | '-' expression %prec UMINUS			{$$ = Expression_node::createExpressionNodeFromOperator(UMINUS_EXPRESSION_TYPE, NULL, $2);}
 		  | '+' expression %prec UPLUS			{$$ = Expression_node::createExpressionNodeFromOperator(UPLUS_EXPRESSION_TYPE, NULL, $2);}
 		  | '&' expression %prec UAMPERSAND		{$$ = Expression_node::createExpressionNodeFromOperator(UAMPERSAND_EXPRESSION_TYPE, NULL, $2);}
@@ -215,9 +213,6 @@ expression: IDENTIFIER							{$$ = Expression_node::createExpressionNodeFromIden
 expression_e: /*empty*/		{$$ = NULL;}
 			| expression	{$$ = $1;}
 			;
-
-message_expression: '[' receiver message_selector ']'	{$$ = Message_expression_node::createMessageExpressionNode($2, $3);}
-				  ;
 
 receiver: SUPER			{$$ = Receiver_node::createReceiverNode(SUPER_RECEIVER_TYPE, NULL);}
 		| SELF			{$$ = Receiver_node::createReceiverNode(SELF_RECEIVER_TYPE, NULL);}

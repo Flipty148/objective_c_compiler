@@ -235,12 +235,11 @@ Expression_node* Expression_node::createExpressionNodeFromOperator(expression_ty
     return res;
 }
 
-// ---------- message_expression ----------
-
-Message_expression_node* Message_expression_node::createMessageExpressionNode(Receiver_node *receiver, Message_selector_node *arguments)
+Expression_node* Expression_node::createExpressionNodeFromMessageExpression(Receiver_node *receiver, Message_selector_node *arguments)
 {
-    Message_expression_node *res = new Message_expression_node;
+    Expression_node *res = new Expression_node;
     res->id = maxId++;
+    res->type = MESSAGE_EXPRESSION_EXPRESSION_TYPE;
     res->Receiver = receiver;
     res->Arguments = arguments;
     return res;

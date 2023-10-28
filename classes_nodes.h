@@ -200,6 +200,8 @@ class Expression_node
         } *constant;
         Expression_node *Left;
         Expression_node *Right;
+        Receiver_node *Receiver;
+        Message_selector_node *Arguments;
 
         static Expression_node* createExpressionNodeFromIdentifier(char *name);
         static Expression_node* createExpressionNodeFromLiteral(Literal_node *value);
@@ -207,18 +209,7 @@ class Expression_node
         static Expression_node* createExpressionNodeFromSimpleExpression(expression_type type, Expression_node *expression);
         static Expression_node* createExpressionNodeFromSelf();
         static Expression_node* createExpressionNodeFromOperator(expression_type type, Expression_node *leftExpression, Expression_node *rightExpression);
-};
-
-// ---------- message_expression ----------
-
-class Message_expression_node : public Expression_node
-{
-    public:
-        int id;
-        Receiver_node *Receiver;
-        Message_selector_node *Arguments;
-
-        static Message_expression_node* createMessageExpressionNode(Receiver_node *receiver, Message_selector_node *arguments);
+        static Expression_node* createExpressionNodeFromMessageExpression(Receiver_node *receiver, Message_selector_node *arguments);
 };
 
 // ---------- receiver ----------

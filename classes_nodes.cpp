@@ -179,15 +179,44 @@ Init_declarator_list_node* Init_declarator_list_node::addToInitDeclaratorListNod
 
 // ---------- init_declarator ----------
 
-Init_declarator_node* Init_declarator_node::createInitDeclaratorNode(init_declarator_type type, char *name, Expression_node *expression)
+Init_declarator_node* Init_declarator_node::createInitDeclaratorNode(init_declarator_type type, Declarator_node *declarator, Expression_node *expression)
 {
     Init_declarator_node *res = new Init_declarator_node;
     res->id = maxId++;
     res->type = type;
-    res->name = name;
+    res->Declarator = declarator;
     res->expression = expression;
     res->Next = NULL;
     return res;
+}
+
+// ---------- declarator ----------
+
+Declarator_node* Declarator_node::createDeclaratorNode(char *name)
+{
+    Declarator_node *res = new Declarator_node;
+    res->id = maxId++;
+    res->name = name;
+    res->Next = NULL;
+    return res;
+}
+
+// ---------- declarator_list ----------
+
+Declarator_list_node* Declarator_list_node::createDeclaratorListNode(Declarator_node *declarator)
+{
+    Declarator_list_node *res = new Declarator_list_node;
+    res->id = maxId++;
+    res->First = declarator;
+    res->Last = declarator;
+    return res;
+}
+
+Declarator_list_node* Declarator_list_node::addToDeclaratorListNode(Declarator_list_node *list, Declarator_node *declarator)
+{
+    list->Last->Next = declarator;
+    list->Last = declarator;
+    return list;
 }
 
 // ---------- parameter_list ----------
@@ -618,12 +647,41 @@ Class_declaration_list_node* Class_declaration_list_node::createClassDeclaration
 
 // ---------- instance_variables ----------
 
-Instance_variables_node* Instance_variables_node::createInstanceVariablesNode(Declaration_list_node *declarationList)
+Instance_variables_node* Instance_variables_node::createInstanceVariablesNode(Instance_variables_declaration_list_node *declarationList)
 {
     Instance_variables_node *res= new Instance_variables_node;
     res->id = maxId++;
     res->DeclarationList = declarationList;
     return res;
+}
+
+// ---------- instance_variables_declaration ----------
+
+Instance_variables_declaration_node* Instance_variables_declaration_node::createInstanceVariablesDeclarationNode(Type_node *type, Declarator_list_node *declaratorList)
+{
+    Instance_variables_declaration_node *res= new Instance_variables_declaration_node;
+    res->id = maxId++;
+    res->Type = type;
+    res->DeclaratorList = declaratorList;
+    return res;
+}
+
+// ---------- instance_variables_declaration_list ----------
+
+Instance_variables_declaration_list_node* Instance_variables_declaration_list_node::createInstanceVariablesDeclarationListNode(Instance_variables_declaration_node *declaration)
+{
+    Instance_variables_declaration_list_node *res= new Instance_variables_declaration_list_node;
+    res->id = maxId++;
+    res->First = declaration;
+    res->Last = declaration;
+    return res;
+}
+
+Instance_variables_declaration_list_node* Instance_variables_declaration_list_node::addToInstanceVariablesDeclarationListNode(Instance_variables_declaration_list_node *list, Instance_variables_declaration_node *declaration)
+{
+    list->Last->Next = declaration;
+    list->Last = declaration;
+    return list;
 }
 
 // ---------- interface_declaration_list ----------

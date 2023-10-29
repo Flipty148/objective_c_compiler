@@ -32,6 +32,8 @@ class Keyword_declaration_node;
 class Attribute_node;
 class Function_and_class_list_node;
 class Function_node;
+class Declarator_node;
+class Instance_variables_declaration_list_node;
 
 
 // -------------------- Типы --------------------
@@ -154,11 +156,36 @@ class Init_declarator_node
     public:
         int id;
         enum init_declarator_type type;
-        char *name;
+        Declarator_node *Declarator;
         Expression_node *expression;
         Init_declarator_node *Next;
 
-        static Init_declarator_node* createInitDeclaratorNode(init_declarator_type type, char *name, Expression_node *expression);
+        static Init_declarator_node* createInitDeclaratorNode(init_declarator_type type, Declarator_node *declarator, Expression_node *expression);
+};
+
+// ---------- declarator ----------
+
+class Declarator_node
+{
+    public:
+        int id;
+        char *name;
+        Declarator_node *Next;
+
+        static Declarator_node* createDeclaratorNode(char *name);
+};
+
+// ---------- declarator_list ----------
+
+class Declarator_list_node
+{
+    public:
+        int id;
+        Declarator_node *First;
+        Declarator_node *Last;
+
+        static Declarator_list_node* createDeclaratorListNode(Declarator_node *declarator);
+        static Declarator_list_node* addToDeclaratorListNode(Declarator_list_node *list, Declarator_node *declarator);
 };
 
 // ---------- parameter_list ----------
@@ -538,9 +565,35 @@ class Instance_variables_node
 {
     public:
         int id;
-        Declaration_list_node *DeclarationList;
+        Instance_variables_declaration_list_node *DeclarationList;
 
-        static Instance_variables_node* createInstanceVariablesNode(Declaration_list_node *declarationList);
+        static Instance_variables_node* createInstanceVariablesNode(Instance_variables_declaration_list_node *declarationList);
+};
+
+// ---------- instance_variables_declaration --------
+
+class Instance_variables_declaration_node
+{
+    public:
+        int id;
+        Type_node *Type;
+        Declarator_list_node *DeclaratorList;
+        Instance_variables_declaration_node *Next;
+
+        static Instance_variables_declaration_node* createInstanceVariablesDeclarationNode(Type_node *type, Declarator_list_node *declaratorList);
+};
+
+// ---------- instance_variables_declaration_list ----------
+
+class Instance_variables_declaration_list_node
+{
+    public:
+        int id;
+        Instance_variables_declaration_node *First;
+        Instance_variables_declaration_node *Last;
+
+        static Instance_variables_declaration_list_node* createInstanceVariablesDeclarationListNode(Instance_variables_declaration_node *declaration);
+        static Instance_variables_declaration_list_node* addToInstanceVariablesDeclarationListNode(Instance_variables_declaration_list_node *list, Instance_variables_declaration_node *declaration);
 };
 
 // ---------- interface_declaration_list ----------

@@ -52,6 +52,10 @@
 	Class_list *Class_list;
 	Function_and_class_list_node *Function_and_class_list;
 	Function_node *Function;
+	Declarator_node *Declarator;
+	Declarator_list_node *Declarator_list;
+	Instance_variables_declaration_node *Instance_variables_declaration;
+	Instance_variables_declaration_list_node *Instance_variables_declaration_list;
 }
 
 // ---------- Операции с их приоритетом ----------
@@ -127,6 +131,10 @@
 %type <Program> program 
 %type <Function_and_class_list> function_and_class_list
 %type <Function> function
+%type <Declarator> declarator declarator_with_asterisk
+%type <Declarator_list> declarator_list declarator_with_asterisk_list
+%type <Instance_variables_declaration> instance_variables_declaration
+%type <Instance_variables_declaration_list> instance_variables_declaration_list
 
 
 %start program
@@ -186,12 +194,25 @@ init_declarator_list: init_declarator							{$$ = Init_declarator_list_node::cre
 					| init_declarator_list ',' init_declarator	{$$ = Init_declarator_list_node::addToInitDeclaratorListNode($1, $3);}
 					;
 
-init_declarator: IDENTIFIER						{$$ = Init_declarator_node::createInitDeclaratorNode(SIMPLE_DECLARATOR_TYPE, $1, NULL);}
-			   | IDENTIFIER '=' expression		{$$ = Init_declarator_node::createInitDeclaratorNode(DECLARATOR_WITH_INITIALIZING_TYPE, $1, $3);}
+init_declarator: declarator						{$$ = Init_declarator_node::createInitDeclaratorNode(SIMPLE_DECLARATOR_TYPE, $1, NULL);}
+			   | declarator '=' expression		{$$ = Init_declarator_node::createInitDeclaratorNode(DECLARATOR_WITH_INITIALIZING_TYPE, $1, $3);}
 			   ;
 
-init_declarator_with_asterisk: '*' IDENTIFIER					{$$ = Init_declarator_node::createInitDeclaratorNode(SIMPLE_DECLARATOR_TYPE, $2, NULL);}
-			   				 | '*' IDENTIFIER '=' expression	{$$ = Init_declarator_node::createInitDeclaratorNode(DECLARATOR_WITH_INITIALIZING_TYPE, $2, $4);}
+declarator: IDENTIFIER	{$$ = Declarator_node::createDeclaratorNode($1);}
+		  ;
+
+declarator_with_asterisk: '*' IDENTIFIER	{$$ = Declarator_node::createDeclaratorNode($2);}
+						;
+
+declarator_with_asterisk_list: declarator_with_asterisk										{$$ = Declarator_list_node::createDeclaratorListNode($1);}
+							 | declarator_with_asterisk_list ',' declarator_with_asterisk	{$$ = Declarator_list_node::addToDeclaratorListNode($1);}
+
+declarator_list: declarator							{$$ = Declarator_list_node::createDeclaratorListNode($1);}
+			   | declarator_list ',' declarator		{$$ = Declarator_list_node::addToDeclaratorListNode($1);}
+			   ;
+
+init_declarator_with_asterisk: declarator_with_asterisk					{$$ = Init_declarator_node::createInitDeclaratorNode(SIMPLE_DECLARATOR_TYPE, $1, NULL);}
+			   				 | declarator_with_asterisk '=' expression	{$$ = Init_declarator_node::createInitDeclaratorNode(DECLARATOR_WITH_INITIALIZING_TYPE, $1, $3);}
 							 ;
 
 init_declarator_with_asterisk_list: init_declarator_with_asterisk											{$$ = Init_declarator_list_node::createInitDeclaratorListNode($1);}								
@@ -335,8 +356,16 @@ class_list: IDENTIFIER					{$$ = Class_list_node::createClassListNode($1);}
 		  | class_list ',' IDENTIFIER	{$$ = Class_list_node::addToClassListNode($1, $3);}
 		  ;
 
-instance_variables: '{' declaration_list '}'	{$$ = Instance_variables_node::createInstanceVariablesNode($2);}
+instance_variables: '{' instance_variables_declaration_list '}'	{$$ = Instance_variables_node::createInstanceVariablesNode($2);}
 				   ;
+
+instance_variables_declaration: type declarator_list ';'						{$$ = Instance_variables_declaration_node::createInstanceVariablesDeclarationNode($1, $2);}
+							  | CLASS_NAME declarator_with_asterisk_list ';'	{$$ = Instance_variables_declaration_node::createInstanceVariablesDeclarationNode(Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $1), $2);}
+							  ;
+
+instance_variables_declaration_list: instance_variables_declaration											{$$ = Instance_variables_declaration_list_node::createInstanceVariablesDeclarationListNode($1);}
+								   | instance_variables_declaration_list instance_variables_declaration		{$$ = Instance_variables_declaration_list_node::addToInstanceVariablesDeclarationListNode($1, $2);}
+								   ;
 
 interface_declaration_list: declaration										{$$ = Interface_declaration_list_node::createInterfaceDeclarationListNodeFromDeclaration($1);}
 						  | property										{$$ = Interface_declaration_list_node::createInterfaceDeclarationListNodeFromProperty($1);}

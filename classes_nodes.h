@@ -644,15 +644,12 @@ class Implementation_definition_list_node
         int id;
         union interface_declaration {
             Declaration_node *declaration;
-            Property_node *property;
             Method_definition_node *method_definition;
         } *First, *Last;
 
         static Implementation_definition_list_node* createImplementationDefinitionListNodeFromDeclaration(Declaration_node *interfaceDeclaration);
-        static Implementation_definition_list_node* createImplementationDefinitionListNodeFromProperty(Property_node *interfaceDeclaration);
         static Implementation_definition_list_node* createImplementationDefinitionListNodeFromMethodDeclaration(Method_definition_node *interfaceDeclaration);
         static Implementation_definition_list_node* addDeclarationToImplementationDefinitionListNode(Implementation_definition_list_node *list, Declaration_node *interfaceDeclaration);
-        static Implementation_definition_list_node* addPropertyToImplementationDefinitionListNode(Implementation_definition_list_node *list, Property_node *interfaceDeclaration);
         static Implementation_definition_list_node* addMethodDeclarationToImplementationDefinitionListNode(Implementation_definition_list_node *list, Method_definition_node *interfaceDeclaration);
 };
 

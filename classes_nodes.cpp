@@ -757,15 +757,6 @@ Implementation_definition_list_node* Implementation_definition_list_node::create
     return res;
 }
 
-Implementation_definition_list_node* Implementation_definition_list_node::createImplementationDefinitionListNodeFromProperty(Property_node *interfaceDeclaration)
-{
-    Implementation_definition_list_node *res = new Implementation_definition_list_node;
-    res->id = maxId++;
-    res->First->property = interfaceDeclaration;
-    res->Last->property = interfaceDeclaration;
-    return res;
-}
-
 Implementation_definition_list_node* Implementation_definition_list_node::createImplementationDefinitionListNodeFromMethodDeclaration(Method_definition_node *interfaceDeclaration)
 {
     Implementation_definition_list_node *res = new Implementation_definition_list_node;
@@ -779,13 +770,6 @@ Implementation_definition_list_node* Implementation_definition_list_node::addDec
 {
     list->Last->declaration->Next = interfaceDeclaration;
     list->Last->declaration = interfaceDeclaration;
-    return list;
-}
-
-Implementation_definition_list_node* Implementation_definition_list_node::addPropertyToImplementationDefinitionListNode(Implementation_definition_list_node *list, Property_node *interfaceDeclaration)
-{
-    list->Last->property->Next = interfaceDeclaration;
-    list->Last->property = interfaceDeclaration;
     return list;
 }
 

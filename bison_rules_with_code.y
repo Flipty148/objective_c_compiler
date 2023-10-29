@@ -390,11 +390,9 @@ instance_method_declaration: '-' method_type method_selector ';' 	{$$ = Method_d
 						   ;
 
 implementation_definition_list: declaration											{$$ = Implementation_definition_list_node::createImplementationDefinitionListNodeFromDeclaration($1);}
-							  | property											{$$ = Implementation_definition_list_node::createImplementationDefinitionListNodeFromProperty($1);}
 							  | method_definition									{$$ = Implementation_definition_list_node::createImplementationDefinitionListNodeFromMethodDeclaration($1);}
 							  | implementation_definition_list declaration			{$$ = Implementation_definition_list_node::addDeclarationToImplementationDefinitionListNode($1, $2);}
 							  | implementation_definition_list method_definition	{$$ = Implementation_definition_list_node::addMethodDeclarationToImplementationDefinitionListNode($1, $2);}
-							  | implementation_definition_list property				{$$ = Implementation_definition_list_node::addPropertyToImplementationDefinitionListNode($1, $2);}
 							  ;
 
 method_definition: class_method_definition		{$$ = $1;}

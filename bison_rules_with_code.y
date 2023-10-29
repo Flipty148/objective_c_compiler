@@ -66,6 +66,7 @@
 %left '+' '-'
 %left '*' '/'
 %right UMINUS UPLUS UAMPERSAND
+%left '.' ARROW
 %nonassoc '(' ')' '[' ']'
 
 //---------- Терминальные символы ----------
@@ -256,6 +257,8 @@ expression: IDENTIFIER							{$$ = Expression_node::createExpressionNodeFromIden
 		  | expression LESS_EQUAL expression	{$$ = Expression_node::createExpressionNodeFromOperator(LESS_EQUAL_EXPRESSION_TYPE, $1, $3);}
 		  | expression GREATER_EQUAL expression	{$$ = Expression_node::createExpressionNodeFromOperator(GREATER_EQUAL_EXPRESSION_TYPE, $1, $3);}
 		  | expression '=' expression			{$$ = Expression_node::createExpressionNodeFromOperator(ASSIGNMENT_EXPRESSION_TYPE, $1, $3);}
+		  | expression '.' IDENTIFIER			{$$ = Expression_node::createExpressionNodeFromMemberAccessOperator(DOT_EXPRESSION_TYPE, $1, $3);}
+		  | expression ARROW IDENTIFIER			{$$ = Expression_node::createExpressionNodeFromMemberAccessOperator(ARROW_EXPRESSION_TYPE, $1, $3);}
 		  ;
 
 expression_e: /*empty*/		{$$ = NULL;}

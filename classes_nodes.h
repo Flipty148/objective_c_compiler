@@ -240,7 +240,9 @@ enum expression_type
     LESS_EXPRESSION_TYPE,
     LESS_EQUAL_EXPRESSION_TYPE,
     GREATER_EQUAL_EXPRESSION_TYPE,
-    ASSIGNMENT_EXPRESSION_TYPE
+    ASSIGNMENT_EXPRESSION_TYPE,
+    DOT_EXPRESSION_TYPE,
+    ARROW_EXPRESSION_TYPE
 };
 
 class Expression_node
@@ -266,6 +268,7 @@ class Expression_node
         static Expression_node* createExpressionNodeFromSelf();
         static Expression_node* createExpressionNodeFromOperator(expression_type type, Expression_node *leftExpression, Expression_node *rightExpression);
         static Expression_node* createExpressionNodeFromMessageExpression(Receiver_node *receiver, Message_selector_node *arguments);
+        static Expression_node* createExpressionNodeFromMemberAccessOperator(expression_type type, Expression_node *expression, char *memberName);
 };
 
 // ---------- receiver ----------

@@ -335,6 +335,18 @@ Expression_node* Expression_node::createExpressionNodeFromMessageExpression(Rece
     return res;
 }
 
+Expression_node* Expression_node::createExpressionNodeFromMemberAccessOperator(expression_type type, Expression_node *expression, char *memberName)
+{
+    Expression_node *res = new Expression_node;
+    res->id = maxId++;
+    res->type = type;
+    res->name = memberName;
+    res->constant = NULL;
+    res->Left = expression;
+    res->Right = NULL;
+    return res;
+}
+
 // ---------- receiver ----------
 
 Receiver_node* Receiver_node::createReceiverNode(receiver_type type, char *name)

@@ -79,6 +79,9 @@ UNDERLINE_LETTER [A-Za-z_]
 
 "=" {printf("Found assignment operation =: %s\n", yytext);}
 
+"." {printf("Found member access operator '.' %s\n", yytext);}
+"->" {printf("Found member access operator '->' %s\n", yytext);}
+
 
 "(" {printf("Found bracket (: %s\n", yytext);}
 ")" {printf("Found bracket ): %s\n", yytext);}

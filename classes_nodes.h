@@ -5,6 +5,34 @@ using namespace std;
 int maxId = 0; // Глобальный id узла
 set<string> ClassNames; //Множество имен объявленных классов
 
+//---------- Прототипы классов ----------
+class Init_declarator_list_node;
+class Init_declarator_node;
+class Expression_node;
+class Parameter_declaration_node;
+class Receiver_node;
+class Message_selector_node;
+class Keyword_argument_list_node;
+class Keyword_argument_node;
+class Class_declaration_list_node;
+class Statement_list_node;
+class Class_interface_node;
+class Class_implementation_node;
+class Interface_body_node;
+class Instance_variables_node;
+class Interface_declaration_list_node;
+class Implementation_definition_list_node;
+class Class_list_node;
+class Property_node;
+class Method_declaration_node;
+class Method_selector_node;
+class Method_definition_node;
+class Keyword_selector_node;
+class Keyword_declaration_node;
+class Attribute_node;
+class Function_and_class_list_node;
+class Function_node;
+
 
 // -------------------- Типы --------------------
 
@@ -280,7 +308,39 @@ class Keyword_argument_node
         static Keyword_argument_node* createKeywordArgumentNode(keyword_argument_type type, char *identifier, Expression_node *expression);
 };
 
-// -------------------- Управляющие структуры: развилки --------------------
+// -------------------- Операторы --------------------
+
+// ---------- statement ----------
+
+enum statement_type {
+    EMPTY_STATEMENT_TYPE,
+    SIMPLE_STATEMENT_TYPE,
+    RETURN_STATEMENT_TYPE,
+    IF_STATEMENT_TYPE,
+    WHILE_STATEMENT_TYPE,
+    DO_WHILE_STATEMENT_TYPE,
+    FOR_STATEMENT_TYPE,
+    COMPOUND_STATEMENT_TYPE,
+    DECLARATION_STATEMENT_TYPE
+};
+
+class Statement_node
+{
+    public:
+        int id;
+        enum statement_type type;
+        Expression_node *Expression;
+        Statement_node *Statement;
+        Declaration_node *Declaration;
+        Class_declaration_list_node *Class_declaration;
+        Statement_node *Next;
+
+        static Statement_node* createStatementNodeFromSimpleStatement(statement_type type, Expression_node *expression);
+        static Statement_node* createStatementNodeFromComplexStatement(statement_type type, Statement_node *statement);
+        static Statement_node* createStatementNodeFromDeclaration(Declaration_node *declaration);
+};
+
+// ---------- Управляющие структуры: развилки ----------
 
 // ------------ if_statement ----------
 
@@ -301,7 +361,7 @@ class If_statement_node : public Statement_node
         static If_statement_node* createIfStatementNode(if_type type, Expression_node *condition, Statement_node *trueBranch, Statement_node *falseBranch);
 };
 
-// -------------------- Управляющие структуры: циклы --------------------
+// ---------- Управляющие структуры: циклы ----------
 
 // ----------- while_stasement ----------
 
@@ -349,38 +409,6 @@ class For_statement_node : public Statement_node
 
         static For_statement_node* createForStatementNode(Expression_node *initExpression, Expression_node *condition, Expression_node *loopExpression, Statement_node *body);
         static For_statement_node* createForStatementNodeFromForeach(for_type type, Type_node *varType, char *loopVar, Expression_node *expression, Statement_node *body);
-};
-
-// -------------------- Операторы --------------------
-
-// ---------- statement ----------
-
-enum statement_type {
-    EMPTY_STATEMENT_TYPE,
-    SIMPLE_STATEMENT_TYPE,
-    RETURN_STATEMENT_TYPE,
-    IF_STATEMENT_TYPE,
-    WHILE_STATEMENT_TYPE,
-    DO_WHILE_STATEMENT_TYPE,
-    FOR_STATEMENT_TYPE,
-    COMPOUND_STATEMENT_TYPE,
-    DECLARATION_STATEMENT_TYPE
-};
-
-class Statement_node
-{
-    public:
-        int id;
-        enum statement_type type;
-        Expression_node *Expression;
-        Statement_node *Statement;
-        Declaration_node *Declaration;
-        Class_declaration_list_node *Class_declaration;
-        Statement_node *Next;
-
-        static Statement_node* createStatementNodeFromSimpleStatement(statement_type type, Expression_node *expression);
-        static Statement_node* createStatementNodeFromComplexStatement(statement_type type, Statement_node *statement);
-        static Statement_node* createStatementNodeFromDeclaration(Declaration_node *declaration);
 };
 
 // ---------- compound_statement ----------

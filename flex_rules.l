@@ -45,6 +45,7 @@ UNDERLINE_LETTER [A-Za-z_]
 "@end" {printf("Found keyword END: %s\n", yytext);}
 "@implementation" {printf("Found keyword IMPLEMENTATION: %s\n", yytext);}
 "@property" {printf("Found keyword PROPERTY: %s\n", yytext);}
+"@synthesize" {printf("Found keyword SYNTHESIZE: %s\n", yytext);}
 "float" {printf("Found keyword FLOAT: %s\n", yytext);}
 "readonly" {printf("Found keyword READONLY: %s\n", yytext);}
 "readwrite" {printf("Found keyword READWRITE: %s\n", yytext);}

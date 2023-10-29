@@ -34,6 +34,7 @@ class Function_and_class_list_node;
 class Function_node;
 class Declarator_node;
 class Instance_variables_declaration_list_node;
+class Synthesize_node;
 
 
 // -------------------- Типы --------------------
@@ -645,12 +646,15 @@ class Implementation_definition_list_node
         union interface_declaration {
             Declaration_node *declaration;
             Method_definition_node *method_definition;
+            Synthesize_node *synthesize;
         } *First, *Last;
 
-        static Implementation_definition_list_node* createImplementationDefinitionListNodeFromDeclaration(Declaration_node *interfaceDeclaration);
-        static Implementation_definition_list_node* createImplementationDefinitionListNodeFromMethodDeclaration(Method_definition_node *interfaceDeclaration);
-        static Implementation_definition_list_node* addDeclarationToImplementationDefinitionListNode(Implementation_definition_list_node *list, Declaration_node *interfaceDeclaration);
-        static Implementation_definition_list_node* addMethodDeclarationToImplementationDefinitionListNode(Implementation_definition_list_node *list, Method_definition_node *interfaceDeclaration);
+        static Implementation_definition_list_node* createImplementationDefinitionListNodeFromDeclaration(Declaration_node *implementationDefinition);
+        static Implementation_definition_list_node* createImplementationDefinitionListNodeFromMethodDeclaration(Method_definition_node *implementationDefinition);
+        static Implementation_definition_list_node* createImplementationDefinitionListNodeFromSynthesize(Synthesize_node *implementationDefinition);
+        static Implementation_definition_list_node* addDeclarationToImplementationDefinitionListNode(Implementation_definition_list_node *list, Declaration_node *implementationDefinition);
+        static Implementation_definition_list_node* addMethodDeclarationToImplementationDefinitionListNode(Implementation_definition_list_node *list, Method_definition_node *implementationDefinition);
+        static Implementation_definition_list_node* addSynthesizeToImplementationDefinitionListNode(Implementation_definition_list_node *list, Synthesize_node *implementationDefinition);
 };
 
 // ---------- method_definition, class_method_definition, instance_method_definition ----------
@@ -743,6 +747,18 @@ class Attribute_node
         enum attrribute_type type;
 
         static Attribute_node* createAttributeNode(attrribute_type type);
+};
+
+// ---------- synthesize ----------
+
+class Synthesize_node
+{
+    public:
+        int id;
+        char *Name;
+        Synthesize_node *Next;
+
+        static Synthesize_node* createSynthesizeNode(char *name);
 };
 
 

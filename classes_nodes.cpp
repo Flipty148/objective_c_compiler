@@ -748,35 +748,51 @@ Method_declaration_node* Method_declaration_node::createMethodDeclarationNode(me
 
 // ---------- implementation_definition_list ----------
 
-Implementation_definition_list_node* Implementation_definition_list_node::createImplementationDefinitionListNodeFromDeclaration(Declaration_node *interfaceDeclaration)
+Implementation_definition_list_node* Implementation_definition_list_node::createImplementationDefinitionListNodeFromDeclaration(Declaration_node *implementationDefinition)
 {
     Implementation_definition_list_node *res = new Implementation_definition_list_node;
     res->id = maxId++;
-    res->First->declaration = interfaceDeclaration;
-    res->Last->declaration = interfaceDeclaration;
+    res->First->declaration = implementationDefinition;
+    res->Last->declaration = implementationDefinition;
     return res;
 }
 
-Implementation_definition_list_node* Implementation_definition_list_node::createImplementationDefinitionListNodeFromMethodDeclaration(Method_definition_node *interfaceDeclaration)
+Implementation_definition_list_node* Implementation_definition_list_node::createImplementationDefinitionListNodeFromMethodDeclaration(Method_definition_node *implementationDefinition)
 {
     Implementation_definition_list_node *res = new Implementation_definition_list_node;
     res->id = maxId++;
-    res->First->method_definition = interfaceDeclaration;
-    res->Last->method_definition = interfaceDeclaration;
+    res->First->method_definition = implementationDefinition;
+    res->Last->method_definition = implementationDefinition;
     return res;
 }
 
-Implementation_definition_list_node* Implementation_definition_list_node::addDeclarationToImplementationDefinitionListNode(Implementation_definition_list_node *list, Declaration_node *interfaceDeclaration)
+Implementation_definition_list_node* Implementation_definition_list_node::createImplementationDefinitionListNodeFromSynthesize(Synthesize_node *implementationDefinition)
 {
-    list->Last->declaration->Next = interfaceDeclaration;
-    list->Last->declaration = interfaceDeclaration;
+    Implementation_definition_list_node *res = new Implementation_definition_list_node;
+    res->id = maxId++;
+    res->First->synthesize = implementationDefinition;
+    res->Last->synthesize = implementationDefinition;
+    return res;
+}
+
+Implementation_definition_list_node* Implementation_definition_list_node::addDeclarationToImplementationDefinitionListNode(Implementation_definition_list_node *list, Declaration_node *implementationDefinition)
+{
+    list->Last->declaration->Next = implementationDefinition;
+    list->Last->declaration = implementationDefinition;
     return list;
 }
 
-Implementation_definition_list_node* Implementation_definition_list_node::addMethodDeclarationToImplementationDefinitionListNode(Implementation_definition_list_node *list, Method_definition_node *interfaceDeclaration)
+Implementation_definition_list_node* Implementation_definition_list_node::addMethodDeclarationToImplementationDefinitionListNode(Implementation_definition_list_node *list, Method_definition_node *implementationDefinition)
 {
-    list->Last->method_definition->Next = interfaceDeclaration;
-    list->Last->method_definition = interfaceDeclaration;
+    list->Last->method_definition->Next = implementationDefinition;
+    list->Last->method_definition = implementationDefinition;
+    return list;
+}
+
+Implementation_definition_list_node* Implementation_definition_list_node::addSynthesizeToImplementationDefinitionListNode(Implementation_definition_list_node *list, Synthesize_node *implementationDefinition)
+{
+    list->Last->synthesize->Next = implementationDefinition;
+    list->Last->synthesize = implementationDefinition;
     return list;
 }
 
@@ -859,5 +875,16 @@ Attribute_node* Attribute_node::createAttributeNode(attrribute_type type)
     Attribute_node *res = new Attribute_node;
     res->id = maxId++;
     res->type = type;
+    return res;
+}
+
+// ---------- synthesize ----------
+
+Synthesize_node* Synthesize_node::createSynthesizeNode(char *name)
+{
+    Synthesize_node *res = new Synthesize_node;
+    res->id = maxId++;
+    res->Name = name;
+    res->Next = NULL;
     return res;
 }

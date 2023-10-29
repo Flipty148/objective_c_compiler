@@ -438,6 +438,10 @@ method_type: '(' type ')'	{$$ = Type_node::createTypeNode($2);}
 
 property: PROPERTY '(' attribute ')' type IDENTIFIER ';'	{$$ = Property_node::createPropertyNode($3, $5, $6);}
 		| PROPERTY '(' attribute ')' CLASS_NAME '*' IDENTIFIER ';'	{$$ = Property_node::createPropertyNode($3, Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $5), $7);}
+		| PROPERTY type IDENTIFIER ';'	{$$ = Property_node::createPropertyNode(NULL, $2, $3);}
+		| PROPERTY CLASS_NAME '*' IDENTIFIER ';'	{$$ = Property_node::createPropertyNode(NULL, Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $2), $4);}
+		| PROPERTY '(' ')' type IDENTIFIER ';'	{$$ = Property_node::createPropertyNode(NULL, $4, $5);}
+		| PROPERTY '(' ')' CLASS_NAME '*' IDENTIFIER ';'	{$$ = Property_node::createPropertyNode(NULL, Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $4), $6);}
 		;
 
 attribute: READONLY		{$$ = Attribute_node::createAttributeNode(READONLY_ATTRIBUTE_TYPE);}

@@ -98,7 +98,7 @@
 %type <Expression> expression expression_e
 %type <Receiver> receiver
 %type <Message_selector> message_selector
-%type <Keyword_argument_list> keyword_argument_list
+%type <Keyword_argument_list> keyword_argument_list keyword_argument_list_e
 %type <Keyword_argument> keyword_argument
 %type <If> if_statement
 %type <While> while_statement
@@ -120,8 +120,8 @@
 %type <Implementation_definition_list> implementation_definition_list
 %type <Method_definition> method_definition class_method_definition instance_method_definition
 %type <Method_selector> method_selector
-%type <Keyword_selector> keyword_selector
-%type <Keyword_declaration> keyword_declaration
+%type <Keyword_selector> keyword_selector keyword_selector_e
+%type <Keyword_declaration> keyword_declaration keyword_declaration_without_identifier
 %type <Property> property
 %type <Attribute> attribute
 %type <Program> program 
@@ -243,9 +243,13 @@ receiver: SUPER			{$$ = Receiver_node::createReceiverNode(SUPER_RECEIVER_TYPE, N
 		| CLASS_NAME	{$$ = Receiver_node::createReceiverNode(CLASS_NAME_RECEIVER_TYPE, $1);}
 		;
 
-message_selector: IDENTIFIER				{$$ = Message_selector_node::createMessageSelectorNode($1, NULL);}
-				| keyword_argument_list		{$$ = Message_selector_node::createMessageSelectorNode(NULL, $1);}
+message_selector: IDENTIFIER										{$$ = Message_selector_node::createMessageSelectorNode($1, NULL, NULL);}
+				| IDENTIFIER ':' expression keyword_argument_list_e	{$$ = Message_selector_node::createMessageSelectorNode($1, $3, $4);}
 				;
+
+keyword_argument_list_e: /*empty*/				{$$ = NULL;}
+					   | keyword_argument_list	{$$ = $1;}
+					   ;
 
 keyword_argument_list: keyword_argument							{$$ = Keyword_argument_list_node::createKeywordArgumentListNode($1);}
 					 | keyword_argument_list keyword_argument	{$$ = Keyword_argument_list_node::addToKeywordArgumentListNode($1, $2);}
@@ -377,14 +381,22 @@ instance_method_definition: '-' method_type method_selector declaration_list_e c
 						  | '-' method_selector declaration_list_e compound_statement				{$$ = Method_definition_node::createMethodDefinitionNode(INSTANCE_METHOD_DEFINITION_TYPE, NULL, $2, $3, $4);}
 					   	  ;
 
-method_selector: IDENTIFIER									{$$ = Method_selector_node::createMethodSelectorNode($1, NULL, NULL);}
-			   | keyword_selector							{$$ = Method_selector_node::createMethodSelectorNode(NULL, $1, NULL);}
-			   | keyword_selector ',' parameter_list	{$$ = Method_selector_node::createMethodSelectorNode(NULL, $1, $3);}
+method_selector: IDENTIFIER																						{$$ = Method_selector_node::createMethodSelectorNode($1, NULL, NULL, NULL);}
+			   | IDENTIFIER ':' keyword_declaration_without_identifier keyword_selector_e						{$$ = Method_selector_node::createMethodSelectorNode($1, $3, $4, NULL);}
+			   | IDENTIFIER ':' keyword_declaration_without_identifier keyword_selector_e ',' parameter_list 	{$$ = Method_selector_node::createMethodSelectorNode($1, $3, $4, $6);}
 			   ;
+
+keyword_selector_e: /*empty*/			{$$ = NULL;}
+				  | keyword_selector	{$$ = $1;}
+				  ;
 
 keyword_selector: keyword_declaration						{$$ = Keyword_selector_node::createKeywordSelectorNode($1);}
 				| keyword_selector keyword_declaration		{$$ = Keyword_selector_node::addToKeywordSelectorNode($1, $2);}
 				;
+
+keyword_declaration_without_identifier: method_type IDENTIFIER	{$$ = Keyword_declaration_node::createKeywordDeclarationNode($1, NULL, $2);}
+				   					  | IDENTIFIER				{$$ = Keyword_declaration_node::createKeywordDeclarationNode(NULL, NULL, $1);}
+									  ;
 
 keyword_declaration: ':' method_type IDENTIFIER					{$$ = Keyword_declaration_node::createKeywordDeclarationNode($2, NULL, $3);}
 				   | ':' IDENTIFIER								{$$ = Keyword_declaration_node::createKeywordDeclarationNode(NULL, NULL, $2);}

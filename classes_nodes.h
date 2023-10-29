@@ -237,8 +237,9 @@ class Message_selector_node
         int id;
         char *MethodName;
         Keyword_argument_list_node *Arguments;
+        Expression_node *Expression;
 
-        static Message_selector_node* createMessageSelectorNode(char *methodName, Keyword_argument_list_node *arguments);
+        static Message_selector_node* createMessageSelectorNode(char *methodName, Expression_node *expression, Keyword_argument_list_node *arguments);
 };
 
 // ---------- keyword_argument_list ----------
@@ -598,8 +599,9 @@ class Method_selector_node
         char *MethodName;
         Keyword_selector_node *KeywordSelector;
         Parameter_list_node *ParameterListNode;
+        Keyword_declaration_node *KeywordDeclaration;
 
-        static Method_selector_node* createMethodSelectorNode(char *methodName, Keyword_selector_node *selector, Parameter_list_node *parameters);
+        static Method_selector_node* createMethodSelectorNode(char *methodName, Keyword_declaration_node *keywordDeclaration, Keyword_selector_node *selector, Parameter_list_node *parameters);
 };
 
 // ---------- keyword_selector ----------

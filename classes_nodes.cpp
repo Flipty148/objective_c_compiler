@@ -318,12 +318,13 @@ Receiver_node* Receiver_node::createReceiverNode(receiver_type type, char *name)
 
 // ---------- message_selector ----------
 
-Message_selector_node* Message_selector_node::createMessageSelectorNode(char *methodName, Keyword_argument_list_node *arguments)
+Message_selector_node* Message_selector_node::createMessageSelectorNode(char *methodName,Expression_node *expression, Keyword_argument_list_node *arguments)
 {
     Message_selector_node *res = new Message_selector_node;
     res->id = maxId++;
     res->MethodName = methodName;
     res->Arguments = arguments;
+    res->Expression = expression;
     return res;
 }
 
@@ -743,13 +744,14 @@ Method_definition_node* Method_definition_node::createMethodDefinitionNode(metho
 
 // ---------- method_selector ----------
 
-Method_selector_node* Method_selector_node::createMethodSelectorNode(char *methodName, Keyword_selector_node *selector, Parameter_list_node *parameters)
+Method_selector_node* Method_selector_node::createMethodSelectorNode(char *methodName,Keyword_declaration_node *keywordDeclaration, Keyword_selector_node *selector, Parameter_list_node *parameters)
 {
     Method_selector_node *res = new Method_selector_node;
     res->id = maxId++;
     res->MethodName = methodName;
     res->KeywordSelector = selector;
     res->ParameterListNode = parameters;
+    res->KeywordDeclaration = keywordDeclaration;
     return res;
 }
 

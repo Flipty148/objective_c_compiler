@@ -216,7 +216,8 @@ class Expression_node
 enum receiver_type {
     SUPER_RECEIVER_TYPE,
     SELF_RECEIVER_TYPE,
-    CLASS_NAME_RECEIVER_TYPE
+    OBJECT_NAME_RECEIVER_TYPE,
+    MESSAGE_EXPRESSION_RECEIVER_TYPE
 };
 
 
@@ -225,8 +226,13 @@ class Receiver_node
     public:
         int id;
         char *name;
+        receiver_type Type;
+        Receiver_node *Receiver;
+        Message_selector_node *Arguments;
 
         static Receiver_node* createReceiverNode(receiver_type type, char *name);
+        static Receiver_node* createReceiverNodeFromMessageExpression(Receiver_node *receiver, Message_selector_node *arguments);
+
 };
 
 // ---------- message_selector -----------

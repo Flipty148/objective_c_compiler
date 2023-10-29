@@ -312,7 +312,18 @@ Receiver_node* Receiver_node::createReceiverNode(receiver_type type, char *name)
 {
     Receiver_node *res = new Receiver_node;
     res->id = maxId++;
+    res->Type = type;
     res->name = name;
+    return res;
+}
+
+Receiver_node* Receiver_node::createReceiverNodeFromMessageExpression(Receiver_node *receiver, Message_selector_node *arguments)
+{
+    Receiver_node *res = new Receiver_node;
+    res->id = maxId++;
+    res->Type = MESSAGE_EXPRESSION_RECEIVER_TYPE;
+    res->Receiver = receiver;
+    res->Arguments = arguments;
     return res;
 }
 

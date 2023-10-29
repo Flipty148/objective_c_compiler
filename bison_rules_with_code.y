@@ -238,9 +238,10 @@ expression_e: /*empty*/		{$$ = NULL;}
 			| expression	{$$ = $1;}
 			;
 
-receiver: SUPER			{$$ = Receiver_node::createReceiverNode(SUPER_RECEIVER_TYPE, NULL);}
-		| SELF			{$$ = Receiver_node::createReceiverNode(SELF_RECEIVER_TYPE, NULL);}
-		| CLASS_NAME	{$$ = Receiver_node::createReceiverNode(CLASS_NAME_RECEIVER_TYPE, $1);}
+receiver: SUPER								{$$ = Receiver_node::createReceiverNode(SUPER_RECEIVER_TYPE, NULL);}
+		| SELF								{$$ = Receiver_node::createReceiverNode(SELF_RECEIVER_TYPE, NULL);}
+		| IDENTIFIER						{$$ = Receiver_node::createReceiverNode(OBJECT_NAME_RECEIVER_TYPE, $1);}
+		| '[' receiver message_selector ']'	{$$ = Receiver_node::createReceiverNodeFromMessageExpression($2, $3);}
 		;
 
 message_selector: IDENTIFIER										{$$ = Message_selector_node::createMessageSelectorNode($1, NULL, NULL);}

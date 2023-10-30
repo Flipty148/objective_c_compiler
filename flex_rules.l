@@ -1,6 +1,7 @@
 /*Опции*/
 %option noyywrap
 %option never-interactive
+%option stack
 
 /*Именованные шаблоны*/
 DIGIT [0-9]

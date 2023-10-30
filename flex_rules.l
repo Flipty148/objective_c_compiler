@@ -87,12 +87,12 @@ UNDERLINE_LETTER [A-Za-z_]
 "->" {printf("Found member access operator '->' %s\n", yytext);     return ARROW;}
 
 
-"(" {printf("Found bracket (: %s\n", yytext);}
-")" {printf("Found bracket ): %s\n", yytext);}
-"{" {printf("Found bracket {: %s\n", yytext);}
-"}" {printf("Found bracket }: %s\n", yytext);}
-"[" {printf("Found bracket [: %s\n", yytext);}
-"]" {printf("Found bracket ]: %s\n", yytext);}
+"(" {printf("Found bracket (: %s\n", yytext);   return '(';}
+")" {printf("Found bracket ): %s\n", yytext);   return ')';}
+"{" {printf("Found bracket {: %s\n", yytext);   return '{';}
+"}" {printf("Found bracket }: %s\n", yytext);   return '}';}
+"[" {printf("Found bracket [: %s\n", yytext);   return '[';}
+"]" {printf("Found bracket ]: %s\n", yytext);   return ']';}
 
 
 ";" {printf("Found delimiter ;: %s\n", yytext);}

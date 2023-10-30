@@ -149,7 +149,19 @@ UNDERLINE_LETTER [A-Za-z_]
     str += c;}
 <STRING,CHAR,NSSTRING>\n {printf("ERROR! Multiline string\n", lineCount); lineCount++;}
 <STRING,CHAR,NSSTRING><<EOF>> {printf("ERROR! haven't found closing quotes.\n"); BEGIN(INITIAL);}
-<STRING,NSSTRING>\" {std::cout << "Found String literal: " << str.c_str() << std::endl;BEGIN(INITIAL);}
+<STRING,NSSTRING>\" {std::cout << "Found String literal: " << str.c_str() << std::endl;BEGIN(INITIAL);
+      
+      if (yy_top_state() == STRING)
+      {
+        strcpy(yylval.String_constant, str.c_str()); 
+        return STRING_CONSTANT;
+      }
+      else
+      {
+        strcpy(yylval.NSString_constant, str.c_str()); 
+        return NSSTRING_CONSTANT;
+      }
+}
 <CHAR>\' {
     if(str.size() != 1)
     {
@@ -158,6 +170,8 @@ UNDERLINE_LETTER [A-Za-z_]
     else
     {
         std::cout << "Found char: " + str << std::endl;BEGIN(INITIAL);
+        strcpy(yylval.Char_constant, str.c_str());
+        return CHAR_CONSTANT;
     }
 }
 
@@ -167,15 +181,27 @@ UNDERLINE_LETTER [A-Za-z_]
     strcpy(tmp, yytext);
     removeFloatSuffix(tmp);
     printf("Found float constant: %f\n", (float)atof(tmp));
+    yylval.Float_constant = (float)atof(tmp);
+    return FLOAT_CONSTANT;
 }
 
 ({DIGIT}+\.?{DIGIT}*|\.{DIGIT}+)(e|E)[+-]?{DIGIT}+[fF]? {
     strcpy(tmp, yytext);
     removeFloatSuffix(tmp);
     printf("Found float constant: %f\n", (float)atof(tmp));
+    yylval.Float_constant = (float)atof(tmp);
+    return FLOAT_CONSTANT;
 }
 
-{UNDERLINE_LETTER}({UNDERLINE_LETTER}|{DIGIT})* {printf("Found identifier: %s\n", yytext);}
+{UNDERLINE_LETTER}({UNDERLINE_LETTER}|{DIGIT})* {printf("Found identifier: %s\n", yytext);
+    str = "";
+    str += yytext;
+    strcpy(yylval.Identifier, str.c_str());
+    if (ClassNames.contains(str))
+        return CLASS_NAME;
+    else
+        return IDENTIFIER;
+}
 {DIGIT}({UNDERLINE_LETTER}|{DIGIT})* {printf("ERROR! Incorrect identifier: %s\n", yytext);}
 
 

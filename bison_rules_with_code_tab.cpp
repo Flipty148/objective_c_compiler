@@ -46,13 +46,15 @@
 #line 1 "bison_rules_with_code.y"
 
 	#include "classes_nodes.h"
+	void yyerror(char const *s);
+	extern int yylex(void);
 	Program_node *root;
 
-#line 7 "bison_rules_with_code.y"
+#line 9 "bison_rules_with_code.y"
 typedef union {
 	int Integer_constant;
 	char *String_constant;
-	char Char_constant;
+	char *Char_constant;
 	float Float_constant;
 	char *NSString_constant;
 	char *Identifier;
@@ -94,7 +96,7 @@ typedef union {
 	Property_node *Property;
 	Attribute_node *Attribute;
 	Program_node *Program;
-	Class_list *Class_list;
+	Class_list_node *Class_list;
 	Function_and_class_list_node *Function_and_class_list;
 	Function_node *Function;
 	Declarator_node *Declarator;
@@ -262,24 +264,24 @@ static const short yyrhs[] = {    60,
 
 #if YYDEBUG != 0
 static const short yyrline[] = { 0,
-   148,   151,   152,   153,   154,   155,   156,   161,   164,   165,
-   166,   167,   171,   172,   175,   176,   177,   181,   182,   185,
-   186,   189,   190,   193,   194,   197,   198,   201,   202,   205,
-   208,   211,   212,   214,   215,   218,   219,   222,   223,   226,
-   227,   230,   231,   234,   235,   240,   241,   242,   243,   244,
-   245,   246,   247,   248,   249,   250,   251,   252,   253,   254,
-   255,   256,   257,   258,   259,   260,   261,   264,   265,   268,
-   269,   270,   271,   274,   275,   278,   279,   282,   283,   286,
-   287,   291,   292,   296,   299,   302,   303,   304,   305,   310,
-   311,   312,   313,   314,   315,   316,   317,   318,   321,   324,
-   325,   328,   329,   332,   333,   337,   338,   339,   342,   343,
-   346,   347,   350,   351,   352,   353,   354,   355,   358,   361,
-   362,   365,   368,   369,   372,   373,   376,   377,   378,   379,
-   380,   381,   384,   385,   388,   389,   390,   393,   394,   395,
-   398,   399,   400,   401,   402,   403,   406,   407,   410,   411,
-   412,   415,   416,   417,   420,   421,   422,   425,   426,   429,
-   430,   433,   434,   437,   438,   439,   440,   443,   444,   447,
-   448,   449,   450,   451,   452,   455,   456,   459
+   150,   153,   154,   155,   156,   157,   158,   163,   166,   167,
+   168,   169,   173,   174,   177,   178,   179,   183,   184,   187,
+   188,   191,   192,   195,   196,   199,   200,   203,   204,   207,
+   210,   213,   214,   216,   217,   220,   221,   224,   225,   228,
+   229,   232,   233,   236,   237,   242,   243,   244,   245,   246,
+   247,   248,   249,   250,   251,   252,   253,   254,   255,   256,
+   257,   258,   259,   260,   261,   262,   263,   266,   267,   270,
+   271,   272,   273,   276,   277,   280,   281,   284,   285,   288,
+   289,   293,   294,   298,   301,   304,   305,   306,   307,   312,
+   313,   314,   315,   316,   317,   318,   319,   320,   323,   326,
+   327,   330,   331,   334,   335,   339,   340,   341,   344,   345,
+   348,   349,   352,   353,   354,   355,   356,   357,   360,   363,
+   364,   367,   370,   371,   374,   375,   378,   379,   380,   381,
+   382,   383,   386,   387,   390,   391,   392,   395,   396,   397,
+   400,   401,   402,   403,   404,   405,   408,   409,   412,   413,
+   414,   417,   418,   419,   422,   423,   424,   427,   428,   431,
+   432,   435,   436,   439,   440,   441,   442,   445,   446,   449,
+   450,   451,   452,   453,   454,   457,   458,   461
 };
 
 static const char * const yytname[] = {   "$","error","$undefined.","'='","EQUAL",
@@ -1096,715 +1098,715 @@ yyreduce:
   switch (yyn) {
 
 case 1:
-#line 148 "bison_rules_with_code.y"
+#line 150 "bison_rules_with_code.y"
 {yyval.Program = Program_node::createProgramNode(yyvsp[0].Function_and_class_list);;
     break;}
 case 2:
-#line 151 "bison_rules_with_code.y"
+#line 153 "bison_rules_with_code.y"
 {yyval.Function_and_class_list = Function_and_class_list_node::createFunctionAndClassListNodeFromClassBlock(yyvsp[0].Class_block);;
     break;}
 case 3:
-#line 152 "bison_rules_with_code.y"
+#line 154 "bison_rules_with_code.y"
 {yyval.Function_and_class_list = Function_and_class_list_node::createFunctionAndClassListNodeFromFunction(yyvsp[0].Function);;
     break;}
 case 4:
-#line 153 "bison_rules_with_code.y"
+#line 155 "bison_rules_with_code.y"
 {yyval.Function_and_class_list = Function_and_class_list_node::createFunctionAndClassListNodeFromClassDeclarationList(yyvsp[0].Class_declaration_list);;
     break;}
 case 5:
-#line 154 "bison_rules_with_code.y"
+#line 156 "bison_rules_with_code.y"
 {yyval.Function_and_class_list = Function_and_class_list_node::addToFunctionAndClassListNodeFromClassBlock(yyvsp[-1].Function_and_class_list, yyvsp[0].Class_block);;
     break;}
 case 6:
-#line 155 "bison_rules_with_code.y"
+#line 157 "bison_rules_with_code.y"
 {yyval.Function_and_class_list = Function_and_class_list_node::addToFunctionAndClassListNodeFromFunction(yyvsp[-1].Function_and_class_list, yyvsp[0].Function);;
     break;}
 case 7:
-#line 156 "bison_rules_with_code.y"
+#line 158 "bison_rules_with_code.y"
 {yyval.Function_and_class_list = Function_and_class_list_node::addToFunctionAndClassListNodeFromClassDeclarationList(yyvsp[-1].Function_and_class_list, yyvsp[0].Class_declaration_list);;
     break;}
 case 8:
-#line 161 "bison_rules_with_code.y"
+#line 163 "bison_rules_with_code.y"
 {yyval.Function = Function_node::createFunctionNode(yyvsp[-4].Type, yyvsp[-3].Identifier, yyvsp[0].Compound_statement);;
     break;}
 case 9:
-#line 164 "bison_rules_with_code.y"
+#line 166 "bison_rules_with_code.y"
 {yyval.Type = Type_node::createTypeNode(INT_TYPE);;
     break;}
 case 10:
-#line 165 "bison_rules_with_code.y"
+#line 167 "bison_rules_with_code.y"
 {yyval.Type = Type_node::createTypeNode(CHAR_TYPE);;
     break;}
 case 11:
-#line 166 "bison_rules_with_code.y"
+#line 168 "bison_rules_with_code.y"
 {yyval.Type = Type_node::createTypeNode(FLOAT_TYPE);;
     break;}
 case 12:
-#line 167 "bison_rules_with_code.y"
+#line 169 "bison_rules_with_code.y"
 {yyval.Type = Type_node::createTypeNode(ID_TYPE);;
     break;}
 case 13:
-#line 171 "bison_rules_with_code.y"
+#line 173 "bison_rules_with_code.y"
 {yyval.Numeric_constant = Numeric_constant_node::createNumericConstantNodeFromFloat(yyvsp[0].Float_constant);;
     break;}
 case 14:
-#line 172 "bison_rules_with_code.y"
+#line 174 "bison_rules_with_code.y"
 {yyval.Numeric_constant = Numeric_constant_node::createNumericConstantNodeFromInteger(yyvsp[0].Integer_constant);;
     break;}
 case 15:
-#line 175 "bison_rules_with_code.y"
+#line 177 "bison_rules_with_code.y"
 {yyval.Literal = Literal_node::createLiteralNode(STRING_CONSTANT_TYPE, yyvsp[0].String_constant);;
     break;}
 case 16:
-#line 176 "bison_rules_with_code.y"
+#line 178 "bison_rules_with_code.y"
 {yyval.Literal = Literal_node::createLiteralNode(CHAR_CONSTANT_TYPE, yyvsp[0].Char_constant);;
     break;}
 case 17:
-#line 177 "bison_rules_with_code.y"
+#line 179 "bison_rules_with_code.y"
 {yyval.Literal = Literal_node::createLiteralNode(NSSTRING_CONSTANT_TYPE, yyvsp[0].NSString_constant);;
     break;}
 case 18:
-#line 181 "bison_rules_with_code.y"
+#line 183 "bison_rules_with_code.y"
 {yyval.Declaration = Declaration_node::createDeclarationNode(yyvsp[-2].Type, yyvsp[-1].Init_declarator_list);;
     break;}
 case 19:
-#line 182 "bison_rules_with_code.y"
+#line 184 "bison_rules_with_code.y"
 {yyval.Declaration = Declaration_node::createDeclarationNode(Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, yyvsp[-2].Identifier), yyvsp[-1].Init_declarator_list);
     break;}
 case 20:
-#line 185 "bison_rules_with_code.y"
+#line 187 "bison_rules_with_code.y"
 {yyval.Declaration_list = Declaration_list_node::createDeclarationListNode(yyvsp[0].Declaration);;
     break;}
 case 21:
-#line 186 "bison_rules_with_code.y"
+#line 188 "bison_rules_with_code.y"
 {yyval.Declaration_list = Declaration_list_node::addToDeclarationListNode(yyvsp[-1].Declaration_list, yyvsp[0].Declaration);;
     break;}
 case 22:
-#line 189 "bison_rules_with_code.y"
+#line 191 "bison_rules_with_code.y"
 {yyval.Declaration_list = NULL;;
     break;}
 case 23:
-#line 190 "bison_rules_with_code.y"
+#line 192 "bison_rules_with_code.y"
 {yyval.Declaration_list = yyvsp[0].Declaration_list;;
     break;}
 case 24:
-#line 193 "bison_rules_with_code.y"
+#line 195 "bison_rules_with_code.y"
 {yyval.Init_declarator_list = NULL;;
     break;}
 case 25:
-#line 194 "bison_rules_with_code.y"
+#line 196 "bison_rules_with_code.y"
 {yyval.Init_declarator_list = yyvsp[0].Init_declarator_list;;
     break;}
 case 26:
-#line 197 "bison_rules_with_code.y"
+#line 199 "bison_rules_with_code.y"
 {yyval.Init_declarator_list = Init_declarator_list_node::createInitDeclaratorListNode(yyvsp[0].Init_declarator);;
     break;}
 case 27:
-#line 198 "bison_rules_with_code.y"
+#line 200 "bison_rules_with_code.y"
 {yyval.Init_declarator_list = Init_declarator_list_node::addToInitDeclaratorListNode(yyvsp[-2].Init_declarator_list, yyvsp[0].Init_declarator);;
     break;}
 case 28:
-#line 201 "bison_rules_with_code.y"
+#line 203 "bison_rules_with_code.y"
 {yyval.Init_declarator = Init_declarator_node::createInitDeclaratorNode(SIMPLE_DECLARATOR_TYPE, yyvsp[0].Declarator, NULL);;
     break;}
 case 29:
-#line 202 "bison_rules_with_code.y"
+#line 204 "bison_rules_with_code.y"
 {yyval.Init_declarator = Init_declarator_node::createInitDeclaratorNode(DECLARATOR_WITH_INITIALIZING_TYPE, yyvsp[-2].Declarator, yyvsp[0].Expression);;
     break;}
 case 30:
-#line 205 "bison_rules_with_code.y"
+#line 207 "bison_rules_with_code.y"
 {yyval.Declarator = Declarator_node::createDeclaratorNode(yyvsp[0].Identifier);;
     break;}
 case 31:
-#line 208 "bison_rules_with_code.y"
+#line 210 "bison_rules_with_code.y"
 {yyval.Declarator = Declarator_node::createDeclaratorNode(yyvsp[0].Identifier);;
     break;}
 case 32:
-#line 211 "bison_rules_with_code.y"
+#line 213 "bison_rules_with_code.y"
 {yyval.Declarator_list = Declarator_list_node::createDeclaratorListNode(yyvsp[0].Declarator);;
     break;}
 case 33:
-#line 212 "bison_rules_with_code.y"
-{yyval.Declarator_list = Declarator_list_node::addToDeclaratorListNode(yyvsp[-2].Declarator_list);;
+#line 214 "bison_rules_with_code.y"
+{yyval.Declarator_list = Declarator_list_node::addToDeclaratorListNode(yyvsp[-2].Declarator_list, yyvsp[0].Declarator);;
     break;}
 case 34:
-#line 214 "bison_rules_with_code.y"
+#line 216 "bison_rules_with_code.y"
 {yyval.Declarator_list = Declarator_list_node::createDeclaratorListNode(yyvsp[0].Declarator);;
     break;}
 case 35:
-#line 215 "bison_rules_with_code.y"
-{yyval.Declarator_list = Declarator_list_node::addToDeclaratorListNode(yyvsp[-2].Declarator_list);;
+#line 217 "bison_rules_with_code.y"
+{yyval.Declarator_list = Declarator_list_node::addToDeclaratorListNode(yyvsp[-2].Declarator_list,yyvsp[0].Declarator);;
     break;}
 case 36:
-#line 218 "bison_rules_with_code.y"
+#line 220 "bison_rules_with_code.y"
 {yyval.Init_declarator = Init_declarator_node::createInitDeclaratorNode(SIMPLE_DECLARATOR_TYPE, yyvsp[0].Declarator, NULL);;
     break;}
 case 37:
-#line 219 "bison_rules_with_code.y"
+#line 221 "bison_rules_with_code.y"
 {yyval.Init_declarator = Init_declarator_node::createInitDeclaratorNode(DECLARATOR_WITH_INITIALIZING_TYPE, yyvsp[-2].Declarator, yyvsp[0].Expression);;
     break;}
 case 38:
-#line 222 "bison_rules_with_code.y"
+#line 224 "bison_rules_with_code.y"
 {yyval.Init_declarator_list = Init_declarator_list_node::createInitDeclaratorListNode(yyvsp[0].Init_declarator);;
     break;}
 case 39:
-#line 223 "bison_rules_with_code.y"
+#line 225 "bison_rules_with_code.y"
 {yyval.Init_declarator_list = Init_declarator_list_node::addToInitDeclaratorListNode(yyvsp[-2].Init_declarator_list, yyvsp[0].Init_declarator);;
     break;}
 case 40:
-#line 226 "bison_rules_with_code.y"
+#line 228 "bison_rules_with_code.y"
 {yyval.Init_declarator_list = NULL;;
     break;}
 case 41:
-#line 227 "bison_rules_with_code.y"
+#line 229 "bison_rules_with_code.y"
 {yyval.Init_declarator_list = yyvsp[0].Init_declarator_list;;
     break;}
 case 42:
-#line 230 "bison_rules_with_code.y"
+#line 232 "bison_rules_with_code.y"
 {yyval.Parameter_list = Parameter_list_node::createParameterListNode(yyvsp[0].Parameter_declaration);;
     break;}
 case 43:
-#line 231 "bison_rules_with_code.y"
+#line 233 "bison_rules_with_code.y"
 {yyval.Parameter_list = Parameter_list_node::addToParameterListNode(yyvsp[-2].Parameter_list, yyvsp[0].Parameter_declaration);;
     break;}
 case 44:
-#line 234 "bison_rules_with_code.y"
+#line 236 "bison_rules_with_code.y"
 {yyval.Parameter_declaration = Parameter_declaration_node::createParameterDeclarationNode(yyvsp[-1].Type, yyvsp[0].Identifier);;
     break;}
 case 45:
-#line 235 "bison_rules_with_code.y"
+#line 237 "bison_rules_with_code.y"
 {yyval.Parameter_declaration = Parameter_declaration_node::createParameterDeclarationNode(Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, yyvsp[-2].Identifier),yyvsp[0].Identifier);;
     break;}
 case 46:
-#line 240 "bison_rules_with_code.y"
+#line 242 "bison_rules_with_code.y"
 {yyval.Expression = Expression_node::createExpressionNodeFromIdentifier(yyvsp[0].Identifier);;
     break;}
 case 47:
-#line 241 "bison_rules_with_code.y"
+#line 243 "bison_rules_with_code.y"
 {yyval.Expression = Expression_node::createExpressionNodeFromLiteral(yyvsp[0].Literal);;
     break;}
 case 48:
-#line 242 "bison_rules_with_code.y"
+#line 244 "bison_rules_with_code.y"
 {yyval.Expression = Expression_node::createExpressionNodeFromNumericConstant(yyvsp[0].Numeric_constant);;
     break;}
 case 49:
-#line 243 "bison_rules_with_code.y"
-{yyval.Expression = Expression_node::createSimpleExpressionNode(PRIORITY_EXPRESSION_TYPE, yyvsp[-1].Expression);;
+#line 245 "bison_rules_with_code.y"
+{yyval.Expression = Expression_node::createExpressionNodeFromSimpleExpression(PRIORITY_EXPRESSION_TYPE, yyvsp[-1].Expression);;
     break;}
 case 50:
-#line 244 "bison_rules_with_code.y"
+#line 246 "bison_rules_with_code.y"
 {yyval.Expression = Expression_node::createExpressionNodeFromSelf();;
     break;}
 case 51:
-#line 245 "bison_rules_with_code.y"
+#line 247 "bison_rules_with_code.y"
 {yyval.Expression = Expression_node::createExpressionNodeFromMessageExpression(yyvsp[-2].Receiver, yyvsp[-1].Message_selector);;
     break;}
 case 52:
-#line 246 "bison_rules_with_code.y"
+#line 248 "bison_rules_with_code.y"
 {yyval.Expression = Expression_node::createExpressionNodeFromOperator(UMINUS_EXPRESSION_TYPE, NULL, yyvsp[0].Expression);;
     break;}
 case 53:
-#line 247 "bison_rules_with_code.y"
+#line 249 "bison_rules_with_code.y"
 {yyval.Expression = Expression_node::createExpressionNodeFromOperator(UPLUS_EXPRESSION_TYPE, NULL, yyvsp[0].Expression);;
     break;}
 case 54:
-#line 248 "bison_rules_with_code.y"
+#line 250 "bison_rules_with_code.y"
 {yyval.Expression = Expression_node::createExpressionNodeFromOperator(UAMPERSAND_EXPRESSION_TYPE, NULL, yyvsp[0].Expression);;
     break;}
 case 55:
-#line 249 "bison_rules_with_code.y"
+#line 251 "bison_rules_with_code.y"
 {yyval.Expression = Expression_node::createExpressionNodeFromOperator(PLUS_EXPRESSION_TYPE, yyvsp[-2].Expression, yyvsp[0].Expression);;
     break;}
 case 56:
-#line 250 "bison_rules_with_code.y"
+#line 252 "bison_rules_with_code.y"
 {yyval.Expression = Expression_node::createExpressionNodeFromOperator(MINUS_EXPRESSION_TYPE, yyvsp[-2].Expression, yyvsp[0].Expression);;
     break;}
 case 57:
-#line 251 "bison_rules_with_code.y"
+#line 253 "bison_rules_with_code.y"
 {yyval.Expression = Expression_node::createExpressionNodeFromOperator(MUL_EXPRESSION_TYPE, yyvsp[-2].Expression, yyvsp[0].Expression);;
     break;}
 case 58:
-#line 252 "bison_rules_with_code.y"
+#line 254 "bison_rules_with_code.y"
 {yyval.Expression = Expression_node::createExpressionNodeFromOperator(DIV_EXPRESSION_TYPE, yyvsp[-2].Expression, yyvsp[0].Expression);;
     break;}
 case 59:
-#line 253 "bison_rules_with_code.y"
+#line 255 "bison_rules_with_code.y"
 {yyval.Expression = Expression_node::createExpressionNodeFromOperator(EQUAL_EXPRESSION_TYPE, yyvsp[-2].Expression, yyvsp[0].Expression);;
     break;}
 case 60:
-#line 254 "bison_rules_with_code.y"
+#line 256 "bison_rules_with_code.y"
 {yyval.Expression = Expression_node::createExpressionNodeFromOperator(NOT_EQUAL_EXPRESSION_TYPE, yyvsp[-2].Expression, yyvsp[0].Expression);;
     break;}
 case 61:
-#line 255 "bison_rules_with_code.y"
+#line 257 "bison_rules_with_code.y"
 {yyval.Expression = Expression_node::createExpressionNodeFromOperator(GREATER_EXPRESSION_TYPE, yyvsp[-2].Expression, yyvsp[0].Expression);;
     break;}
 case 62:
-#line 256 "bison_rules_with_code.y"
+#line 258 "bison_rules_with_code.y"
 {yyval.Expression = Expression_node::createExpressionNodeFromOperator(LESS_EXPRESSION_TYPE, yyvsp[-2].Expression, yyvsp[0].Expression);;
     break;}
 case 63:
-#line 257 "bison_rules_with_code.y"
+#line 259 "bison_rules_with_code.y"
 {yyval.Expression = Expression_node::createExpressionNodeFromOperator(LESS_EQUAL_EXPRESSION_TYPE, yyvsp[-2].Expression, yyvsp[0].Expression);;
     break;}
 case 64:
-#line 258 "bison_rules_with_code.y"
+#line 260 "bison_rules_with_code.y"
 {yyval.Expression = Expression_node::createExpressionNodeFromOperator(GREATER_EQUAL_EXPRESSION_TYPE, yyvsp[-2].Expression, yyvsp[0].Expression);;
     break;}
 case 65:
-#line 259 "bison_rules_with_code.y"
+#line 261 "bison_rules_with_code.y"
 {yyval.Expression = Expression_node::createExpressionNodeFromOperator(ASSIGNMENT_EXPRESSION_TYPE, yyvsp[-2].Expression, yyvsp[0].Expression);;
     break;}
 case 66:
-#line 260 "bison_rules_with_code.y"
+#line 262 "bison_rules_with_code.y"
 {yyval.Expression = Expression_node::createExpressionNodeFromMemberAccessOperator(DOT_EXPRESSION_TYPE, yyvsp[-2].Expression, yyvsp[0].Identifier);;
     break;}
 case 67:
-#line 261 "bison_rules_with_code.y"
+#line 263 "bison_rules_with_code.y"
 {yyval.Expression = Expression_node::createExpressionNodeFromMemberAccessOperator(ARROW_EXPRESSION_TYPE, yyvsp[-2].Expression, yyvsp[0].Identifier);;
     break;}
 case 68:
-#line 264 "bison_rules_with_code.y"
+#line 266 "bison_rules_with_code.y"
 {yyval.Expression = NULL;;
     break;}
 case 69:
-#line 265 "bison_rules_with_code.y"
+#line 267 "bison_rules_with_code.y"
 {yyval.Expression = yyvsp[0].Expression;;
     break;}
 case 70:
-#line 268 "bison_rules_with_code.y"
+#line 270 "bison_rules_with_code.y"
 {yyval.Receiver = Receiver_node::createReceiverNode(SUPER_RECEIVER_TYPE, NULL);;
     break;}
 case 71:
-#line 269 "bison_rules_with_code.y"
+#line 271 "bison_rules_with_code.y"
 {yyval.Receiver = Receiver_node::createReceiverNode(SELF_RECEIVER_TYPE, NULL);;
     break;}
 case 72:
-#line 270 "bison_rules_with_code.y"
+#line 272 "bison_rules_with_code.y"
 {yyval.Receiver = Receiver_node::createReceiverNode(OBJECT_NAME_RECEIVER_TYPE, yyvsp[0].Identifier);;
     break;}
 case 73:
-#line 271 "bison_rules_with_code.y"
+#line 273 "bison_rules_with_code.y"
 {yyval.Receiver = Receiver_node::createReceiverNodeFromMessageExpression(yyvsp[-2].Receiver, yyvsp[-1].Message_selector);;
     break;}
 case 74:
-#line 274 "bison_rules_with_code.y"
+#line 276 "bison_rules_with_code.y"
 {yyval.Message_selector = Message_selector_node::createMessageSelectorNode(yyvsp[0].Identifier, NULL, NULL);;
     break;}
 case 75:
-#line 275 "bison_rules_with_code.y"
+#line 277 "bison_rules_with_code.y"
 {yyval.Message_selector = Message_selector_node::createMessageSelectorNode(yyvsp[-3].Identifier, yyvsp[-1].Expression, yyvsp[0].Keyword_argument_list);;
     break;}
 case 76:
-#line 278 "bison_rules_with_code.y"
+#line 280 "bison_rules_with_code.y"
 {yyval.Keyword_argument_list = NULL;;
     break;}
 case 77:
-#line 279 "bison_rules_with_code.y"
+#line 281 "bison_rules_with_code.y"
 {yyval.Keyword_argument_list = yyvsp[0].Keyword_argument_list;;
     break;}
 case 78:
-#line 282 "bison_rules_with_code.y"
+#line 284 "bison_rules_with_code.y"
 {yyval.Keyword_argument_list = Keyword_argument_list_node::createKeywordArgumentListNode(yyvsp[0].Keyword_argument);;
     break;}
 case 79:
-#line 283 "bison_rules_with_code.y"
+#line 285 "bison_rules_with_code.y"
 {yyval.Keyword_argument_list = Keyword_argument_list_node::addToKeywordArgumentListNode(yyvsp[-1].Keyword_argument_list, yyvsp[0].Keyword_argument);;
     break;}
 case 80:
-#line 286 "bison_rules_with_code.y"
+#line 288 "bison_rules_with_code.y"
 {yyval.Keyword_argument = Keyword_argument_node::createKeywordArgumentNode(WITH_IDENTIFIER_KW_ARGUMENT_TYPE, yyvsp[-2].Identifier, yyvsp[0].Expression);;
     break;}
 case 81:
-#line 287 "bison_rules_with_code.y"
+#line 289 "bison_rules_with_code.y"
 {yyval.Keyword_argument = Keyword_argument_node::createKeywordArgumentNode(WITHOUT_IDENTIFIER_KW_ARGUMENT_TYPE, NULL, yyvsp[0].Expression);;
     break;}
 case 82:
-#line 291 "bison_rules_with_code.y"
+#line 293 "bison_rules_with_code.y"
 {yyval.If = If_statement_node::createIfStatementNode(WITHOUT_ALTERNATIVE_IF_TYPE, yyvsp[-2].Expression, yyvsp[0].Statement, NULL);;
     break;}
 case 83:
-#line 292 "bison_rules_with_code.y"
+#line 294 "bison_rules_with_code.y"
 {yyval.If = If_statement_node::createIfStatementNode(WITH_ALTERNATIVE_IF_TYPE, yyvsp[-4].Expression, yyvsp[-2].Statement, yyvsp[0].Statement);;
     break;}
 case 84:
-#line 296 "bison_rules_with_code.y"
+#line 298 "bison_rules_with_code.y"
 {yyval.While  = While_statement_node::createWhileStatementNode(yyvsp[-2].Expression, yyvsp[0].Statement);;
     break;}
 case 85:
-#line 299 "bison_rules_with_code.y"
+#line 301 "bison_rules_with_code.y"
 {yyval.Do_while = Do_while_statement_node::createDoWhileStatementNode(yyvsp[-2].Expression, yyvsp[-5].Statement);;
     break;}
 case 86:
-#line 302 "bison_rules_with_code.y"
+#line 304 "bison_rules_with_code.y"
 {yyval.For = For_statement_node::createForStatementNode(yyvsp[-6].Expression, yyvsp[-4].Expression, yyvsp[-2].Expression, yyvsp[0].Statement);;
     break;}
 case 87:
-#line 303 "bison_rules_with_code.y"
+#line 305 "bison_rules_with_code.y"
 {yyval.For = For_statement_node::createForStatementNodeFromForeach(FOREACH_FOR_TYPE, NULL, yyvsp[-4].Identifier, yyvsp[-2].Expression, yyvsp[0].Statement);;
     break;}
 case 88:
-#line 304 "bison_rules_with_code.y"
+#line 306 "bison_rules_with_code.y"
 {yyval.For = For_statement_node::createForStatementNodeFromForeach(FOREACH_WITH_DECLARATION_FOR_TYPE, yyvsp[-5].Type, yyvsp[-4].Identifier, yyvsp[-2].Expression, yyvsp[0].Statement);;
     break;}
 case 89:
-#line 305 "bison_rules_with_code.y"
+#line 307 "bison_rules_with_code.y"
 {yyval.For = For_statement_node::createForStatementNodeFromForeach(FOREACH_WITH_DECLARATION_FOR_TYPE, Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, yyvsp[-6].Identifier), yyvsp[-4].Identifier, yyvsp[-2].Expression, yyvsp[0].Statement);;
     break;}
 case 90:
-#line 310 "bison_rules_with_code.y"
+#line 312 "bison_rules_with_code.y"
 {yyval.Statement = Statement_node::createStatementNodeFromSimpleStatement(EMPTY_STATEMENT_TYPE, NULL);;
     break;}
 case 91:
-#line 311 "bison_rules_with_code.y"
+#line 313 "bison_rules_with_code.y"
 {yyval.Statement = Statement_node::createStatementNodeFromSimpleStatement(SIMPLE_STATEMENT_TYPE, yyvsp[-1].Expression);;
     break;}
 case 92:
-#line 312 "bison_rules_with_code.y"
+#line 314 "bison_rules_with_code.y"
 {yyval.Statement = Statement_node::createStatementNodeFromSimpleStatement(RETURN_STATEMENT_TYPE, yyvsp[-1].Expression);;
     break;}
 case 93:
-#line 313 "bison_rules_with_code.y"
+#line 315 "bison_rules_with_code.y"
 {yyval.Statement = Statement_node::createStatementNodeFromComplexStatement(IF_STATEMENT_TYPE, yyvsp[0].If);;
     break;}
 case 94:
-#line 314 "bison_rules_with_code.y"
+#line 316 "bison_rules_with_code.y"
 {yyval.Statement = Statement_node::createStatementNodeFromComplexStatement(WHILE_STATEMENT_TYPE, yyvsp[0].While);;
     break;}
 case 95:
-#line 315 "bison_rules_with_code.y"
+#line 317 "bison_rules_with_code.y"
 {yyval.Statement = Statement_node::createStatementNodeFromComplexStatement(DO_WHILE_STATEMENT_TYPE, yyvsp[0].Do_while);;
     break;}
 case 96:
-#line 316 "bison_rules_with_code.y"
+#line 318 "bison_rules_with_code.y"
 {yyval.Statement = Statement_node::createStatementNodeFromComplexStatement(FOR_STATEMENT_TYPE, yyvsp[0].For);;
     break;}
 case 97:
-#line 317 "bison_rules_with_code.y"
+#line 319 "bison_rules_with_code.y"
 {yyval.Statement = Statement_node::createStatementNodeFromComplexStatement(COMPOUND_STATEMENT_TYPE, yyvsp[0].Compound_statement);;
     break;}
 case 98:
-#line 318 "bison_rules_with_code.y"
+#line 320 "bison_rules_with_code.y"
 {yyval.Statement = Statement_node::createStatementNodeFromDeclaration(yyvsp[0].Declaration);;
     break;}
 case 99:
-#line 321 "bison_rules_with_code.y"
+#line 323 "bison_rules_with_code.y"
 {yyval.Compound_statement = Compound_statement_node::createCompoundStatementNode(yyvsp[-1].Statement_list);;
     break;}
 case 100:
-#line 324 "bison_rules_with_code.y"
+#line 326 "bison_rules_with_code.y"
 {yyval.Statement_list = Statement_list_node::createStatementListNode(yyvsp[0].Statement);;
     break;}
 case 101:
-#line 325 "bison_rules_with_code.y"
+#line 327 "bison_rules_with_code.y"
 {yyval.Statement_list = Statement_list_node::addToStatementListNode(yyvsp[-1].Statement_list, yyvsp[0].Statement);;
     break;}
 case 102:
-#line 328 "bison_rules_with_code.y"
+#line 330 "bison_rules_with_code.y"
 {yyval.Statement_list = NULL;;
     break;}
 case 103:
-#line 329 "bison_rules_with_code.y"
+#line 331 "bison_rules_with_code.y"
 {yyval.Statement_list = yyvsp[0].Statement_list;;
     break;}
 case 104:
-#line 332 "bison_rules_with_code.y"
+#line 334 "bison_rules_with_code.y"
 {yyval.Class_block = Class_block_node::createClassBlockNodeFromInterface(yyvsp[0].Class_interface);;
     break;}
 case 105:
-#line 333 "bison_rules_with_code.y"
-{yyval.Class_block = Class_block_node::createClassBlcokNodeFromImplementation(yyvsp[0].Class_implementation);;
+#line 335 "bison_rules_with_code.y"
+{yyval.Class_block = Class_block_node::createClassBlockNodeFromImplementation(yyvsp[0].Class_implementation);;
     break;}
 case 106:
-#line 337 "bison_rules_with_code.y"
-{yyval.Class_interface = Class_interface_node::createClassInterfaceNode(yyvsp[-4].Identifier, yyvsp[-2].Identifier, yyvsp[-1].Interface_body);;
-    break;}
-case 107:
-#line 338 "bison_rules_with_code.y"
-{yyval.Class_interface = Class_interface_node::createClassInterfaceNode(yyvsp[-2].Identifier, NULL, yyvsp[-1].Interface_body);;
-    break;}
-case 108:
 #line 339 "bison_rules_with_code.y"
 {yyval.Class_interface = Class_interface_node::createClassInterfaceNode(yyvsp[-4].Identifier, yyvsp[-2].Identifier, yyvsp[-1].Interface_body);;
     break;}
+case 107:
+#line 340 "bison_rules_with_code.y"
+{yyval.Class_interface = Class_interface_node::createClassInterfaceNode(yyvsp[-2].Identifier, NULL, yyvsp[-1].Interface_body);;
+    break;}
+case 108:
+#line 341 "bison_rules_with_code.y"
+{yyval.Class_interface = Class_interface_node::createClassInterfaceNode(yyvsp[-4].Identifier, yyvsp[-2].Identifier, yyvsp[-1].Interface_body);;
+    break;}
 case 109:
-#line 342 "bison_rules_with_code.y"
+#line 344 "bison_rules_with_code.y"
 {yyval.Interface_body = Interface_body_node::createInterfaceBodyNode(yyvsp[-1].Instance_variables, yyvsp[0].Interface_declaration_list);;
     break;}
 case 110:
-#line 343 "bison_rules_with_code.y"
+#line 345 "bison_rules_with_code.y"
 {yyval.Interface_body = Interface_body_node::createInterfaceBodyNode(NULL, yyvsp[0].Interface_declaration_list);;
     break;}
 case 111:
-#line 346 "bison_rules_with_code.y"
+#line 348 "bison_rules_with_code.y"
 {yyval.Implementation_body = Implementation_body_node::createImplementationBodyNode(yyvsp[-1].Instance_variables, yyvsp[0].Implementation_definition_list);;
     break;}
 case 112:
-#line 347 "bison_rules_with_code.y"
+#line 349 "bison_rules_with_code.y"
 {yyval.Implementation_body = Implementation_body_node::createImplementationBodyNode(NULL, yyvsp[0].Implementation_definition_list);;
     break;}
 case 113:
-#line 350 "bison_rules_with_code.y"
-{yyval.Class_implementation = Class_implementation_node::createClassImplementationNode(yyvsp[-2].Identifier, NULL, yyvsp[-1].Implementation_body);;
-    break;}
-case 114:
-#line 351 "bison_rules_with_code.y"
-{yyval.Class_implementation = Class_implementation_node::createClassImplementationNode(yyvsp[-4].Identifier, yyvsp[-2].Identifier, yyvsp[-1].Implementation_body);;
-    break;}
-case 115:
 #line 352 "bison_rules_with_code.y"
 {yyval.Class_implementation = Class_implementation_node::createClassImplementationNode(yyvsp[-2].Identifier, NULL, yyvsp[-1].Implementation_body);;
     break;}
-case 116:
+case 114:
 #line 353 "bison_rules_with_code.y"
 {yyval.Class_implementation = Class_implementation_node::createClassImplementationNode(yyvsp[-4].Identifier, yyvsp[-2].Identifier, yyvsp[-1].Implementation_body);;
     break;}
-case 117:
+case 115:
 #line 354 "bison_rules_with_code.y"
-{yyval.Class_implementation = Class_implementation_node::createClassImplementationNode(yyvsp[-4].Identifier, yyvsp[-2].Identifier, yyvsp[-1].Implementation_body);;
+{yyval.Class_implementation = Class_implementation_node::createClassImplementationNode(yyvsp[-2].Identifier, NULL, yyvsp[-1].Implementation_body);;
     break;}
-case 118:
+case 116:
 #line 355 "bison_rules_with_code.y"
 {yyval.Class_implementation = Class_implementation_node::createClassImplementationNode(yyvsp[-4].Identifier, yyvsp[-2].Identifier, yyvsp[-1].Implementation_body);;
     break;}
+case 117:
+#line 356 "bison_rules_with_code.y"
+{yyval.Class_implementation = Class_implementation_node::createClassImplementationNode(yyvsp[-4].Identifier, yyvsp[-2].Identifier, yyvsp[-1].Implementation_body);;
+    break;}
+case 118:
+#line 357 "bison_rules_with_code.y"
+{yyval.Class_implementation = Class_implementation_node::createClassImplementationNode(yyvsp[-4].Identifier, yyvsp[-2].Identifier, yyvsp[-1].Implementation_body);;
+    break;}
 case 119:
-#line 358 "bison_rules_with_code.y"
+#line 360 "bison_rules_with_code.y"
 {yyval.Class_declaration_list = Class_declaration_list_node::createClassDeclarationListNode(yyvsp[-1].Class_list);;
     break;}
 case 120:
-#line 361 "bison_rules_with_code.y"
+#line 363 "bison_rules_with_code.y"
 {yyval.Class_list = Class_list_node::createClassListNode(yyvsp[0].Identifier);;
     break;}
 case 121:
-#line 362 "bison_rules_with_code.y"
+#line 364 "bison_rules_with_code.y"
 {yyval.Class_list = Class_list_node::addToClassListNode(yyvsp[-2].Class_list, yyvsp[0].Identifier);;
     break;}
 case 122:
-#line 365 "bison_rules_with_code.y"
+#line 367 "bison_rules_with_code.y"
 {yyval.Instance_variables = Instance_variables_node::createInstanceVariablesNode(yyvsp[-1].Instance_variables_declaration_list);;
     break;}
 case 123:
-#line 368 "bison_rules_with_code.y"
+#line 370 "bison_rules_with_code.y"
 {yyval.Instance_variables_declaration = Instance_variables_declaration_node::createInstanceVariablesDeclarationNode(yyvsp[-2].Type, yyvsp[-1].Declarator_list);;
     break;}
 case 124:
-#line 369 "bison_rules_with_code.y"
+#line 371 "bison_rules_with_code.y"
 {yyval.Instance_variables_declaration = Instance_variables_declaration_node::createInstanceVariablesDeclarationNode(Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, yyvsp[-2].Identifier), yyvsp[-1].Declarator_list);;
     break;}
 case 125:
-#line 372 "bison_rules_with_code.y"
+#line 374 "bison_rules_with_code.y"
 {yyval.Instance_variables_declaration_list = Instance_variables_declaration_list_node::createInstanceVariablesDeclarationListNode(yyvsp[0].Instance_variables_declaration);;
     break;}
 case 126:
-#line 373 "bison_rules_with_code.y"
+#line 375 "bison_rules_with_code.y"
 {yyval.Instance_variables_declaration_list = Instance_variables_declaration_list_node::addToInstanceVariablesDeclarationListNode(yyvsp[-1].Instance_variables_declaration_list, yyvsp[0].Instance_variables_declaration);;
     break;}
 case 127:
-#line 376 "bison_rules_with_code.y"
+#line 378 "bison_rules_with_code.y"
 {yyval.Interface_declaration_list = Interface_declaration_list_node::createInterfaceDeclarationListNodeFromDeclaration(yyvsp[0].Declaration);;
     break;}
 case 128:
-#line 377 "bison_rules_with_code.y"
+#line 379 "bison_rules_with_code.y"
 {yyval.Interface_declaration_list = Interface_declaration_list_node::createInterfaceDeclarationListNodeFromProperty(yyvsp[0].Property);;
     break;}
 case 129:
-#line 378 "bison_rules_with_code.y"
+#line 380 "bison_rules_with_code.y"
 {yyval.Interface_declaration_list = Interface_declaration_list_node::createInterfaceDeclarationListNodeFromMethodDeclaration(yyvsp[0].Method_declaration);;
     break;}
 case 130:
-#line 379 "bison_rules_with_code.y"
+#line 381 "bison_rules_with_code.y"
 {yyval.Interface_declaration_list = Interface_declaration_list_node::addDeclarationToInterfaceDeclarationListNode(yyvsp[-1].Interface_declaration_list, yyvsp[0].Declaration);;
     break;}
 case 131:
-#line 380 "bison_rules_with_code.y"
+#line 382 "bison_rules_with_code.y"
 {yyval.Interface_declaration_list = Interface_declaration_list_node::addMethodDeclarationToInterfaceDeclarationListNode(yyvsp[-1].Interface_declaration_list, yyvsp[0].Method_declaration);;
     break;}
 case 132:
-#line 381 "bison_rules_with_code.y"
+#line 383 "bison_rules_with_code.y"
 {yyval.Interface_declaration_list = Interface_declaration_list_node::addPropertyToInterfaceDeclarationListNode(yyvsp[-1].Interface_declaration_list, yyvsp[0].Property);;
     break;}
 case 133:
-#line 384 "bison_rules_with_code.y"
+#line 386 "bison_rules_with_code.y"
 {yyval.Method_declaration = yyvsp[0].Method_declaration;;
     break;}
 case 134:
-#line 385 "bison_rules_with_code.y"
+#line 387 "bison_rules_with_code.y"
 {yyval.Method_declaration = yyvsp[0].Method_declaration;;
     break;}
 case 135:
-#line 388 "bison_rules_with_code.y"
+#line 390 "bison_rules_with_code.y"
 {yyval.Method_declaration = Method_declaration_node::createMethodDeclarationNode(CLASS_METHOD_DECLARATION_TYPE, yyvsp[-2].Type, yyvsp[-1].Method_selector);;
     break;}
 case 136:
-#line 389 "bison_rules_with_code.y"
+#line 391 "bison_rules_with_code.y"
 {yyval.Method_declaration = Method_declaration_node::createMethodDeclarationNode(CLASS_METHOD_DECLARATION_TYPE, Type_node::createTypeNode(VOID_TYPE), yyvsp[-1].Method_selector);;
     break;}
 case 137:
-#line 390 "bison_rules_with_code.y"
+#line 392 "bison_rules_with_code.y"
 {yyval.Method_declaration = Method_declaration_node::createMethodDeclarationNode(CLASS_METHOD_DECLARATION_TYPE, NULL, yyvsp[-1].Method_selector);;
     break;}
 case 138:
-#line 393 "bison_rules_with_code.y"
+#line 395 "bison_rules_with_code.y"
 {yyval.Method_declaration = Method_declaration_node::createMethodDeclarationNode(INSTANCE_METHOD_DECLARATION_TYPE, yyvsp[-2].Type, yyvsp[-1].Method_selector);;
     break;}
 case 139:
-#line 394 "bison_rules_with_code.y"
+#line 396 "bison_rules_with_code.y"
 {yyval.Method_declaration = Method_declaration_node::createMethodDeclarationNode(INSTANCE_METHOD_DECLARATION_TYPE, Type_node::createTypeNode(VOID_TYPE), yyvsp[-1].Method_selector);;
     break;}
 case 140:
-#line 395 "bison_rules_with_code.y"
+#line 397 "bison_rules_with_code.y"
 {yyval.Method_declaration = Method_declaration_node::createMethodDeclarationNode(INSTANCE_METHOD_DECLARATION_TYPE, NULL, yyvsp[-1].Method_selector);;
     break;}
 case 141:
-#line 398 "bison_rules_with_code.y"
+#line 400 "bison_rules_with_code.y"
 {yyval.Implementation_definition_list = Implementation_definition_list_node::createImplementationDefinitionListNodeFromDeclaration(yyvsp[0].Declaration);;
     break;}
 case 142:
-#line 399 "bison_rules_with_code.y"
+#line 401 "bison_rules_with_code.y"
 {yyval.Implementation_definition_list = Implementation_definition_list_node::createImplementationDefinitionListNodeFromSynthesize(yyvsp[0].Synthesize);;
     break;}
 case 143:
-#line 400 "bison_rules_with_code.y"
+#line 402 "bison_rules_with_code.y"
 {yyval.Implementation_definition_list = Implementation_definition_list_node::createImplementationDefinitionListNodeFromMethodDeclaration(yyvsp[0].Method_definition);;
     break;}
 case 144:
-#line 401 "bison_rules_with_code.y"
+#line 403 "bison_rules_with_code.y"
 {yyval.Implementation_definition_list = Implementation_definition_list_node::addDeclarationToImplementationDefinitionListNode(yyvsp[-1].Implementation_definition_list, yyvsp[0].Declaration);;
     break;}
 case 145:
-#line 402 "bison_rules_with_code.y"
+#line 404 "bison_rules_with_code.y"
 {yyval.Implementation_definition_list = Implementation_definition_list_node::addSynthesizeToImplementationDefinitionListNode(yyvsp[-1].Implementation_definition_list, yyvsp[0].Synthesize);;
     break;}
 case 146:
-#line 403 "bison_rules_with_code.y"
+#line 405 "bison_rules_with_code.y"
 {yyval.Implementation_definition_list = Implementation_definition_list_node::addMethodDeclarationToImplementationDefinitionListNode(yyvsp[-1].Implementation_definition_list, yyvsp[0].Method_definition);;
     break;}
 case 147:
-#line 406 "bison_rules_with_code.y"
+#line 408 "bison_rules_with_code.y"
 {yyval.Method_definition = yyvsp[0].Method_definition;;
     break;}
 case 148:
-#line 407 "bison_rules_with_code.y"
+#line 409 "bison_rules_with_code.y"
 {yyval.Method_definition = yyvsp[0].Method_definition;;
     break;}
 case 149:
-#line 410 "bison_rules_with_code.y"
+#line 412 "bison_rules_with_code.y"
 {yyval.Method_definition = Method_definition_node::createMethodDefinitionNode(CLASS_METHOD_DEFINITION_TYPE, yyvsp[-3].Type, yyvsp[-2].Method_selector, yyvsp[-1].Declaration_list, yyvsp[0].Compound_statement);;
     break;}
 case 150:
-#line 411 "bison_rules_with_code.y"
+#line 413 "bison_rules_with_code.y"
 {yyval.Method_definition = Method_definition_node::createMethodDefinitionNode(CLASS_METHOD_DEFINITION_TYPE, Type_node::createTypeNode(VOID_TYPE), yyvsp[-2].Method_selector, yyvsp[-1].Declaration_list, yyvsp[0].Compound_statement);;
     break;}
 case 151:
-#line 412 "bison_rules_with_code.y"
+#line 414 "bison_rules_with_code.y"
 {yyval.Method_definition = Method_definition_node::createMethodDefinitionNode(CLASS_METHOD_DEFINITION_TYPE, NULL, yyvsp[-2].Method_selector, yyvsp[-1].Declaration_list, yyvsp[0].Compound_statement);;
     break;}
 case 152:
-#line 415 "bison_rules_with_code.y"
+#line 417 "bison_rules_with_code.y"
 {yyval.Method_definition = Method_definition_node::createMethodDefinitionNode(INSTANCE_METHOD_DEFINITION_TYPE, yyvsp[-3].Type, yyvsp[-2].Method_selector, yyvsp[-1].Declaration_list, yyvsp[0].Compound_statement);;
     break;}
 case 153:
-#line 416 "bison_rules_with_code.y"
+#line 418 "bison_rules_with_code.y"
 {yyval.Method_definition = Method_definition_node::createMethodDefinitionNode(INSTANCE_METHOD_DEFINITION_TYPE, Type_node::createTypeNode(VOID_TYPE), yyvsp[-2].Method_selector, yyvsp[-1].Declaration_list, yyvsp[0].Compound_statement);;
     break;}
 case 154:
-#line 417 "bison_rules_with_code.y"
+#line 419 "bison_rules_with_code.y"
 {yyval.Method_definition = Method_definition_node::createMethodDefinitionNode(INSTANCE_METHOD_DEFINITION_TYPE, NULL, yyvsp[-2].Method_selector, yyvsp[-1].Declaration_list, yyvsp[0].Compound_statement);;
     break;}
 case 155:
-#line 420 "bison_rules_with_code.y"
+#line 422 "bison_rules_with_code.y"
 {yyval.Method_selector = Method_selector_node::createMethodSelectorNode(yyvsp[0].Identifier, NULL, NULL, NULL);;
     break;}
 case 156:
-#line 421 "bison_rules_with_code.y"
+#line 423 "bison_rules_with_code.y"
 {yyval.Method_selector = Method_selector_node::createMethodSelectorNode(yyvsp[-3].Identifier, yyvsp[-1].Keyword_declaration, yyvsp[0].Keyword_selector, NULL);;
     break;}
 case 157:
-#line 422 "bison_rules_with_code.y"
+#line 424 "bison_rules_with_code.y"
 {yyval.Method_selector = Method_selector_node::createMethodSelectorNode(yyvsp[-5].Identifier, yyvsp[-3].Keyword_declaration, yyvsp[-2].Keyword_selector, yyvsp[0].Parameter_list);;
     break;}
 case 158:
-#line 425 "bison_rules_with_code.y"
+#line 427 "bison_rules_with_code.y"
 {yyval.Keyword_selector = NULL;;
     break;}
 case 159:
-#line 426 "bison_rules_with_code.y"
+#line 428 "bison_rules_with_code.y"
 {yyval.Keyword_selector = yyvsp[0].Keyword_selector;;
     break;}
 case 160:
-#line 429 "bison_rules_with_code.y"
+#line 431 "bison_rules_with_code.y"
 {yyval.Keyword_selector = Keyword_selector_node::createKeywordSelectorNode(yyvsp[0].Keyword_declaration);;
     break;}
 case 161:
-#line 430 "bison_rules_with_code.y"
+#line 432 "bison_rules_with_code.y"
 {yyval.Keyword_selector = Keyword_selector_node::addToKeywordSelectorNode(yyvsp[-1].Keyword_selector, yyvsp[0].Keyword_declaration);;
     break;}
 case 162:
-#line 433 "bison_rules_with_code.y"
+#line 435 "bison_rules_with_code.y"
 {yyval.Keyword_declaration = Keyword_declaration_node::createKeywordDeclarationNode(yyvsp[-1].Type, NULL, yyvsp[0].Identifier);;
     break;}
 case 163:
-#line 434 "bison_rules_with_code.y"
+#line 436 "bison_rules_with_code.y"
 {yyval.Keyword_declaration = Keyword_declaration_node::createKeywordDeclarationNode(NULL, NULL, yyvsp[0].Identifier);;
     break;}
 case 164:
-#line 437 "bison_rules_with_code.y"
+#line 439 "bison_rules_with_code.y"
 {yyval.Keyword_declaration = Keyword_declaration_node::createKeywordDeclarationNode(yyvsp[-1].Type, NULL, yyvsp[0].Identifier);;
     break;}
 case 165:
-#line 438 "bison_rules_with_code.y"
+#line 440 "bison_rules_with_code.y"
 {yyval.Keyword_declaration = Keyword_declaration_node::createKeywordDeclarationNode(NULL, NULL, yyvsp[0].Identifier);;
     break;}
 case 166:
-#line 439 "bison_rules_with_code.y"
+#line 441 "bison_rules_with_code.y"
 {yyval.Keyword_declaration = Keyword_declaration_node::createKeywordDeclarationNode(yyvsp[-1].Type, yyvsp[-3].Identifier, yyvsp[0].Identifier);;
     break;}
 case 167:
-#line 440 "bison_rules_with_code.y"
+#line 442 "bison_rules_with_code.y"
 {yyval.Keyword_declaration = Keyword_declaration_node::createKeywordDeclarationNode(NULL, yyvsp[-2].Identifier, yyvsp[0].Identifier);;
     break;}
 case 168:
-#line 443 "bison_rules_with_code.y"
-{yyval.Type = Type_node::createTypeNode(yyvsp[-1].Type);;
+#line 445 "bison_rules_with_code.y"
+{yyval.Type = yyvsp[-1].Type;;
     break;}
 case 169:
-#line 444 "bison_rules_with_code.y"
+#line 446 "bison_rules_with_code.y"
 {yyval.Type = Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, yyvsp[-2].Identifier);;
     break;}
 case 170:
-#line 447 "bison_rules_with_code.y"
+#line 449 "bison_rules_with_code.y"
 {yyval.Property = Property_node::createPropertyNode(yyvsp[-4].Attribute, yyvsp[-2].Type, yyvsp[-1].Identifier);;
     break;}
 case 171:
-#line 448 "bison_rules_with_code.y"
+#line 450 "bison_rules_with_code.y"
 {yyval.Property = Property_node::createPropertyNode(yyvsp[-5].Attribute, Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, yyvsp[-3].Identifier), yyvsp[-1].Identifier);;
     break;}
 case 172:
-#line 449 "bison_rules_with_code.y"
-{yyval.Property = Property_node::createPropertyNode(NULL, yyvsp[-2].Type, yyvsp[-1].Identifier);;
-    break;}
-case 173:
-#line 450 "bison_rules_with_code.y"
-{yyval.Property = Property_node::createPropertyNode(NULL, Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, yyvsp[-3].Identifier), yyvsp[-1].Identifier);;
-    break;}
-case 174:
 #line 451 "bison_rules_with_code.y"
 {yyval.Property = Property_node::createPropertyNode(NULL, yyvsp[-2].Type, yyvsp[-1].Identifier);;
     break;}
-case 175:
+case 173:
 #line 452 "bison_rules_with_code.y"
 {yyval.Property = Property_node::createPropertyNode(NULL, Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, yyvsp[-3].Identifier), yyvsp[-1].Identifier);;
     break;}
+case 174:
+#line 453 "bison_rules_with_code.y"
+{yyval.Property = Property_node::createPropertyNode(NULL, yyvsp[-2].Type, yyvsp[-1].Identifier);;
+    break;}
+case 175:
+#line 454 "bison_rules_with_code.y"
+{yyval.Property = Property_node::createPropertyNode(NULL, Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, yyvsp[-3].Identifier), yyvsp[-1].Identifier);;
+    break;}
 case 176:
-#line 455 "bison_rules_with_code.y"
+#line 457 "bison_rules_with_code.y"
 {yyval.Attribute = Attribute_node::createAttributeNode(READONLY_ATTRIBUTE_TYPE);;
     break;}
 case 177:
-#line 456 "bison_rules_with_code.y"
+#line 458 "bison_rules_with_code.y"
 {yyval.Attribute = Attribute_node::createAttributeNode(READWRITE_ATTRIBUTE_TYPE);;
     break;}
 case 178:
-#line 459 "bison_rules_with_code.y"
+#line 461 "bison_rules_with_code.y"
 {yyval.Synthesize = Synthesize_node::createSynthesizeNode(yyvsp[-1].Identifier);
     break;}
 }
@@ -2005,6 +2007,10 @@ yyerrhandle:
   yystate = yyn;
   goto yynewstate;
 }
-#line 462 "bison_rules_with_code.y"
+#line 464 "bison_rules_with_code.y"
 
 
+void yyerror(char const *s)
+{
+	printf("%s",s);
+}

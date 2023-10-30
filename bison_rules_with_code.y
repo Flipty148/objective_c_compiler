@@ -1,5 +1,7 @@
 %{
 	#include "classes_nodes.h"
+	void yyerror(char const *s);
+	extern int yylex(void);
 	Program_node *root;
 %}
 
@@ -7,7 +9,7 @@
 %union {
 	int Integer_constant;
 	char *String_constant;
-	char Char_constant;
+	char *Char_constant;
 	float Float_constant;
 	char *NSString_constant;
 	char *Identifier;
@@ -49,7 +51,7 @@
 	Property_node *Property;
 	Attribute_node *Attribute;
 	Program_node *Program;
-	Class_list *Class_list;
+	Class_list_node *Class_list;
 	Function_and_class_list_node *Function_and_class_list;
 	Function_node *Function;
 	Declarator_node *Declarator;
@@ -209,10 +211,10 @@ declarator_with_asterisk: '*' IDENTIFIER	{$$ = Declarator_node::createDeclarator
 						;
 
 declarator_with_asterisk_list: declarator_with_asterisk										{$$ = Declarator_list_node::createDeclaratorListNode($1);}
-							 | declarator_with_asterisk_list ',' declarator_with_asterisk	{$$ = Declarator_list_node::addToDeclaratorListNode($1);}
+							 | declarator_with_asterisk_list ',' declarator_with_asterisk	{$$ = Declarator_list_node::addToDeclaratorListNode($1, $3);}
 
 declarator_list: declarator							{$$ = Declarator_list_node::createDeclaratorListNode($1);}
-			   | declarator_list ',' declarator		{$$ = Declarator_list_node::addToDeclaratorListNode($1);}
+			   | declarator_list ',' declarator		{$$ = Declarator_list_node::addToDeclaratorListNode($1,$3);}
 			   ;
 
 init_declarator_with_asterisk: declarator_with_asterisk					{$$ = Init_declarator_node::createInitDeclaratorNode(SIMPLE_DECLARATOR_TYPE, $1, NULL);}
@@ -240,7 +242,7 @@ parameter_declaration: type IDENTIFIER			{$$ = Parameter_declaration_node::creat
 expression: IDENTIFIER							{$$ = Expression_node::createExpressionNodeFromIdentifier($1);}
 		  | literal								{$$ = Expression_node::createExpressionNodeFromLiteral($1);}
 		  | numeric_constant					{$$ = Expression_node::createExpressionNodeFromNumericConstant($1);}
-		  | '(' expression ')'					{$$ = Expression_node::createSimpleExpressionNode(PRIORITY_EXPRESSION_TYPE, $2);}
+		  | '(' expression ')'					{$$ = Expression_node::createExpressionNodeFromSimpleExpression(PRIORITY_EXPRESSION_TYPE, $2);}
 		  | SELF								{$$ = Expression_node::createExpressionNodeFromSelf();}
 		  | '[' receiver message_selector ']'	{$$ = Expression_node::createExpressionNodeFromMessageExpression($2, $3);}
 		  | '-' expression %prec UMINUS			{$$ = Expression_node::createExpressionNodeFromOperator(UMINUS_EXPRESSION_TYPE, NULL, $2);}
@@ -330,7 +332,7 @@ statement_list_e: /*empty*/			{$$ = NULL;}
 				;
 
 class_block: class_interface		{$$ = Class_block_node::createClassBlockNodeFromInterface($1);}
-	 	   | class_implementation	{$$ = Class_block_node::createClassBlcokNodeFromImplementation($1);}
+	 	   | class_implementation	{$$ = Class_block_node::createClassBlockNodeFromImplementation($1);}
 		   ;
 
 // ---------- Классы ----------
@@ -440,7 +442,7 @@ keyword_declaration: ':' method_type IDENTIFIER					{$$ = Keyword_declaration_no
 				   | IDENTIFIER ':' IDENTIFIER					{$$ = Keyword_declaration_node::createKeywordDeclarationNode(NULL, $1, $3);}
 				   ;
 
-method_type: '(' type ')'	{$$ = Type_node::createTypeNode($2);}
+method_type: '(' type ')'	{$$ = $2;}
 		   | '(' CLASS_NAME '*' ')' {$$ = Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $2);}
 		   ;
 
@@ -461,3 +463,7 @@ synthesize: SYNTHESIZE IDENTIFIER ';'	{$$ = Synthesize_node::createSynthesizeNod
 
 %%
 
+void yyerror(char const *s)
+{
+	printf("%s",s);
+}

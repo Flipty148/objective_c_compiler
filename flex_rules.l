@@ -95,9 +95,6 @@ UNDERLINE_LETTER [A-Za-z_]
 ":" {printf("Found delimiter :: %s\n", yytext);}
 "," {printf("Found delimiter ,: %s\n", yytext);}
 
-<*>\\\n {lineCount++;}
-<*>\n {lineCount++;}
-
 0|[1-9]{DIGIT}* {printf("Found integer: %d\n", atoi(yytext));}
 (0x|0X)[0-9a-fA-F]+ {
     char* a;
@@ -116,23 +113,23 @@ UNDERLINE_LETTER [A-Za-z_]
     printf("ERROR! Incorrect octal number: %s in row: %d\n", yytext, lineCount);
 }
 
-\' str = ""; BEGIN(CHAR);
-\" str = ""; BEGIN(STRING);
-@\" str = ""; BEGIN(NSSTRING);
-<STRING,NSSTRING>[^\\\n\"]+ str += yytext;
-<CHAR>[^\\\n\'] str += yytext;
-<STRING,CHAR,NSSTRING>\\b str += "\b";
-<STRING,CHAR,NSSTRING>\\f str += "\f";
-<STRING,CHAR,NSSTRING>\\n str += "\n";
-<STRING,CHAR,NSSTRING>\\r str += "\r";
-<STRING,CHAR,NSSTRING>\\t str += "\t";
-<STRING,CHAR,NSSTRING>\\v str += "\v";
-<STRING,CHAR,NSSTRING>\\\' str += "\'";
-<STRING,CHAR,NSSTRING>\\\" str += "\"";
-<STRING,CHAR,NSSTRING>\\\\ str += "\\";
-<STRING,CHAR,NSSTRING>\\0 str += '\0';
-<STRING,CHAR,NSSTRING>\\x0 str += '\0';
-<STRING,CHAR,NSSTRING>\\x00 str += '\0';
+\' {str = ""; BEGIN(CHAR);}
+\" {str = ""; BEGIN(STRING);}
+@\" {str = ""; BEGIN(NSSTRING);}
+<STRING,NSSTRING>[^\\\n\"]+ {str += yytext;}
+<CHAR>[^\\\n\'] {str += yytext;}
+<STRING,CHAR,NSSTRING>\\b {str += "\b";}
+<STRING,CHAR,NSSTRING>\\f {str += "\f";}
+<STRING,CHAR,NSSTRING>\\n {str += "\n";}
+<STRING,CHAR,NSSTRING>\\r {str += "\r";}
+<STRING,CHAR,NSSTRING>\\t {str += "\t";}
+<STRING,CHAR,NSSTRING>\\v {str += "\v";}
+<STRING,CHAR,NSSTRING>\\\' {str += "\'";}
+<STRING,CHAR,NSSTRING>\\\" {str += "\"";}
+<STRING,CHAR,NSSTRING>\\\\ {str += "\\";}
+<STRING,CHAR,NSSTRING>\\0 {str += '\0';}
+<STRING,CHAR,NSSTRING>\\x0 {str += '\0';}
+<STRING,CHAR,NSSTRING>\\x00 {str += '\0';}
 <STRING,CHAR,NSSTRING>\\x[0-9a-fA-F]{1,2} {
     char *a;
     char c =strtol(yytext+2, &a, 16);
@@ -183,13 +180,16 @@ UNDERLINE_LETTER [A-Za-z_]
 "/*" {tmp[0] = '\0'; BEGIN(MULTILINE_COMMENT);}
 <MULTILINE_COMMENT>[^*\n]+ {strcat(tmp, yytext);}
 <MULTILINE_COMMENT>[^*\n]+\n {lineCount++; strcat(tmp, yytext);}
-<MULTILINE_COMMENT>"*"+[^*/] {strcat(tmp, yytext);}
+<MULTILINE_COMMENT>"*"+[^*/\n] {strcat(tmp, yytext);}
 <MULTILINE_COMMENT>"*"+\n {lineCount++; strcat(tmp, yytext);}
 <MULTILINE_COMMENT>"*"+"/" {printf("Found multiline comment: %s\n", tmp);BEGIN(INITIAL);}
 
 <MULTILINE_COMMENT><<EOF>> {printf("ERROR! Multiline comment \"%s\" isn't closed in row: %d\n", tmp, lineCount); BEGIN(INITIAL);}
 
-\s+ {printf("", yytext);}
+" "+ {printf("", yytext);}
+
+<*>\\\n {lineCount++;}
+<*>\n {lineCount++;}
 
 <*>. {printf("unrecognized element: %s\n", yytext);}
 

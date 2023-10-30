@@ -99,11 +99,13 @@ UNDERLINE_LETTER [A-Za-z_]
 ":" {printf("Found delimiter :: %s\n", yytext);     return ':';}
 "," {printf("Found delimiter ,: %s\n", yytext);     return ',';}
 
-0|[1-9]{DIGIT}* {printf("Found integer: %d\n", atoi(yytext));}
+0|[1-9]{DIGIT}* {printf("Found integer: %d\n", atoi(yytext));   yylval.Integer_constant=atoi(yytext); return INTEGER_CONSTANT;}
 (0x|0X)[0-9a-fA-F]+ {
     char* a;
     long number = strtol(yytext+2, &a,16);
     printf("Found hexadecimal number: %d\n", number);
+    yylval.Integer_constant=number;
+    return INTEGER_CONSTANT;
     }
 (0x|0X)[0-9a-zA-Z]+ {
     printf("ERROR! Incorrect hex number: %s in row: %d\n", yytext, lineCount);
@@ -112,6 +114,8 @@ UNDERLINE_LETTER [A-Za-z_]
     char *a;
     long number = strtol(yytext+2, &a,8);
     printf("Found octal number: %d\n", number);
+    yylval.Integer_constant=number;
+    return INTEGER_CONSTANT;
     }
 0[0-9]+ {
     printf("ERROR! Incorrect octal number: %s in row: %d\n", yytext, lineCount);

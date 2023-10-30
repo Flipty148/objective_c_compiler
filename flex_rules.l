@@ -21,6 +21,7 @@ UNDERLINE_LETTER [A-Za-z_]
     #include <stdlib.h>
     #include <iostream>
     extern int yyparse(void);
+    extern set<string> ClassNames;
     int isContainsSymbol(char *string, char symbol);
     void removeSymbol(char *string, char symbol);
     void removeFloatSuffix(char *string);
@@ -36,33 +37,33 @@ UNDERLINE_LETTER [A-Za-z_]
 
 
 
-"int" {printf("Found keyword INT: %s\n", yytext);}
-"char" {printf("Found keyword CHAR: %s\n", yytext);}
-"if" {printf("Found keyword IF: %s\n", yytext);}
-"else" {printf("Found keyword ELSE: %s\n", yytext);}
-"while" {printf("Found keyword WHILE: %s\n", yytext);}
-"do" {printf("Found keyword DO: %s\n", yytext);}
-"for" {printf("Found keyword FOR: %s\n", yytext);}
-"in" {printf("Found keyword IN: %s\n", yytext);}
-"@interface" {printf("Found keyword INTERFACE: %s\n", yytext);}
-"@end" {printf("Found keyword END: %s\n", yytext);}
-"@implementation" {printf("Found keyword IMPLEMENTATION: %s\n", yytext);}
-"@property" {printf("Found keyword PROPERTY: %s\n", yytext);}
-"@synthesize" {printf("Found keyword SYNTHESIZE: %s\n", yytext);}
-"float" {printf("Found keyword FLOAT: %s\n", yytext);}
-"readonly" {printf("Found keyword READONLY: %s\n", yytext);}
-"readwrite" {printf("Found keyword READWRITE: %s\n", yytext);}
-"enum" {printf("Found keyword ENUM: %s\n", yytext);}
+"int" {printf("Found keyword INT: %s\n", yytext);   return INT;}
+"char" {printf("Found keyword CHAR: %s\n", yytext);     return CHAR;}
+"if" {printf("Found keyword IF: %s\n", yytext);     return IF;}
+"else" {printf("Found keyword ELSE: %s\n", yytext);     return ELSE;}
+"while" {printf("Found keyword WHILE: %s\n", yytext);   return WHILE;}
+"do" {printf("Found keyword DO: %s\n", yytext);     return DO;}
+"for" {printf("Found keyword FOR: %s\n", yytext);   return FOR;}
+"in" {printf("Found keyword IN: %s\n", yytext);     return IN;}
+"@interface" {printf("Found keyword INTERFACE: %s\n", yytext);      return INTERFACE;}
+"@end" {printf("Found keyword END: %s\n", yytext);      return END;}
+"@implementation" {printf("Found keyword IMPLEMENTATION: %s\n", yytext);    return IMPLEMENTATION;}
+"@property" {printf("Found keyword PROPERTY: %s\n", yytext);    return PROPERTY;}
+"@synthesize" {printf("Found keyword SYNTHESIZE: %s\n", yytext);    return SYNTHESIZE;}
+"float" {printf("Found keyword FLOAT: %s\n", yytext);       return FLOAT;}
+"readonly" {printf("Found keyword READONLY: %s\n", yytext);     return READONLY;}
+"readwrite" {printf("Found keyword READWRITE: %s\n", yytext);   return READWRITE;}
+"enum" {printf("Found keyword ENUM: %s\n", yytext);     return ENUM;}
 "unsigned" {printf("Found keyword UNSIGNED: %s\n", yytext);}
 "u" {printf("Found suffix U: %s\n", yytext);}
 "long" {printf("Found keyword LONG: %s\n", yytext);}
 "l" {printf("Found suffix L: %s\n", yytext);}
-"return" {printf("Found keyword RETURN: %s\n", yytext);}
-"self" {printf("Found keyword SELF: %s\n", yytext);}
-"super" {printf("Found keyword SUPER: %s\n", yytext);}
-"id" {printf("Found keyword ID: %s\n", yytext);}
-"@class" {printf("Found keyword CLASS: %s\n", yytext);}
-"void" {printf("Found keyword VOID: %s\n", yytext);}
+"return" {printf("Found keyword RETURN: %s\n", yytext);     return RETURN;}
+"self" {printf("Found keyword SELF: %s\n", yytext);     return SELF;}
+"super" {printf("Found keyword SUPER: %s\n", yytext);   return SUPER;}
+"id" {printf("Found keyword ID: %s\n", yytext);     return ID;}
+"@class" {printf("Found keyword CLASS: %s\n", yytext);  return CLASS;}
+"void" {printf("Found keyword VOID: %s\n", yytext);     return VOID;}
 
 
 

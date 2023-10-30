@@ -95,9 +95,9 @@ UNDERLINE_LETTER [A-Za-z_]
 "]" {printf("Found bracket ]: %s\n", yytext);   return ']';}
 
 
-";" {printf("Found delimiter ;: %s\n", yytext);}
-":" {printf("Found delimiter :: %s\n", yytext);}
-"," {printf("Found delimiter ,: %s\n", yytext);}
+";" {printf("Found delimiter ;: %s\n", yytext);     return ';';}
+":" {printf("Found delimiter :: %s\n", yytext);     return ':';}
+"," {printf("Found delimiter ,: %s\n", yytext);     return ',';}
 
 0|[1-9]{DIGIT}* {printf("Found integer: %d\n", atoi(yytext));}
 (0x|0X)[0-9a-fA-F]+ {

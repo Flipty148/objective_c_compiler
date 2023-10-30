@@ -14,10 +14,13 @@ UNDERLINE_LETTER [A-Za-z_]
 
 /*Подключение библиотек*/
 %{
+    #include "classes_nodes.h"
+    #include "bison_rules_with_code_tab.h"
     #include <stdio.h>
     #include <string.h>
     #include <stdlib.h>
     #include <iostream>
+    extern int yyparse(void);
     int isContainsSymbol(char *string, char symbol);
     void removeSymbol(char *string, char symbol);
     void removeFloatSuffix(char *string);
@@ -247,5 +250,5 @@ int main(int argc, char* argv[])
     else
             yyin = stdin;
 
-    yylex();
+    yyparse();
 }

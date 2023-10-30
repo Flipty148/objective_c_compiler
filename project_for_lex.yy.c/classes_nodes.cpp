@@ -1,7 +1,6 @@
 #include "classes_nodes.h"
 int maxId = 0; // Глобальный id узла
 set<string> ClassNames; //Множество имен объявленных классов
-
 //---------- program ----------
 
 Program_node* Program_node::createProgramNode(Function_and_class_list_node* list)

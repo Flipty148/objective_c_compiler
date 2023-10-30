@@ -67,10 +67,10 @@ UNDERLINE_LETTER [A-Za-z_]
 
 
 
-"+" {printf("Found arithmetic operation +: %s\n", yytext);}
-"-" {printf("Found arithmetic operation -: %s\n", yytext);}
-"*" {printf("Found arithmetic operation *: %s\n", yytext);}
-"/" {printf("Found arithmetic operation /: %s\n", yytext);}
+"+" {printf("Found arithmetic operation +: %s\n", yytext);  return '+';}
+"-" {printf("Found arithmetic operation -: %s\n", yytext);  return '-';}
+"*" {printf("Found arithmetic operation *: %s\n", yytext);  return '*';}
+"/" {printf("Found arithmetic operation /: %s\n", yytext);  return '/';}
 
 
 "==" {printf("Found comparison operation ==: %s\n", yytext);}

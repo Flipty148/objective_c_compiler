@@ -73,12 +73,12 @@ UNDERLINE_LETTER [A-Za-z_]
 "/" {printf("Found arithmetic operation /: %s\n", yytext);  return '/';}
 
 
-"==" {printf("Found comparison operation ==: %s\n", yytext);}
-"!=" {printf("Found comparison operation !=: %s\n", yytext);}
-">" {printf("Found comparison operation >: %s\n", yytext);}
-"<" {printf("Found comparison operation <: %s\n", yytext);}
-">=" {printf("Found comparison operation >=: %s\n", yytext);}
-"<=" {printf("Found comparison operation <=: %s\n", yytext);}
+"==" {printf("Found comparison operation ==: %s\n", yytext);    return EQUAL;}
+"!=" {printf("Found comparison operation !=: %s\n", yytext);    return NOT_EQUAL;}
+">" {printf("Found comparison operation >: %s\n", yytext);      return '>';}
+"<" {printf("Found comparison operation <: %s\n", yytext);      return '<';}
+">=" {printf("Found comparison operation >=: %s\n", yytext);    return GREATER_EQUAL;}
+"<=" {printf("Found comparison operation <=: %s\n", yytext);    return LESS_EQUAL;}
 
 
 "=" {printf("Found assignment operation =: %s\n", yytext);}

@@ -23,6 +23,7 @@
 	Parameter_list_node *Parameter_list;
 	Parameter_declaration_node *Parameter_declaration;
 	Expression_node *Expression;
+	Expression_list_node *Expression_list;
 	Receiver_node *Receiver;
 	Message_selector_node *Message_selector;
 	Keyword_argument_list_node *Keyword_argument_list;
@@ -105,6 +106,7 @@
 %type <Parameter_list> parameter_list
 %type <Parameter_declaration> parameter_declaration
 %type <Expression> expression expression_e
+%type <Expression_list> expression_list
 %type <Receiver> receiver
 %type <Message_selector> message_selector
 %type <Keyword_argument_list> keyword_argument_list keyword_argument_list_e
@@ -267,14 +269,19 @@ expression_e: /*empty*/		{$$ = NULL;}
 			| expression	{$$ = $1;}
 			;
 
+expression_list: expression							{$$ = Expression_list_node::createExpressionListNode($1);}
+			   | expression_list ',' expression		{$$ = Expression_list_node::addToExpressionListNode($1, $3);}
+			   ;
+
 receiver: SUPER								{$$ = Receiver_node::createReceiverNode(SUPER_RECEIVER_TYPE, NULL);}
 		| SELF								{$$ = Receiver_node::createReceiverNode(SELF_RECEIVER_TYPE, NULL);}
 		| IDENTIFIER						{$$ = Receiver_node::createReceiverNode(OBJECT_NAME_RECEIVER_TYPE, $1);}
 		| '[' receiver message_selector ']'	{$$ = Receiver_node::createReceiverNodeFromMessageExpression($2, $3);}
 		;
 
-message_selector: IDENTIFIER										{$$ = Message_selector_node::createMessageSelectorNode($1, NULL, NULL);}
-				| IDENTIFIER ':' expression keyword_argument_list_e	{$$ = Message_selector_node::createMessageSelectorNode($1, $3, $4);}
+message_selector: IDENTIFIER																{$$ = Message_selector_node::createMessageSelectorNode($1, NULL, NULL, NULL);}
+				| IDENTIFIER ':' expression keyword_argument_list_e							{$$ = Message_selector_node::createMessageSelectorNode($1, $3, $4, NULL);}
+				| IDENTIFIER ':' expression keyword_argument_list_e ',' expression_list		{$$ = Message_selector_node::createMessageSelectorNode($1, $3, $4, $6);}
 				;
 
 keyword_argument_list_e: /*empty*/				{$$ = NULL;}

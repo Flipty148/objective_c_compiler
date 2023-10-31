@@ -258,6 +258,7 @@ class Expression_node
         Expression_node *Right;
         Receiver_node *Receiver;
         Message_selector_node *Arguments;
+        Expression_node *Next;
 
         static Expression_node* createExpressionNodeFromIdentifier(char *name);
         static Expression_node* createExpressionNodeFromLiteral(Literal_node *value);
@@ -267,6 +268,19 @@ class Expression_node
         static Expression_node* createExpressionNodeFromOperator(expression_type type, Expression_node *leftExpression, Expression_node *rightExpression);
         static Expression_node* createExpressionNodeFromMessageExpression(Receiver_node *receiver, Message_selector_node *arguments);
         static Expression_node* createExpressionNodeFromMemberAccessOperator(expression_type type, Expression_node *expression, char *memberName);
+};
+
+// ---------- expression_list ----------
+
+class Expression_list_node
+{
+    public:
+        int id;
+        Expression_node *First;
+        Expression_node *Last;
+
+        static Expression_list_node* createExpressionListNode(Expression_node *expression);
+        static Expression_list_node* addToExpressionListNode(Expression_list_node *list, Expression_node *expression);
 };
 
 // ---------- receiver ----------
@@ -301,8 +315,9 @@ class Message_selector_node
         char *MethodName;
         Keyword_argument_list_node *Arguments;
         Expression_node *Expression;
+        Expression_list_node *ExprArguments;
 
-        static Message_selector_node* createMessageSelectorNode(char *methodName, Expression_node *expression, Keyword_argument_list_node *arguments);
+        static Message_selector_node* createMessageSelectorNode(char *methodName, Expression_node *expression, Keyword_argument_list_node *arguments, Expression_list_node *exprArguments);
 };
 
 // ---------- keyword_argument_list ----------

@@ -349,6 +349,24 @@ Expression_node* Expression_node::createExpressionNodeFromMemberAccessOperator(e
     return res;
 }
 
+// ---------- expression_list ----------
+
+Expression_list_node* Expression_list_node::createExpressionListNode(Expression_node *expression)
+{
+    Expression_list_node *res = new Expression_list_node;
+    res->id = maxId++;
+    res->First = expression;
+    res->Last = expression;
+    return res;
+}
+
+Expression_list_node* Expression_list_node::addToExpressionListNode(Expression_list_node *list, Expression_node *expression)
+{
+    list->Last->Next = expression;
+    list->Last = expression;
+    return list;
+}
+
 // ---------- receiver ----------
 
 Receiver_node* Receiver_node::createReceiverNode(receiver_type type, char *name)
@@ -372,13 +390,14 @@ Receiver_node* Receiver_node::createReceiverNodeFromMessageExpression(Receiver_n
 
 // ---------- message_selector ----------
 
-Message_selector_node* Message_selector_node::createMessageSelectorNode(char *methodName,Expression_node *expression, Keyword_argument_list_node *arguments)
+Message_selector_node* Message_selector_node::createMessageSelectorNode(char *methodName,Expression_node *expression, Keyword_argument_list_node *arguments, Expression_list_node *exprArguments)
 {
     Message_selector_node *res = new Message_selector_node;
     res->id = maxId++;
     res->MethodName = methodName;
     res->Arguments = arguments;
     res->Expression = expression;
+    res->ExprArguments = exprArguments;
     return res;
 }
 

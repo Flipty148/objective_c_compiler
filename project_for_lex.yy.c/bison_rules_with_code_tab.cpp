@@ -1120,7 +1120,7 @@ yyreduce:
 
 case 1:
 #line 152 "bison_rules_with_code.y"
-{yyval.Program = Program_node::createProgramNode(yyvsp[0].Function_and_class_list);;
+{yyval.Program = root = Program_node::createProgramNode(yyvsp[0].Function_and_class_list);;
     break;}
 case 2:
 #line 155 "bison_rules_with_code.y"

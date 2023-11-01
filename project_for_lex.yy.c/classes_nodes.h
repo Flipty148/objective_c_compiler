@@ -706,7 +706,7 @@ class Interface_declaration_list_node
             Property_node *property;
             Method_declaration_node *method_declaration;
         };
-        vector<interface_declaration*> *Declarations;
+        vector<interface_declaration> *Declarations;
 
         static Interface_declaration_list_node* createInterfaceDeclarationListNodeFromDeclaration(Declaration_node *interfaceDeclaration);
         static Interface_declaration_list_node* createInterfaceDeclarationListNodeFromProperty(Property_node *interfaceDeclaration);
@@ -751,7 +751,7 @@ class Implementation_definition_list_node
             Method_definition_node *method_definition;
             Synthesize_node *synthesize;
         };
-        vector<implementation_definition*> *Definitions;
+        vector<implementation_definition> *Definitions;
 
         static Implementation_definition_list_node* createImplementationDefinitionListNodeFromDeclaration(Declaration_node *implementationDefinition);
         static Implementation_definition_list_node* createImplementationDefinitionListNodeFromMethodDeclaration(Method_definition_node *implementationDefinition);
@@ -908,7 +908,7 @@ class Function_and_class_list_node
             Class_declaration_list_node *class_declaration_list;
         };
 
-        vector<function_and_class*> *FunctionsAndClasses;
+        vector<function_and_class> *FunctionsAndClasses;
 
         static Function_and_class_list_node* createFunctionAndClassListNodeFromClassBlock(Class_block_node *classBlock);
         static Function_and_class_list_node* createFunctionAndClassListNodeFromFunction(Function_node *function);

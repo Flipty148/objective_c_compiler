@@ -149,7 +149,7 @@
 
 %%
 
-program: function_and_class_list	{$$ = Program_node::createProgramNode($1);}
+program: function_and_class_list	{$$ = root = Program_node::createProgramNode($1);}
 	   ;
 
 function_and_class_list: class_block									{$$ = Function_and_class_list_node::createFunctionAndClassListNodeFromClassBlock($1);}

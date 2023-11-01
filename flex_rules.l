@@ -286,8 +286,8 @@ int main(int argc, char* argv[])
 
     yyparse();
 
-    /* string res = root->toDot();
+    string res = root->toDot();
     ofstream out("dot.dot");
     out << res;
-    out.close(); */
+    out.close();
 }

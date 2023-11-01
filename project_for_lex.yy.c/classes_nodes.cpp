@@ -1,7 +1,7 @@
 #include "classes_nodes.h"
 #include <string>
 using namespace std;
-int maxId = 0; // Глобальный id узла
+long maxId = 0; // Глобальный id узла
 set<string> ClassNames; //Множество имен объявленных классов
 
 //---------- program ----------
@@ -20,9 +20,12 @@ Function_and_class_list_node* Function_and_class_list_node::createFunctionAndCla
 {
     Function_and_class_list_node *res = new Function_and_class_list_node;
     res->id = maxId++;
-    res->FunctionsAndClasses = new vector<function_and_class*>;
-    function_and_class functionAndClass = { functionList };
-    res->FunctionsAndClasses->push_back(&functionAndClass);
+    res->FunctionsAndClasses = new vector<function_and_class>;
+    struct function_and_class functionAndClass;
+    functionAndClass.function = functionList;
+    functionAndClass.class_block = NULL;
+    functionAndClass.class_declaration_list = NULL;
+    res->FunctionsAndClasses->push_back(functionAndClass);
     return res;
 }
 
@@ -30,9 +33,12 @@ Function_and_class_list_node* Function_and_class_list_node::createFunctionAndCla
 {
     Function_and_class_list_node *res = new Function_and_class_list_node;
     res->id = maxId++;
-    res->FunctionsAndClasses = new vector<function_and_class*>;
-    function_and_class functionAndClass = { NULL, NULL, classDeclarationList};
-    res->FunctionsAndClasses->push_back(&functionAndClass);
+    res->FunctionsAndClasses = new vector<function_and_class>;
+    struct function_and_class functionAndClass;
+    functionAndClass.class_declaration_list = classDeclarationList;
+    functionAndClass.class_block = NULL;
+    functionAndClass.function = NULL;
+    res->FunctionsAndClasses->push_back(functionAndClass);
 
     return res;
 }
@@ -41,30 +47,42 @@ Function_and_class_list_node* Function_and_class_list_node::createFunctionAndCla
 {
     Function_and_class_list_node *res = new Function_and_class_list_node;
     res->id = maxId++;
-    res->FunctionsAndClasses = new vector<function_and_class*>;
-    function_and_class functionAndClass = { NULL, classBlock};
-    res->FunctionsAndClasses->push_back(&functionAndClass);
+    res->FunctionsAndClasses = new vector<function_and_class>;
+    struct function_and_class functionAndClass;
+    functionAndClass.class_block = classBlock;
+    functionAndClass.class_declaration_list = NULL;
+    functionAndClass.function = NULL;
+    res->FunctionsAndClasses->push_back(functionAndClass);
     return res;
 }
 
 Function_and_class_list_node* Function_and_class_list_node::addToFunctionAndClassListNodeFromFunction(Function_and_class_list_node *list, Function_node *function)
 {
-    function_and_class functionAndClass = { function };
-    list->FunctionsAndClasses->push_back(&functionAndClass);
+    struct function_and_class functionAndClass;
+    functionAndClass.function = function;
+    functionAndClass.class_block = NULL;
+    functionAndClass.class_declaration_list = NULL;
+    list->FunctionsAndClasses->push_back(functionAndClass);
     return list;
 }
 
 Function_and_class_list_node* Function_and_class_list_node::addToFunctionAndClassListNodeFromClassDeclarationList(Function_and_class_list_node *list, Class_declaration_list_node *classDeclarationList)
 {
-    function_and_class functionAndClass = { NULL, NULL, classDeclarationList };
-    list->FunctionsAndClasses->push_back(&functionAndClass);
+    struct function_and_class functionAndClass;
+    functionAndClass.class_declaration_list = classDeclarationList;
+    functionAndClass.class_block = NULL;
+    functionAndClass.function = NULL;
+    list->FunctionsAndClasses->push_back(functionAndClass);
     return list;
 }
 
 Function_and_class_list_node* Function_and_class_list_node::addToFunctionAndClassListNodeFromClassBlock(Function_and_class_list_node *list, Class_block_node *classStatement)
 {
-    function_and_class functionAndClass = { NULL, classStatement};
-    list->FunctionsAndClasses->push_back(&functionAndClass);
+    struct function_and_class functionAndClass;
+    functionAndClass.class_block = classStatement;
+    functionAndClass.class_declaration_list = NULL;
+    functionAndClass.function = NULL;
+    list->FunctionsAndClasses->push_back(functionAndClass);
     return list;
 }
 
@@ -733,6 +751,7 @@ Instance_variables_declaration_node* Instance_variables_declaration_node::create
     res->id = maxId++;
     res->Type = type;
     res->DeclaratorList = declaratorList;
+    res->Next = NULL;
     return res;
 }
 
@@ -760,9 +779,12 @@ Interface_declaration_list_node* Interface_declaration_list_node::createInterfac
 {
     Interface_declaration_list_node *res = new Interface_declaration_list_node;
     res->id = maxId++;
-    res->Declarations = new vector<interface_declaration*>;
-    interface_declaration Declaration = {interfaceDeclaration };
-    res->Declarations->push_back(&Declaration);
+    res->Declarations = new vector<interface_declaration>;
+    struct interface_declaration Declaration;
+    Declaration.declaration = interfaceDeclaration;
+    Declaration.method_declaration = NULL;
+    Declaration.property = NULL;
+    res->Declarations->push_back(Declaration);
     return res;
 }
 
@@ -770,9 +792,12 @@ Interface_declaration_list_node* Interface_declaration_list_node::createInterfac
 {
     Interface_declaration_list_node *res = new Interface_declaration_list_node;
     res->id = maxId++;
-    res->Declarations = new vector<interface_declaration*>;
-    interface_declaration Declaration = {NULL, interfaceDeclaration };
-    res->Declarations->push_back(&Declaration);
+    res->Declarations = new vector<interface_declaration>;
+    struct interface_declaration Declaration;
+    Declaration.property = interfaceDeclaration;
+    Declaration.method_declaration = NULL;
+    Declaration.declaration = NULL;
+    res->Declarations->push_back(Declaration);
     return res;
 }
 
@@ -780,30 +805,42 @@ Interface_declaration_list_node* Interface_declaration_list_node::createInterfac
 {
     Interface_declaration_list_node *res = new Interface_declaration_list_node;
     res->id = maxId++;
-    res->Declarations = new vector<interface_declaration*>;
-    interface_declaration Declaration = {NULL, NULL, interfaceDeclaration };
-    res->Declarations->push_back(&Declaration);
+    res->Declarations = new vector<interface_declaration>;
+    struct interface_declaration Declaration;
+    Declaration.method_declaration = interfaceDeclaration;
+    Declaration.declaration = NULL;
+    Declaration.property = NULL;
+    res->Declarations->push_back(Declaration);
     return res;
 }
 
 Interface_declaration_list_node* Interface_declaration_list_node::addDeclarationToInterfaceDeclarationListNode(Interface_declaration_list_node *list, Declaration_node *interfaceDeclaration)
 {
-    interface_declaration Declaration = {interfaceDeclaration };
-    list->Declarations->push_back(&Declaration);
+    struct interface_declaration Declaration;
+    Declaration.declaration = interfaceDeclaration;
+    Declaration.method_declaration = NULL;
+    Declaration.property = NULL;
+    list->Declarations->push_back(Declaration);
     return list;
 }
 
 Interface_declaration_list_node* Interface_declaration_list_node::addPropertyToInterfaceDeclarationListNode(Interface_declaration_list_node *list, Property_node *interfaceDeclaration)
 {
-    interface_declaration Declaration = {NULL, interfaceDeclaration };
-    list->Declarations->push_back(&Declaration);
+    interface_declaration Declaration;
+    Declaration.property = interfaceDeclaration;
+    Declaration.method_declaration = NULL;
+    Declaration.declaration = NULL;
+    list->Declarations->push_back(Declaration);
     return list;
 }
 
 Interface_declaration_list_node* Interface_declaration_list_node::addMethodDeclarationToInterfaceDeclarationListNode(Interface_declaration_list_node *list, Method_declaration_node *interfaceDeclaration)
 {
-    interface_declaration Declaration = {NULL, NULL, interfaceDeclaration };
-    list->Declarations->push_back(&Declaration);
+    interface_declaration Declaration;
+    Declaration.method_declaration = interfaceDeclaration;
+    Declaration.declaration = NULL;
+    Declaration.property = NULL;
+    list->Declarations->push_back(Declaration);
     return list;
 }
 
@@ -825,9 +862,12 @@ Implementation_definition_list_node* Implementation_definition_list_node::create
 {
     Implementation_definition_list_node *res = new Implementation_definition_list_node;
     res->id = maxId++;
-    res->Definitions = new vector<implementation_definition*>;
-    implementation_definition Definition = {implementationDefinition };
-    res->Definitions->push_back(&Definition);
+    res->Definitions = new vector<implementation_definition>;
+    struct implementation_definition Definition;
+    Definition.declaration = implementationDefinition;
+    Definition.method_definition = NULL;
+    Definition.synthesize = NULL;
+    res->Definitions->push_back(Definition);
     return res;
 }
 
@@ -835,9 +875,12 @@ Implementation_definition_list_node* Implementation_definition_list_node::create
 {
     Implementation_definition_list_node *res = new Implementation_definition_list_node;
     res->id = maxId++;
-    res->Definitions = new vector<implementation_definition*>;
-    implementation_definition Definition = {NULL, implementationDefinition };
-    res->Definitions->push_back(&Definition);
+    res->Definitions = new vector<implementation_definition>;
+    struct implementation_definition Definition;
+    Definition.method_definition = implementationDefinition;
+    Definition.declaration = NULL;
+    Definition.synthesize = NULL;
+    res->Definitions->push_back(Definition);
     return res;
 }
 
@@ -845,30 +888,42 @@ Implementation_definition_list_node* Implementation_definition_list_node::create
 {
     Implementation_definition_list_node *res = new Implementation_definition_list_node;
     res->id = maxId++;
-    res->Definitions = new vector<implementation_definition*>;
-    implementation_definition Definition = {NULL, NULL, implementationDefinition };
-    res->Definitions->push_back(&Definition);
+    res->Definitions = new vector<implementation_definition>;
+    struct implementation_definition Definition;
+    Definition.synthesize = implementationDefinition;
+    Definition.declaration = NULL;
+    Definition.method_definition = NULL;
+    res->Definitions->push_back(Definition);
     return res;
 }
 
 Implementation_definition_list_node* Implementation_definition_list_node::addDeclarationToImplementationDefinitionListNode(Implementation_definition_list_node *list, Declaration_node *implementationDefinition)
 {
-    implementation_definition Definition = {implementationDefinition };
-    list->Definitions->push_back(&Definition);
+    struct implementation_definition Definition;
+    Definition.declaration = implementationDefinition;
+    Definition.method_definition = NULL;
+    Definition.synthesize = NULL;
+    list->Definitions->push_back(Definition);
     return list;
 }
 
 Implementation_definition_list_node* Implementation_definition_list_node::addMethodDeclarationToImplementationDefinitionListNode(Implementation_definition_list_node *list, Method_definition_node *implementationDefinition)
 {
-    implementation_definition Definition = {NULL, implementationDefinition };
-    list->Definitions->push_back(&Definition);
+    struct implementation_definition Definition;
+    Definition.method_definition = implementationDefinition;
+    Definition.declaration = NULL;
+    Definition.synthesize = NULL;
+    list->Definitions->push_back(Definition);
     return list;
 }
 
 Implementation_definition_list_node* Implementation_definition_list_node::addSynthesizeToImplementationDefinitionListNode(Implementation_definition_list_node *list, Synthesize_node *implementationDefinition)
 {
-    implementation_definition Definition = {NULL, NULL, implementationDefinition };
-    list->Definitions->push_back(&Definition);
+    implementation_definition Definition;
+    Definition.synthesize = implementationDefinition;
+    Definition.declaration = NULL;
+    Definition.method_definition = NULL;
+    list->Definitions->push_back(Definition);
     return list;
 }
 
@@ -1068,8 +1123,11 @@ string Declaration_node::toDot(string labelConection)
     res += to_string(id) + "[label=\"declaration\"];\n";
     res += to_string(id);
     res += type->toDot();
-    res += to_string(id);
-    res += init_declarator_list->toDot();
+    if (init_declarator_list != NULL)
+    {
+        res += to_string(id);
+        res += init_declarator_list->toDot();
+    }
     return res;
 }
 
@@ -1405,14 +1463,16 @@ string Expression_node::toDot(string labelConection)
         res += to_string(id) + "[label=\".\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
-        res += Right->toDot("right");
+        res += to_string(id) + ".1 [label=\"" + name + "\"];\n";
+        res += to_string(id) + "->" + to_string(id) + ".1 [label=\"name\"];\n";
     }
     else if (type == ARROW_EXPRESSION_TYPE)
     {
         res += to_string(id) + "[label=\"->\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
-        res += Right->toDot("right");
+        res += to_string(id) + ".1 [label=\"" + name + "\"];\n";
+        res += to_string(id) + "->" + to_string(id) + ".1 [label=\"name\"];\n";
     }
 
     return res;
@@ -1848,8 +1908,11 @@ string Class_interface_node::toDot(string labelConection)
         res += to_string(id) + "->" + to_string(id) + ".2 [label=\"superclass name\"];\n";
     }
 
-    res += to_string(id);
-    res += Body->toDot("body");
+    if (Body != NULL)
+    {
+        res += to_string(id);
+        res += Body->toDot("body");
+    }
 
     return res;
 }
@@ -1917,8 +1980,11 @@ string Class_implementation_node::toDot(string labelConection)
         res += to_string(id) + "->" + to_string(id) + ".2 [label=\"superclass name\"];\n";
     }
 
-    res += to_string(id);
-    res += Body->toDot("body");
+    if (Body!= NULL)
+    {
+        res += to_string(id);
+        res += Body->toDot("body");
+    }
     return res;
 }
 
@@ -2038,12 +2104,12 @@ string Interface_declaration_list_node::toDot(string labelConection)
     for (int i = 0; i < Declarations->size(); i++)
     {
         res += to_string(id);
-        if (Declarations->at(i)->declaration != NULL)
-            res += Declarations->at(i)->declaration->toDot(to_string(i));
-        else if (Declarations->at(i)->property != NULL)
-            res += Declarations->at(i)->property->toDot(to_string(i));
-        else if (Declarations->at(i)->method_declaration != NULL)
-            res += Declarations->at(i)->method_declaration->toDot(to_string(i));
+        if (Declarations->at(i).declaration != NULL)
+            res += Declarations->at(i).declaration->toDot(to_string(i));
+        else if (Declarations->at(i).property != NULL)
+            res += Declarations->at(i).property->toDot(to_string(i));
+        else if (Declarations->at(i).method_declaration != NULL)
+            res += Declarations->at(i).method_declaration->toDot(to_string(i));
     }
 
     return res;
@@ -2088,12 +2154,12 @@ string Implementation_definition_list_node::toDot(string labelConection)
     for (int i = 0; i < Definitions->size(); i++)
     {
         res += to_string(id);
-        if (Definitions->at(i)->declaration!= NULL)
-            res += Definitions->at(i)->declaration->toDot(to_string(i));
-        else if (Definitions->at(i)->method_definition!= NULL)
-            res += Definitions->at(i)->method_definition->toDot(to_string(i));
-        else if (Definitions->at(i)->synthesize!= NULL)
-            res += Definitions->at(i)->synthesize->toDot(to_string(i));
+        if (Definitions->at(i).declaration!= NULL)
+            res += Definitions->at(i).declaration->toDot(to_string(i));
+        else if (Definitions->at(i).method_definition!= NULL)
+            res += Definitions->at(i).method_definition->toDot(to_string(i));
+        else if (Definitions->at(i).synthesize!= NULL)
+            res += Definitions->at(i).synthesize->toDot(to_string(i));
     }
 
     return res;
@@ -2296,7 +2362,7 @@ string Synthesize_node::toDot(string labelConection)
 
 string Program_node::toDot()
 {
-    string res = "digraph Objective-C {\n";
+    string res = "digraph ObjectiveC {\n";
     res += to_string(id) + "[label=\"program\"];\n";
 
     res += to_string(id);
@@ -2315,12 +2381,12 @@ string Function_and_class_list_node::toDot()
     for (int i = 0; i < FunctionsAndClasses->size(); i++)
     {
         res += to_string(id);
-        if (FunctionsAndClasses->at(i)->function!= NULL)
-            res += FunctionsAndClasses->at(i)->function->toDot(to_string(i));
-        else if (FunctionsAndClasses->at(i)->class_block!= NULL)
-            res += FunctionsAndClasses->at(i)->class_block->toDot(to_string(i));
-        else if (FunctionsAndClasses->at(i)->class_declaration_list!= NULL)
-            res += FunctionsAndClasses->at(i)->class_declaration_list->toDot(to_string(i));
+        if (FunctionsAndClasses->at(i).function!= NULL)
+            res += FunctionsAndClasses->at(i).function->toDot(to_string(i));
+        else if (FunctionsAndClasses->at(i).class_block!= NULL)
+            res += FunctionsAndClasses->at(i).class_block->toDot(to_string(i));
+        else if (FunctionsAndClasses->at(i).class_declaration_list!= NULL)
+            res += FunctionsAndClasses->at(i).class_declaration_list->toDot(to_string(i));
     }
 
     return res;
@@ -2340,7 +2406,9 @@ string Function_node::toDot(string labelConection)
     res += Type->toDot("type");
 
     res += to_string(id) + "->" + to_string(id) + ".1 [label=\"name\"];\n";
-    res += to_string(id) + ".1 [label=\"" + Name + "\"];\n";
+    res += to_string(id) + ".1 [label=\""; 
+    res += Name;
+    res += "\"];\n";
 
     res += to_string(id);
     res += statement->toDot("body");

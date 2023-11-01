@@ -1198,4 +1198,306 @@ string Parameter_declaration_node::toDot(string labelConection="")
     return res;
 }
 
+// -------------------- Выражения --------------------
 
+// ---------- Expression_node ----------
+
+string Expression_node::toDot(string labelConection="")
+{
+    string res = "->" + to_string(id);
+    if (labelConection!= "")
+        res += "[label=\"" + labelConection;
+    res += ";\n";
+    res += to_string(id) + "[label=\"expression\"];\n";
+    if (type == IDENTIFIER_EXPRESSION_TYPE)
+    {
+        res += to_string(id);
+        res += "->";
+        res += to_string(id) + ".1 [label=\"identifier\"];";
+        res += to_string(id) + ".1";
+        res += "[label=\"";
+        res += name;
+        res += "\"];\n";
+    }
+    else if (type == LITERAL_EXPRESSION_TYPE)
+    {
+        res += to_string(id);
+        res += constant->literal->toDot();
+    }
+    else if (type == NUMERIIC_CONSTANT_EXPRESSION_TYPE)
+    {
+        res += to_string(id);
+        res += constant->num->toDot();
+    }
+    else if (type == PRIORITY_EXPRESSION_TYPE)
+    {
+        res += to_string(id) + "[label=\"priority_expression\"];\n";
+        res += to_string(id);
+        res += Right->toDot();
+    }
+    else if (type == SELF_EXPRESSION_TYPE)
+    {
+        res += to_string(id) + "[label=\"self_expression\"];\n";
+    }
+    else if (type == MESSAGE_EXPRESSION_EXPRESSION_TYPE)
+    {
+        res += to_string(id) + "[label=\"message_expression\"];\n";
+        res += to_string(id);
+        res += Receiver->toDot("receiver");
+        res += to_string(id);
+        res += Arguments->toDot("arguments");
+    }
+    else if (type == UMINUS_EXPRESSION_TYPE)
+    {
+        res += to_string(id) + "[label=\"-\"];\n";
+        res += to_string(id);
+        res += Right->toDot();
+    }
+    else if (type == UPLUS_EXPRESSION_TYPE)
+    {
+        res += to_string(id) + "[label=\"+\"];\n";
+        res += to_string(id);
+        res += Right->toDot();
+    }
+    else if (type == UAMPERSAND_EXPRESSION_TYPE)
+    {
+        res += to_string(id) + "[label=\"&\"];\n";
+        res += to_string(id);
+        res += Right->toDot();
+    }
+    else if (type == PLUS_EXPRESSION_TYPE)
+    {
+        res += to_string(id) + "[label=\"+\"];\n";
+        res += to_string(id);
+        res += Left->toDot("left");
+        res += Right->toDot("right");
+    }
+    else if (type == MINUS_EXPRESSION_TYPE)
+    {
+        res += to_string(id) + "[label=\"-\"];\n";
+        res += to_string(id);
+        res += Left->toDot("left");
+        res += Right->toDot("right");
+    }
+    else if (type == MUL_EXPRESSION_TYPE)
+    {
+        res += to_string(id) + "[label=\"*\"];\n";
+        res += to_string(id);
+        res += Left->toDot("left");
+        res += Right->toDot("right");
+    }
+    else if (type == DIV_EXPRESSION_TYPE)
+    {
+        res += to_string(id) + "[label=\"/\"];\n";
+        res += to_string(id);
+        res += Left->toDot("left");
+        res += Right->toDot("right");
+    }
+    else if (type == EQUAL_EXPRESSION_TYPE)
+    {
+        res += to_string(id) + "[label=\"==\"];\n";
+        res += to_string(id);
+        res += Left->toDot("left");
+        res += Right->toDot("right");
+    }
+    else if (type == NOT_EQUAL_EXPRESSION_TYPE)
+    {
+        res += to_string(id) + "[label=\"!=\"];\n";
+        res += to_string(id);
+        res += Left->toDot("left");
+        res += Right->toDot("right");
+    }
+    else if (type == GREATER_EXPRESSION_TYPE)
+    {
+        res += to_string(id) + "[label=\">\"];\n";
+        res += to_string(id);
+        res += Left->toDot("left");
+        res += Right->toDot("right");
+    }
+    else if (type == LESS_EXPRESSION_TYPE)
+    {
+        res += to_string(id) + "[label=\"<\"];\n";
+        res += to_string(id);
+        res += Left->toDot("left");
+        res += Right->toDot("right");
+    }
+    else if (type == GREATER_EQUAL_EXPRESSION_TYPE)
+    {
+        res += to_string(id) + "[label=\">=\"];\n";
+        res += to_string(id);
+        res += Left->toDot("left");
+        res += Right->toDot("right");
+    }
+    else if (type == LESS_EQUAL_EXPRESSION_TYPE)
+    {
+        res += to_string(id) + "[label=\"<=\"];\n";
+        res += to_string(id);
+        res += Left->toDot("left");
+        res += Right->toDot("right");
+    }
+    else if (type == ASSIGNMENT_EXPRESSION_TYPE)
+    {
+        res += to_string(id) + "[label=\"=\"];\n";
+        res += to_string(id);
+        res += Left->toDot("left");
+        res += Right->toDot("right");
+    }
+    else if (type == DOT_EXPRESSION_TYPE)
+    {
+        res += to_string(id) + "[label=\".\"];\n";
+        res += to_string(id);
+        res += Left->toDot("left");
+        res += Right->toDot("right");
+    }
+    else if (type == ARROW_EXPRESSION_TYPE)
+    {
+        res += to_string(id) + "[label=\"->\"];\n";
+        res += to_string(id);
+        res += Left->toDot("left");
+        res += Right->toDot("right");
+    }
+
+    return res;
+}
+
+// ---------- Expression_list_node ----------
+
+vector<Expression_node*>* Expression_list_node::getElements()
+{
+    vector<Expression_node*> *res = new vector<Expression_node*>;
+    Expression_node *current = First;
+    res->push_back(current);
+    while (current->Next!= NULL)
+    {
+        current = current->Next;
+        res->push_back(current->Next);
+    }
+    return res;
+}
+
+string Expression_list_node::toDot(string labelConection = "")
+{
+    string res = "->" + to_string(id); 
+    if (labelConection!= "")
+        res += "[label=\"" + labelConection + "\"]";
+    res+= ";\n";
+    res += to_string(id) + "[label=\"expression_list\"];\n";
+    vector<Expression_node*>* elements = getElements();
+    for (int i = 0; i < elements->size() - 1; i++)
+    {
+        res += to_string(id);
+        res += elements->at(i)->toDot(to_string(id));
+    }
+    delete elements;
+    return res;
+}
+
+// ---------- Receiver_node ----------
+
+string Receiver_node::toDot(string labelConection="")
+{
+    string res = "->" + to_string(id);
+    if (labelConection!= "")
+        res += "[label=\"" + labelConection + "\"]";
+    res += ";\n";
+    if (Type == SUPER_RECEIVER_TYPE)
+        res += to_string(id) + "[label=\"receiver: super\"];\n";
+    else if (Type == SELF_RECEIVER_TYPE)
+        res += to_string(id) + "[label=\"receiver: self\"];\n";
+    else if (Type == OBJECT_NAME_RECEIVER_TYPE)
+    {
+        res += to_string(id) + "[label=\"receiver: object_name\"];\n";
+        res += to_string(id) + ".1 [label=\"" + name + "\"];\n";
+    }
+    else if (Type == MESSAGE_EXPRESSION_RECEIVER_TYPE)
+    {
+        res += to_string(id) + "[label=\"receiver: message_expression\"];\n";
+        res += to_string(id);
+        res += Receiver->toDot("receiver");
+        res += to_string(id);
+        res += Arguments->toDot("arguments");
+    }
+    
+    return res;
+}
+
+// ---------- Message_selector_node ----------
+
+string Message_selector_node::toDot(string labelConection="")
+{
+    string res = "->" + to_string(id);
+    if (labelConection!= "")
+        res += "[label=\"" + labelConection + "\"]";
+    res += ";\n";
+    res += to_string(id) + "[label=\"message_selector\"];\n";
+    res += to_string(id) + ".1 [label=\"" + MethodName + "\"];\n";
+    res += to_string(id) + "->" + to_string(id) + ".1 [label=\"method name\"]; \n";
+    if (Arguments!= NULL)
+    {
+        res += to_string(id);
+        res += Arguments->toDot("arguments");
+    }
+    if (Expression != NULL)
+    {
+        res += to_string(id);
+        res += Expression->toDot("expression");
+    }
+    if (ExprArguments!= NULL)
+    {
+        res += to_string(id);
+        res += ExprArguments->toDot("expr_arguments");
+    }
+}
+
+// ---------- Keyword_argument_list_node ----------
+
+vector<Keyword_argument_node*>* Keyword_argument_list_node::getElements()
+{
+    vector<Keyword_argument_node*> *res = new vector<Keyword_argument_node*>;
+    Keyword_argument_node *current = First;
+    res->push_back(current);
+    while (current->Next!= NULL)
+    {
+        current = current->Next;
+        res->push_back(current->Next);
+    }
+    return res;
+}
+
+string Keyword_argument_list_node::toDot(string labelConection = "")
+{
+    string res = "->" + to_string(id);
+    if (labelConection!= "")
+        res += "[label=\"" + labelConection + "\"]";
+    res += ";\n";
+    res += to_string(id) + "[label=\"keyword_argument_list\"];\n";
+    vector<Keyword_argument_node*>* elements = getElements();
+    for (int i = 0; i < elements->size() - 1; i++)
+    {
+        res += to_string(id);
+        res += elements->at(i)->toDot(to_string(id));
+    }
+    delete elements;
+    return res;
+}
+
+// ---------- Keyword_argument_node ----------
+
+string Keyword_argument_node::toDot(string labelConection = "")
+{
+    string res = "->" + to_string(id);
+    if (labelConection!= "")
+        res += "[label=\"" + labelConection + "\"]";
+    res += ";\n";
+    res += to_string(id) + "[label=\"keyword_argument\"];\n";
+
+    if (type == WITH_IDENTIFIER_KW_ARGUMENT_TYPE)
+    {
+        res += to_string(id) + ".1 [label=\"" + name + "\"];\n";
+        res += to_string(id) + "->" + to_string(id) + ".1 [label=\"identifier\"]; \n";
+    }
+
+    res += to_string(id);
+    res += expression->toDot("expression");
+    return res;
+}

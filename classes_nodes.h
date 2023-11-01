@@ -58,7 +58,7 @@ class Type_node
         static Type_node* createTypeNode(type_type type);
         static Type_node* createTypeNodeFromClassName(type_type type, char *name);
 
-        string toDot(string labelConection);
+        string toDot(string labelConection="");
 };
 
 // -------------------- Константы --------------------
@@ -294,6 +294,8 @@ class Expression_node
         static Expression_node* createExpressionNodeFromOperator(expression_type type, Expression_node *leftExpression, Expression_node *rightExpression);
         static Expression_node* createExpressionNodeFromMessageExpression(Receiver_node *receiver, Message_selector_node *arguments);
         static Expression_node* createExpressionNodeFromMemberAccessOperator(expression_type type, Expression_node *expression, char *memberName);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- expression_list ----------
@@ -307,6 +309,9 @@ class Expression_list_node
 
         static Expression_list_node* createExpressionListNode(Expression_node *expression);
         static Expression_list_node* addToExpressionListNode(Expression_list_node *list, Expression_node *expression);
+
+        vector<Expression_node*>* getElements();
+        string toDot(string labelConection="");
 };
 
 // ---------- receiver ----------
@@ -330,6 +335,8 @@ class Receiver_node
         static Receiver_node* createReceiverNode(receiver_type type, char *name);
         static Receiver_node* createReceiverNodeFromMessageExpression(Receiver_node *receiver, Message_selector_node *arguments);
 
+        string toDot(string labelConection="");
+
 };
 
 // ---------- message_selector -----------
@@ -344,6 +351,8 @@ class Message_selector_node
         Expression_list_node *ExprArguments;
 
         static Message_selector_node* createMessageSelectorNode(char *methodName, Expression_node *expression, Keyword_argument_list_node *arguments, Expression_list_node *exprArguments);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- keyword_argument_list ----------
@@ -357,6 +366,9 @@ class Keyword_argument_list_node
 
         static Keyword_argument_list_node* createKeywordArgumentListNode(Keyword_argument_node *argument);
         static Keyword_argument_list_node* addToKeywordArgumentListNode(Keyword_argument_list_node *list, Keyword_argument_node *argument);
+
+        vector<Keyword_argument_node*>* getElements();
+        string toDot(string labelConection="");
 };
 
 // ---------- keyword_argument ----------
@@ -376,6 +388,8 @@ class Keyword_argument_node
         Keyword_argument_node *Next;
 
         static Keyword_argument_node* createKeywordArgumentNode(keyword_argument_type type, char *identifier, Expression_node *expression);
+
+        string toDot(string labelConection="");
 };
 
 // -------------------- Операторы --------------------

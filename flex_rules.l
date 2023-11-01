@@ -21,7 +21,9 @@ UNDERLINE_LETTER [A-Za-z_]
     #include <string.h>
     #include <stdlib.h>
     #include <iostream>
+    #include <fstream>
     extern int yyparse(void);
+    extern Program_node *root;
     extern set<string> ClassNames;
     int isContainsSymbol(char *string, char symbol);
     void removeSymbol(char *string, char symbol);
@@ -283,4 +285,9 @@ int main(int argc, char* argv[])
             yyin = stdin;
 
     yyparse();
+
+    string res = root->toDot();
+    ofstream out("dot.dot");
+    out << res;
+    out.close();
 }

@@ -57,6 +57,8 @@ class Type_node
 
         static Type_node* createTypeNode(type_type type);
         static Type_node* createTypeNodeFromClassName(type_type type, char *name);
+
+        string toDot(string labelConection="");
 };
 
 // -------------------- Константы --------------------
@@ -81,6 +83,8 @@ class Numeric_constant_node
 
         static Numeric_constant_node* createNumericConstantNodeFromInteger(int number);
         static Numeric_constant_node* createNumericConstantNodeFromFloat(float number);
+
+        string toDot();
 };
 
 // ---------- literal ----------
@@ -99,6 +103,8 @@ class Literal_node
         char *value;
 
         static Literal_node* createLiteralNode(literal_type type, char *value);
+
+        string toDot();
 };
 
 // -------------------- Объявления --------------------
@@ -114,6 +120,8 @@ class Declaration_node
         Declaration_node *Next;
 
         static Declaration_node* createDeclarationNode(Type_node *type, Init_declarator_list_node *initDeclarators);
+
+        string toDot(string labelConection="");
 };
 
 
@@ -127,7 +135,10 @@ class Declaration_list_node
         Declaration_node *Last;
 
         static Declaration_list_node* createDeclarationListNode(Declaration_node *declaration);
-        static Declaration_list_node* addToDeclarationListNode(Declaration_list_node *list, Declaration_node *declaration);        
+        static Declaration_list_node* addToDeclarationListNode(Declaration_list_node *list, Declaration_node *declaration);
+
+        string toDot(string labelConection="");
+        vector<Declaration_node*>* getElements();        
 };
 
 // ---------- init_declarator_list ----------
@@ -141,6 +152,9 @@ class Init_declarator_list_node
 
         static Init_declarator_list_node* createInitDeclaratorListNode(Init_declarator_node *initDeclarator);
         static Init_declarator_list_node* addToInitDeclaratorListNode(Init_declarator_list_node *list, Init_declarator_node *initDeclarator);
+
+        string toDot();
+        vector<Init_declarator_node*>* getElements();
 };
 
 // ---------- init_declarator ----------
@@ -160,6 +174,8 @@ class Init_declarator_node
         Init_declarator_node *Next;
 
         static Init_declarator_node* createInitDeclaratorNode(init_declarator_type type, Declarator_node *declarator, Expression_node *expression);
+        
+        string toDot(string labelConection="");
 };
 
 // ---------- declarator ----------
@@ -172,6 +188,8 @@ class Declarator_node
         Declarator_node *Next;
 
         static Declarator_node* createDeclaratorNode(char *name);
+        
+        string toDot(string labelConection="");
 };
 
 // ---------- declarator_list ----------
@@ -185,6 +203,9 @@ class Declarator_list_node
 
         static Declarator_list_node* createDeclaratorListNode(Declarator_node *declarator);
         static Declarator_list_node* addToDeclaratorListNode(Declarator_list_node *list, Declarator_node *declarator);
+
+        vector<Declarator_node*>* getElements();
+        string toDot(string labelConection="");
 };
 
 // ---------- parameter_list ----------
@@ -198,6 +219,9 @@ class Parameter_list_node
 
         static Parameter_list_node* createParameterListNode(Parameter_declaration_node *parameter);
         static Parameter_list_node* addToParameterListNode(Parameter_list_node *list, Parameter_declaration_node *parameter);
+
+        vector<Parameter_declaration_node*>* getElements();
+        string toDot(string labelConection="");
 };
 
 // ---------- parameter_declaration ----------
@@ -211,6 +235,8 @@ class Parameter_declaration_node
         Parameter_declaration_node *Next;
 
         static Parameter_declaration_node* createParameterDeclarationNode(Type_node *type, char *name);
+
+        string toDot(string labelConection="");
 };
 
 // -------------------- Выражения --------------------
@@ -268,6 +294,8 @@ class Expression_node
         static Expression_node* createExpressionNodeFromOperator(expression_type type, Expression_node *leftExpression, Expression_node *rightExpression);
         static Expression_node* createExpressionNodeFromMessageExpression(Receiver_node *receiver, Message_selector_node *arguments);
         static Expression_node* createExpressionNodeFromMemberAccessOperator(expression_type type, Expression_node *expression, char *memberName);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- expression_list ----------
@@ -281,6 +309,9 @@ class Expression_list_node
 
         static Expression_list_node* createExpressionListNode(Expression_node *expression);
         static Expression_list_node* addToExpressionListNode(Expression_list_node *list, Expression_node *expression);
+
+        vector<Expression_node*>* getElements();
+        string toDot(string labelConection="");
 };
 
 // ---------- receiver ----------
@@ -304,6 +335,8 @@ class Receiver_node
         static Receiver_node* createReceiverNode(receiver_type type, char *name);
         static Receiver_node* createReceiverNodeFromMessageExpression(Receiver_node *receiver, Message_selector_node *arguments);
 
+        string toDot(string labelConection="");
+
 };
 
 // ---------- message_selector -----------
@@ -318,6 +351,8 @@ class Message_selector_node
         Expression_list_node *ExprArguments;
 
         static Message_selector_node* createMessageSelectorNode(char *methodName, Expression_node *expression, Keyword_argument_list_node *arguments, Expression_list_node *exprArguments);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- keyword_argument_list ----------
@@ -331,6 +366,9 @@ class Keyword_argument_list_node
 
         static Keyword_argument_list_node* createKeywordArgumentListNode(Keyword_argument_node *argument);
         static Keyword_argument_list_node* addToKeywordArgumentListNode(Keyword_argument_list_node *list, Keyword_argument_node *argument);
+
+        vector<Keyword_argument_node*>* getElements();
+        string toDot(string labelConection="");
 };
 
 // ---------- keyword_argument ----------
@@ -350,6 +388,8 @@ class Keyword_argument_node
         Keyword_argument_node *Next;
 
         static Keyword_argument_node* createKeywordArgumentNode(keyword_argument_type type, char *identifier, Expression_node *expression);
+
+        string toDot(string labelConection="");
 };
 
 // -------------------- Операторы --------------------
@@ -376,12 +416,13 @@ class Statement_node
         Expression_node *Expression;
         Statement_node *Statement;
         Declaration_node *Declaration;
-        Class_declaration_list_node *Class_declaration;
         Statement_node *Next;
 
         static Statement_node* createStatementNodeFromSimpleStatement(statement_type type, Expression_node *expression);
         static Statement_node* createStatementNodeFromComplexStatement(statement_type type, Statement_node *statement);
         static Statement_node* createStatementNodeFromDeclaration(Declaration_node *declaration);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- Управляющие структуры: развилки ----------
@@ -403,6 +444,8 @@ class If_statement_node : public Statement_node
         Statement_node *FalseBranch;
 
         static If_statement_node* createIfStatementNode(if_type type, Expression_node *condition, Statement_node *trueBranch, Statement_node *falseBranch);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- Управляющие структуры: циклы ----------
@@ -417,6 +460,8 @@ class While_statement_node : public Statement_node
         Statement_node *LoopBody;
 
         static While_statement_node* createWhileStatementNode(Expression_node *condition, Statement_node *body);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- do_while_statement ----------
@@ -429,6 +474,8 @@ class Do_while_statement_node : public Statement_node
         Statement_node *LoopBody;
 
         static Do_while_statement_node* createDoWhileStatementNode(Expression_node *condition, Statement_node *body);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- for_statement ----------
@@ -453,6 +500,8 @@ class For_statement_node : public Statement_node
 
         static For_statement_node* createForStatementNode(Expression_node *initExpression, Expression_node *condition, Expression_node *loopExpression, Statement_node *body);
         static For_statement_node* createForStatementNodeFromForeach(for_type type, Type_node *varType, char *loopVar, Expression_node *expression, Statement_node *body);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- compound_statement ----------
@@ -464,6 +513,8 @@ class Compound_statement_node : public Statement_node
         Statement_list_node *Statements;
 
         static Compound_statement_node* createCompoundStatementNode(Statement_list_node *statements);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- statement_list ----------
@@ -477,6 +528,9 @@ class Statement_list_node
 
         static Statement_list_node* createStatementListNode(Statement_node *statement);
         static Statement_list_node* addToStatementListNode(Statement_list_node *list, Statement_node *statement);
+
+        vector<Statement_node*>* getElements();
+        string toDot(string labelConection="");
 };
 
 // ---------- class_block ----------
@@ -498,7 +552,9 @@ class Class_block_node {
         Class_block_node *Next;
 
         static Class_block_node* createClassBlockNodeFromInterface(Class_interface_node *interface);
-        static Class_block_node* createClassBlockNodeFromImplementation(Class_implementation_node *implementation);     
+        static Class_block_node* createClassBlockNodeFromImplementation(Class_implementation_node *implementation); 
+
+        string toDot(string labelConection="");    
 };
 
 
@@ -515,6 +571,8 @@ class Class_interface_node : public Class_block_node
         Interface_body_node *Body;
 
         static Class_interface_node* createClassInterfaceNode(char *className, char *superclassName, Interface_body_node *body);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- interface_body ----------
@@ -527,6 +585,8 @@ class Interface_body_node
         Interface_declaration_list_node *Declaration_list;
 
         static Interface_body_node* createInterfaceBodyNode(Instance_variables_node *variables, Interface_declaration_list_node *declarationList);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- implementation_body ----------
@@ -539,6 +599,8 @@ class Implementation_body_node
         Implementation_definition_list_node *Declaration_list;
 
         static Implementation_body_node* createImplementationBodyNode(Instance_variables_node *variables, Implementation_definition_list_node *definitionList);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- class_implementation ----------
@@ -552,6 +614,8 @@ class Class_implementation_node : public Class_block_node
         Implementation_body_node *Body;
 
         static Class_implementation_node* createClassImplementationNode(char *className, char *superclassName, Implementation_body_node *body);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- class_declaration_list и class_list ----------
@@ -564,16 +628,20 @@ class Class_declaration_list_node
         Class_declaration_list_node *Next;
 
         static Class_declaration_list_node* createClassDeclarationListNode(Class_list_node *list);
+
+        string toDot(string labelConection="");
 };
 
 class Class_list_node
 {
     public:
         int id;
-    std::vector<char*> *Class_names;
+        std::vector<char*> *Class_names;
 
     static Class_list_node* createClassListNode(char *className);
     static Class_list_node* addToClassListNode(Class_list_node *list, char *className);
+
+    string toDot(string labelConection="");
 };
 
 // ---------- instance_variables ----------
@@ -585,6 +653,8 @@ class Instance_variables_node
         Instance_variables_declaration_list_node *DeclarationList;
 
         static Instance_variables_node* createInstanceVariablesNode(Instance_variables_declaration_list_node *declarationList);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- instance_variables_declaration --------
@@ -598,6 +668,8 @@ class Instance_variables_declaration_node
         Instance_variables_declaration_node *Next;
 
         static Instance_variables_declaration_node* createInstanceVariablesDeclarationNode(Type_node *type, Declarator_list_node *declaratorList);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- instance_variables_declaration_list ----------
@@ -611,6 +683,9 @@ class Instance_variables_declaration_list_node
 
         static Instance_variables_declaration_list_node* createInstanceVariablesDeclarationListNode(Instance_variables_declaration_node *declaration);
         static Instance_variables_declaration_list_node* addToInstanceVariablesDeclarationListNode(Instance_variables_declaration_list_node *list, Instance_variables_declaration_node *declaration);
+
+        vector<Instance_variables_declaration_node*>* getElements();
+        string toDot(string labelConection="");
 };
 
 // ---------- interface_declaration_list ----------
@@ -619,11 +694,12 @@ class Interface_declaration_list_node
 {
     public:
         int id;
-        union interface_declaration {
+        struct interface_declaration {
             Declaration_node *declaration;
             Property_node *property;
             Method_declaration_node *method_declaration;
-        } *First, *Last;
+        };
+        vector<interface_declaration*> *Declarations;
 
         static Interface_declaration_list_node* createInterfaceDeclarationListNodeFromDeclaration(Declaration_node *interfaceDeclaration);
         static Interface_declaration_list_node* createInterfaceDeclarationListNodeFromProperty(Property_node *interfaceDeclaration);
@@ -631,6 +707,8 @@ class Interface_declaration_list_node
         static Interface_declaration_list_node* addDeclarationToInterfaceDeclarationListNode(Interface_declaration_list_node *list, Declaration_node *interfaceDeclaration);
         static Interface_declaration_list_node* addPropertyToInterfaceDeclarationListNode(Interface_declaration_list_node *list, Property_node *interfaceDeclaration);
         static Interface_declaration_list_node* addMethodDeclarationToInterfaceDeclarationListNode(Interface_declaration_list_node *list, Method_declaration_node *interfaceDeclaration);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- method_declaration, class_method_declaration, instance_method_declaration ----------
@@ -650,6 +728,8 @@ class Method_declaration_node
         Method_declaration_node *Next;
 
         static Method_declaration_node* createMethodDeclarationNode(method_declaration_type type, Type_node *methodType, Method_selector_node *selector);
+
+        string toDot(string labelConection="");
 };
 
 
@@ -659,11 +739,12 @@ class Implementation_definition_list_node
 {
     public:
         int id;
-        union interface_declaration {
+        struct implementation_definition {
             Declaration_node *declaration;
             Method_definition_node *method_definition;
             Synthesize_node *synthesize;
-        } *First, *Last;
+        };
+        vector<implementation_definition*> *Definitions;
 
         static Implementation_definition_list_node* createImplementationDefinitionListNodeFromDeclaration(Declaration_node *implementationDefinition);
         static Implementation_definition_list_node* createImplementationDefinitionListNodeFromMethodDeclaration(Method_definition_node *implementationDefinition);
@@ -671,6 +752,8 @@ class Implementation_definition_list_node
         static Implementation_definition_list_node* addDeclarationToImplementationDefinitionListNode(Implementation_definition_list_node *list, Declaration_node *implementationDefinition);
         static Implementation_definition_list_node* addMethodDeclarationToImplementationDefinitionListNode(Implementation_definition_list_node *list, Method_definition_node *implementationDefinition);
         static Implementation_definition_list_node* addSynthesizeToImplementationDefinitionListNode(Implementation_definition_list_node *list, Synthesize_node *implementationDefinition);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- method_definition, class_method_definition, instance_method_definition ----------
@@ -692,6 +775,8 @@ class Method_definition_node
         Method_definition_node *Next;
 
         static Method_definition_node* createMethodDefinitionNode(method_definition_type type, Type_node *methodType, Method_selector_node *selector, Declaration_list_node *declarationList, Compound_statement_node *methodBody);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- method_selector ----------
@@ -706,6 +791,8 @@ class Method_selector_node
         Keyword_declaration_node *KeywordDeclaration;
 
         static Method_selector_node* createMethodSelectorNode(char *methodName, Keyword_declaration_node *keywordDeclaration, Keyword_selector_node *selector, Parameter_list_node *parameters);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- keyword_selector ----------
@@ -719,6 +806,9 @@ class Keyword_selector_node
 
         static Keyword_selector_node* createKeywordSelectorNode(Keyword_declaration_node *declaration);
         static Keyword_selector_node* addToKeywordSelectorNode(Keyword_selector_node *list, Keyword_declaration_node *declaration);
+
+        vector<Keyword_declaration_node*>* getElements();
+        string toDot(string labelConection="");
 };
 
 // ---------- keyword_declaration ----------
@@ -733,6 +823,8 @@ class Keyword_declaration_node
         Keyword_declaration_node *Next;
 
         static Keyword_declaration_node* createKeywordDeclarationNode(Type_node *type, char *identifier, char *keywordName);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- property ----------
@@ -747,6 +839,8 @@ class Property_node
         Property_node *Next;
 
         static Property_node* createPropertyNode(Attribute_node *attribute, Type_node *type, char *name);
+
+        string toDot(string labelConection="");
 };
 
 // ----------- attribute ----------
@@ -763,6 +857,8 @@ class Attribute_node
         enum attrribute_type type;
 
         static Attribute_node* createAttributeNode(attrribute_type type);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- synthesize ----------
@@ -775,6 +871,8 @@ class Synthesize_node
         Synthesize_node *Next;
 
         static Synthesize_node* createSynthesizeNode(char *name);
+
+        string toDot(string labelConection="");
 };
 
 
@@ -787,6 +885,8 @@ class Program_node
         Function_and_class_list_node *list;
 
         static Program_node* createProgramNode(Function_and_class_list_node *list);
+        
+        string toDot();
 };
 
 // ---------- function_and_class_list ----------
@@ -795,11 +895,13 @@ class Function_and_class_list_node
 {
     public:
         int id;
-        union function_and_class {
+        struct function_and_class {
             Function_node *function;
             Class_block_node *class_block;
             Class_declaration_list_node *class_declaration_list;
-        } *First, *Last;
+        };
+
+        vector<function_and_class*> *FunctionsAndClasses;
 
         static Function_and_class_list_node* createFunctionAndClassListNodeFromClassBlock(Class_block_node *classBlock);
         static Function_and_class_list_node* createFunctionAndClassListNodeFromFunction(Function_node *function);
@@ -807,6 +909,8 @@ class Function_and_class_list_node
         static Function_and_class_list_node* addToFunctionAndClassListNodeFromClassBlock(Function_and_class_list_node *list, Class_block_node *classBlock);
         static Function_and_class_list_node* addToFunctionAndClassListNodeFromFunction(Function_and_class_list_node *list, Function_node *functionList);
         static Function_and_class_list_node* addToFunctionAndClassListNodeFromClassDeclarationList(Function_and_class_list_node *list, Class_declaration_list_node *classDeclarationList);
+
+        string toDot();
 };
 
 // ---------- function ----------
@@ -821,4 +925,6 @@ class Function_node
         Function_node *Next;
 
         static Function_node* createFunctionNode(Type_node *type, char *name, Compound_statement_node *statement);
+        
+        string toDot(string labelConection="");
 };

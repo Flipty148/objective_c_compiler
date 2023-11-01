@@ -21,9 +21,9 @@ Function_and_class_list_node* Function_and_class_list_node::createFunctionAndCla
     Function_and_class_list_node *res = new Function_and_class_list_node;
     res->id = maxId++;
     res->FunctionsAndClasses = new vector<function_and_class*>;
-    function_and_class *functionAndClass;
-    functionAndClass->function = functionList;
-    res->FunctionsAndClasses->push_back(functionAndClass);
+    function_and_class functionAndClass;
+    functionAndClass.function = functionList;
+    res->FunctionsAndClasses->push_back(&functionAndClass);
     return res;
 }
 
@@ -32,9 +32,9 @@ Function_and_class_list_node* Function_and_class_list_node::createFunctionAndCla
     Function_and_class_list_node *res = new Function_and_class_list_node;
     res->id = maxId++;
     res->FunctionsAndClasses = new vector<function_and_class*>;
-    function_and_class *functionAndClass;
-    functionAndClass->class_declaration_list = classDeclarationList;
-    res->FunctionsAndClasses->push_back(functionAndClass);
+    function_and_class functionAndClass;
+    functionAndClass.class_declaration_list = classDeclarationList;
+    res->FunctionsAndClasses->push_back(&functionAndClass);
 
     return res;
 }
@@ -44,33 +44,33 @@ Function_and_class_list_node* Function_and_class_list_node::createFunctionAndCla
     Function_and_class_list_node *res = new Function_and_class_list_node;
     res->id = maxId++;
     res->FunctionsAndClasses = new vector<function_and_class*>;
-    function_and_class *functionAndClass;
-    functionAndClass->class_block = classBlock;
-    res->FunctionsAndClasses->push_back(functionAndClass);
+    function_and_class functionAndClass;
+    functionAndClass.class_block = classBlock;
+    res->FunctionsAndClasses->push_back(&functionAndClass);
     return res;
 }
 
 Function_and_class_list_node* Function_and_class_list_node::addToFunctionAndClassListNodeFromFunction(Function_and_class_list_node *list, Function_node *function)
 {
-    function_and_class *functionAndClass;
-    functionAndClass->function = function;
-    list->FunctionsAndClasses->push_back(functionAndClass);
+    function_and_class functionAndClass;
+    functionAndClass.function = function;
+    list->FunctionsAndClasses->push_back(&functionAndClass);
     return list;
 }
 
 Function_and_class_list_node* Function_and_class_list_node::addToFunctionAndClassListNodeFromClassDeclarationList(Function_and_class_list_node *list, Class_declaration_list_node *classDeclarationList)
 {
-    function_and_class *functionAndClass;
-    functionAndClass->class_declaration_list = classDeclarationList;
-    list->FunctionsAndClasses->push_back(functionAndClass);
+    function_and_class functionAndClass;
+    functionAndClass.class_declaration_list = classDeclarationList;
+    list->FunctionsAndClasses->push_back(&functionAndClass);
     return list;
 }
 
 Function_and_class_list_node* Function_and_class_list_node::addToFunctionAndClassListNodeFromClassBlock(Function_and_class_list_node *list, Class_block_node *classStatement)
 {
-    function_and_class *functionAndClass;
-    functionAndClass->class_block = classStatement;
-    list->FunctionsAndClasses->push_back(functionAndClass);
+    function_and_class functionAndClass;
+    functionAndClass.class_block = classStatement;
+    list->FunctionsAndClasses->push_back(&functionAndClass);
     return list;
 }
 
@@ -733,9 +733,9 @@ Interface_declaration_list_node* Interface_declaration_list_node::createInterfac
     Interface_declaration_list_node *res = new Interface_declaration_list_node;
     res->id = maxId++;
     res->Declarations = new vector<interface_declaration*>;
-    interface_declaration *Declaration;
-    Declaration->declaration = interfaceDeclaration;
-    res->Declarations->push_back(Declaration);
+    interface_declaration Declaration;
+    Declaration.declaration = interfaceDeclaration;
+    res->Declarations->push_back(&Declaration);
     return res;
 }
 
@@ -744,9 +744,9 @@ Interface_declaration_list_node* Interface_declaration_list_node::createInterfac
     Interface_declaration_list_node *res = new Interface_declaration_list_node;
     res->id = maxId++;
     res->Declarations = new vector<interface_declaration*>;
-    interface_declaration *Declaration;
-    Declaration->property = interfaceDeclaration;
-    res->Declarations->push_back(Declaration);
+    interface_declaration Declaration;
+    Declaration.property = interfaceDeclaration;
+    res->Declarations->push_back(&Declaration);
     return res;
 }
 
@@ -755,33 +755,33 @@ Interface_declaration_list_node* Interface_declaration_list_node::createInterfac
     Interface_declaration_list_node *res = new Interface_declaration_list_node;
     res->id = maxId++;
     res->Declarations = new vector<interface_declaration*>;
-    interface_declaration *Declaration;
-    Declaration->method_declaration = interfaceDeclaration;
-    res->Declarations->push_back(Declaration);
+    interface_declaration Declaration;
+    Declaration.method_declaration = interfaceDeclaration;
+    res->Declarations->push_back(&Declaration);
     return res;
 }
 
 Interface_declaration_list_node* Interface_declaration_list_node::addDeclarationToInterfaceDeclarationListNode(Interface_declaration_list_node *list, Declaration_node *interfaceDeclaration)
 {
-    interface_declaration *Declaration;
-    Declaration->declaration = interfaceDeclaration;
-    list->Declarations->push_back(Declaration);
+    interface_declaration Declaration;
+    Declaration.declaration = interfaceDeclaration;
+    list->Declarations->push_back(&Declaration);
     return list;
 }
 
 Interface_declaration_list_node* Interface_declaration_list_node::addPropertyToInterfaceDeclarationListNode(Interface_declaration_list_node *list, Property_node *interfaceDeclaration)
 {
-    interface_declaration *Declaration;
-    Declaration->property = interfaceDeclaration;
-    list->Declarations->push_back(Declaration);
+    interface_declaration Declaration;
+    Declaration.property = interfaceDeclaration;
+    list->Declarations->push_back(&Declaration);
     return list;
 }
 
 Interface_declaration_list_node* Interface_declaration_list_node::addMethodDeclarationToInterfaceDeclarationListNode(Interface_declaration_list_node *list, Method_declaration_node *interfaceDeclaration)
 {
-    interface_declaration *Declaration;
-    Declaration->method_declaration = interfaceDeclaration;
-    list->Declarations->push_back(Declaration);
+    interface_declaration Declaration;
+    Declaration.method_declaration = interfaceDeclaration;
+    list->Declarations->push_back(&Declaration);
     return list;
 }
 
@@ -804,9 +804,9 @@ Implementation_definition_list_node* Implementation_definition_list_node::create
     Implementation_definition_list_node *res = new Implementation_definition_list_node;
     res->id = maxId++;
     res->Definitions = new vector<implementation_definition*>;
-    implementation_definition *Definition;
-    Definition->declaration = implementationDefinition;
-    res->Definitions->push_back(Definition);
+    implementation_definition Definition;
+    Definition.declaration = implementationDefinition;
+    res->Definitions->push_back(&Definition);
     return res;
 }
 
@@ -815,9 +815,9 @@ Implementation_definition_list_node* Implementation_definition_list_node::create
     Implementation_definition_list_node *res = new Implementation_definition_list_node;
     res->id = maxId++;
     res->Definitions = new vector<implementation_definition*>;
-    implementation_definition *Definition;
-    Definition->method_definition = implementationDefinition;
-    res->Definitions->push_back(Definition);
+    implementation_definition Definition;
+    Definition.method_definition = implementationDefinition;
+    res->Definitions->push_back(&Definition);
     return res;
 }
 
@@ -826,33 +826,33 @@ Implementation_definition_list_node* Implementation_definition_list_node::create
     Implementation_definition_list_node *res = new Implementation_definition_list_node;
     res->id = maxId++;
     res->Definitions = new vector<implementation_definition*>;
-    implementation_definition *Definition;
-    Definition->synthesize = implementationDefinition;
-    res->Definitions->push_back(Definition);
+    implementation_definition Definition;
+    Definition.synthesize = implementationDefinition;
+    res->Definitions->push_back(&Definition);
     return res;
 }
 
 Implementation_definition_list_node* Implementation_definition_list_node::addDeclarationToImplementationDefinitionListNode(Implementation_definition_list_node *list, Declaration_node *implementationDefinition)
 {
-    implementation_definition *Definition;
-    Definition->declaration = implementationDefinition;
-    list->Definitions->push_back(Definition);
+    implementation_definition Definition;
+    Definition.declaration = implementationDefinition;
+    list->Definitions->push_back(&Definition);
     return list;
 }
 
 Implementation_definition_list_node* Implementation_definition_list_node::addMethodDeclarationToImplementationDefinitionListNode(Implementation_definition_list_node *list, Method_definition_node *implementationDefinition)
 {
-    implementation_definition *Definition;
-    Definition->method_definition = implementationDefinition;
-    list->Definitions->push_back(Definition);
+    implementation_definition Definition;
+    Definition.method_definition = implementationDefinition;
+    list->Definitions->push_back(&Definition);
     return list;
 }
 
 Implementation_definition_list_node* Implementation_definition_list_node::addSynthesizeToImplementationDefinitionListNode(Implementation_definition_list_node *list, Synthesize_node *implementationDefinition)
 {
-    implementation_definition *Definition;
-    Definition->synthesize = implementationDefinition;
-    list->Definitions->push_back(Definition);
+    implementation_definition Definition;
+    Definition.synthesize = implementationDefinition;
+    list->Definitions->push_back(&Definition);
     return list;
 }
 
@@ -956,7 +956,7 @@ Synthesize_node* Synthesize_node::createSynthesizeNode(char *name)
 
 // ---------- Type_node ----------
 
-string Type_node::toDot(string labelConection="")
+string Type_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection != "")
@@ -1042,7 +1042,7 @@ string Literal_node::toDot()
 
 // ---------- Declaration_node ----------
 
-string Declaration_node::toDot(string labelConection="")
+string Declaration_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1072,7 +1072,7 @@ vector<Declaration_node*>* Declaration_list_node::getElements()
     return res;
 }
 
-string Declaration_list_node::toDot(string labelConection="")
+string Declaration_list_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1121,7 +1121,7 @@ string Init_declarator_list_node::toDot()
 
 // ---------- Init_declarator_node ----------
 
-string Init_declarator_node::toDot(string labelConection="")
+string Init_declarator_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection != "")
@@ -1140,7 +1140,7 @@ string Init_declarator_node::toDot(string labelConection="")
 
 // ---------- Declarator_node ----------
 
-string Declarator_node::toDot(string labelConection="")
+string Declarator_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1167,7 +1167,7 @@ vector<Declarator_node*>* Declarator_list_node::getElements()
     return res;
 }
 
-string Declarator_list_node::toDot(string labelConection="")
+string Declarator_list_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id); 
     if (labelConection!= "")
@@ -1199,7 +1199,7 @@ vector<Parameter_declaration_node*>* Parameter_list_node::getElements()
     return res;
 }
 
-string Parameter_list_node::toDot(string labelConection="")
+string Parameter_list_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1218,7 +1218,7 @@ string Parameter_list_node::toDot(string labelConection="")
 
 // ---------- Parameter_declaration_node ----------
 
-string Parameter_declaration_node::toDot(string labelConection="")
+string Parameter_declaration_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1236,7 +1236,7 @@ string Parameter_declaration_node::toDot(string labelConection="")
 
 // ---------- Expression_node ----------
 
-string Expression_node::toDot(string labelConection="")
+string Expression_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1409,7 +1409,7 @@ vector<Expression_node*>* Expression_list_node::getElements()
     return res;
 }
 
-string Expression_list_node::toDot(string labelConection = "")
+string Expression_list_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id); 
     if (labelConection!= "")
@@ -1428,7 +1428,7 @@ string Expression_list_node::toDot(string labelConection = "")
 
 // ---------- Receiver_node ----------
 
-string Receiver_node::toDot(string labelConection="")
+string Receiver_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1457,7 +1457,7 @@ string Receiver_node::toDot(string labelConection="")
 
 // ---------- Message_selector_node ----------
 
-string Message_selector_node::toDot(string labelConection="")
+string Message_selector_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1481,6 +1481,8 @@ string Message_selector_node::toDot(string labelConection="")
         res += to_string(id);
         res += ExprArguments->toDot("expr_arguments");
     }
+
+    return res;
 }
 
 // ---------- Keyword_argument_list_node ----------
@@ -1498,7 +1500,7 @@ vector<Keyword_argument_node*>* Keyword_argument_list_node::getElements()
     return res;
 }
 
-string Keyword_argument_list_node::toDot(string labelConection = "")
+string Keyword_argument_list_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1517,7 +1519,7 @@ string Keyword_argument_list_node::toDot(string labelConection = "")
 
 // ---------- Keyword_argument_node ----------
 
-string Keyword_argument_node::toDot(string labelConection = "")
+string Keyword_argument_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1540,7 +1542,7 @@ string Keyword_argument_node::toDot(string labelConection = "")
 
 // ---------- Statement_node ----------
 
-string Statement_node::toDot(string labelConection = "")
+string Statement_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1606,7 +1608,7 @@ string Statement_node::toDot(string labelConection = "")
 
 // ----------- If_statement_node ----------
 
-string If_statement_node::toDot(string labelConection = "")
+string If_statement_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1630,7 +1632,7 @@ string If_statement_node::toDot(string labelConection = "")
 
 // ----------- While_statement_node ----------
 
-string While_statement_node::toDot(string labelConection = "")
+string While_statement_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1649,7 +1651,7 @@ string While_statement_node::toDot(string labelConection = "")
 
 // ---------- Do_while_statement_node ----------
 
-string Do_while_statement_node::toDot(string labelConection = "")
+string Do_while_statement_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1668,7 +1670,7 @@ string Do_while_statement_node::toDot(string labelConection = "")
 
 // ---------- For_statement_node ----------
 
-string For_statement_node::toDot(string labelConection = "")
+string For_statement_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1727,7 +1729,7 @@ string For_statement_node::toDot(string labelConection = "")
 
 // ----------- Compound_statement_node ----------
 
-string Compound_statement_node::toDot(string labelConection = "")
+string Compound_statement_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1759,7 +1761,7 @@ vector<Statement_node*>* Statement_list_node::getElements()
     return res;
 }
 
-string Statement_list_node::toDot(string labelConection = "")
+string Statement_list_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1779,7 +1781,7 @@ string Statement_list_node::toDot(string labelConection = "")
 
 // ---------- Class_block_node ----------
 
-string Class_block_node::toDot(string labelConection = "")
+string Class_block_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1800,7 +1802,7 @@ string Class_block_node::toDot(string labelConection = "")
 
 // ---------- Class_interface_node ----------
 
-string Class_interface_node::toDot(string labelConection = "")
+string Class_interface_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1825,7 +1827,7 @@ string Class_interface_node::toDot(string labelConection = "")
 
 // ---------- Interface_body_node ----------
 
-string Interface_body_node::toDot(string labelConection = "")
+string Interface_body_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1847,7 +1849,7 @@ string Interface_body_node::toDot(string labelConection = "")
 
 // ---------- Implementation_body_node ----------
 
-string Implementation_body_node::toDot(string labelConection = "")
+string Implementation_body_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1869,7 +1871,7 @@ string Implementation_body_node::toDot(string labelConection = "")
 
 // ---------- Class_implementation_node ----------
 
-string Class_implementation_node::toDot(string labelConection = "")
+string Class_implementation_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1893,7 +1895,7 @@ string Class_implementation_node::toDot(string labelConection = "")
 
 // ---------- Class_declaration_list_node ----------
 
-string Class_declaration_list_node::toDot(string labelConection = "")
+string Class_declaration_list_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1909,7 +1911,7 @@ string Class_declaration_list_node::toDot(string labelConection = "")
 
 // ---------- Class_list_node ----------
 
-string Class_list_node::toDot(string labelConection = "")
+string Class_list_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1928,7 +1930,7 @@ string Class_list_node::toDot(string labelConection = "")
 
 // ---------- Instance_variables_node ----------
 
-string Instance_variables_node::toDot(string labelConection = "")
+string Instance_variables_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1944,7 +1946,7 @@ string Instance_variables_node::toDot(string labelConection = "")
 
 // ---------- Instance_variables_declaration_node ----------
 
-string Instance_variables_declaration_node::toDot(string labelConection = "")
+string Instance_variables_declaration_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1976,7 +1978,7 @@ vector<Instance_variables_declaration_node*>* Instance_variables_declaration_lis
     return res;
 }
 
-string Instance_variables_declaration_list_node::toDot(string labelConection = "")
+string Instance_variables_declaration_list_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -1996,7 +1998,7 @@ string Instance_variables_declaration_list_node::toDot(string labelConection = "
 
 // ---------- Interface_declaration_list_node ----------
 
-string Interface_declaration_list_node::toDot(string labelConection = "")
+string Interface_declaration_list_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -2020,7 +2022,7 @@ string Interface_declaration_list_node::toDot(string labelConection = "")
 
 // ---------- Method_declaration_node ----------
 
-string Method_declaration_node::toDot(string labelConection = "")
+string Method_declaration_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -2040,11 +2042,13 @@ string Method_declaration_node::toDot(string labelConection = "")
 
     res += to_string(id);
     res += MethodSelector->toDot("selector");
+
+    return res;
 }
 
 // ---------- Implementation_definition_list_node ----------
 
-string Implementation_definition_list_node::toDot(string labelConection = "")
+string Implementation_definition_list_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -2068,7 +2072,7 @@ string Implementation_definition_list_node::toDot(string labelConection = "")
 
 // ---------- Method_definition_node ----------
 
-string Method_definition_node::toDot(string labelConection = "")
+string Method_definition_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -2103,7 +2107,7 @@ string Method_definition_node::toDot(string labelConection = "")
 
 // ---------- Method_selector_node ----------
 
-string Method_selector_node::toDot(string labelConection = "")
+string Method_selector_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -2150,7 +2154,7 @@ vector<Keyword_declaration_node*>* Keyword_selector_node::getElements()
     return res;
 }
 
-string Keyword_selector_node::toDot(string labelConection = "")
+string Keyword_selector_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -2169,7 +2173,7 @@ string Keyword_selector_node::toDot(string labelConection = "")
 
 // ---------- Keyword_declaration_node ----------
 
-string Keyword_declaration_node::toDot(string labelConection = "")
+string Keyword_declaration_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -2197,7 +2201,7 @@ string Keyword_declaration_node::toDot(string labelConection = "")
 
 // ---------- Property_node ----------
 
-string Property_node::toDot(string labelConection = "")
+string Property_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -2222,7 +2226,7 @@ string Property_node::toDot(string labelConection = "")
 
 // ---------- Attribute_node ----------
 
-string Attribute_node::toDot(string labelConection = "")
+string Attribute_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -2243,7 +2247,7 @@ string Attribute_node::toDot(string labelConection = "")
 
 // ---------- Synthesize_node ----------
 
-string Synthesize_node::toDot(string labelConection = "")
+string Synthesize_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
@@ -2295,7 +2299,7 @@ string Function_and_class_list_node::toDot()
 
 // ---------- Function_node ----------
 
-string Function_node::toDot(string labelConection = "")
+string Function_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")

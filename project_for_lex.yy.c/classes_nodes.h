@@ -33,6 +33,7 @@ class Function_node;
 class Declarator_node;
 class Instance_variables_declaration_list_node;
 class Synthesize_node;
+class Expression_list_node;
 
 
 // -------------------- Типы --------------------
@@ -79,7 +80,7 @@ class Numeric_constant_node
         {
             int Int;
             float Float;
-        } *number;
+        } number;
 
         static Numeric_constant_node* createNumericConstantNodeFromInteger(int number);
         static Numeric_constant_node* createNumericConstantNodeFromFloat(float number);
@@ -251,6 +252,7 @@ enum expression_type
     PRIORITY_EXPRESSION_TYPE,
     SELF_EXPRESSION_TYPE,
     MESSAGE_EXPRESSION_EXPRESSION_TYPE,
+    FUNCTION_CALL_EXPRESSION_TYPE,
     UMINUS_EXPRESSION_TYPE,
     UPLUS_EXPRESSION_TYPE,
     UAMPERSAND_EXPRESSION_TYPE,
@@ -279,12 +281,13 @@ class Expression_node
         {
             Numeric_constant_node *num;
             Literal_node *literal;
-        } *constant;
+        } constant;
         Expression_node *Left;
         Expression_node *Right;
         Receiver_node *Receiver;
         Message_selector_node *Arguments;
         Expression_node *Next;
+        Expression_list_node *ArgumentsList;
 
         static Expression_node* createExpressionNodeFromIdentifier(char *name);
         static Expression_node* createExpressionNodeFromLiteral(Literal_node *value);
@@ -293,6 +296,7 @@ class Expression_node
         static Expression_node* createExpressionNodeFromSelf();
         static Expression_node* createExpressionNodeFromOperator(expression_type type, Expression_node *leftExpression, Expression_node *rightExpression);
         static Expression_node* createExpressionNodeFromMessageExpression(Receiver_node *receiver, Message_selector_node *arguments);
+        static Expression_node* createExpressionNodeFromFunctionCall(char *name, Expression_list_node *argumentsList);
         static Expression_node* createExpressionNodeFromMemberAccessOperator(expression_type type, Expression_node *expression, char *memberName);
 
         string toDot(string labelConection="");
@@ -319,6 +323,7 @@ enum receiver_type {
     SUPER_RECEIVER_TYPE,
     SELF_RECEIVER_TYPE,
     OBJECT_NAME_RECEIVER_TYPE,
+    CLASS_NAME_RECEIVER_TYPE,
     MESSAGE_EXPRESSION_RECEIVER_TYPE
 };
 
@@ -482,6 +487,7 @@ class Do_while_statement_node : public Statement_node
 
 enum for_type {
     FOR_FOR_TYPE,
+    FOR_WITH_DECLARATION_FOR_TYPE,
     FOREACH_FOR_TYPE,
     FOREACH_WITH_DECLARATION_FOR_TYPE
 };
@@ -499,6 +505,7 @@ class For_statement_node : public Statement_node
         Type_node *NameType;
 
         static For_statement_node* createForStatementNode(Expression_node *initExpression, Expression_node *condition, Expression_node *loopExpression, Statement_node *body);
+        static For_statement_node* createForStatementNodeFromForWithDeclaration(Type_node *varType, char *loopVar, Expression_node *initExpression, Expression_node *condition, Expression_node *loopExpression, Statement_node *body);
         static For_statement_node* createForStatementNodeFromForeach(for_type type, Type_node *varType, char *loopVar, Expression_node *expression, Statement_node *body);
 
         string toDot(string labelConection="");
@@ -548,7 +555,7 @@ class Class_block_node {
         {
             Class_interface_node *Interface;
             Class_implementation_node *Implementation;
-        } *statement; 
+        } statement; 
         Class_block_node *Next;
 
         static Class_block_node* createClassBlockNodeFromInterface(Class_interface_node *interface);

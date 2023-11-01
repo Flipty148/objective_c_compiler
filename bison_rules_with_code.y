@@ -70,7 +70,7 @@
 %left '*' '/'
 %right UMINUS UPLUS UAMPERSAND
 %left '.' ARROW
-%nonassoc '(' ')' '[' ']'
+%nonassoc '(' ')'
 
 //---------- Терминальные символы ----------
 %token <Type> INT 
@@ -106,7 +106,7 @@
 %type <Parameter_list> parameter_list
 %type <Parameter_declaration> parameter_declaration
 %type <Expression> expression expression_e
-%type <Expression_list> expression_list
+%type <Expression_list> expression_list expression_list_e
 %type <Receiver> receiver
 %type <Message_selector> message_selector
 %type <Keyword_argument_list> keyword_argument_list keyword_argument_list_e
@@ -120,8 +120,8 @@
 %type <Statement_list> statement_list_e statement_list
 %type <Class_block> class_block
 %type <Class_interface> class_interface
-%type <Interface_body> interface_body
-%type <Implementation_body> implementation_body
+%type <Interface_body> interface_body interface_body_e
+%type <Implementation_body> implementation_body implementation_body_e
 %type <Class_implementation> class_implementation
 %type <Class_declaration_list> class_declaration_list 
 %type <Class_list> class_list
@@ -164,6 +164,7 @@ function_and_class_list: class_block									{$$ = Function_and_class_list_node:
 
 function: type IDENTIFIER '(' ')' compound_statement /*Заглушка, тут должно быть определение функции*/ {$$ = Function_node::createFunctionNode($1, $2, $5);}
 		;
+		
 // ---------- Типы ----------
 type: INT				{$$ = Type_node::createTypeNode(INT_TYPE);}
     | CHAR				{$$ = Type_node::createTypeNode(CHAR_TYPE);}
@@ -247,6 +248,7 @@ expression: IDENTIFIER							{$$ = Expression_node::createExpressionNodeFromIden
 		  | '(' expression ')'					{$$ = Expression_node::createExpressionNodeFromSimpleExpression(PRIORITY_EXPRESSION_TYPE, $2);}
 		  | SELF								{$$ = Expression_node::createExpressionNodeFromSelf();}
 		  | '[' receiver message_selector ']'	{$$ = Expression_node::createExpressionNodeFromMessageExpression($2, $3);}
+		  | IDENTIFIER '(' expression_list_e ')' {$$ = Expression_node::createExpressionNodeFromFunctionCall($1, $3);}
 		  | '-' expression %prec UMINUS			{$$ = Expression_node::createExpressionNodeFromOperator(UMINUS_EXPRESSION_TYPE, NULL, $2);}
 		  | '+' expression %prec UPLUS			{$$ = Expression_node::createExpressionNodeFromOperator(UPLUS_EXPRESSION_TYPE, NULL, $2);}
 		  | '&' expression %prec UAMPERSAND		{$$ = Expression_node::createExpressionNodeFromOperator(UAMPERSAND_EXPRESSION_TYPE, NULL, $2);}
@@ -269,6 +271,10 @@ expression_e: /*empty*/		{$$ = NULL;}
 			| expression	{$$ = $1;}
 			;
 
+expression_list_e: /*empty*/		{$$ = NULL;}
+				 | expression_list	{$$ = $1;}
+				 ;
+
 expression_list: expression							{$$ = Expression_list_node::createExpressionListNode($1);}
 			   | expression_list ',' expression		{$$ = Expression_list_node::addToExpressionListNode($1, $3);}
 			   ;
@@ -276,6 +282,7 @@ expression_list: expression							{$$ = Expression_list_node::createExpressionLi
 receiver: SUPER								{$$ = Receiver_node::createReceiverNode(SUPER_RECEIVER_TYPE, NULL);}
 		| SELF								{$$ = Receiver_node::createReceiverNode(SELF_RECEIVER_TYPE, NULL);}
 		| IDENTIFIER						{$$ = Receiver_node::createReceiverNode(OBJECT_NAME_RECEIVER_TYPE, $1);}
+		| CLASS_NAME						{$$ = Receiver_node::createReceiverNode(CLASS_NAME_RECEIVER_TYPE, $1);}
 		| '[' receiver message_selector ']'	{$$ = Receiver_node::createReceiverNodeFromMessageExpression($2, $3);}
 		;
 
@@ -308,9 +315,10 @@ while_statement: WHILE '(' expression ')' statement		{$$  = While_statement_node
 do_while_statement: DO statement WHILE '(' expression ')' ';'	{$$ = Do_while_statement_node::createDoWhileStatementNode($5, $2);}
 				  ;
 
-for_statement: FOR '(' expression_e ';' expression_e ';' expression_e ')' statement		{$$ = For_statement_node::createForStatementNode($3, $5, $7, $9);}
-			 | FOR '(' IDENTIFIER IN expression ')' statement							{$$ = For_statement_node::createForStatementNodeFromForeach(FOREACH_FOR_TYPE, NULL, $3, $5, $7);}
-			 | FOR '(' CLASS_NAME '*' IDENTIFIER IN expression ')' statement			{$$ = For_statement_node::createForStatementNodeFromForeach(FOREACH_WITH_DECLARATION_FOR_TYPE, Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $3), $5, $7, $9);}
+for_statement: FOR '(' expression_e ';' expression_e ';' expression_e ')' statement						{$$ = For_statement_node::createForStatementNode($3, $5, $7, $9);}
+			 | FOR '(' type IDENTIFIER '=' expression ';' expression_e ';' expression_e ')'	statement	{$$ =For_statement_node::createForStatementNodeFromForWithDeclaration($3, $4, $6, $8, $10, $12)}			
+			 | FOR '(' IDENTIFIER IN expression ')' statement											{$$ = For_statement_node::createForStatementNodeFromForeach(FOREACH_FOR_TYPE, NULL, $3, $5, $7);}
+			 | FOR '(' CLASS_NAME '*' IDENTIFIER IN expression ')' statement							{$$ = For_statement_node::createForStatementNodeFromForeach(FOREACH_WITH_DECLARATION_FOR_TYPE, Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $3), $5, $7, $9);}
 			 ;
 
 // ---------- Операторы ----------
@@ -342,25 +350,36 @@ class_block: class_interface		{$$ = Class_block_node::createClassBlockNodeFromIn
 		   ;
 
 // ---------- Классы ----------
-class_interface: INTERFACE IDENTIFIER ':' IDENTIFIER interface_body END	{$$ = Class_interface_node::createClassInterfaceNode($2, $4, $5);}
-			   | INTERFACE IDENTIFIER interface_body END					{$$ = Class_interface_node::createClassInterfaceNode($2, NULL, $3);}
-			   | INTERFACE IDENTIFIER ':' CLASS_NAME interface_body END	{$$ = Class_interface_node::createClassInterfaceNode($2, $4, $5);}
+class_interface: INTERFACE IDENTIFIER ':' IDENTIFIER interface_body_e END		{$$ = Class_interface_node::createClassInterfaceNode($2, $4, $5);}
+			   | INTERFACE IDENTIFIER interface_body_e END					{$$ = Class_interface_node::createClassInterfaceNode($2, NULL, $3);}
+			   | INTERFACE IDENTIFIER ':' CLASS_NAME interface_body_e END		{$$ = Class_interface_node::createClassInterfaceNode($2, $4, $5);}
+			   | INTERFACE CLASS_NAME ':' IDENTIFIER interface_body_e END     {$$ = Class_interface_node::createClassInterfaceNode($2, $4, $5);}
+			   | INTERFACE CLASS_NAME interface_body_e END					{$$ = Class_interface_node::createClassInterfaceNode($2, NULL, $3);}
+			   | INTERFACE CLASS_NAME ':' CLASS_NAME interface_body_e END		{$$ = Class_interface_node::createClassInterfaceNode($2, $4, $5);}
 			   ;
+
+interface_body_e: /*empty*/			{$$ = NULL;}
+				| interface_body	{$$ = $1;}
+				;
 
 interface_body: instance_variables interface_declaration_list	{$$ = Interface_body_node::createInterfaceBodyNode($1, $2);}
 			  | interface_declaration_list						{$$ = Interface_body_node::createInterfaceBodyNode(NULL, $1);}
 			  ;
 
+implementation_body_e: /*empty*/			{$$ = NULL;}
+					 | implementation_body	{$$ = $1;}
+					 ;
+
 implementation_body: instance_variables implementation_definition_list	{$$ = Implementation_body_node::createImplementationBodyNode($1, $2);}
 			       | implementation_definition_list						{$$ = Implementation_body_node::createImplementationBodyNode(NULL, $1);}
 				   ;
 
-class_implementation: IMPLEMENTATION IDENTIFIER implementation_body END						{$$ = Class_implementation_node::createClassImplementationNode($2, NULL, $3);}
-					| IMPLEMENTATION IDENTIFIER ':' IDENTIFIER implementation_body END		{$$ = Class_implementation_node::createClassImplementationNode($2, $4, $5);}
-					| IMPLEMENTATION CLASS_NAME implementation_body END						{$$ = Class_implementation_node::createClassImplementationNode($2, NULL, $3);}
-					| IMPLEMENTATION CLASS_NAME ':' IDENTIFIER implementation_body END		{$$ = Class_implementation_node::createClassImplementationNode($2, $4, $5);}
-					| IMPLEMENTATION IDENTIFIER ':' CLASS_NAME implementation_body END		{$$ = Class_implementation_node::createClassImplementationNode($2, $4, $5);}
-					| IMPLEMENTATION CLASS_NAME ':' CLASS_NAME implementation_body END		{$$ = Class_implementation_node::createClassImplementationNode($2, $4, $5);}
+class_implementation: IMPLEMENTATION IDENTIFIER implementation_body_e END						{$$ = Class_implementation_node::createClassImplementationNode($2, NULL, $3);}
+					| IMPLEMENTATION IDENTIFIER ':' IDENTIFIER implementation_body_e END		{$$ = Class_implementation_node::createClassImplementationNode($2, $4, $5);}
+					| IMPLEMENTATION CLASS_NAME implementation_body_e END						{$$ = Class_implementation_node::createClassImplementationNode($2, NULL, $3);}
+					| IMPLEMENTATION CLASS_NAME ':' IDENTIFIER implementation_body_e END		{$$ = Class_implementation_node::createClassImplementationNode($2, $4, $5);}
+					| IMPLEMENTATION IDENTIFIER ':' CLASS_NAME implementation_body_e END		{$$ = Class_implementation_node::createClassImplementationNode($2, $4, $5);}
+					| IMPLEMENTATION CLASS_NAME ':' CLASS_NAME implementation_body_e END		{$$ = Class_implementation_node::createClassImplementationNode($2, $4, $5);}
 					;
 
 class_declaration_list: CLASS class_list ';'	{$$ = Class_declaration_list_node::createClassDeclarationListNode($2);}

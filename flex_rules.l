@@ -1,7 +1,6 @@
 /*Опции*/
 %option noyywrap
 %option never-interactive
-%option stack
 
 /*Именованные шаблоны*/
 DIGIT [0-9]
@@ -9,9 +8,9 @@ UNDERLINE_LETTER [A-Za-z_]
 
 /*Стартовые состояния*/
 %x MULTILINE_COMMENT
-%x STRING
-%x CHAR
-%x NSSTRING
+%x STRING_SC
+%x CHAR_SC
+%x NSSTRING_SC
 
 /*Подключение библиотек*/
 %{
@@ -70,37 +69,37 @@ UNDERLINE_LETTER [A-Za-z_]
 
 
 
-"+" {printf("Found arithmetic operation +: %s\n", yytext);  return '+';}
-"-" {printf("Found arithmetic operation -: %s\n", yytext);  return '-';}
-"*" {printf("Found arithmetic operation *: %s\n", yytext);  return '*';}
-"/" {printf("Found arithmetic operation /: %s\n", yytext);  return '/';}
+"+" {printf("Found arithmetic operation +: %s\n", yytext);  return (unsigned char)'+';}
+"-" {printf("Found arithmetic operation -: %s\n", yytext);  return (unsigned char)'-';}
+"*" {printf("Found arithmetic operation *: %s\n", yytext);  return (unsigned char)'*';}
+"/" {printf("Found arithmetic operation /: %s\n", yytext);  return (unsigned char)'/';}
 
 
 "==" {printf("Found comparison operation ==: %s\n", yytext);    return EQUAL;}
 "!=" {printf("Found comparison operation !=: %s\n", yytext);    return NOT_EQUAL;}
-">" {printf("Found comparison operation >: %s\n", yytext);      return '>';}
-"<" {printf("Found comparison operation <: %s\n", yytext);      return '<';}
+">" {printf("Found comparison operation >: %s\n", yytext);      return (unsigned char)'>';}
+"<" {printf("Found comparison operation <: %s\n", yytext);      return (unsigned char)'<';}
 ">=" {printf("Found comparison operation >=: %s\n", yytext);    return GREATER_EQUAL;}
 "<=" {printf("Found comparison operation <=: %s\n", yytext);    return LESS_EQUAL;}
 
 
-"=" {printf("Found assignment operation =: %s\n", yytext);      return '=';}
+"=" {printf("Found assignment operation =: %s\n", yytext);      return (unsigned char)'=';}
 
-"." {printf("Found member access operator '.' %s\n", yytext);   return '.';}
+"." {printf("Found member access operator '.' %s\n", yytext);   return (unsigned char)'.';}
 "->" {printf("Found member access operator '->' %s\n", yytext);     return ARROW;}
 
 
-"(" {printf("Found bracket (: %s\n", yytext);   return '(';}
-")" {printf("Found bracket ): %s\n", yytext);   return ')';}
-"{" {printf("Found bracket {: %s\n", yytext);   return '{';}
-"}" {printf("Found bracket }: %s\n", yytext);   return '}';}
-"[" {printf("Found bracket [: %s\n", yytext);   return '[';}
-"]" {printf("Found bracket ]: %s\n", yytext);   return ']';}
+"(" {printf("Found bracket (: %s\n", yytext);   return (unsigned char)'(';}
+")" {printf("Found bracket ): %s\n", yytext);   return (unsigned char)')';}
+"{" {printf("Found bracket {: %s\n", yytext);   return (unsigned char)'{';}
+"}" {printf("Found bracket }: %s\n", yytext);   return (unsigned char)'}';}
+"[" {printf("Found bracket [: %s\n", yytext);   return (unsigned char)'[';}
+"]" {printf("Found bracket ]: %s\n", yytext);   return (unsigned char)']';}
 
 
-";" {printf("Found delimiter ;: %s\n", yytext);     return ';';}
-":" {printf("Found delimiter :: %s\n", yytext);     return ':';}
-"," {printf("Found delimiter ,: %s\n", yytext);     return ',';}
+";" {printf("Found delimiter ;: %s\n", yytext);     return (unsigned char)';';}
+":" {printf("Found delimiter :: %s\n", yytext);     return (unsigned char)':';}
+"," {printf("Found delimiter ,: %s\n", yytext);     return (unsigned char)',';}
 
 0|[1-9]{DIGIT}* {printf("Found integer: %d\n", atoi(yytext));   yylval.Integer_constant=atoi(yytext); return INTEGER_CONSTANT;}
 (0x|0X)[0-9a-fA-F]+ {
@@ -124,37 +123,37 @@ UNDERLINE_LETTER [A-Za-z_]
     printf("ERROR! Incorrect octal number: %s in row: %d\n", yytext, lineCount);
 }
 
-\' {str = ""; BEGIN(CHAR);}
-\" {str = ""; BEGIN(STRING);}
-@\" {str = ""; BEGIN(NSSTRING);}
-<STRING,NSSTRING>[^\\\n\"]+ {str += yytext;}
-<CHAR>[^\\\n\'] {str += yytext;}
-<STRING,CHAR,NSSTRING>\\b {str += "\b";}
-<STRING,CHAR,NSSTRING>\\f {str += "\f";}
-<STRING,CHAR,NSSTRING>\\n {str += "\n";}
-<STRING,CHAR,NSSTRING>\\r {str += "\r";}
-<STRING,CHAR,NSSTRING>\\t {str += "\t";}
-<STRING,CHAR,NSSTRING>\\v {str += "\v";}
-<STRING,CHAR,NSSTRING>\\\' {str += "\'";}
-<STRING,CHAR,NSSTRING>\\\" {str += "\"";}
-<STRING,CHAR,NSSTRING>\\\\ {str += "\\";}
-<STRING,CHAR,NSSTRING>\\0 {str += '\0';}
-<STRING,CHAR,NSSTRING>\\x0 {str += '\0';}
-<STRING,CHAR,NSSTRING>\\x00 {str += '\0';}
-<STRING,CHAR,NSSTRING>\\x[0-9a-fA-F]{1,2} {
+\' {str = ""; BEGIN(CHAR_SC);}
+\" {str = ""; BEGIN(STRING_SC);}
+@\" {str = ""; BEGIN(NSSTRING_SC);}
+<STRING_SC,NSSTRING_SC>[^\\\n\"]+ {str += yytext;}
+<CHAR_SC>[^\\\n\'] {str += yytext;}
+<STRING_SC,CHAR_SC,NSSTRING_SC>\\b {str += "\b";}
+<STRING_SC,CHAR_SC,NSSTRING_SC>\\f {str += "\f";}
+<STRING_SC,CHAR_SC,NSSTRING_SC>\\n {str += "\n";}
+<STRING_SC,CHAR_SC,NSSTRING_SC>\\r {str += "\r";}
+<STRING_SC,CHAR_SC,NSSTRING_SC>\\t {str += "\t";}
+<STRING_SC,CHAR_SC,NSSTRING_SC>\\v {str += "\v";}
+<STRING_SC,CHAR_SC,NSSTRING_SC>\\\' {str += "\'";}
+<STRING_SC,CHAR_SC,NSSTRING_SC>\\\" {str += "\"";}
+<STRING_SC,CHAR_SC,NSSTRING_SC>\\\\ {str += "\\";}
+<STRING_SC,CHAR_SC,NSSTRING_SC>\\0 {str += '\0';}
+<STRING_SC,CHAR_SC,NSSTRING_SC>\\x0 {str += '\0';}
+<STRING_SC,CHAR_SC,NSSTRING_SC>\\x00 {str += '\0';}
+<STRING_SC,CHAR_SC,NSSTRING_SC>\\x[0-9a-fA-F]{1,2} {
     char *a;
     char c =strtol(yytext+2, &a, 16);
     str += c;}
-<STRING,CHAR,NSSTRING>\\x[^0-9a-fA-F]? {printf("ERROR! Incorrect hex digit in string.\n");}
-<STRING,CHAR,NSSTRING>\\[0-7]{1,3} {
+<STRING_SC,CHAR_SC,NSSTRING_SC>\\x[^0-9a-fA-F]? {printf("ERROR! Incorrect hex digit in string.\n");}
+<STRING_SC,CHAR_SC,NSSTRING_SC>\\[0-7]{1,3} {
     char *a;
     char c =strtol(yytext+1, &a, 8);
     str += c;}
-<STRING,CHAR,NSSTRING>\n {printf("ERROR! Multiline string\n", lineCount); lineCount++;}
-<STRING,CHAR,NSSTRING><<EOF>> {printf("ERROR! haven't found closing quotes.\n"); BEGIN(INITIAL);}
-<STRING,NSSTRING>\" {std::cout << "Found String literal: " << str.c_str() << std::endl;BEGIN(INITIAL);
+<STRING_SC,CHAR_SC,NSSTRING_SC>\n {printf("ERROR! Multiline string\n"); lineCount++;}
+<STRING_SC,CHAR_SC,NSSTRING_SC><<EOF>> {printf("ERROR! haven't found closing quotes.\n"); BEGIN(INITIAL);}
+<STRING_SC,NSSTRING_SC>\" {std::cout << "Found String literal: " << str.c_str() << std::endl;BEGIN(INITIAL);
       
-      if (yy_top_state() == STRING)
+      if (YY_START == STRING_SC)
       {
         strcpy(yylval.String_constant, str.c_str()); 
         return STRING_CONSTANT;
@@ -165,7 +164,7 @@ UNDERLINE_LETTER [A-Za-z_]
         return NSSTRING_CONSTANT;
       }
 }
-<CHAR>\' {
+<CHAR_SC>\' {
     if(str.size() != 1)
     {
         printf("ERROR! char length != 1 in row: %d. Char length: %d\n", lineCount, str.size());BEGIN(INITIAL);
@@ -199,8 +198,9 @@ UNDERLINE_LETTER [A-Za-z_]
 {UNDERLINE_LETTER}({UNDERLINE_LETTER}|{DIGIT})* {printf("Found identifier: %s\n", yytext);
     str = "";
     str += yytext;
+    yylval.Identifier = new char[str.length()];
     strcpy(yylval.Identifier, str.c_str());
-    if (ClassNames.contains(str))
+    if (ClassNames.count(str))
         return CLASS_NAME;
     else
         return IDENTIFIER;
@@ -223,7 +223,7 @@ UNDERLINE_LETTER [A-Za-z_]
 
 <MULTILINE_COMMENT><<EOF>> {printf("ERROR! Multiline comment \"%s\" isn't closed in row: %d\n", tmp, lineCount); BEGIN(INITIAL);}
 
-" "+ {printf("", yytext);}
+" "+ {printf("");}
 
 <*>\\\n {lineCount++;}
 <*>\n {lineCount++;}
@@ -286,8 +286,8 @@ int main(int argc, char* argv[])
 
     yyparse();
 
-    string res = root->toDot();
+    /* string res = root->toDot();
     ofstream out("dot.dot");
     out << res;
-    out.close();
+    out.close(); */
 }

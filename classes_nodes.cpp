@@ -1190,13 +1190,11 @@ string Parameter_declaration_node::toDot(string labelConection="")
     if (labelConection!= "")
         res += "[label=\"" + labelConection + "\"]";
     res += ";\n";
-    res += to_string(id) + "[label=\"parameter_declaration\"];\n";
-    res += to_string(id);
-    res += type->toDot("type");
-    res += to_string(id);
-    res += "[label=\"";
+    res += to_string(id) + "[label=\"parameter_declaration :"; 
     res += name;
     res += "\"];\n";
+    res += to_string(id);
+    res += type->toDot("type");
     return res;
 }
 

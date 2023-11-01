@@ -416,12 +416,13 @@ class Statement_node
         Expression_node *Expression;
         Statement_node *Statement;
         Declaration_node *Declaration;
-        Class_declaration_list_node *Class_declaration;
         Statement_node *Next;
 
         static Statement_node* createStatementNodeFromSimpleStatement(statement_type type, Expression_node *expression);
         static Statement_node* createStatementNodeFromComplexStatement(statement_type type, Statement_node *statement);
         static Statement_node* createStatementNodeFromDeclaration(Declaration_node *declaration);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- Управляющие структуры: развилки ----------
@@ -443,6 +444,8 @@ class If_statement_node : public Statement_node
         Statement_node *FalseBranch;
 
         static If_statement_node* createIfStatementNode(if_type type, Expression_node *condition, Statement_node *trueBranch, Statement_node *falseBranch);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- Управляющие структуры: циклы ----------
@@ -457,6 +460,8 @@ class While_statement_node : public Statement_node
         Statement_node *LoopBody;
 
         static While_statement_node* createWhileStatementNode(Expression_node *condition, Statement_node *body);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- do_while_statement ----------
@@ -469,6 +474,8 @@ class Do_while_statement_node : public Statement_node
         Statement_node *LoopBody;
 
         static Do_while_statement_node* createDoWhileStatementNode(Expression_node *condition, Statement_node *body);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- for_statement ----------
@@ -493,6 +500,8 @@ class For_statement_node : public Statement_node
 
         static For_statement_node* createForStatementNode(Expression_node *initExpression, Expression_node *condition, Expression_node *loopExpression, Statement_node *body);
         static For_statement_node* createForStatementNodeFromForeach(for_type type, Type_node *varType, char *loopVar, Expression_node *expression, Statement_node *body);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- compound_statement ----------
@@ -504,6 +513,8 @@ class Compound_statement_node : public Statement_node
         Statement_list_node *Statements;
 
         static Compound_statement_node* createCompoundStatementNode(Statement_list_node *statements);
+
+        string toDot(string labelConection="");
 };
 
 // ---------- statement_list ----------
@@ -517,6 +528,9 @@ class Statement_list_node
 
         static Statement_list_node* createStatementListNode(Statement_node *statement);
         static Statement_list_node* addToStatementListNode(Statement_list_node *list, Statement_node *statement);
+
+        vector<Statement_node*>* getElements();
+        string toDot(string labelConection="");
 };
 
 // ---------- class_block ----------
@@ -538,7 +552,9 @@ class Class_block_node {
         Class_block_node *Next;
 
         static Class_block_node* createClassBlockNodeFromInterface(Class_interface_node *interface);
-        static Class_block_node* createClassBlockNodeFromImplementation(Class_implementation_node *implementation);     
+        static Class_block_node* createClassBlockNodeFromImplementation(Class_implementation_node *implementation); 
+
+        string toDot(string labelConection="");    
 };
 
 

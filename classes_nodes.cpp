@@ -515,7 +515,6 @@ Statement_node* Statement_node::createStatementNodeFromSimpleStatement(statement
     res->Expression = expression;
     res->Statement = NULL;
     res->Declaration = NULL;
-    res->Class_declaration = NULL;
     res->Next = NULL;
     return res;
 }
@@ -528,7 +527,6 @@ Statement_node* Statement_node::createStatementNodeFromComplexStatement(statemen
     res->Expression = NULL;
     res->Statement = statement;
     res->Declaration = NULL;
-    res->Class_declaration = NULL;
     res->Next = NULL;
     return res;
 }
@@ -541,7 +539,6 @@ Statement_node* Statement_node::createStatementNodeFromDeclaration(Declaration_n
     res->Expression = NULL;
     res->Statement = NULL;
     res->Declaration = declaration;
-    res->Class_declaration = NULL;
     res->Next = NULL;
     return res;
 }
@@ -1499,5 +1496,265 @@ string Keyword_argument_node::toDot(string labelConection = "")
 
     res += to_string(id);
     res += expression->toDot("expression");
+    return res;
+}
+
+// -------------------- Операторы --------------------
+
+// ---------- Statement_node ----------
+
+string Statement_node::toDot(string labelConection = "")
+{
+    string res = "->" + to_string(id);
+    if (labelConection!= "")
+        res += "[label=\"" + labelConection + "\"]";
+    res += ";\n";
+    if (type == EMPTY_STATEMENT_TYPE)
+    {
+        res += to_string(id) + "[label=\"empty_statement\"];\n";
+    }
+    else if (type == SIMPLE_STATEMENT_TYPE)
+    {
+        res += to_string(id) + "[label=\"simple_statement\"];\n";
+        res += to_string(id);
+        res += Expression->toDot("expression");
+    }
+    else if (type == RETURN_STATEMENT_TYPE)
+    {
+        res += to_string(id) + "[label=\"return_statement\"];\n";
+        if (Expression!= NULL)
+        {
+            res += to_string(id);
+            res += Expression->toDot("expression");
+        }
+    }
+    else if (type == IF_STATEMENT_TYPE)
+    {
+        res += to_string(id) + "[label=\"if_statement\"];\n";
+        res += to_string(id);
+        res += Statement->toDot();
+    }
+    else if (type == WHILE_STATEMENT_TYPE)
+    {
+        res += to_string(id) + "[label=\"while_statement\"]; \n";
+        res += to_string(id);
+        res += Statement->toDot();
+    }
+    else if (type == FOR_STATEMENT_TYPE)
+    {
+        res += to_string(id) + "[label=\"for_statement\"]; \n";
+        res += to_string(id);
+        res += Statement->toDot();
+    }
+    else if (type == DO_WHILE_STATEMENT_TYPE)
+    {
+        res += to_string(id) + "[label=\"do_while_statement\"];\n";
+        res += to_string(id);
+        res += Statement->toDot();
+    }
+    else if (type == COMPOUND_STATEMENT_TYPE)
+    {
+        res += to_string(id) + "[label=\"compound_statement\"]; \n";
+        res += to_string(id);
+        res += Statement->toDot();
+    }
+    else if (type == DECLARATION_STATEMENT_TYPE)
+    {
+        res += to_string(id) + "[label=\"declaration_statement\"]; \n";
+        res += to_string(id);
+        res += Declaration->toDot();
+    }
+    return res;
+}
+
+// ----------- If_statement_node ----------
+
+string If_statement_node::toDot(string labelConection = "")
+{
+    string res = "->" + to_string(id);
+    if (labelConection!= "")
+        res += "[label=\"" + labelConection + "\"]";
+    res += ";\n";
+    res += to_string(id) + "[label=\"if_statement\"];\n";
+    
+    res += to_string(id);
+    res += Expression->toDot("condition");
+
+    res += to_string(id);
+    res += TrueBranch->toDot("true");
+
+    if (FalseBranch!= NULL)
+    {
+        res += to_string(id);
+        res += FalseBranch->toDot("false");
+    }
+    return res;
+}
+
+// ----------- While_statement_node ----------
+
+string While_statement_node::toDot(string labelConection = "")
+{
+    string res = "->" + to_string(id);
+    if (labelConection!= "")
+        res += "[label=\"" + labelConection + "\"]";
+    res += ";\n";
+    res += to_string(id) + "[label=\"while_statement\"];\n";
+    
+    res += to_string(id);
+    res += Expression->toDot("condition");
+    
+    res += to_string(id);
+    res += Statement->toDot("body");
+    
+    return res;
+}
+
+// ---------- Do_while_statement_node ----------
+
+string Do_while_statement_node::toDot(string labelConection = "")
+{
+    string res = "->" + to_string(id);
+    if (labelConection!= "")
+        res += "[label=\"" + labelConection + "\"]";
+    res += ";\n";
+    res += to_string(id) + "[label=\"do_while_statement\"];\n";
+    
+    res += to_string(id);
+    res += Expression->toDot("condition");
+
+    res += to_string(id);
+    res += Statement->toDot("body");
+    
+    return res;
+}
+
+// ---------- For_statement_node ----------
+
+string For_statement_node::toDot(string labelConection = "")
+{
+    string res = "->" + to_string(id);
+    if (labelConection!= "")
+        res += "[label=\"" + labelConection + "\"]";
+    res += ";\n";
+    res += to_string(id) + "[label=\"for_statement\"];\n";
+    
+    if (type == FOR_FOR_TYPE)
+    {
+        if (InitExpression!= NULL)
+        {
+            res += to_string(id);
+            res += InitExpression->toDot("init_expression");
+        }
+        if (ConditionExpression!= NULL)
+        {
+            res += to_string(id);
+            res += ConditionExpression->toDot("condition_expression");
+        }
+        if (LoopExpression!= NULL)
+        {
+            res += to_string(id);
+            res += LoopExpression->toDot("loop_expression");
+        }
+
+        res += to_string(id);
+        res += Statement->toDot("body");
+    }
+    else if (type == FOREACH_FOR_TYPE)
+    {
+        res += to_string(id) + ".1 [label=\"" + name + "\"];\n";
+        res += to_string(id) + "->" + to_string(id) + ".1 [label=\"identifier\"];\n";
+
+        res += to_string(id);
+        res += LoopExpression->toDot("expression");
+
+        res += to_string(id);
+        res += Statement->toDot("body");
+    }
+    else if (type == FOREACH_WITH_DECLARATION_FOR_TYPE)
+    {
+        res += to_string(id);
+        res += NameType->toDot("type");
+
+        res += to_string(id) + ".1 [label=\"" + name + "\"];\n";
+        res += to_string(id) + "->" + to_string(id) + ".1 [label=\"identifier\"];\n";
+
+        res += to_string(id);
+        res += LoopExpression->toDot("expression");
+
+        res += to_string(id);
+        res += Statement->toDot("body");
+    }
+    return res;
+}
+
+// ----------- Compound_statement_node ----------
+
+string Compound_statement_node::toDot(string labelConection = "")
+{
+    string res = "->" + to_string(id);
+    if (labelConection!= "")
+        res += "[label=\"" + labelConection + "\"]";
+    res += ";\n";
+
+    res += to_string(id) + "[label=\"compound_statement\"];\n";
+
+    if (Statements!= NULL)
+    {
+        res += to_string(id);
+        res += Statements->toDot();
+    }
+    return res;
+}
+
+// ---------- Statement_list_node ----------
+
+vector<Statement_node*>* Statement_list_node::getElements()
+{
+    vector<Statement_node*>* res = new vector<Statement_node*>;
+    Statement_node *current = First;
+    res->push_back(current);
+    while (current->Next!= NULL)
+    {
+        current = current->Next;
+        res->push_back(current);
+    }
+    return res;
+}
+
+string Statement_list_node::toDot(string labelConection = "")
+{
+    string res = "->" + to_string(id);
+    if (labelConection!= "")
+        res += "[label=\"" + labelConection + "\"]";
+    res += ";\n";
+    res += to_string(id) + "[label=\"statement_list\"];\n";
+
+    vector<Statement_node*>* elements = getElements();
+    for (int i = 0; i < elements->size(); i++)
+    {
+        res += to_string(id);
+        res += elements->at(i)->toDot(to_string(i));
+    }
+    delete elements;
+    return res;
+}
+
+// ---------- Class_block_node ----------
+
+string Class_block_node::toDot(string labelConection = "")
+{
+    string res = "->" + to_string(id);
+    if (labelConection!= "")
+        res += "[label=\"" + labelConection + "\"]";
+    res += ";\n";
+    res += to_string(id) + "[label=\"class_block\"];\n";
+
+    res += to_string(id);
+    if (type == INTERFACE_CLASS_BLOCK_TYPE)
+        res += statement->Interface->toDot("interface");
+    else if (type == IMPLEMENTATION_CLASS_BLOCK_TYPE)
+        res += statement->Implementation->toDot("implementation");
+
     return res;
 }

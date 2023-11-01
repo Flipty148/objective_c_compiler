@@ -885,6 +885,8 @@ class Program_node
         Function_and_class_list_node *list;
 
         static Program_node* createProgramNode(Function_and_class_list_node *list);
+        
+        string toDot();
 };
 
 // ---------- function_and_class_list ----------
@@ -893,11 +895,13 @@ class Function_and_class_list_node
 {
     public:
         int id;
-        union function_and_class {
+        struct function_and_class {
             Function_node *function;
             Class_block_node *class_block;
             Class_declaration_list_node *class_declaration_list;
-        } *First, *Last;
+        };
+
+        vector<function_and_class*> *FunctionsAndClasses;
 
         static Function_and_class_list_node* createFunctionAndClassListNodeFromClassBlock(Class_block_node *classBlock);
         static Function_and_class_list_node* createFunctionAndClassListNodeFromFunction(Function_node *function);
@@ -905,6 +909,8 @@ class Function_and_class_list_node
         static Function_and_class_list_node* addToFunctionAndClassListNodeFromClassBlock(Function_and_class_list_node *list, Class_block_node *classBlock);
         static Function_and_class_list_node* addToFunctionAndClassListNodeFromFunction(Function_and_class_list_node *list, Function_node *functionList);
         static Function_and_class_list_node* addToFunctionAndClassListNodeFromClassDeclarationList(Function_and_class_list_node *list, Class_declaration_list_node *classDeclarationList);
+
+        string toDot();
 };
 
 // ---------- function ----------
@@ -919,4 +925,6 @@ class Function_node
         Function_node *Next;
 
         static Function_node* createFunctionNode(Type_node *type, char *name, Compound_statement_node *statement);
+        
+        string toDot(string labelConection="");
 };

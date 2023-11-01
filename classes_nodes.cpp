@@ -20,8 +20,10 @@ Function_and_class_list_node* Function_and_class_list_node::createFunctionAndCla
 {
     Function_and_class_list_node *res = new Function_and_class_list_node;
     res->id = maxId++;
-    res->First->function = functionList;
-    res->Last->function = functionList;
+    res->FunctionsAndClasses = new vector<function_and_class*>;
+    function_and_class *functionAndClass;
+    functionAndClass->function = functionList;
+    res->FunctionsAndClasses->push_back(functionAndClass);
     return res;
 }
 
@@ -29,8 +31,11 @@ Function_and_class_list_node* Function_and_class_list_node::createFunctionAndCla
 {
     Function_and_class_list_node *res = new Function_and_class_list_node;
     res->id = maxId++;
-    res->First->class_declaration_list = classDeclarationList;
-    res->Last->class_declaration_list = classDeclarationList;
+    res->FunctionsAndClasses = new vector<function_and_class*>;
+    function_and_class *functionAndClass;
+    functionAndClass->class_declaration_list = classDeclarationList;
+    res->FunctionsAndClasses->push_back(functionAndClass);
+
     return res;
 }
 
@@ -38,29 +43,34 @@ Function_and_class_list_node* Function_and_class_list_node::createFunctionAndCla
 {
     Function_and_class_list_node *res = new Function_and_class_list_node;
     res->id = maxId++;
-    res->First->class_block = classBlock;
-    res->Last->class_block = classBlock;
+    res->FunctionsAndClasses = new vector<function_and_class*>;
+    function_and_class *functionAndClass;
+    functionAndClass->class_block = classBlock;
+    res->FunctionsAndClasses->push_back(functionAndClass);
     return res;
 }
 
 Function_and_class_list_node* Function_and_class_list_node::addToFunctionAndClassListNodeFromFunction(Function_and_class_list_node *list, Function_node *function)
 {
-    list->Last->function->Next = function;
-    list->Last->function = function;
+    function_and_class *functionAndClass;
+    functionAndClass->function = function;
+    list->FunctionsAndClasses->push_back(functionAndClass);
     return list;
 }
 
 Function_and_class_list_node* Function_and_class_list_node::addToFunctionAndClassListNodeFromClassDeclarationList(Function_and_class_list_node *list, Class_declaration_list_node *classDeclarationList)
 {
-    list->Last->class_declaration_list->Next = classDeclarationList;
-    list->Last->class_declaration_list = classDeclarationList;
+    function_and_class *functionAndClass;
+    functionAndClass->class_declaration_list = classDeclarationList;
+    list->FunctionsAndClasses->push_back(functionAndClass);
     return list;
 }
 
 Function_and_class_list_node* Function_and_class_list_node::addToFunctionAndClassListNodeFromClassBlock(Function_and_class_list_node *list, Class_block_node *classStatement)
 {
-    list->Last->class_block->Next = classStatement;
-    list->Last->class_block = classStatement;
+    function_and_class *functionAndClass;
+    functionAndClass->class_block = classStatement;
+    list->FunctionsAndClasses->push_back(functionAndClass);
     return list;
 }
 
@@ -2244,5 +2254,62 @@ string Synthesize_node::toDot(string labelConection = "")
     res += to_string(id) + "->" + to_string(id) + ".1 [label=\"name\"];\n";
     res += to_string(id) + ".1 [label=\"" + Name + "\"];\n";
 
+    return res;
+}
+
+// -------------------- Program ----------------------
+
+// ---------- Program_node ----------
+
+string Program_node::toDot()
+{
+    string res = "digraph Objective-C {\n";
+    res += to_string(id) + "[label=\"program\"];\n";
+
+    res += to_string(id);
+    res += list->toDot();
+    res += "}\n";
+    return res;
+}
+
+// ---------- Function_and_class_list_node ----------
+
+string Function_and_class_list_node::toDot()
+{
+    string res = "->" + to_string(id);
+    res += "[label=\"function_and_class_list\"];\n";
+
+    for (int i = 0; i < FunctionsAndClasses->size(); i++)
+    {
+        res += to_string(id);
+        if (FunctionsAndClasses->at(i)->function!= NULL)
+            res += FunctionsAndClasses->at(i)->function->toDot(to_string(i));
+        else if (FunctionsAndClasses->at(i)->class_block!= NULL)
+            res += FunctionsAndClasses->at(i)->class_block->toDot(to_string(i));
+        else if (FunctionsAndClasses->at(i)->class_declaration_list!= NULL)
+            res += FunctionsAndClasses->at(i)->class_declaration_list->toDot(to_string(i));
+    }
+
+    return res;
+}
+
+// ---------- Function_node ----------
+
+string Function_node::toDot(string labelConection = "")
+{
+    string res = "->" + to_string(id);
+    if (labelConection!= "")
+        res += "[label=\"" + labelConection + "\"]";
+    res += ";\n";
+    res += to_string(id) + "[label=\"function\"];\n";
+
+    res += to_string(id);
+    res += Type->toDot("type");
+
+    res += to_string(id) + "->" + to_string(id) + ".1 [label=\"name\"];\n";
+    res += to_string(id) + ".1 [label=\"" + Name + "\"];\n";
+
+    res += to_string(id);
+    res += statement->toDot("body");
     return res;
 }

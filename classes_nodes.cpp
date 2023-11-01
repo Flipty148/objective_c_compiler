@@ -963,4 +963,49 @@ string Type_node::toDot()
     return res;
 }
 
+// -------------------- Константы --------------------
 
+// ---------- Numeric_constant_node ----------
+
+string Numeric_constant_node::toDot()
+{
+    string res = "->" + to_string(id) + ";\n";
+    if (type == INTEGER_CONSTANT_TYPE)
+    {
+        res += to_string(id) + "[label=\"" + to_string(number->Int) + "\"];\n";
+    }
+    else if (type == FLOAT_CONSTANT_TYPE)
+    {
+        res += to_string(id) + "[label=\"" + to_string(number->Float) + "\"];\n";
+    }
+    
+    return res;
+}
+
+// ---------- Literal_node ----------
+
+string Literal_node::toDot()
+{
+    string res = "->" + to_string(id) + ";\n";
+    res += to_string(id) + "[label=<";
+    if (type == STRING_CONSTANT_TYPE)
+    {
+        res += "\"";
+        res += value;
+        res += "\"";
+    }
+    else if (type == CHAR_CONSTANT_TYPE)
+    {
+        res += "'";
+        res += value;
+        res += "'";
+    }
+    else if (type == NSSTRING_CONSTANT_TYPE)
+    {
+        res += "@\"";
+        res += value;
+        res += "\"";
+    }
+    res += ">];\n";
+    return res;
+}

@@ -83,6 +83,8 @@ class Numeric_constant_node
 
         static Numeric_constant_node* createNumericConstantNodeFromInteger(int number);
         static Numeric_constant_node* createNumericConstantNodeFromFloat(float number);
+
+        string toDot();
 };
 
 // ---------- literal ----------
@@ -101,6 +103,8 @@ class Literal_node
         char *value;
 
         static Literal_node* createLiteralNode(literal_type type, char *value);
+
+        string toDot();
 };
 
 // -------------------- Объявления --------------------

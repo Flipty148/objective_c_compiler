@@ -1,4 +1,6 @@
 #include "classes_nodes.h"
+#include <string>
+using namespace std;
 int maxId = 0; // Глобальный id узла
 set<string> ClassNames; //Множество имен объявленных классов
 
@@ -921,3 +923,44 @@ Synthesize_node* Synthesize_node::createSynthesizeNode(char *name)
     res->Next = NULL;
     return res;
 }
+
+
+// ------------------------------ ФУНКЦИИ ПОСТРОЕНИЯ ДЕРЕВА ------------------------------
+
+// -------------------- Типы --------------------
+
+// ---------- Type_node ----------
+
+string Type_node::toDot()
+{
+    string res = "->" + to_string(id) + ";\n";
+    res += to_string(id) + "[label=\"";
+    switch (type)
+    {
+        case INT_TYPE:
+            res += "int";
+            break;
+        case CHAR_TYPE:
+            res += "char";
+            break;
+        case FLOAT_TYPE:
+            res += "float";
+            break;
+        case ID_TYPE:
+            res += "id";
+            break;
+        case CLASS_NAME_TYPE:
+            res += "class_name: ";
+            res += ClassName;
+            break;
+        case VOID_TYPE:
+            res += "void";
+            break;
+        default:
+            break;
+    }
+    res += "\"];\n";
+    return res;
+}
+
+

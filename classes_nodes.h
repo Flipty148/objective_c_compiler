@@ -57,6 +57,8 @@ class Type_node
 
         static Type_node* createTypeNode(type_type type);
         static Type_node* createTypeNodeFromClassName(type_type type, char *name);
+
+        string toDot();
 };
 
 // -------------------- Константы --------------------

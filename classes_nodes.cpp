@@ -1314,7 +1314,7 @@ string Expression_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
-        res += "[label=\"" + labelConection;
+        res += "[label=\"" + labelConection + "\"]";
     res += ";\n";
     res += to_string(id) + "[label=\"expression\"];\n";
     if (type == IDENTIFIER_EXPRESSION_TYPE)
@@ -1386,6 +1386,7 @@ string Expression_node::toDot(string labelConection)
         res += to_string(id) + "[label=\"+\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
+        res += to_string(id);
         res += Right->toDot("right");
     }
     else if (type == MINUS_EXPRESSION_TYPE)
@@ -1393,6 +1394,7 @@ string Expression_node::toDot(string labelConection)
         res += to_string(id) + "[label=\"-\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
+        res += to_string(id);
         res += Right->toDot("right");
     }
     else if (type == MUL_EXPRESSION_TYPE)
@@ -1400,6 +1402,7 @@ string Expression_node::toDot(string labelConection)
         res += to_string(id) + "[label=\"*\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
+        res += to_string(id);
         res += Right->toDot("right");
     }
     else if (type == DIV_EXPRESSION_TYPE)
@@ -1407,6 +1410,7 @@ string Expression_node::toDot(string labelConection)
         res += to_string(id) + "[label=\"/\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
+        res += to_string(id);
         res += Right->toDot("right");
     }
     else if (type == EQUAL_EXPRESSION_TYPE)
@@ -1414,6 +1418,7 @@ string Expression_node::toDot(string labelConection)
         res += to_string(id) + "[label=\"==\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
+        res += to_string(id);
         res += Right->toDot("right");
     }
     else if (type == NOT_EQUAL_EXPRESSION_TYPE)
@@ -1421,6 +1426,7 @@ string Expression_node::toDot(string labelConection)
         res += to_string(id) + "[label=\"!=\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
+        res += to_string(id);
         res += Right->toDot("right");
     }
     else if (type == GREATER_EXPRESSION_TYPE)
@@ -1428,6 +1434,7 @@ string Expression_node::toDot(string labelConection)
         res += to_string(id) + "[label=\">\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
+        res += to_string(id);
         res += Right->toDot("right");
     }
     else if (type == LESS_EXPRESSION_TYPE)
@@ -1435,6 +1442,7 @@ string Expression_node::toDot(string labelConection)
         res += to_string(id) + "[label=\"<\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
+        res += to_string(id);
         res += Right->toDot("right");
     }
     else if (type == GREATER_EQUAL_EXPRESSION_TYPE)
@@ -1442,6 +1450,7 @@ string Expression_node::toDot(string labelConection)
         res += to_string(id) + "[label=\">=\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
+        res += to_string(id);
         res += Right->toDot("right");
     }
     else if (type == LESS_EQUAL_EXPRESSION_TYPE)
@@ -1449,6 +1458,7 @@ string Expression_node::toDot(string labelConection)
         res += to_string(id) + "[label=\"<=\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
+        res += to_string(id);
         res += Right->toDot("right");
     }
     else if (type == ASSIGNMENT_EXPRESSION_TYPE)
@@ -1456,6 +1466,7 @@ string Expression_node::toDot(string labelConection)
         res += to_string(id) + "[label=\"=\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
+        res += to_string(id);
         res += Right->toDot("right");
     }
     else if (type == DOT_EXPRESSION_TYPE)
@@ -2175,9 +2186,9 @@ string Method_definition_node::toDot(string labelConection)
     res += ";\n";
     
     if (type == CLASS_METHOD_DEFINITION_TYPE)
-        res += "[label=\"class_method_definition\"];\n";
+        res += to_string(id) + "[label=\"class_method_definition\"];\n";
     else if (type == INSTANCE_METHOD_DEFINITION_TYPE)
-        res += "[label=\"instance_method_definition\"];\n";
+        res += to_string(id) + "[label=\"instance_method_definition\"];\n";
 
     if (MethodType!= NULL)
     {

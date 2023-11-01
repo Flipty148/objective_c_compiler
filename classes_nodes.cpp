@@ -931,9 +931,12 @@ Synthesize_node* Synthesize_node::createSynthesizeNode(char *name)
 
 // ---------- Type_node ----------
 
-string Type_node::toDot()
+string Type_node::toDot(string labelConection="")
 {
-    string res = "->" + to_string(id) + ";\n";
+    string res = "->" + to_string(id);
+    if (labelConection != "")
+        res += "[label=\"" + labelConection + "\"]";
+    res += ";\n";
     res += to_string(id) + "[label=\"";
     switch (type)
     {
@@ -1009,3 +1012,192 @@ string Literal_node::toDot()
     res += ">];\n";
     return res;
 }
+
+// -------------------- Объявления --------------------
+
+// ---------- Declaration_node ----------
+
+string Declaration_node::toDot(string labelConection="")
+{
+    string res = "->" + to_string(id);
+    if (labelConection!= "")
+        res += "[label=\"" + labelConection + "\"]";
+        
+    res += ";\n";
+    res += to_string(id) + "[label=\"declaration\"];\n";
+    res += to_string(id);
+    res += type->toDot();
+    res += to_string(id);
+    res += init_declarator_list->toDot();
+    return res;
+}
+
+// ---------- Declaration_list_node ----------
+
+vector<Declaration_node*>* Declaration_list_node::getElements()
+{
+    vector<Declaration_node*>* res = new vector<Declaration_node*>;
+    Declaration_node *current = First;
+    res->push_back(current);
+    while (current->Next!= NULL)
+    {
+        current = current->Next;
+        res->push_back(current->Next);
+    }
+    return res;
+}
+
+string Declaration_list_node::toDot()
+{
+    string res = "->" + to_string(id) + ";\n";
+    res += to_string(id) + "[label=\"declaration_list\"];\n";
+    vector<Declaration_node*>* elements = getElements();
+    for (int i = 0; i < elements->size() - 1; i++)
+    {
+        res += to_string(id);
+        res += elements->at(i)->toDot();
+    }
+    delete elements;
+    return res;
+}
+
+// ---------- Init_declarator_list_node ----------
+
+vector<Init_declarator_node*>* Init_declarator_list_node::getElements()
+{
+    vector<Init_declarator_node*>* res = new vector<Init_declarator_node*>;
+    Init_declarator_node *current = First;
+    res->push_back(current);
+    while (current->Next!= NULL)
+    {
+        current = current->Next;
+        res->push_back(current->Next);
+    }
+    return res;
+}
+
+string Init_declarator_list_node::toDot()
+{
+    string res = "->" + to_string(id);
+    res += ";\n";
+    res += to_string(id) + "[label=\"init_declarator_list\"];\n";
+    vector<Init_declarator_node*>* elements = getElements();
+    for (int i = 0; i < elements->size() - 1; i++)
+    {
+        res += to_string(id);
+        res += elements->at(i)->toDot(to_string(id));
+    }
+    delete elements;
+    return res;
+}
+
+// ---------- Init_declarator_node ----------
+
+string Init_declarator_node::toDot(string labelConection="")
+{
+    string res = "->" + to_string(id);
+    if (labelConection != "")
+        res += "[label=\"" + labelConection + "\"]";
+    res += ";\n";
+    res += to_string(id) + "[label=\"init_declarator\"];\n";
+    res += to_string(id);
+    res += Declarator->toDot("declarator");
+    if (type == DECLARATOR_WITH_INITIALIZING_TYPE)
+    {
+        res += to_string(id);
+        res += expression->toDot("expression"); 
+    }
+    return res;
+}
+
+// ---------- Declarator_node ----------
+
+string Declarator_node::toDot(string labelConection="")
+{
+    string res = "->" + to_string(id);
+    if (labelConection!= "")
+        res += "[label=\"" + labelConection + "\"]";
+    res += ";\n";
+    res += to_string(id) + "[label=\"";
+    res += name;
+    res += "\"];\n";
+    return res;
+}
+
+// ---------- Declarator_list_node ----------
+
+vector<Declarator_node*>* Declarator_list_node::getElements()
+{
+    vector<Declarator_node*>* res = new vector<Declarator_node*>;
+    Declarator_node *current = First;
+    res->push_back(current);
+    while (current->Next!= NULL)
+    {
+        current = current->Next;
+        res->push_back(current->Next);
+    }
+    return res;
+}
+
+string Declarator_list_node::toDot()
+{
+    string res = "->" + to_string(id) + ";\n";
+    res += to_string(id) + "[label=\"declarator_list\"];\n";
+    vector<Declarator_node*>* elements = getElements();
+    for (int i = 0; i < elements->size() - 1; i++)
+    {
+        res += to_string(id);
+        res += elements->at(i)->toDot(to_string(id));
+    }
+    delete elements;
+    return res;
+}
+
+// ---------- Parameter_list ----------
+
+vector<Parameter_declaration_node*>* Parameter_list_node::getElements()
+{
+    vector<Parameter_declaration_node*>* res = new vector<Parameter_declaration_node*>;
+    Parameter_declaration_node *current = First;
+    res->push_back(current);
+    while (current->Next!= NULL)
+    {
+        current = current->Next;
+        res->push_back(current->Next);
+    }
+    return res;
+}
+
+string Parameter_list_node::toDot()
+{
+    string res = "->" + to_string(id) + ";\n";
+    res += to_string(id) + "[label=\"parameter_list\"];\n";
+    vector<Parameter_declaration_node*>* elements = getElements();
+    for (int i = 0; i < elements->size() - 1; i++)
+    {
+        res += to_string(id);
+        res += elements->at(i)->toDot(to_string(id));
+    }
+    delete elements;
+    return res;
+}
+
+// ---------- Parameter_declaration_node ----------
+
+string Parameter_declaration_node::toDot(string labelConection="")
+{
+    string res = "->" + to_string(id);
+    if (labelConection!= "")
+        res += "[label=\"" + labelConection + "\"]";
+    res += ";\n";
+    res += to_string(id) + "[label=\"parameter_declaration\"];\n";
+    res += to_string(id);
+    res += type->toDot("type");
+    res += to_string(id);
+    res += "[label=\"";
+    res += name;
+    res += "\"];\n";
+    return res;
+}
+
+

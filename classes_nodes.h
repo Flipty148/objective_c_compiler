@@ -58,7 +58,7 @@ class Type_node
         static Type_node* createTypeNode(type_type type);
         static Type_node* createTypeNodeFromClassName(type_type type, char *name);
 
-        string toDot();
+        string toDot(string labelConection);
 };
 
 // -------------------- Константы --------------------
@@ -120,6 +120,8 @@ class Declaration_node
         Declaration_node *Next;
 
         static Declaration_node* createDeclarationNode(Type_node *type, Init_declarator_list_node *initDeclarators);
+
+        string toDot(string labelConection="");
 };
 
 
@@ -133,7 +135,10 @@ class Declaration_list_node
         Declaration_node *Last;
 
         static Declaration_list_node* createDeclarationListNode(Declaration_node *declaration);
-        static Declaration_list_node* addToDeclarationListNode(Declaration_list_node *list, Declaration_node *declaration);        
+        static Declaration_list_node* addToDeclarationListNode(Declaration_list_node *list, Declaration_node *declaration);
+
+        string toDot();
+        vector<Declaration_node*>* getElements();        
 };
 
 // ---------- init_declarator_list ----------
@@ -147,6 +152,9 @@ class Init_declarator_list_node
 
         static Init_declarator_list_node* createInitDeclaratorListNode(Init_declarator_node *initDeclarator);
         static Init_declarator_list_node* addToInitDeclaratorListNode(Init_declarator_list_node *list, Init_declarator_node *initDeclarator);
+
+        string toDot();
+        vector<Init_declarator_node*>* getElements();
 };
 
 // ---------- init_declarator ----------
@@ -166,6 +174,8 @@ class Init_declarator_node
         Init_declarator_node *Next;
 
         static Init_declarator_node* createInitDeclaratorNode(init_declarator_type type, Declarator_node *declarator, Expression_node *expression);
+        
+        string toDot(string labelConection="");
 };
 
 // ---------- declarator ----------
@@ -178,6 +188,8 @@ class Declarator_node
         Declarator_node *Next;
 
         static Declarator_node* createDeclaratorNode(char *name);
+        
+        string toDot(string labelConection="");
 };
 
 // ---------- declarator_list ----------
@@ -191,6 +203,9 @@ class Declarator_list_node
 
         static Declarator_list_node* createDeclaratorListNode(Declarator_node *declarator);
         static Declarator_list_node* addToDeclaratorListNode(Declarator_list_node *list, Declarator_node *declarator);
+
+        vector<Declarator_node*>* getElements();
+        string toDot();
 };
 
 // ---------- parameter_list ----------
@@ -204,6 +219,9 @@ class Parameter_list_node
 
         static Parameter_list_node* createParameterListNode(Parameter_declaration_node *parameter);
         static Parameter_list_node* addToParameterListNode(Parameter_list_node *list, Parameter_declaration_node *parameter);
+
+        vector<Parameter_declaration_node*>* getElements();
+        string toDot();
 };
 
 // ---------- parameter_declaration ----------
@@ -217,6 +235,8 @@ class Parameter_declaration_node
         Parameter_declaration_node *Next;
 
         static Parameter_declaration_node* createParameterDeclarationNode(Type_node *type, char *name);
+
+        string toDot(string labelConection="");
 };
 
 // -------------------- Выражения --------------------

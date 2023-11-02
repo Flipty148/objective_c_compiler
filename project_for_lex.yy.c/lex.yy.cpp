@@ -1220,11 +1220,13 @@ YY_RULE_SETUP
       
       if (YY_START == STRING_SC)
       {
+        yylval.String_constant = new char[str.length()];
         strcpy(yylval.String_constant, str.c_str()); 
         return STRING_CONSTANT;
       }
       else
       {
+        yylval.NSString_constant = new char[str.length()];
         strcpy(yylval.NSString_constant, str.c_str()); 
         return NSSTRING_CONSTANT;
       }
@@ -1232,7 +1234,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 167 "flex_rules.l"
+#line 169 "flex_rules.l"
 {
     if(str.size() != 1)
     {
@@ -1248,7 +1250,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 182 "flex_rules.l"
+#line 184 "flex_rules.l"
 {
     strcpy(tmp, yytext);
     removeFloatSuffix(tmp);
@@ -1259,7 +1261,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
-#line 190 "flex_rules.l"
+#line 192 "flex_rules.l"
 {
     strcpy(tmp, yytext);
     removeFloatSuffix(tmp);
@@ -1270,7 +1272,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 198 "flex_rules.l"
+#line 200 "flex_rules.l"
 {printf("Found identifier: %s\n", yytext);
     str = "";
     str += yytext;
@@ -1284,12 +1286,12 @@ YY_RULE_SETUP
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
-#line 208 "flex_rules.l"
+#line 210 "flex_rules.l"
 {printf("ERROR! Incorrect identifier: %s\n", yytext);}
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
-#line 211 "flex_rules.l"
+#line 213 "flex_rules.l"
 {printf("Found line comment: %s\n", yytext);
     strcpy(tmp, yytext);
     lineCount += countChar(tmp, '\n');
@@ -1297,64 +1299,64 @@ YY_RULE_SETUP
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
-#line 217 "flex_rules.l"
+#line 219 "flex_rules.l"
 {tmp[0] = '\0'; BEGIN(MULTILINE_COMMENT);}
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
-#line 218 "flex_rules.l"
+#line 220 "flex_rules.l"
 {strcat(tmp, yytext);}
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
-#line 219 "flex_rules.l"
+#line 221 "flex_rules.l"
 {lineCount++; strcat(tmp, yytext);}
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 220 "flex_rules.l"
+#line 222 "flex_rules.l"
 {strcat(tmp, yytext);}
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 221 "flex_rules.l"
+#line 223 "flex_rules.l"
 {lineCount++; strcat(tmp, yytext);}
 	YY_BREAK
 case 88:
 YY_RULE_SETUP
-#line 222 "flex_rules.l"
+#line 224 "flex_rules.l"
 {printf("Found multiline comment: %s\n", tmp);BEGIN(INITIAL);}
 	YY_BREAK
 case YY_STATE_EOF(MULTILINE_COMMENT):
-#line 224 "flex_rules.l"
+#line 226 "flex_rules.l"
 {printf("ERROR! Multiline comment \"%s\" isn't closed in row: %d\n", tmp, lineCount); BEGIN(INITIAL);}
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
-#line 226 "flex_rules.l"
+#line 228 "flex_rules.l"
 {printf("");}
 	YY_BREAK
 case 90:
 YY_RULE_SETUP
-#line 228 "flex_rules.l"
+#line 230 "flex_rules.l"
 {lineCount++;}
 	YY_BREAK
 case 91:
 YY_RULE_SETUP
-#line 229 "flex_rules.l"
+#line 231 "flex_rules.l"
 {lineCount++;}
 	YY_BREAK
 case 92:
 YY_RULE_SETUP
-#line 231 "flex_rules.l"
+#line 233 "flex_rules.l"
 {printf("unrecognized element: %s\n", yytext);}
 	YY_BREAK
 case 93:
 YY_RULE_SETUP
-#line 233 "flex_rules.l"
+#line 235 "flex_rules.l"
 ECHO;
 	YY_BREAK
-#line 1359 "lex.yy.c"
+#line 1361 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2214,7 +2216,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 233 "flex_rules.l"
+#line 235 "flex_rules.l"
 
 
 //Проверка на содержание символа в строке

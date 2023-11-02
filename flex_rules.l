@@ -155,11 +155,13 @@ UNDERLINE_LETTER [A-Za-z_]
       
       if (YY_START == STRING_SC)
       {
+        yylval.String_constant = new char[str.length()];
         strcpy(yylval.String_constant, str.c_str()); 
         return STRING_CONSTANT;
       }
       else
       {
+        yylval.NSString_constant = new char[str.length()];
         strcpy(yylval.NSString_constant, str.c_str()); 
         return NSSTRING_CONSTANT;
       }

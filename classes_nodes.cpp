@@ -2002,7 +2002,7 @@ string Implementation_body_node::toDot(string labelConection)
     }
 
     res += to_string(id);
-    res += Declaration_list->toDot("declaration_list");
+    res += Declaration_list->toDot("definition_list");
 
     return res;
 }

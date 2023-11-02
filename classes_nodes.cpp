@@ -1150,7 +1150,7 @@ vector<Declaration_node*>* Declaration_list_node::getElements()
     while (current->Next!= NULL)
     {
         current = current->Next;
-        res->push_back(current->Next);
+        res->push_back(current);
     }
     return res;
 }
@@ -1163,7 +1163,7 @@ string Declaration_list_node::toDot(string labelConection)
     res += ";\n";
     res += to_string(id) + "[label=\"declaration_list\"];\n";
     vector<Declaration_node*>* elements = getElements();
-    for (int i = 0; i < elements->size() - 1; i++)
+    for (int i = 0; i < elements->size(); i++)
     {
         res += to_string(id);
         res += elements->at(i)->toDot();
@@ -1182,7 +1182,7 @@ vector<Init_declarator_node*>* Init_declarator_list_node::getElements()
     while (current->Next!= NULL)
     {
         current = current->Next;
-        res->push_back(current->Next);
+        res->push_back(current);
     }
     return res;
 }
@@ -1193,10 +1193,10 @@ string Init_declarator_list_node::toDot()
     res += ";\n";
     res += to_string(id) + "[label=\"init_declarator_list\"];\n";
     vector<Init_declarator_node*>* elements = getElements();
-    for (int i = 0; i < elements->size() - 1; i++)
+    for (int i = 0; i < elements->size(); i++)
     {
         res += to_string(id);
-        res += elements->at(i)->toDot(to_string(id));
+        res += elements->at(i)->toDot(to_string(i));
     }
     delete elements;
     return res;
@@ -1245,7 +1245,7 @@ vector<Declarator_node*>* Declarator_list_node::getElements()
     while (current->Next!= NULL)
     {
         current = current->Next;
-        res->push_back(current->Next);
+        res->push_back(current);
     }
     return res;
 }
@@ -1258,10 +1258,10 @@ string Declarator_list_node::toDot(string labelConection)
     res+= ";\n";
     res += to_string(id) + "[label=\"declarator_list\"];\n";
     vector<Declarator_node*>* elements = getElements();
-    for (int i = 0; i < elements->size() - 1; i++)
+    for (int i = 0; i < elements->size(); i++)
     {
         res += to_string(id);
-        res += elements->at(i)->toDot(to_string(id));
+        res += elements->at(i)->toDot(to_string(i));
     }
     delete elements;
     return res;
@@ -1277,7 +1277,7 @@ vector<Parameter_declaration_node*>* Parameter_list_node::getElements()
     while (current->Next!= NULL)
     {
         current = current->Next;
-        res->push_back(current->Next);
+        res->push_back(current);
     }
     return res;
 }
@@ -1290,10 +1290,10 @@ string Parameter_list_node::toDot(string labelConection)
     res += ";\n";
     res += to_string(id) + "[label=\"parameter_list\"];\n";
     vector<Parameter_declaration_node*>* elements = getElements();
-    for (int i = 0; i < elements->size() - 1; i++)
+    for (int i = 0; i < elements->size(); i++)
     {
         res += to_string(id);
-        res += elements->at(i)->toDot(to_string(id));
+        res += elements->at(i)->toDot(to_string(i));
     }
     delete elements;
     return res;
@@ -1508,7 +1508,7 @@ vector<Expression_node*>* Expression_list_node::getElements()
     while (current->Next!= NULL)
     {
         current = current->Next;
-        res->push_back(current->Next);
+        res->push_back(current);
     }
     return res;
 }
@@ -1521,10 +1521,10 @@ string Expression_list_node::toDot(string labelConection)
     res+= ";\n";
     res += to_string(id) + "[label=\"expression_list\"];\n";
     vector<Expression_node*>* elements = getElements();
-    for (int i = 0; i < elements->size() - 1; i++)
+    for (int i = 0; i < elements->size(); i++)
     {
         res += to_string(id);
-        res += elements->at(i)->toDot(to_string(id));
+        res += elements->at(i)->toDot(to_string(i));
     }
     delete elements;
     return res;
@@ -1606,7 +1606,7 @@ vector<Keyword_argument_node*>* Keyword_argument_list_node::getElements()
     while (current->Next!= NULL)
     {
         current = current->Next;
-        res->push_back(current->Next);
+        res->push_back(current);
     }
     return res;
 }
@@ -1619,10 +1619,10 @@ string Keyword_argument_list_node::toDot(string labelConection)
     res += ";\n";
     res += to_string(id) + "[label=\"keyword_argument_list\"];\n";
     vector<Keyword_argument_node*>* elements = getElements();
-    for (int i = 0; i < elements->size() - 1; i++)
+    for (int i = 0; i < elements->size(); i++)
     {
         res += to_string(id);
-        res += elements->at(i)->toDot(to_string(id));
+        res += elements->at(i)->toDot(to_string(i));
     }
     delete elements;
     return res;

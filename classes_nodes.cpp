@@ -1725,7 +1725,7 @@ string If_statement_node::toDot(string labelConection)
     if (labelConection!= "")
         res += "[label=\"" + labelConection + "\"]";
     res += ";\n";
-    res += to_string(id) + "[label=\"if_statement\"];\n";
+    res += to_string(id) + "[label=\"if\"];\n";
     
     res += to_string(id);
     res += Condition->toDot("condition");
@@ -1749,7 +1749,7 @@ string While_statement_node::toDot(string labelConection)
     if (labelConection!= "")
         res += "[label=\"" + labelConection + "\"]";
     res += ";\n";
-    res += to_string(id) + "[label=\"while_statement\"];\n";
+    res += to_string(id) + "[label=\"while\"];\n";
     
     res += to_string(id);
     res += LoopCondition->toDot("condition");
@@ -1768,7 +1768,7 @@ string Do_while_statement_node::toDot(string labelConection)
     if (labelConection!= "")
         res += "[label=\"" + labelConection + "\"]";
     res += ";\n";
-    res += to_string(id) + "[label=\"do_while_statement\"];\n";
+    res += to_string(id) + "[label=\"do_while\"];\n";
     
     res += to_string(id);
     res += LoopCondition->toDot("condition");
@@ -1787,7 +1787,7 @@ string For_statement_node::toDot(string labelConection)
     if (labelConection!= "")
         res += "[label=\"" + labelConection + "\"]";
     res += ";\n";
-    res += to_string(id) + "[label=\"for_statement\"];\n";
+    res += to_string(id) + "[label=\"for\"];\n";
     
     if (type == FOR_FOR_TYPE)
     {
@@ -1807,6 +1807,30 @@ string For_statement_node::toDot(string labelConection)
             res += LoopExpression->toDot("loop_expression");
         }
 
+        res += to_string(id);
+        res += LoopBody->toDot("body");
+    }
+    else if (type == FOR_WITH_DECLARATION_FOR_TYPE)
+    {
+        res += to_string(id);
+        res += NameType->toDot("type");
+
+        res += to_string(id) + ".1 [label=\"" + name + "\"];\n";
+        res += to_string(id) + "->" + to_string(id) + ".1 [label=\"identifier\"]; \n";
+
+        res += to_string(id);
+        res += InitExpression->toDot("init_expression");
+
+        if (ConditionExpression!= NULL)
+        {
+            res += to_string(id);
+            res += ConditionExpression->toDot("condition_expression");
+        }
+        if (LoopExpression!= NULL)
+        {
+            res += to_string(id);
+            res += LoopExpression->toDot("loop_expression");
+        }
         res += to_string(id);
         res += LoopBody->toDot("body");
     }
@@ -1847,7 +1871,7 @@ string Compound_statement_node::toDot(string labelConection)
         res += "[label=\"" + labelConection + "\"]";
     res += ";\n";
 
-    res += to_string(id) + "[label=\"compound_statement\"];\n";
+    res += to_string(id) + "[label=\"compound\"];\n";
 
     if (Statements!= NULL)
     {

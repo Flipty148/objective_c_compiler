@@ -427,7 +427,7 @@ class Statement_node
         static Statement_node* createStatementNodeFromComplexStatement(statement_type type, Statement_node *statement);
         static Statement_node* createStatementNodeFromDeclaration(Declaration_node *declaration);
 
-        string toDot(string labelConection="");
+        virtual string toDot(string labelConection="");
 };
 
 // ---------- Управляющие структуры: развилки ----------

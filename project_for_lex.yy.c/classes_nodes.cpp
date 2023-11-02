@@ -287,6 +287,7 @@ Expression_node* Expression_node::createExpressionNodeFromIdentifier(char *name)
     res->name = name;
     res->Left = NULL;
     res->Right = NULL;
+    res->Next = NULL;
     return res;
 }
 
@@ -299,6 +300,7 @@ Expression_node* Expression_node::createExpressionNodeFromLiteral(Literal_node *
     res->constant.literal = value;
     res->Left = NULL;
     res->Right = NULL;
+    res->Next = NULL;
     return res;
 }
 
@@ -311,6 +313,7 @@ Expression_node* Expression_node::createExpressionNodeFromNumericConstant(Numeri
     res->constant.num = value;
     res->Left = NULL;
     res->Right = NULL;
+    res->Next = NULL;
     return res;
 }
 
@@ -322,6 +325,7 @@ Expression_node* Expression_node::createExpressionNodeFromSimpleExpression(expre
     res->name = NULL;
     res->Left = NULL;
     res->Right = expression;
+    res->Next = NULL;
     return res;
 }
 
@@ -333,6 +337,7 @@ Expression_node* Expression_node::createExpressionNodeFromSelf()
     res->name = NULL;
     res->Left = NULL;
     res->Right = NULL;
+    res->Next = NULL;
     return res;
 }
 
@@ -344,6 +349,7 @@ Expression_node* Expression_node::createExpressionNodeFromOperator(expression_ty
     res->name = NULL;
     res->Left = leftExpression;
     res->Right = rightExpression;
+    res->Next = NULL;
     return res;
 }
 
@@ -354,6 +360,7 @@ Expression_node* Expression_node::createExpressionNodeFromMessageExpression(Rece
     res->type = MESSAGE_EXPRESSION_EXPRESSION_TYPE;
     res->Receiver = receiver;
     res->Arguments = arguments;
+    res->Next = NULL;
     return res;
 }
 
@@ -364,6 +371,7 @@ Expression_node* Expression_node::createExpressionNodeFromFunctionCall(char *nam
     res->type = FUNCTION_CALL_EXPRESSION_TYPE;
     res->name = name;
     res->ArgumentsList = argumentsList;
+    res->Next = NULL;
     return res;
 }
 
@@ -375,6 +383,7 @@ Expression_node* Expression_node::createExpressionNodeFromMemberAccessOperator(e
     res->name = memberName;
     res->Left = expression;
     res->Right = NULL;
+    res->Next = NULL;
     return res;
 }
 
@@ -1719,7 +1728,7 @@ string If_statement_node::toDot(string labelConection)
     res += to_string(id) + "[label=\"if_statement\"];\n";
     
     res += to_string(id);
-    res += Expression->toDot("condition");
+    res += Condition->toDot("condition");
 
     res += to_string(id);
     res += TrueBranch->toDot("true");
@@ -1743,10 +1752,10 @@ string While_statement_node::toDot(string labelConection)
     res += to_string(id) + "[label=\"while_statement\"];\n";
     
     res += to_string(id);
-    res += Expression->toDot("condition");
+    res += LoopCondition->toDot("condition");
     
     res += to_string(id);
-    res += Statement->toDot("body");
+    res += LoopBody->toDot("body");
     
     return res;
 }
@@ -1762,10 +1771,10 @@ string Do_while_statement_node::toDot(string labelConection)
     res += to_string(id) + "[label=\"do_while_statement\"];\n";
     
     res += to_string(id);
-    res += Expression->toDot("condition");
+    res += LoopCondition->toDot("condition");
 
     res += to_string(id);
-    res += Statement->toDot("body");
+    res += LoopBody->toDot("body");
     
     return res;
 }
@@ -1799,7 +1808,7 @@ string For_statement_node::toDot(string labelConection)
         }
 
         res += to_string(id);
-        res += Statement->toDot("body");
+        res += LoopBody->toDot("body");
     }
     else if (type == FOREACH_FOR_TYPE)
     {
@@ -1810,7 +1819,7 @@ string For_statement_node::toDot(string labelConection)
         res += LoopExpression->toDot("expression");
 
         res += to_string(id);
-        res += Statement->toDot("body");
+        res += LoopBody->toDot("body");
     }
     else if (type == FOREACH_WITH_DECLARATION_FOR_TYPE)
     {
@@ -1824,7 +1833,7 @@ string For_statement_node::toDot(string labelConection)
         res += LoopExpression->toDot("expression");
 
         res += to_string(id);
-        res += Statement->toDot("body");
+        res += LoopBody->toDot("body");
     }
     return res;
 }
@@ -2388,8 +2397,8 @@ string Program_node::toDot()
 
 string Function_and_class_list_node::toDot()
 {
-    string res = "->" + to_string(id);
-    res += "[label=\"function_and_class_list\"];\n";
+    string res = "->" + to_string(id) + ";\n";
+    res += to_string(id) + "[label=\"function_and_class_list\"];\n";
 
     for (int i = 0; i < FunctionsAndClasses->size(); i++)
     {

@@ -2274,7 +2274,7 @@ string Method_selector_node::toDot(string labelConection)
     if (KeywordDeclaration != NULL)
     {
         res += to_string(id);
-        res += KeywordDeclaration->toDot("keyword_declaration");
+        res += KeywordDeclaration->toDot("keyword_parameters");
     }
 
     return res;

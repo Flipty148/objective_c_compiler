@@ -1537,11 +1537,13 @@ string Receiver_node::toDot(string labelConection)
     {
         res += to_string(id) + "[label=\"receiver: object_name\"];\n";
         res += to_string(id) + ".1 [label=\"" + name + "\"];\n";
+        res += to_string(id) + "->" + to_string(id) + ".1 [label=\"name\"];\n";
     }
     else if (Type == CLASS_NAME_RECEIVER_TYPE)
     {
         res += to_string(id) + "[label=\"receiver: class_name\"];\n";
         res += to_string(id) + ".1 [label=\"" + name + "\"];\n";
+        res += to_string(id) + "->" + to_string(id) + ".1 [label=\"name\"];\n";
     }
     else if (Type == MESSAGE_EXPRESSION_RECEIVER_TYPE)
     {
@@ -2373,7 +2375,7 @@ string Synthesize_node::toDot(string labelConection)
 
 string Program_node::toDot()
 {
-    string res = "digraph ObjectiveC {\n";
+    string res = "digraph ObjectiveC { rankdir=\"LR\";\n";
     res += to_string(id) + "[label=\"program\"];\n";
 
     res += to_string(id);

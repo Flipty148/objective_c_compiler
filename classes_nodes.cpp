@@ -341,6 +341,18 @@ Expression_node* Expression_node::createExpressionNodeFromSelf()
     return res;
 }
 
+Expression_node* Expression_node::createExpressionNodeFromSuper()
+{
+    Expression_node *res = new Expression_node;
+    res->id = maxId++;
+    res->type = SUPER_EXPRESSION_TYPE;
+    res->name = NULL;
+    res->Left = NULL;
+    res->Right = NULL;
+    res->Next = NULL;
+    return res;
+}
+
 Expression_node* Expression_node::createExpressionNodeFromOperator(expression_type type, Expression_node *leftExpression, Expression_node *rightExpression)
 {
     Expression_node *res = new Expression_node;
@@ -1355,6 +1367,10 @@ string Expression_node::toDot(string labelConection)
     else if (type == SELF_EXPRESSION_TYPE)
     {
         res += to_string(id) + "[label=\"self_expression\"];\n";
+    }
+    else if (SUPER_EXPRESSION_TYPE)
+    {
+        res += to_string(id) + "[label=\"super_expression\"];\n";
     }
     else if (type == MESSAGE_EXPRESSION_EXPRESSION_TYPE)
     {

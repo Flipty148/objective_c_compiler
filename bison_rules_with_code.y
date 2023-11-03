@@ -247,6 +247,7 @@ expression: IDENTIFIER							{$$ = Expression_node::createExpressionNodeFromIden
 		  | numeric_constant					{$$ = Expression_node::createExpressionNodeFromNumericConstant($1);}
 		  | '(' expression ')'					{$$ = Expression_node::createExpressionNodeFromSimpleExpression(PRIORITY_EXPRESSION_TYPE, $2);}
 		  | SELF								{$$ = Expression_node::createExpressionNodeFromSelf();}
+		  | SUPER								{$$ = Expression_node::createExpressionNodeFromSuper();}
 		  | '[' receiver message_selector ']'	{$$ = Expression_node::createExpressionNodeFromMessageExpression($2, $3);}
 		  | IDENTIFIER '(' expression_list_e ')' {$$ = Expression_node::createExpressionNodeFromFunctionCall($1, $3);}
 		  | '-' expression %prec UMINUS			{$$ = Expression_node::createExpressionNodeFromOperator(UMINUS_EXPRESSION_TYPE, NULL, $2);}

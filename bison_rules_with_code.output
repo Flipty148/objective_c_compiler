@@ -1,0 +1,6197 @@
+
+
+Terminals which are not used:
+
+   ENUM
+
+
+Conflict in state 243 between rule 54 and token '=' resolved as reduce.
+Conflict in state 243 between rule 54 and token EQUAL resolved as reduce.
+Conflict in state 243 between rule 54 and token NOT_EQUAL resolved as reduce.
+Conflict in state 243 between rule 54 and token '<' resolved as reduce.
+Conflict in state 243 between rule 54 and token '>' resolved as reduce.
+Conflict in state 243 between rule 54 and token LESS_EQUAL resolved as reduce.
+Conflict in state 243 between rule 54 and token GREATER_EQUAL resolved as reduce.
+Conflict in state 243 between rule 54 and token '+' resolved as reduce.
+Conflict in state 243 between rule 54 and token '-' resolved as reduce.
+Conflict in state 243 between rule 54 and token '*' resolved as reduce.
+Conflict in state 243 between rule 54 and token '/' resolved as reduce.
+Conflict in state 243 between rule 54 and token '.' resolved as shift.
+Conflict in state 243 between rule 54 and token ARROW resolved as shift.
+Conflict in state 244 between rule 53 and token '=' resolved as reduce.
+Conflict in state 244 between rule 53 and token EQUAL resolved as reduce.
+Conflict in state 244 between rule 53 and token NOT_EQUAL resolved as reduce.
+Conflict in state 244 between rule 53 and token '<' resolved as reduce.
+Conflict in state 244 between rule 53 and token '>' resolved as reduce.
+Conflict in state 244 between rule 53 and token LESS_EQUAL resolved as reduce.
+Conflict in state 244 between rule 53 and token GREATER_EQUAL resolved as reduce.
+Conflict in state 244 between rule 53 and token '+' resolved as reduce.
+Conflict in state 244 between rule 53 and token '-' resolved as reduce.
+Conflict in state 244 between rule 53 and token '*' resolved as reduce.
+Conflict in state 244 between rule 53 and token '/' resolved as reduce.
+Conflict in state 244 between rule 53 and token '.' resolved as shift.
+Conflict in state 244 between rule 53 and token ARROW resolved as shift.
+Conflict in state 253 between rule 55 and token '=' resolved as reduce.
+Conflict in state 253 between rule 55 and token EQUAL resolved as reduce.
+Conflict in state 253 between rule 55 and token NOT_EQUAL resolved as reduce.
+Conflict in state 253 between rule 55 and token '<' resolved as reduce.
+Conflict in state 253 between rule 55 and token '>' resolved as reduce.
+Conflict in state 253 between rule 55 and token LESS_EQUAL resolved as reduce.
+Conflict in state 253 between rule 55 and token GREATER_EQUAL resolved as reduce.
+Conflict in state 253 between rule 55 and token '+' resolved as reduce.
+Conflict in state 253 between rule 55 and token '-' resolved as reduce.
+Conflict in state 253 between rule 55 and token '*' resolved as reduce.
+Conflict in state 253 between rule 55 and token '/' resolved as reduce.
+Conflict in state 253 between rule 55 and token '.' resolved as shift.
+Conflict in state 253 between rule 55 and token ARROW resolved as shift.
+Conflict in state 300 between rule 66 and token '=' resolved as shift.
+Conflict in state 300 between rule 66 and token EQUAL resolved as shift.
+Conflict in state 300 between rule 66 and token NOT_EQUAL resolved as shift.
+Conflict in state 300 between rule 66 and token '<' resolved as shift.
+Conflict in state 300 between rule 66 and token '>' resolved as shift.
+Conflict in state 300 between rule 66 and token LESS_EQUAL resolved as shift.
+Conflict in state 300 between rule 66 and token GREATER_EQUAL resolved as shift.
+Conflict in state 300 between rule 66 and token '+' resolved as shift.
+Conflict in state 300 between rule 66 and token '-' resolved as shift.
+Conflict in state 300 between rule 66 and token '*' resolved as shift.
+Conflict in state 300 between rule 66 and token '/' resolved as shift.
+Conflict in state 300 between rule 66 and token '.' resolved as shift.
+Conflict in state 300 between rule 66 and token ARROW resolved as shift.
+Conflict in state 301 between rule 60 and token '=' resolved as reduce.
+Conflict in state 301 between rule 60 and token EQUAL resolved as reduce.
+Conflict in state 301 between rule 60 and token NOT_EQUAL resolved as reduce.
+Conflict in state 301 between rule 60 and token '<' resolved as shift.
+Conflict in state 301 between rule 60 and token '>' resolved as shift.
+Conflict in state 301 between rule 60 and token LESS_EQUAL resolved as shift.
+Conflict in state 301 between rule 60 and token GREATER_EQUAL resolved as shift.
+Conflict in state 301 between rule 60 and token '+' resolved as shift.
+Conflict in state 301 between rule 60 and token '-' resolved as shift.
+Conflict in state 301 between rule 60 and token '*' resolved as shift.
+Conflict in state 301 between rule 60 and token '/' resolved as shift.
+Conflict in state 301 between rule 60 and token '.' resolved as shift.
+Conflict in state 301 between rule 60 and token ARROW resolved as shift.
+Conflict in state 302 between rule 61 and token '=' resolved as reduce.
+Conflict in state 302 between rule 61 and token EQUAL resolved as reduce.
+Conflict in state 302 between rule 61 and token NOT_EQUAL resolved as reduce.
+Conflict in state 302 between rule 61 and token '<' resolved as shift.
+Conflict in state 302 between rule 61 and token '>' resolved as shift.
+Conflict in state 302 between rule 61 and token LESS_EQUAL resolved as shift.
+Conflict in state 302 between rule 61 and token GREATER_EQUAL resolved as shift.
+Conflict in state 302 between rule 61 and token '+' resolved as shift.
+Conflict in state 302 between rule 61 and token '-' resolved as shift.
+Conflict in state 302 between rule 61 and token '*' resolved as shift.
+Conflict in state 302 between rule 61 and token '/' resolved as shift.
+Conflict in state 302 between rule 61 and token '.' resolved as shift.
+Conflict in state 302 between rule 61 and token ARROW resolved as shift.
+Conflict in state 303 between rule 63 and token '=' resolved as reduce.
+Conflict in state 303 between rule 63 and token EQUAL resolved as reduce.
+Conflict in state 303 between rule 63 and token NOT_EQUAL resolved as reduce.
+Conflict in state 303 between rule 63 and token '<' resolved as reduce.
+Conflict in state 303 between rule 63 and token '>' resolved as reduce.
+Conflict in state 303 between rule 63 and token LESS_EQUAL resolved as reduce.
+Conflict in state 303 between rule 63 and token GREATER_EQUAL resolved as reduce.
+Conflict in state 303 between rule 63 and token '+' resolved as shift.
+Conflict in state 303 between rule 63 and token '-' resolved as shift.
+Conflict in state 303 between rule 63 and token '*' resolved as shift.
+Conflict in state 303 between rule 63 and token '/' resolved as shift.
+Conflict in state 303 between rule 63 and token '.' resolved as shift.
+Conflict in state 303 between rule 63 and token ARROW resolved as shift.
+Conflict in state 304 between rule 62 and token '=' resolved as reduce.
+Conflict in state 304 between rule 62 and token EQUAL resolved as reduce.
+Conflict in state 304 between rule 62 and token NOT_EQUAL resolved as reduce.
+Conflict in state 304 between rule 62 and token '<' resolved as reduce.
+Conflict in state 304 between rule 62 and token '>' resolved as reduce.
+Conflict in state 304 between rule 62 and token LESS_EQUAL resolved as reduce.
+Conflict in state 304 between rule 62 and token GREATER_EQUAL resolved as reduce.
+Conflict in state 304 between rule 62 and token '+' resolved as shift.
+Conflict in state 304 between rule 62 and token '-' resolved as shift.
+Conflict in state 304 between rule 62 and token '*' resolved as shift.
+Conflict in state 304 between rule 62 and token '/' resolved as shift.
+Conflict in state 304 between rule 62 and token '.' resolved as shift.
+Conflict in state 304 between rule 62 and token ARROW resolved as shift.
+Conflict in state 305 between rule 64 and token '=' resolved as reduce.
+Conflict in state 305 between rule 64 and token EQUAL resolved as reduce.
+Conflict in state 305 between rule 64 and token NOT_EQUAL resolved as reduce.
+Conflict in state 305 between rule 64 and token '<' resolved as reduce.
+Conflict in state 305 between rule 64 and token '>' resolved as reduce.
+Conflict in state 305 between rule 64 and token LESS_EQUAL resolved as reduce.
+Conflict in state 305 between rule 64 and token GREATER_EQUAL resolved as reduce.
+Conflict in state 305 between rule 64 and token '+' resolved as shift.
+Conflict in state 305 between rule 64 and token '-' resolved as shift.
+Conflict in state 305 between rule 64 and token '*' resolved as shift.
+Conflict in state 305 between rule 64 and token '/' resolved as shift.
+Conflict in state 305 between rule 64 and token '.' resolved as shift.
+Conflict in state 305 between rule 64 and token ARROW resolved as shift.
+Conflict in state 306 between rule 65 and token '=' resolved as reduce.
+Conflict in state 306 between rule 65 and token EQUAL resolved as reduce.
+Conflict in state 306 between rule 65 and token NOT_EQUAL resolved as reduce.
+Conflict in state 306 between rule 65 and token '<' resolved as reduce.
+Conflict in state 306 between rule 65 and token '>' resolved as reduce.
+Conflict in state 306 between rule 65 and token LESS_EQUAL resolved as reduce.
+Conflict in state 306 between rule 65 and token GREATER_EQUAL resolved as reduce.
+Conflict in state 306 between rule 65 and token '+' resolved as shift.
+Conflict in state 306 between rule 65 and token '-' resolved as shift.
+Conflict in state 306 between rule 65 and token '*' resolved as shift.
+Conflict in state 306 between rule 65 and token '/' resolved as shift.
+Conflict in state 306 between rule 65 and token '.' resolved as shift.
+Conflict in state 306 between rule 65 and token ARROW resolved as shift.
+Conflict in state 307 between rule 56 and token '=' resolved as reduce.
+Conflict in state 307 between rule 56 and token EQUAL resolved as reduce.
+Conflict in state 307 between rule 56 and token NOT_EQUAL resolved as reduce.
+Conflict in state 307 between rule 56 and token '<' resolved as reduce.
+Conflict in state 307 between rule 56 and token '>' resolved as reduce.
+Conflict in state 307 between rule 56 and token LESS_EQUAL resolved as reduce.
+Conflict in state 307 between rule 56 and token GREATER_EQUAL resolved as reduce.
+Conflict in state 307 between rule 56 and token '+' resolved as reduce.
+Conflict in state 307 between rule 56 and token '-' resolved as reduce.
+Conflict in state 307 between rule 56 and token '*' resolved as shift.
+Conflict in state 307 between rule 56 and token '/' resolved as shift.
+Conflict in state 307 between rule 56 and token '.' resolved as shift.
+Conflict in state 307 between rule 56 and token ARROW resolved as shift.
+Conflict in state 308 between rule 57 and token '=' resolved as reduce.
+Conflict in state 308 between rule 57 and token EQUAL resolved as reduce.
+Conflict in state 308 between rule 57 and token NOT_EQUAL resolved as reduce.
+Conflict in state 308 between rule 57 and token '<' resolved as reduce.
+Conflict in state 308 between rule 57 and token '>' resolved as reduce.
+Conflict in state 308 between rule 57 and token LESS_EQUAL resolved as reduce.
+Conflict in state 308 between rule 57 and token GREATER_EQUAL resolved as reduce.
+Conflict in state 308 between rule 57 and token '+' resolved as reduce.
+Conflict in state 308 between rule 57 and token '-' resolved as reduce.
+Conflict in state 308 between rule 57 and token '*' resolved as shift.
+Conflict in state 308 between rule 57 and token '/' resolved as shift.
+Conflict in state 308 between rule 57 and token '.' resolved as shift.
+Conflict in state 308 between rule 57 and token ARROW resolved as shift.
+Conflict in state 309 between rule 58 and token '=' resolved as reduce.
+Conflict in state 309 between rule 58 and token EQUAL resolved as reduce.
+Conflict in state 309 between rule 58 and token NOT_EQUAL resolved as reduce.
+Conflict in state 309 between rule 58 and token '<' resolved as reduce.
+Conflict in state 309 between rule 58 and token '>' resolved as reduce.
+Conflict in state 309 between rule 58 and token LESS_EQUAL resolved as reduce.
+Conflict in state 309 between rule 58 and token GREATER_EQUAL resolved as reduce.
+Conflict in state 309 between rule 58 and token '+' resolved as reduce.
+Conflict in state 309 between rule 58 and token '-' resolved as reduce.
+Conflict in state 309 between rule 58 and token '*' resolved as reduce.
+Conflict in state 309 between rule 58 and token '/' resolved as reduce.
+Conflict in state 309 between rule 58 and token '.' resolved as shift.
+Conflict in state 309 between rule 58 and token ARROW resolved as shift.
+Conflict in state 310 between rule 59 and token '=' resolved as reduce.
+Conflict in state 310 between rule 59 and token EQUAL resolved as reduce.
+Conflict in state 310 between rule 59 and token NOT_EQUAL resolved as reduce.
+Conflict in state 310 between rule 59 and token '<' resolved as reduce.
+Conflict in state 310 between rule 59 and token '>' resolved as reduce.
+Conflict in state 310 between rule 59 and token LESS_EQUAL resolved as reduce.
+Conflict in state 310 between rule 59 and token GREATER_EQUAL resolved as reduce.
+Conflict in state 310 between rule 59 and token '+' resolved as reduce.
+Conflict in state 310 between rule 59 and token '-' resolved as reduce.
+Conflict in state 310 between rule 59 and token '*' resolved as reduce.
+Conflict in state 310 between rule 59 and token '/' resolved as reduce.
+Conflict in state 310 between rule 59 and token '.' resolved as shift.
+Conflict in state 310 between rule 59 and token ARROW resolved as shift.
+State 355 contains 1 shift/reduce conflict.
+
+Grammar
+rule 1    program -> function_and_class_list
+rule 2    function_and_class_list -> class_block
+rule 3    function_and_class_list -> function
+rule 4    function_and_class_list -> class_declaration_list
+rule 5    function_and_class_list -> function_and_class_list class_block
+rule 6    function_and_class_list -> function_and_class_list function
+rule 7    function_and_class_list -> function_and_class_list class_declaration_list
+rule 8    function -> type IDENTIFIER '(' ')' compound_statement
+rule 9    type -> INT
+rule 10   type -> CHAR
+rule 11   type -> FLOAT
+rule 12   type -> ID
+rule 13   numeric_constant -> FLOAT_CONSTANT
+rule 14   numeric_constant -> INTEGER_CONSTANT
+rule 15   literal -> STRING_CONSTANT
+rule 16   literal -> CHAR_CONSTANT
+rule 17   literal -> NSSTRING_CONSTANT
+rule 18   declaration -> type init_declarator_list_e ';'
+rule 19   declaration -> CLASS_NAME init_declarator_with_asterisk_list_e ';'
+rule 20   declaration_list -> declaration
+rule 21   declaration_list -> declaration_list declaration
+rule 22   declaration_list_e ->		/* empty */
+rule 23   declaration_list_e -> declaration_list
+rule 24   init_declarator_list_e ->		/* empty */
+rule 25   init_declarator_list_e -> init_declarator_list
+rule 26   init_declarator_list -> init_declarator
+rule 27   init_declarator_list -> init_declarator_list ',' init_declarator
+rule 28   init_declarator -> declarator
+rule 29   init_declarator -> declarator '=' expression
+rule 30   declarator -> IDENTIFIER
+rule 31   declarator_with_asterisk -> '*' IDENTIFIER
+rule 32   declarator_with_asterisk_list -> declarator_with_asterisk
+rule 33   declarator_with_asterisk_list -> declarator_with_asterisk_list ',' declarator_with_asterisk
+rule 34   declarator_list -> declarator
+rule 35   declarator_list -> declarator_list ',' declarator
+rule 36   init_declarator_with_asterisk -> declarator_with_asterisk
+rule 37   init_declarator_with_asterisk -> declarator_with_asterisk '=' expression
+rule 38   init_declarator_with_asterisk_list -> init_declarator_with_asterisk
+rule 39   init_declarator_with_asterisk_list -> init_declarator_with_asterisk_list ',' init_declarator_with_asterisk
+rule 40   init_declarator_with_asterisk_list_e ->		/* empty */
+rule 41   init_declarator_with_asterisk_list_e -> init_declarator_with_asterisk_list
+rule 42   parameter_list -> parameter_declaration
+rule 43   parameter_list -> parameter_list ',' parameter_declaration
+rule 44   parameter_declaration -> type IDENTIFIER
+rule 45   parameter_declaration -> CLASS_NAME '*' IDENTIFIER
+rule 46   expression -> IDENTIFIER
+rule 47   expression -> literal
+rule 48   expression -> numeric_constant
+rule 49   expression -> '(' expression ')'
+rule 50   expression -> SELF
+rule 51   expression -> '[' receiver message_selector ']'
+rule 52   expression -> IDENTIFIER '(' expression_list_e ')'
+rule 53   expression -> '-' expression
+rule 54   expression -> '+' expression
+rule 55   expression -> '&' expression
+rule 56   expression -> expression '+' expression
+rule 57   expression -> expression '-' expression
+rule 58   expression -> expression '*' expression
+rule 59   expression -> expression '/' expression
+rule 60   expression -> expression EQUAL expression
+rule 61   expression -> expression NOT_EQUAL expression
+rule 62   expression -> expression '>' expression
+rule 63   expression -> expression '<' expression
+rule 64   expression -> expression LESS_EQUAL expression
+rule 65   expression -> expression GREATER_EQUAL expression
+rule 66   expression -> expression '=' expression
+rule 67   expression -> expression '.' IDENTIFIER
+rule 68   expression -> expression ARROW IDENTIFIER
+rule 69   expression_e ->		/* empty */
+rule 70   expression_e -> expression
+rule 71   expression_list_e ->		/* empty */
+rule 72   expression_list_e -> expression_list
+rule 73   expression_list -> expression
+rule 74   expression_list -> expression_list ',' expression
+rule 75   receiver -> SUPER
+rule 76   receiver -> SELF
+rule 77   receiver -> IDENTIFIER
+rule 78   receiver -> CLASS_NAME
+rule 79   receiver -> '[' receiver message_selector ']'
+rule 80   message_selector -> IDENTIFIER
+rule 81   message_selector -> IDENTIFIER ':' expression keyword_argument_list_e
+rule 82   message_selector -> IDENTIFIER ':' expression keyword_argument_list_e ',' expression_list
+rule 83   keyword_argument_list_e ->		/* empty */
+rule 84   keyword_argument_list_e -> keyword_argument_list
+rule 85   keyword_argument_list -> keyword_argument
+rule 86   keyword_argument_list -> keyword_argument_list keyword_argument
+rule 87   keyword_argument -> IDENTIFIER ':' expression
+rule 88   keyword_argument -> ':' expression
+rule 89   if_statement -> IF '(' expression ')' statement
+rule 90   if_statement -> IF '(' expression ')' statement ELSE statement
+rule 91   while_statement -> WHILE '(' expression ')' statement
+rule 92   do_while_statement -> DO statement WHILE '(' expression ')' ';'
+rule 93   for_statement -> FOR '(' expression_e ';' expression_e ';' expression_e ')' statement
+rule 94   for_statement -> FOR '(' type IDENTIFIER '=' expression ';' expression_e ';' expression_e ')' statement
+rule 95   for_statement -> FOR '(' IDENTIFIER IN expression ')' statement
+rule 96   for_statement -> FOR '(' CLASS_NAME '*' IDENTIFIER IN expression ')' statement
+rule 97   statement -> ';'
+rule 98   statement -> expression ';'
+rule 99   statement -> RETURN expression_e ';'
+rule 100  statement -> if_statement
+rule 101  statement -> while_statement
+rule 102  statement -> do_while_statement
+rule 103  statement -> for_statement
+rule 104  statement -> compound_statement
+rule 105  statement -> declaration
+rule 106  compound_statement -> '{' statement_list_e '}'
+rule 107  statement_list -> statement
+rule 108  statement_list -> statement_list statement
+rule 109  statement_list_e ->		/* empty */
+rule 110  statement_list_e -> statement_list
+rule 111  class_block -> class_interface
+rule 112  class_block -> class_implementation
+rule 113  class_interface -> INTERFACE IDENTIFIER ':' IDENTIFIER interface_body_e END
+rule 114  class_interface -> INTERFACE IDENTIFIER interface_body_e END
+rule 115  class_interface -> INTERFACE IDENTIFIER ':' CLASS_NAME interface_body_e END
+rule 116  class_interface -> INTERFACE CLASS_NAME ':' IDENTIFIER interface_body_e END
+rule 117  class_interface -> INTERFACE CLASS_NAME interface_body_e END
+rule 118  class_interface -> INTERFACE CLASS_NAME ':' CLASS_NAME interface_body_e END
+rule 119  interface_body_e ->		/* empty */
+rule 120  interface_body_e -> interface_body
+rule 121  interface_body -> instance_variables interface_declaration_list
+rule 122  interface_body -> interface_declaration_list
+rule 123  implementation_body_e ->		/* empty */
+rule 124  implementation_body_e -> implementation_body
+rule 125  implementation_body -> instance_variables implementation_definition_list
+rule 126  implementation_body -> implementation_definition_list
+rule 127  class_implementation -> IMPLEMENTATION IDENTIFIER implementation_body_e END
+rule 128  class_implementation -> IMPLEMENTATION IDENTIFIER ':' IDENTIFIER implementation_body_e END
+rule 129  class_implementation -> IMPLEMENTATION CLASS_NAME implementation_body_e END
+rule 130  class_implementation -> IMPLEMENTATION CLASS_NAME ':' IDENTIFIER implementation_body_e END
+rule 131  class_implementation -> IMPLEMENTATION IDENTIFIER ':' CLASS_NAME implementation_body_e END
+rule 132  class_implementation -> IMPLEMENTATION CLASS_NAME ':' CLASS_NAME implementation_body_e END
+rule 133  class_declaration_list -> CLASS class_list ';'
+rule 134  class_list -> IDENTIFIER
+rule 135  class_list -> class_list ',' IDENTIFIER
+rule 136  instance_variables -> '{' instance_variables_declaration_list '}'
+rule 137  instance_variables_declaration -> type declarator_list ';'
+rule 138  instance_variables_declaration -> CLASS_NAME declarator_with_asterisk_list ';'
+rule 139  instance_variables_declaration_list -> instance_variables_declaration
+rule 140  instance_variables_declaration_list -> instance_variables_declaration_list instance_variables_declaration
+rule 141  interface_declaration_list -> declaration
+rule 142  interface_declaration_list -> property
+rule 143  interface_declaration_list -> method_declaration
+rule 144  interface_declaration_list -> interface_declaration_list declaration
+rule 145  interface_declaration_list -> interface_declaration_list method_declaration
+rule 146  interface_declaration_list -> interface_declaration_list property
+rule 147  method_declaration -> class_method_declaration
+rule 148  method_declaration -> instance_method_declaration
+rule 149  class_method_declaration -> '+' method_type method_selector ';'
+rule 150  class_method_declaration -> '+' '(' VOID ')' method_selector ';'
+rule 151  class_method_declaration -> '+' method_selector ';'
+rule 152  instance_method_declaration -> '-' method_type method_selector ';'
+rule 153  instance_method_declaration -> '-' '(' VOID ')' method_selector ';'
+rule 154  instance_method_declaration -> '-' method_selector ';'
+rule 155  implementation_definition_list -> declaration
+rule 156  implementation_definition_list -> synthesize
+rule 157  implementation_definition_list -> method_definition
+rule 158  implementation_definition_list -> implementation_definition_list declaration
+rule 159  implementation_definition_list -> implementation_definition_list synthesize
+rule 160  implementation_definition_list -> implementation_definition_list method_definition
+rule 161  method_definition -> class_method_definition
+rule 162  method_definition -> instance_method_definition
+rule 163  class_method_definition -> '+' method_type method_selector declaration_list_e compound_statement
+rule 164  class_method_definition -> '+' '(' VOID ')' method_selector declaration_list_e compound_statement
+rule 165  class_method_definition -> '+' method_selector declaration_list_e compound_statement
+rule 166  instance_method_definition -> '-' method_type method_selector declaration_list_e compound_statement
+rule 167  instance_method_definition -> '-' '(' VOID ')' method_selector declaration_list_e compound_statement
+rule 168  instance_method_definition -> '-' method_selector declaration_list_e compound_statement
+rule 169  method_selector -> IDENTIFIER
+rule 170  method_selector -> IDENTIFIER ':' keyword_declaration_without_identifier keyword_selector_e
+rule 171  method_selector -> IDENTIFIER ':' keyword_declaration_without_identifier keyword_selector_e ',' parameter_list
+rule 172  keyword_selector_e ->		/* empty */
+rule 173  keyword_selector_e -> keyword_selector
+rule 174  keyword_selector -> keyword_declaration
+rule 175  keyword_selector -> keyword_selector keyword_declaration
+rule 176  keyword_declaration_without_identifier -> method_type IDENTIFIER
+rule 177  keyword_declaration_without_identifier -> IDENTIFIER
+rule 178  keyword_declaration -> ':' method_type IDENTIFIER
+rule 179  keyword_declaration -> ':' IDENTIFIER
+rule 180  keyword_declaration -> IDENTIFIER ':' method_type IDENTIFIER
+rule 181  keyword_declaration -> IDENTIFIER ':' IDENTIFIER
+rule 182  method_type -> '(' type ')'
+rule 183  method_type -> '(' CLASS_NAME '*' ')'
+rule 184  property -> PROPERTY '(' attribute ')' type IDENTIFIER ';'
+rule 185  property -> PROPERTY '(' attribute ')' CLASS_NAME '*' IDENTIFIER ';'
+rule 186  property -> PROPERTY type IDENTIFIER ';'
+rule 187  property -> PROPERTY CLASS_NAME '*' IDENTIFIER ';'
+rule 188  property -> PROPERTY '(' ')' type IDENTIFIER ';'
+rule 189  property -> PROPERTY '(' ')' CLASS_NAME '*' IDENTIFIER ';'
+rule 190  attribute -> READONLY
+rule 191  attribute -> READWRITE
+rule 192  synthesize -> SYNTHESIZE IDENTIFIER ';'
+
+Terminals, with rules where they appear
+
+$ (-1)
+'&' (38) 55
+'(' (40) 8 49 52 89 90 91 92 93 94 95 96 150 153 164 167 182 183 184
+    185 188 189
+')' (41) 8 49 52 89 90 91 92 93 94 95 96 150 153 164 167 182 183 184
+    185 188 189
+'*' (42) 31 45 58 96 183 185 187 189
+'+' (43) 54 56 149 150 151 163 164 165
+',' (44) 27 33 35 39 43 74 82 135 171
+'-' (45) 53 57 152 153 154 166 167 168
+'.' (46) 67
+'/' (47) 59
+':' (58) 81 82 87 88 113 115 116 118 128 130 131 132 170 171 178 179
+    180 181
+';' (59) 18 19 92 93 94 97 98 99 133 137 138 149 150 151 152 153 154
+    184 185 186 187 188 189 192
+'<' (60) 63
+'=' (61) 29 37 66 94
+'>' (62) 62
+'[' (91) 51 79
+']' (93) 51 79
+'{' (123) 106 136
+'}' (125) 106 136
+error (256)
+EQUAL (258) 60
+NOT_EQUAL (259) 61
+LESS_EQUAL (260) 64
+GREATER_EQUAL (261) 65
+UMINUS (262)
+UPLUS (263)
+UAMPERSAND (264)
+ARROW (265) 68
+INT (266) 9
+CHAR (267) 10
+FLOAT (268) 11
+VOID (269) 150 153 164 167
+ENUM (270)
+IF (271) 89 90
+ELSE (272) 90
+WHILE (273) 91 92
+DO (274) 92
+FOR (275) 93 94 95 96
+IN (276) 95 96
+INTERFACE (277) 113 114 115 116 117 118
+IMPLEMENTATION (278) 127 128 129 130 131 132
+END (279) 113 114 115 116 117 118 127 128 129 130 131 132
+PROPERTY (280) 184 185 186 187 188 189
+READONLY (281) 190
+READWRITE (282) 191
+SYNTHESIZE (283) 192
+SELF (284) 50 76
+SUPER (285) 75
+ID (286) 12
+CLASS (287) 133
+RETURN (288) 99
+INTEGER_CONSTANT (289) 14
+STRING_CONSTANT (290) 15
+CHAR_CONSTANT (291) 16
+FLOAT_CONSTANT (292) 13
+NSSTRING_CONSTANT (293) 17
+IDENTIFIER (294) 8 30 31 44 45 46 52 67 68 77 80 81 82 87 94 95 96
+    113 114 115 116 127 128 130 131 134 135 169 170 171 176 177 178
+    179 180 181 184 185 186 187 188 189 192
+CLASS_NAME (295) 19 45 78 96 115 116 117 118 129 130 131 132 138 183
+    185 187 189
+
+Nonterminals, with rules where they appear
+
+program (59)
+    on left: 1
+function_and_class_list (60)
+    on left: 2 3 4 5 6 7, on right: 1 5 6 7
+function (61)
+    on left: 8, on right: 3 6
+type (62)
+    on left: 9 10 11 12, on right: 8 18 44 94 137 182 184 186 188
+numeric_constant (63)
+    on left: 13 14, on right: 48
+literal (64)
+    on left: 15 16 17, on right: 47
+declaration (65)
+    on left: 18 19, on right: 20 21 105 141 144 155 158
+declaration_list (66)
+    on left: 20 21, on right: 21 23
+declaration_list_e (67)
+    on left: 22 23, on right: 163 164 165 166 167 168
+init_declarator_list_e (68)
+    on left: 24 25, on right: 18
+init_declarator_list (69)
+    on left: 26 27, on right: 25 27
+init_declarator (70)
+    on left: 28 29, on right: 26 27
+declarator (71)
+    on left: 30, on right: 28 29 34 35
+declarator_with_asterisk (72)
+    on left: 31, on right: 32 33 36 37
+declarator_with_asterisk_list (73)
+    on left: 32 33, on right: 33 138
+declarator_list (74)
+    on left: 34 35, on right: 35 137
+init_declarator_with_asterisk (75)
+    on left: 36 37, on right: 38 39
+init_declarator_with_asterisk_list (76)
+    on left: 38 39, on right: 39 41
+init_declarator_with_asterisk_list_e (77)
+    on left: 40 41, on right: 19
+parameter_list (78)
+    on left: 42 43, on right: 43 171
+parameter_declaration (79)
+    on left: 44 45, on right: 42 43
+expression (80)
+    on left: 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63
+    64 65 66 67 68, on right: 29 37 49 53 54 55 56 57 58 59 60 61 62
+    63 64 65 66 67 68 70 73 74 81 82 87 88 89 90 91 92 94 95 96 98
+expression_e (81)
+    on left: 69 70, on right: 93 94 99
+expression_list_e (82)
+    on left: 71 72, on right: 52
+expression_list (83)
+    on left: 73 74, on right: 72 74 82
+receiver (84)
+    on left: 75 76 77 78 79, on right: 51 79
+message_selector (85)
+    on left: 80 81 82, on right: 51 79
+keyword_argument_list_e (86)
+    on left: 83 84, on right: 81 82
+keyword_argument_list (87)
+    on left: 85 86, on right: 84 86
+keyword_argument (88)
+    on left: 87 88, on right: 85 86
+if_statement (89)
+    on left: 89 90, on right: 100
+while_statement (90)
+    on left: 91, on right: 101
+do_while_statement (91)
+    on left: 92, on right: 102
+for_statement (92)
+    on left: 93 94 95 96, on right: 103
+statement (93)
+    on left: 97 98 99 100 101 102 103 104 105, on right: 89 90 91 92
+    93 94 95 96 107 108
+compound_statement (94)
+    on left: 106, on right: 8 104 163 164 165 166 167 168
+statement_list (95)
+    on left: 107 108, on right: 108 110
+statement_list_e (96)
+    on left: 109 110, on right: 106
+class_block (97)
+    on left: 111 112, on right: 2 5
+class_interface (98)
+    on left: 113 114 115 116 117 118, on right: 111
+interface_body_e (99)
+    on left: 119 120, on right: 113 114 115 116 117 118
+interface_body (100)
+    on left: 121 122, on right: 120
+implementation_body_e (101)
+    on left: 123 124, on right: 127 128 129 130 131 132
+implementation_body (102)
+    on left: 125 126, on right: 124
+class_implementation (103)
+    on left: 127 128 129 130 131 132, on right: 112
+class_declaration_list (104)
+    on left: 133, on right: 4 7
+class_list (105)
+    on left: 134 135, on right: 133 135
+instance_variables (106)
+    on left: 136, on right: 121 125
+instance_variables_declaration (107)
+    on left: 137 138, on right: 139 140
+instance_variables_declaration_list (108)
+    on left: 139 140, on right: 136 140
+interface_declaration_list (109)
+    on left: 141 142 143 144 145 146, on right: 121 122 144 145 146
+method_declaration (110)
+    on left: 147 148, on right: 143 145
+class_method_declaration (111)
+    on left: 149 150 151, on right: 147
+instance_method_declaration (112)
+    on left: 152 153 154, on right: 148
+implementation_definition_list (113)
+    on left: 155 156 157 158 159 160, on right: 125 126 158 159 160
+method_definition (114)
+    on left: 161 162, on right: 157 160
+class_method_definition (115)
+    on left: 163 164 165, on right: 161
+instance_method_definition (116)
+    on left: 166 167 168, on right: 162
+method_selector (117)
+    on left: 169 170 171, on right: 149 150 151 152 153 154 163 164
+    165 166 167 168
+keyword_selector_e (118)
+    on left: 172 173, on right: 170 171
+keyword_selector (119)
+    on left: 174 175, on right: 173 175
+keyword_declaration_without_identifier (120)
+    on left: 176 177, on right: 170 171
+keyword_declaration (121)
+    on left: 178 179 180 181, on right: 174 175
+method_type (122)
+    on left: 182 183, on right: 149 152 163 166 176 178 180
+property (123)
+    on left: 184 185 186 187 188 189, on right: 142 146
+attribute (124)
+    on left: 190 191, on right: 184 185
+synthesize (125)
+    on left: 192, on right: 156 159
+
+
+state 0
+
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    INTERFACE	shift, and go to state 4
+    IMPLEMENTATION	shift, and go to state 5
+    ID  	shift, and go to state 6
+    CLASS	shift, and go to state 7
+
+    program	go to state 396
+    function_and_class_list	go to state 8
+    function	go to state 9
+    type	go to state 10
+    class_block	go to state 11
+    class_interface	go to state 12
+    class_implementation	go to state 13
+    class_declaration_list	go to state 14
+
+
+
+state 1
+
+    type  ->  INT .   (rule 9)
+
+    $default	reduce using rule 9 (type)
+
+
+
+state 2
+
+    type  ->  CHAR .   (rule 10)
+
+    $default	reduce using rule 10 (type)
+
+
+
+state 3
+
+    type  ->  FLOAT .   (rule 11)
+
+    $default	reduce using rule 11 (type)
+
+
+
+state 4
+
+    class_interface  ->  INTERFACE . IDENTIFIER ':' IDENTIFIER interface_body_e END   (rule 113)
+    class_interface  ->  INTERFACE . IDENTIFIER interface_body_e END   (rule 114)
+    class_interface  ->  INTERFACE . IDENTIFIER ':' CLASS_NAME interface_body_e END   (rule 115)
+    class_interface  ->  INTERFACE . CLASS_NAME ':' IDENTIFIER interface_body_e END   (rule 116)
+    class_interface  ->  INTERFACE . CLASS_NAME interface_body_e END   (rule 117)
+    class_interface  ->  INTERFACE . CLASS_NAME ':' CLASS_NAME interface_body_e END   (rule 118)
+
+    IDENTIFIER	shift, and go to state 15
+    CLASS_NAME	shift, and go to state 16
+
+
+
+state 5
+
+    class_implementation  ->  IMPLEMENTATION . IDENTIFIER implementation_body_e END   (rule 127)
+    class_implementation  ->  IMPLEMENTATION . IDENTIFIER ':' IDENTIFIER implementation_body_e END   (rule 128)
+    class_implementation  ->  IMPLEMENTATION . CLASS_NAME implementation_body_e END   (rule 129)
+    class_implementation  ->  IMPLEMENTATION . CLASS_NAME ':' IDENTIFIER implementation_body_e END   (rule 130)
+    class_implementation  ->  IMPLEMENTATION . IDENTIFIER ':' CLASS_NAME implementation_body_e END   (rule 131)
+    class_implementation  ->  IMPLEMENTATION . CLASS_NAME ':' CLASS_NAME implementation_body_e END   (rule 132)
+
+    IDENTIFIER	shift, and go to state 17
+    CLASS_NAME	shift, and go to state 18
+
+
+
+state 6
+
+    type  ->  ID .   (rule 12)
+
+    $default	reduce using rule 12 (type)
+
+
+
+state 7
+
+    class_declaration_list  ->  CLASS . class_list ';'   (rule 133)
+
+    IDENTIFIER	shift, and go to state 19
+
+    class_list	go to state 20
+
+
+
+state 8
+
+    program  ->  function_and_class_list .   (rule 1)
+    function_and_class_list  ->  function_and_class_list . class_block   (rule 5)
+    function_and_class_list  ->  function_and_class_list . function   (rule 6)
+    function_and_class_list  ->  function_and_class_list . class_declaration_list   (rule 7)
+
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    INTERFACE	shift, and go to state 4
+    IMPLEMENTATION	shift, and go to state 5
+    ID  	shift, and go to state 6
+    CLASS	shift, and go to state 7
+
+    $default	reduce using rule 1 (program)
+
+    function	go to state 21
+    type	go to state 10
+    class_block	go to state 22
+    class_interface	go to state 12
+    class_implementation	go to state 13
+    class_declaration_list	go to state 23
+
+
+
+state 9
+
+    function_and_class_list  ->  function .   (rule 3)
+
+    $default	reduce using rule 3 (function_and_class_list)
+
+
+
+state 10
+
+    function  ->  type . IDENTIFIER '(' ')' compound_statement   (rule 8)
+
+    IDENTIFIER	shift, and go to state 24
+
+
+
+state 11
+
+    function_and_class_list  ->  class_block .   (rule 2)
+
+    $default	reduce using rule 2 (function_and_class_list)
+
+
+
+state 12
+
+    class_block  ->  class_interface .   (rule 111)
+
+    $default	reduce using rule 111 (class_block)
+
+
+
+state 13
+
+    class_block  ->  class_implementation .   (rule 112)
+
+    $default	reduce using rule 112 (class_block)
+
+
+
+state 14
+
+    function_and_class_list  ->  class_declaration_list .   (rule 4)
+
+    $default	reduce using rule 4 (function_and_class_list)
+
+
+
+state 15
+
+    class_interface  ->  INTERFACE IDENTIFIER . ':' IDENTIFIER interface_body_e END   (rule 113)
+    class_interface  ->  INTERFACE IDENTIFIER . interface_body_e END   (rule 114)
+    class_interface  ->  INTERFACE IDENTIFIER . ':' CLASS_NAME interface_body_e END   (rule 115)
+
+    '+' 	shift, and go to state 25
+    '-' 	shift, and go to state 26
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    PROPERTY	shift, and go to state 27
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 28
+    ':' 	shift, and go to state 29
+    '{' 	shift, and go to state 30
+
+    $default	reduce using rule 119 (interface_body_e)
+
+    type	go to state 31
+    declaration	go to state 32
+    interface_body_e	go to state 33
+    interface_body	go to state 34
+    instance_variables	go to state 35
+    interface_declaration_list	go to state 36
+    method_declaration	go to state 37
+    class_method_declaration	go to state 38
+    instance_method_declaration	go to state 39
+    property	go to state 40
+
+
+
+state 16
+
+    class_interface  ->  INTERFACE CLASS_NAME . ':' IDENTIFIER interface_body_e END   (rule 116)
+    class_interface  ->  INTERFACE CLASS_NAME . interface_body_e END   (rule 117)
+    class_interface  ->  INTERFACE CLASS_NAME . ':' CLASS_NAME interface_body_e END   (rule 118)
+
+    '+' 	shift, and go to state 25
+    '-' 	shift, and go to state 26
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    PROPERTY	shift, and go to state 27
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 28
+    ':' 	shift, and go to state 41
+    '{' 	shift, and go to state 30
+
+    $default	reduce using rule 119 (interface_body_e)
+
+    type	go to state 31
+    declaration	go to state 32
+    interface_body_e	go to state 42
+    interface_body	go to state 34
+    instance_variables	go to state 35
+    interface_declaration_list	go to state 36
+    method_declaration	go to state 37
+    class_method_declaration	go to state 38
+    instance_method_declaration	go to state 39
+    property	go to state 40
+
+
+
+state 17
+
+    class_implementation  ->  IMPLEMENTATION IDENTIFIER . implementation_body_e END   (rule 127)
+    class_implementation  ->  IMPLEMENTATION IDENTIFIER . ':' IDENTIFIER implementation_body_e END   (rule 128)
+    class_implementation  ->  IMPLEMENTATION IDENTIFIER . ':' CLASS_NAME implementation_body_e END   (rule 131)
+
+    '+' 	shift, and go to state 43
+    '-' 	shift, and go to state 44
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    SYNTHESIZE	shift, and go to state 45
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 28
+    ':' 	shift, and go to state 46
+    '{' 	shift, and go to state 30
+
+    $default	reduce using rule 123 (implementation_body_e)
+
+    type	go to state 31
+    declaration	go to state 47
+    implementation_body_e	go to state 48
+    implementation_body	go to state 49
+    instance_variables	go to state 50
+    implementation_definition_list	go to state 51
+    method_definition	go to state 52
+    class_method_definition	go to state 53
+    instance_method_definition	go to state 54
+    synthesize	go to state 55
+
+
+
+state 18
+
+    class_implementation  ->  IMPLEMENTATION CLASS_NAME . implementation_body_e END   (rule 129)
+    class_implementation  ->  IMPLEMENTATION CLASS_NAME . ':' IDENTIFIER implementation_body_e END   (rule 130)
+    class_implementation  ->  IMPLEMENTATION CLASS_NAME . ':' CLASS_NAME implementation_body_e END   (rule 132)
+
+    '+' 	shift, and go to state 43
+    '-' 	shift, and go to state 44
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    SYNTHESIZE	shift, and go to state 45
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 28
+    ':' 	shift, and go to state 56
+    '{' 	shift, and go to state 30
+
+    $default	reduce using rule 123 (implementation_body_e)
+
+    type	go to state 31
+    declaration	go to state 47
+    implementation_body_e	go to state 57
+    implementation_body	go to state 49
+    instance_variables	go to state 50
+    implementation_definition_list	go to state 51
+    method_definition	go to state 52
+    class_method_definition	go to state 53
+    instance_method_definition	go to state 54
+    synthesize	go to state 55
+
+
+
+state 19
+
+    class_list  ->  IDENTIFIER .   (rule 134)
+
+    $default	reduce using rule 134 (class_list)
+
+
+
+state 20
+
+    class_declaration_list  ->  CLASS class_list . ';'   (rule 133)
+    class_list  ->  class_list . ',' IDENTIFIER   (rule 135)
+
+    ';' 	shift, and go to state 58
+    ',' 	shift, and go to state 59
+
+
+
+state 21
+
+    function_and_class_list  ->  function_and_class_list function .   (rule 6)
+
+    $default	reduce using rule 6 (function_and_class_list)
+
+
+
+state 22
+
+    function_and_class_list  ->  function_and_class_list class_block .   (rule 5)
+
+    $default	reduce using rule 5 (function_and_class_list)
+
+
+
+state 23
+
+    function_and_class_list  ->  function_and_class_list class_declaration_list .   (rule 7)
+
+    $default	reduce using rule 7 (function_and_class_list)
+
+
+
+state 24
+
+    function  ->  type IDENTIFIER . '(' ')' compound_statement   (rule 8)
+
+    '(' 	shift, and go to state 60
+
+
+
+state 25
+
+    class_method_declaration  ->  '+' . method_type method_selector ';'   (rule 149)
+    class_method_declaration  ->  '+' . '(' VOID ')' method_selector ';'   (rule 150)
+    class_method_declaration  ->  '+' . method_selector ';'   (rule 151)
+
+    '(' 	shift, and go to state 61
+    IDENTIFIER	shift, and go to state 62
+
+    method_selector	go to state 63
+    method_type	go to state 64
+
+
+
+state 26
+
+    instance_method_declaration  ->  '-' . method_type method_selector ';'   (rule 152)
+    instance_method_declaration  ->  '-' . '(' VOID ')' method_selector ';'   (rule 153)
+    instance_method_declaration  ->  '-' . method_selector ';'   (rule 154)
+
+    '(' 	shift, and go to state 65
+    IDENTIFIER	shift, and go to state 62
+
+    method_selector	go to state 66
+    method_type	go to state 67
+
+
+
+state 27
+
+    property  ->  PROPERTY . '(' attribute ')' type IDENTIFIER ';'   (rule 184)
+    property  ->  PROPERTY . '(' attribute ')' CLASS_NAME '*' IDENTIFIER ';'   (rule 185)
+    property  ->  PROPERTY . type IDENTIFIER ';'   (rule 186)
+    property  ->  PROPERTY . CLASS_NAME '*' IDENTIFIER ';'   (rule 187)
+    property  ->  PROPERTY . '(' ')' type IDENTIFIER ';'   (rule 188)
+    property  ->  PROPERTY . '(' ')' CLASS_NAME '*' IDENTIFIER ';'   (rule 189)
+
+    '(' 	shift, and go to state 68
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 69
+
+    type	go to state 70
+
+
+
+state 28
+
+    declaration  ->  CLASS_NAME . init_declarator_with_asterisk_list_e ';'   (rule 19)
+
+    '*' 	shift, and go to state 71
+
+    $default	reduce using rule 40 (init_declarator_with_asterisk_list_e)
+
+    declarator_with_asterisk	go to state 72
+    init_declarator_with_asterisk	go to state 73
+    init_declarator_with_asterisk_list	go to state 74
+    init_declarator_with_asterisk_list_e	go to state 75
+
+
+
+state 29
+
+    class_interface  ->  INTERFACE IDENTIFIER ':' . IDENTIFIER interface_body_e END   (rule 113)
+    class_interface  ->  INTERFACE IDENTIFIER ':' . CLASS_NAME interface_body_e END   (rule 115)
+
+    IDENTIFIER	shift, and go to state 76
+    CLASS_NAME	shift, and go to state 77
+
+
+
+state 30
+
+    instance_variables  ->  '{' . instance_variables_declaration_list '}'   (rule 136)
+
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 78
+
+    type	go to state 79
+    instance_variables_declaration	go to state 80
+    instance_variables_declaration_list	go to state 81
+
+
+
+state 31
+
+    declaration  ->  type . init_declarator_list_e ';'   (rule 18)
+
+    IDENTIFIER	shift, and go to state 82
+
+    $default	reduce using rule 24 (init_declarator_list_e)
+
+    init_declarator_list_e	go to state 83
+    init_declarator_list	go to state 84
+    init_declarator	go to state 85
+    declarator	go to state 86
+
+
+
+state 32
+
+    interface_declaration_list  ->  declaration .   (rule 141)
+
+    $default	reduce using rule 141 (interface_declaration_list)
+
+
+
+state 33
+
+    class_interface  ->  INTERFACE IDENTIFIER interface_body_e . END   (rule 114)
+
+    END 	shift, and go to state 87
+
+
+
+state 34
+
+    interface_body_e  ->  interface_body .   (rule 120)
+
+    $default	reduce using rule 120 (interface_body_e)
+
+
+
+state 35
+
+    interface_body  ->  instance_variables . interface_declaration_list   (rule 121)
+
+    '+' 	shift, and go to state 25
+    '-' 	shift, and go to state 26
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    PROPERTY	shift, and go to state 27
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 28
+
+    type	go to state 31
+    declaration	go to state 32
+    interface_declaration_list	go to state 88
+    method_declaration	go to state 37
+    class_method_declaration	go to state 38
+    instance_method_declaration	go to state 39
+    property	go to state 40
+
+
+
+state 36
+
+    interface_body  ->  interface_declaration_list .   (rule 122)
+    interface_declaration_list  ->  interface_declaration_list . declaration   (rule 144)
+    interface_declaration_list  ->  interface_declaration_list . method_declaration   (rule 145)
+    interface_declaration_list  ->  interface_declaration_list . property   (rule 146)
+
+    '+' 	shift, and go to state 25
+    '-' 	shift, and go to state 26
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    PROPERTY	shift, and go to state 27
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 28
+
+    $default	reduce using rule 122 (interface_body)
+
+    type	go to state 31
+    declaration	go to state 89
+    method_declaration	go to state 90
+    class_method_declaration	go to state 38
+    instance_method_declaration	go to state 39
+    property	go to state 91
+
+
+
+state 37
+
+    interface_declaration_list  ->  method_declaration .   (rule 143)
+
+    $default	reduce using rule 143 (interface_declaration_list)
+
+
+
+state 38
+
+    method_declaration  ->  class_method_declaration .   (rule 147)
+
+    $default	reduce using rule 147 (method_declaration)
+
+
+
+state 39
+
+    method_declaration  ->  instance_method_declaration .   (rule 148)
+
+    $default	reduce using rule 148 (method_declaration)
+
+
+
+state 40
+
+    interface_declaration_list  ->  property .   (rule 142)
+
+    $default	reduce using rule 142 (interface_declaration_list)
+
+
+
+state 41
+
+    class_interface  ->  INTERFACE CLASS_NAME ':' . IDENTIFIER interface_body_e END   (rule 116)
+    class_interface  ->  INTERFACE CLASS_NAME ':' . CLASS_NAME interface_body_e END   (rule 118)
+
+    IDENTIFIER	shift, and go to state 92
+    CLASS_NAME	shift, and go to state 93
+
+
+
+state 42
+
+    class_interface  ->  INTERFACE CLASS_NAME interface_body_e . END   (rule 117)
+
+    END 	shift, and go to state 94
+
+
+
+state 43
+
+    class_method_definition  ->  '+' . method_type method_selector declaration_list_e compound_statement   (rule 163)
+    class_method_definition  ->  '+' . '(' VOID ')' method_selector declaration_list_e compound_statement   (rule 164)
+    class_method_definition  ->  '+' . method_selector declaration_list_e compound_statement   (rule 165)
+
+    '(' 	shift, and go to state 95
+    IDENTIFIER	shift, and go to state 62
+
+    method_selector	go to state 96
+    method_type	go to state 97
+
+
+
+state 44
+
+    instance_method_definition  ->  '-' . method_type method_selector declaration_list_e compound_statement   (rule 166)
+    instance_method_definition  ->  '-' . '(' VOID ')' method_selector declaration_list_e compound_statement   (rule 167)
+    instance_method_definition  ->  '-' . method_selector declaration_list_e compound_statement   (rule 168)
+
+    '(' 	shift, and go to state 98
+    IDENTIFIER	shift, and go to state 62
+
+    method_selector	go to state 99
+    method_type	go to state 100
+
+
+
+state 45
+
+    synthesize  ->  SYNTHESIZE . IDENTIFIER ';'   (rule 192)
+
+    IDENTIFIER	shift, and go to state 101
+
+
+
+state 46
+
+    class_implementation  ->  IMPLEMENTATION IDENTIFIER ':' . IDENTIFIER implementation_body_e END   (rule 128)
+    class_implementation  ->  IMPLEMENTATION IDENTIFIER ':' . CLASS_NAME implementation_body_e END   (rule 131)
+
+    IDENTIFIER	shift, and go to state 102
+    CLASS_NAME	shift, and go to state 103
+
+
+
+state 47
+
+    implementation_definition_list  ->  declaration .   (rule 155)
+
+    $default	reduce using rule 155 (implementation_definition_list)
+
+
+
+state 48
+
+    class_implementation  ->  IMPLEMENTATION IDENTIFIER implementation_body_e . END   (rule 127)
+
+    END 	shift, and go to state 104
+
+
+
+state 49
+
+    implementation_body_e  ->  implementation_body .   (rule 124)
+
+    $default	reduce using rule 124 (implementation_body_e)
+
+
+
+state 50
+
+    implementation_body  ->  instance_variables . implementation_definition_list   (rule 125)
+
+    '+' 	shift, and go to state 43
+    '-' 	shift, and go to state 44
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    SYNTHESIZE	shift, and go to state 45
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 28
+
+    type	go to state 31
+    declaration	go to state 47
+    implementation_definition_list	go to state 105
+    method_definition	go to state 52
+    class_method_definition	go to state 53
+    instance_method_definition	go to state 54
+    synthesize	go to state 55
+
+
+
+state 51
+
+    implementation_body  ->  implementation_definition_list .   (rule 126)
+    implementation_definition_list  ->  implementation_definition_list . declaration   (rule 158)
+    implementation_definition_list  ->  implementation_definition_list . synthesize   (rule 159)
+    implementation_definition_list  ->  implementation_definition_list . method_definition   (rule 160)
+
+    '+' 	shift, and go to state 43
+    '-' 	shift, and go to state 44
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    SYNTHESIZE	shift, and go to state 45
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 28
+
+    $default	reduce using rule 126 (implementation_body)
+
+    type	go to state 31
+    declaration	go to state 106
+    method_definition	go to state 107
+    class_method_definition	go to state 53
+    instance_method_definition	go to state 54
+    synthesize	go to state 108
+
+
+
+state 52
+
+    implementation_definition_list  ->  method_definition .   (rule 157)
+
+    $default	reduce using rule 157 (implementation_definition_list)
+
+
+
+state 53
+
+    method_definition  ->  class_method_definition .   (rule 161)
+
+    $default	reduce using rule 161 (method_definition)
+
+
+
+state 54
+
+    method_definition  ->  instance_method_definition .   (rule 162)
+
+    $default	reduce using rule 162 (method_definition)
+
+
+
+state 55
+
+    implementation_definition_list  ->  synthesize .   (rule 156)
+
+    $default	reduce using rule 156 (implementation_definition_list)
+
+
+
+state 56
+
+    class_implementation  ->  IMPLEMENTATION CLASS_NAME ':' . IDENTIFIER implementation_body_e END   (rule 130)
+    class_implementation  ->  IMPLEMENTATION CLASS_NAME ':' . CLASS_NAME implementation_body_e END   (rule 132)
+
+    IDENTIFIER	shift, and go to state 109
+    CLASS_NAME	shift, and go to state 110
+
+
+
+state 57
+
+    class_implementation  ->  IMPLEMENTATION CLASS_NAME implementation_body_e . END   (rule 129)
+
+    END 	shift, and go to state 111
+
+
+
+state 58
+
+    class_declaration_list  ->  CLASS class_list ';' .   (rule 133)
+
+    $default	reduce using rule 133 (class_declaration_list)
+
+
+
+state 59
+
+    class_list  ->  class_list ',' . IDENTIFIER   (rule 135)
+
+    IDENTIFIER	shift, and go to state 112
+
+
+
+state 60
+
+    function  ->  type IDENTIFIER '(' . ')' compound_statement   (rule 8)
+
+    ')' 	shift, and go to state 113
+
+
+
+state 61
+
+    class_method_declaration  ->  '+' '(' . VOID ')' method_selector ';'   (rule 150)
+    method_type  ->  '(' . type ')'   (rule 182)
+    method_type  ->  '(' . CLASS_NAME '*' ')'   (rule 183)
+
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    VOID	shift, and go to state 114
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 115
+
+    type	go to state 116
+
+
+
+state 62
+
+    method_selector  ->  IDENTIFIER .   (rule 169)
+    method_selector  ->  IDENTIFIER . ':' keyword_declaration_without_identifier keyword_selector_e   (rule 170)
+    method_selector  ->  IDENTIFIER . ':' keyword_declaration_without_identifier keyword_selector_e ',' parameter_list   (rule 171)
+
+    ':' 	shift, and go to state 117
+
+    $default	reduce using rule 169 (method_selector)
+
+
+
+state 63
+
+    class_method_declaration  ->  '+' method_selector . ';'   (rule 151)
+
+    ';' 	shift, and go to state 118
+
+
+
+state 64
+
+    class_method_declaration  ->  '+' method_type . method_selector ';'   (rule 149)
+
+    IDENTIFIER	shift, and go to state 62
+
+    method_selector	go to state 119
+
+
+
+state 65
+
+    instance_method_declaration  ->  '-' '(' . VOID ')' method_selector ';'   (rule 153)
+    method_type  ->  '(' . type ')'   (rule 182)
+    method_type  ->  '(' . CLASS_NAME '*' ')'   (rule 183)
+
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    VOID	shift, and go to state 120
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 115
+
+    type	go to state 116
+
+
+
+state 66
+
+    instance_method_declaration  ->  '-' method_selector . ';'   (rule 154)
+
+    ';' 	shift, and go to state 121
+
+
+
+state 67
+
+    instance_method_declaration  ->  '-' method_type . method_selector ';'   (rule 152)
+
+    IDENTIFIER	shift, and go to state 62
+
+    method_selector	go to state 122
+
+
+
+state 68
+
+    property  ->  PROPERTY '(' . attribute ')' type IDENTIFIER ';'   (rule 184)
+    property  ->  PROPERTY '(' . attribute ')' CLASS_NAME '*' IDENTIFIER ';'   (rule 185)
+    property  ->  PROPERTY '(' . ')' type IDENTIFIER ';'   (rule 188)
+    property  ->  PROPERTY '(' . ')' CLASS_NAME '*' IDENTIFIER ';'   (rule 189)
+
+    ')' 	shift, and go to state 123
+    READONLY	shift, and go to state 124
+    READWRITE	shift, and go to state 125
+
+    attribute	go to state 126
+
+
+
+state 69
+
+    property  ->  PROPERTY CLASS_NAME . '*' IDENTIFIER ';'   (rule 187)
+
+    '*' 	shift, and go to state 127
+
+
+
+state 70
+
+    property  ->  PROPERTY type . IDENTIFIER ';'   (rule 186)
+
+    IDENTIFIER	shift, and go to state 128
+
+
+
+state 71
+
+    declarator_with_asterisk  ->  '*' . IDENTIFIER   (rule 31)
+
+    IDENTIFIER	shift, and go to state 129
+
+
+
+state 72
+
+    init_declarator_with_asterisk  ->  declarator_with_asterisk .   (rule 36)
+    init_declarator_with_asterisk  ->  declarator_with_asterisk . '=' expression   (rule 37)
+
+    '=' 	shift, and go to state 130
+
+    $default	reduce using rule 36 (init_declarator_with_asterisk)
+
+
+
+state 73
+
+    init_declarator_with_asterisk_list  ->  init_declarator_with_asterisk .   (rule 38)
+
+    $default	reduce using rule 38 (init_declarator_with_asterisk_list)
+
+
+
+state 74
+
+    init_declarator_with_asterisk_list  ->  init_declarator_with_asterisk_list . ',' init_declarator_with_asterisk   (rule 39)
+    init_declarator_with_asterisk_list_e  ->  init_declarator_with_asterisk_list .   (rule 41)
+
+    ',' 	shift, and go to state 131
+
+    $default	reduce using rule 41 (init_declarator_with_asterisk_list_e)
+
+
+
+state 75
+
+    declaration  ->  CLASS_NAME init_declarator_with_asterisk_list_e . ';'   (rule 19)
+
+    ';' 	shift, and go to state 132
+
+
+
+state 76
+
+    class_interface  ->  INTERFACE IDENTIFIER ':' IDENTIFIER . interface_body_e END   (rule 113)
+
+    '+' 	shift, and go to state 25
+    '-' 	shift, and go to state 26
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    PROPERTY	shift, and go to state 27
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 28
+    '{' 	shift, and go to state 30
+
+    $default	reduce using rule 119 (interface_body_e)
+
+    type	go to state 31
+    declaration	go to state 32
+    interface_body_e	go to state 133
+    interface_body	go to state 34
+    instance_variables	go to state 35
+    interface_declaration_list	go to state 36
+    method_declaration	go to state 37
+    class_method_declaration	go to state 38
+    instance_method_declaration	go to state 39
+    property	go to state 40
+
+
+
+state 77
+
+    class_interface  ->  INTERFACE IDENTIFIER ':' CLASS_NAME . interface_body_e END   (rule 115)
+
+    '+' 	shift, and go to state 25
+    '-' 	shift, and go to state 26
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    PROPERTY	shift, and go to state 27
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 28
+    '{' 	shift, and go to state 30
+
+    $default	reduce using rule 119 (interface_body_e)
+
+    type	go to state 31
+    declaration	go to state 32
+    interface_body_e	go to state 134
+    interface_body	go to state 34
+    instance_variables	go to state 35
+    interface_declaration_list	go to state 36
+    method_declaration	go to state 37
+    class_method_declaration	go to state 38
+    instance_method_declaration	go to state 39
+    property	go to state 40
+
+
+
+state 78
+
+    instance_variables_declaration  ->  CLASS_NAME . declarator_with_asterisk_list ';'   (rule 138)
+
+    '*' 	shift, and go to state 71
+
+    declarator_with_asterisk	go to state 135
+    declarator_with_asterisk_list	go to state 136
+
+
+
+state 79
+
+    instance_variables_declaration  ->  type . declarator_list ';'   (rule 137)
+
+    IDENTIFIER	shift, and go to state 82
+
+    declarator	go to state 137
+    declarator_list	go to state 138
+
+
+
+state 80
+
+    instance_variables_declaration_list  ->  instance_variables_declaration .   (rule 139)
+
+    $default	reduce using rule 139 (instance_variables_declaration_list)
+
+
+
+state 81
+
+    instance_variables  ->  '{' instance_variables_declaration_list . '}'   (rule 136)
+    instance_variables_declaration_list  ->  instance_variables_declaration_list . instance_variables_declaration   (rule 140)
+
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 78
+    '}' 	shift, and go to state 139
+
+    type	go to state 79
+    instance_variables_declaration	go to state 140
+
+
+
+state 82
+
+    declarator  ->  IDENTIFIER .   (rule 30)
+
+    $default	reduce using rule 30 (declarator)
+
+
+
+state 83
+
+    declaration  ->  type init_declarator_list_e . ';'   (rule 18)
+
+    ';' 	shift, and go to state 141
+
+
+
+state 84
+
+    init_declarator_list_e  ->  init_declarator_list .   (rule 25)
+    init_declarator_list  ->  init_declarator_list . ',' init_declarator   (rule 27)
+
+    ',' 	shift, and go to state 142
+
+    $default	reduce using rule 25 (init_declarator_list_e)
+
+
+
+state 85
+
+    init_declarator_list  ->  init_declarator .   (rule 26)
+
+    $default	reduce using rule 26 (init_declarator_list)
+
+
+
+state 86
+
+    init_declarator  ->  declarator .   (rule 28)
+    init_declarator  ->  declarator . '=' expression   (rule 29)
+
+    '=' 	shift, and go to state 143
+
+    $default	reduce using rule 28 (init_declarator)
+
+
+
+state 87
+
+    class_interface  ->  INTERFACE IDENTIFIER interface_body_e END .   (rule 114)
+
+    $default	reduce using rule 114 (class_interface)
+
+
+
+state 88
+
+    interface_body  ->  instance_variables interface_declaration_list .   (rule 121)
+    interface_declaration_list  ->  interface_declaration_list . declaration   (rule 144)
+    interface_declaration_list  ->  interface_declaration_list . method_declaration   (rule 145)
+    interface_declaration_list  ->  interface_declaration_list . property   (rule 146)
+
+    '+' 	shift, and go to state 25
+    '-' 	shift, and go to state 26
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    PROPERTY	shift, and go to state 27
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 28
+
+    $default	reduce using rule 121 (interface_body)
+
+    type	go to state 31
+    declaration	go to state 89
+    method_declaration	go to state 90
+    class_method_declaration	go to state 38
+    instance_method_declaration	go to state 39
+    property	go to state 91
+
+
+
+state 89
+
+    interface_declaration_list  ->  interface_declaration_list declaration .   (rule 144)
+
+    $default	reduce using rule 144 (interface_declaration_list)
+
+
+
+state 90
+
+    interface_declaration_list  ->  interface_declaration_list method_declaration .   (rule 145)
+
+    $default	reduce using rule 145 (interface_declaration_list)
+
+
+
+state 91
+
+    interface_declaration_list  ->  interface_declaration_list property .   (rule 146)
+
+    $default	reduce using rule 146 (interface_declaration_list)
+
+
+
+state 92
+
+    class_interface  ->  INTERFACE CLASS_NAME ':' IDENTIFIER . interface_body_e END   (rule 116)
+
+    '+' 	shift, and go to state 25
+    '-' 	shift, and go to state 26
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    PROPERTY	shift, and go to state 27
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 28
+    '{' 	shift, and go to state 30
+
+    $default	reduce using rule 119 (interface_body_e)
+
+    type	go to state 31
+    declaration	go to state 32
+    interface_body_e	go to state 144
+    interface_body	go to state 34
+    instance_variables	go to state 35
+    interface_declaration_list	go to state 36
+    method_declaration	go to state 37
+    class_method_declaration	go to state 38
+    instance_method_declaration	go to state 39
+    property	go to state 40
+
+
+
+state 93
+
+    class_interface  ->  INTERFACE CLASS_NAME ':' CLASS_NAME . interface_body_e END   (rule 118)
+
+    '+' 	shift, and go to state 25
+    '-' 	shift, and go to state 26
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    PROPERTY	shift, and go to state 27
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 28
+    '{' 	shift, and go to state 30
+
+    $default	reduce using rule 119 (interface_body_e)
+
+    type	go to state 31
+    declaration	go to state 32
+    interface_body_e	go to state 145
+    interface_body	go to state 34
+    instance_variables	go to state 35
+    interface_declaration_list	go to state 36
+    method_declaration	go to state 37
+    class_method_declaration	go to state 38
+    instance_method_declaration	go to state 39
+    property	go to state 40
+
+
+
+state 94
+
+    class_interface  ->  INTERFACE CLASS_NAME interface_body_e END .   (rule 117)
+
+    $default	reduce using rule 117 (class_interface)
+
+
+
+state 95
+
+    class_method_definition  ->  '+' '(' . VOID ')' method_selector declaration_list_e compound_statement   (rule 164)
+    method_type  ->  '(' . type ')'   (rule 182)
+    method_type  ->  '(' . CLASS_NAME '*' ')'   (rule 183)
+
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    VOID	shift, and go to state 146
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 115
+
+    type	go to state 116
+
+
+
+state 96
+
+    class_method_definition  ->  '+' method_selector . declaration_list_e compound_statement   (rule 165)
+
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 28
+
+    $default	reduce using rule 22 (declaration_list_e)
+
+    type	go to state 31
+    declaration	go to state 147
+    declaration_list	go to state 148
+    declaration_list_e	go to state 149
+
+
+
+state 97
+
+    class_method_definition  ->  '+' method_type . method_selector declaration_list_e compound_statement   (rule 163)
+
+    IDENTIFIER	shift, and go to state 62
+
+    method_selector	go to state 150
+
+
+
+state 98
+
+    instance_method_definition  ->  '-' '(' . VOID ')' method_selector declaration_list_e compound_statement   (rule 167)
+    method_type  ->  '(' . type ')'   (rule 182)
+    method_type  ->  '(' . CLASS_NAME '*' ')'   (rule 183)
+
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    VOID	shift, and go to state 151
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 115
+
+    type	go to state 116
+
+
+
+state 99
+
+    instance_method_definition  ->  '-' method_selector . declaration_list_e compound_statement   (rule 168)
+
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 28
+
+    $default	reduce using rule 22 (declaration_list_e)
+
+    type	go to state 31
+    declaration	go to state 147
+    declaration_list	go to state 148
+    declaration_list_e	go to state 152
+
+
+
+state 100
+
+    instance_method_definition  ->  '-' method_type . method_selector declaration_list_e compound_statement   (rule 166)
+
+    IDENTIFIER	shift, and go to state 62
+
+    method_selector	go to state 153
+
+
+
+state 101
+
+    synthesize  ->  SYNTHESIZE IDENTIFIER . ';'   (rule 192)
+
+    ';' 	shift, and go to state 154
+
+
+
+state 102
+
+    class_implementation  ->  IMPLEMENTATION IDENTIFIER ':' IDENTIFIER . implementation_body_e END   (rule 128)
+
+    '+' 	shift, and go to state 43
+    '-' 	shift, and go to state 44
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    SYNTHESIZE	shift, and go to state 45
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 28
+    '{' 	shift, and go to state 30
+
+    $default	reduce using rule 123 (implementation_body_e)
+
+    type	go to state 31
+    declaration	go to state 47
+    implementation_body_e	go to state 155
+    implementation_body	go to state 49
+    instance_variables	go to state 50
+    implementation_definition_list	go to state 51
+    method_definition	go to state 52
+    class_method_definition	go to state 53
+    instance_method_definition	go to state 54
+    synthesize	go to state 55
+
+
+
+state 103
+
+    class_implementation  ->  IMPLEMENTATION IDENTIFIER ':' CLASS_NAME . implementation_body_e END   (rule 131)
+
+    '+' 	shift, and go to state 43
+    '-' 	shift, and go to state 44
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    SYNTHESIZE	shift, and go to state 45
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 28
+    '{' 	shift, and go to state 30
+
+    $default	reduce using rule 123 (implementation_body_e)
+
+    type	go to state 31
+    declaration	go to state 47
+    implementation_body_e	go to state 156
+    implementation_body	go to state 49
+    instance_variables	go to state 50
+    implementation_definition_list	go to state 51
+    method_definition	go to state 52
+    class_method_definition	go to state 53
+    instance_method_definition	go to state 54
+    synthesize	go to state 55
+
+
+
+state 104
+
+    class_implementation  ->  IMPLEMENTATION IDENTIFIER implementation_body_e END .   (rule 127)
+
+    $default	reduce using rule 127 (class_implementation)
+
+
+
+state 105
+
+    implementation_body  ->  instance_variables implementation_definition_list .   (rule 125)
+    implementation_definition_list  ->  implementation_definition_list . declaration   (rule 158)
+    implementation_definition_list  ->  implementation_definition_list . synthesize   (rule 159)
+    implementation_definition_list  ->  implementation_definition_list . method_definition   (rule 160)
+
+    '+' 	shift, and go to state 43
+    '-' 	shift, and go to state 44
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    SYNTHESIZE	shift, and go to state 45
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 28
+
+    $default	reduce using rule 125 (implementation_body)
+
+    type	go to state 31
+    declaration	go to state 106
+    method_definition	go to state 107
+    class_method_definition	go to state 53
+    instance_method_definition	go to state 54
+    synthesize	go to state 108
+
+
+
+state 106
+
+    implementation_definition_list  ->  implementation_definition_list declaration .   (rule 158)
+
+    $default	reduce using rule 158 (implementation_definition_list)
+
+
+
+state 107
+
+    implementation_definition_list  ->  implementation_definition_list method_definition .   (rule 160)
+
+    $default	reduce using rule 160 (implementation_definition_list)
+
+
+
+state 108
+
+    implementation_definition_list  ->  implementation_definition_list synthesize .   (rule 159)
+
+    $default	reduce using rule 159 (implementation_definition_list)
+
+
+
+state 109
+
+    class_implementation  ->  IMPLEMENTATION CLASS_NAME ':' IDENTIFIER . implementation_body_e END   (rule 130)
+
+    '+' 	shift, and go to state 43
+    '-' 	shift, and go to state 44
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    SYNTHESIZE	shift, and go to state 45
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 28
+    '{' 	shift, and go to state 30
+
+    $default	reduce using rule 123 (implementation_body_e)
+
+    type	go to state 31
+    declaration	go to state 47
+    implementation_body_e	go to state 157
+    implementation_body	go to state 49
+    instance_variables	go to state 50
+    implementation_definition_list	go to state 51
+    method_definition	go to state 52
+    class_method_definition	go to state 53
+    instance_method_definition	go to state 54
+    synthesize	go to state 55
+
+
+
+state 110
+
+    class_implementation  ->  IMPLEMENTATION CLASS_NAME ':' CLASS_NAME . implementation_body_e END   (rule 132)
+
+    '+' 	shift, and go to state 43
+    '-' 	shift, and go to state 44
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    SYNTHESIZE	shift, and go to state 45
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 28
+    '{' 	shift, and go to state 30
+
+    $default	reduce using rule 123 (implementation_body_e)
+
+    type	go to state 31
+    declaration	go to state 47
+    implementation_body_e	go to state 158
+    implementation_body	go to state 49
+    instance_variables	go to state 50
+    implementation_definition_list	go to state 51
+    method_definition	go to state 52
+    class_method_definition	go to state 53
+    instance_method_definition	go to state 54
+    synthesize	go to state 55
+
+
+
+state 111
+
+    class_implementation  ->  IMPLEMENTATION CLASS_NAME implementation_body_e END .   (rule 129)
+
+    $default	reduce using rule 129 (class_implementation)
+
+
+
+state 112
+
+    class_list  ->  class_list ',' IDENTIFIER .   (rule 135)
+
+    $default	reduce using rule 135 (class_list)
+
+
+
+state 113
+
+    function  ->  type IDENTIFIER '(' ')' . compound_statement   (rule 8)
+
+    '{' 	shift, and go to state 159
+
+    compound_statement	go to state 160
+
+
+
+state 114
+
+    class_method_declaration  ->  '+' '(' VOID . ')' method_selector ';'   (rule 150)
+
+    ')' 	shift, and go to state 161
+
+
+
+state 115
+
+    method_type  ->  '(' CLASS_NAME . '*' ')'   (rule 183)
+
+    '*' 	shift, and go to state 162
+
+
+
+state 116
+
+    method_type  ->  '(' type . ')'   (rule 182)
+
+    ')' 	shift, and go to state 163
+
+
+
+state 117
+
+    method_selector  ->  IDENTIFIER ':' . keyword_declaration_without_identifier keyword_selector_e   (rule 170)
+    method_selector  ->  IDENTIFIER ':' . keyword_declaration_without_identifier keyword_selector_e ',' parameter_list   (rule 171)
+
+    '(' 	shift, and go to state 164
+    IDENTIFIER	shift, and go to state 165
+
+    keyword_declaration_without_identifier	go to state 166
+    method_type	go to state 167
+
+
+
+state 118
+
+    class_method_declaration  ->  '+' method_selector ';' .   (rule 151)
+
+    $default	reduce using rule 151 (class_method_declaration)
+
+
+
+state 119
+
+    class_method_declaration  ->  '+' method_type method_selector . ';'   (rule 149)
+
+    ';' 	shift, and go to state 168
+
+
+
+state 120
+
+    instance_method_declaration  ->  '-' '(' VOID . ')' method_selector ';'   (rule 153)
+
+    ')' 	shift, and go to state 169
+
+
+
+state 121
+
+    instance_method_declaration  ->  '-' method_selector ';' .   (rule 154)
+
+    $default	reduce using rule 154 (instance_method_declaration)
+
+
+
+state 122
+
+    instance_method_declaration  ->  '-' method_type method_selector . ';'   (rule 152)
+
+    ';' 	shift, and go to state 170
+
+
+
+state 123
+
+    property  ->  PROPERTY '(' ')' . type IDENTIFIER ';'   (rule 188)
+    property  ->  PROPERTY '(' ')' . CLASS_NAME '*' IDENTIFIER ';'   (rule 189)
+
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 171
+
+    type	go to state 172
+
+
+
+state 124
+
+    attribute  ->  READONLY .   (rule 190)
+
+    $default	reduce using rule 190 (attribute)
+
+
+
+state 125
+
+    attribute  ->  READWRITE .   (rule 191)
+
+    $default	reduce using rule 191 (attribute)
+
+
+
+state 126
+
+    property  ->  PROPERTY '(' attribute . ')' type IDENTIFIER ';'   (rule 184)
+    property  ->  PROPERTY '(' attribute . ')' CLASS_NAME '*' IDENTIFIER ';'   (rule 185)
+
+    ')' 	shift, and go to state 173
+
+
+
+state 127
+
+    property  ->  PROPERTY CLASS_NAME '*' . IDENTIFIER ';'   (rule 187)
+
+    IDENTIFIER	shift, and go to state 174
+
+
+
+state 128
+
+    property  ->  PROPERTY type IDENTIFIER . ';'   (rule 186)
+
+    ';' 	shift, and go to state 175
+
+
+
+state 129
+
+    declarator_with_asterisk  ->  '*' IDENTIFIER .   (rule 31)
+
+    $default	reduce using rule 31 (declarator_with_asterisk)
+
+
+
+state 130
+
+    init_declarator_with_asterisk  ->  declarator_with_asterisk '=' . expression   (rule 37)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 190
+
+
+
+state 131
+
+    init_declarator_with_asterisk_list  ->  init_declarator_with_asterisk_list ',' . init_declarator_with_asterisk   (rule 39)
+
+    '*' 	shift, and go to state 71
+
+    declarator_with_asterisk	go to state 72
+    init_declarator_with_asterisk	go to state 191
+
+
+
+state 132
+
+    declaration  ->  CLASS_NAME init_declarator_with_asterisk_list_e ';' .   (rule 19)
+
+    $default	reduce using rule 19 (declaration)
+
+
+
+state 133
+
+    class_interface  ->  INTERFACE IDENTIFIER ':' IDENTIFIER interface_body_e . END   (rule 113)
+
+    END 	shift, and go to state 192
+
+
+
+state 134
+
+    class_interface  ->  INTERFACE IDENTIFIER ':' CLASS_NAME interface_body_e . END   (rule 115)
+
+    END 	shift, and go to state 193
+
+
+
+state 135
+
+    declarator_with_asterisk_list  ->  declarator_with_asterisk .   (rule 32)
+
+    $default	reduce using rule 32 (declarator_with_asterisk_list)
+
+
+
+state 136
+
+    declarator_with_asterisk_list  ->  declarator_with_asterisk_list . ',' declarator_with_asterisk   (rule 33)
+    instance_variables_declaration  ->  CLASS_NAME declarator_with_asterisk_list . ';'   (rule 138)
+
+    ';' 	shift, and go to state 194
+    ',' 	shift, and go to state 195
+
+
+
+state 137
+
+    declarator_list  ->  declarator .   (rule 34)
+
+    $default	reduce using rule 34 (declarator_list)
+
+
+
+state 138
+
+    declarator_list  ->  declarator_list . ',' declarator   (rule 35)
+    instance_variables_declaration  ->  type declarator_list . ';'   (rule 137)
+
+    ';' 	shift, and go to state 196
+    ',' 	shift, and go to state 197
+
+
+
+state 139
+
+    instance_variables  ->  '{' instance_variables_declaration_list '}' .   (rule 136)
+
+    $default	reduce using rule 136 (instance_variables)
+
+
+
+state 140
+
+    instance_variables_declaration_list  ->  instance_variables_declaration_list instance_variables_declaration .   (rule 140)
+
+    $default	reduce using rule 140 (instance_variables_declaration_list)
+
+
+
+state 141
+
+    declaration  ->  type init_declarator_list_e ';' .   (rule 18)
+
+    $default	reduce using rule 18 (declaration)
+
+
+
+state 142
+
+    init_declarator_list  ->  init_declarator_list ',' . init_declarator   (rule 27)
+
+    IDENTIFIER	shift, and go to state 82
+
+    init_declarator	go to state 198
+    declarator	go to state 86
+
+
+
+state 143
+
+    init_declarator  ->  declarator '=' . expression   (rule 29)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 199
+
+
+
+state 144
+
+    class_interface  ->  INTERFACE CLASS_NAME ':' IDENTIFIER interface_body_e . END   (rule 116)
+
+    END 	shift, and go to state 200
+
+
+
+state 145
+
+    class_interface  ->  INTERFACE CLASS_NAME ':' CLASS_NAME interface_body_e . END   (rule 118)
+
+    END 	shift, and go to state 201
+
+
+
+state 146
+
+    class_method_definition  ->  '+' '(' VOID . ')' method_selector declaration_list_e compound_statement   (rule 164)
+
+    ')' 	shift, and go to state 202
+
+
+
+state 147
+
+    declaration_list  ->  declaration .   (rule 20)
+
+    $default	reduce using rule 20 (declaration_list)
+
+
+
+state 148
+
+    declaration_list  ->  declaration_list . declaration   (rule 21)
+    declaration_list_e  ->  declaration_list .   (rule 23)
+
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 28
+
+    $default	reduce using rule 23 (declaration_list_e)
+
+    type	go to state 31
+    declaration	go to state 203
+
+
+
+state 149
+
+    class_method_definition  ->  '+' method_selector declaration_list_e . compound_statement   (rule 165)
+
+    '{' 	shift, and go to state 159
+
+    compound_statement	go to state 204
+
+
+
+state 150
+
+    class_method_definition  ->  '+' method_type method_selector . declaration_list_e compound_statement   (rule 163)
+
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 28
+
+    $default	reduce using rule 22 (declaration_list_e)
+
+    type	go to state 31
+    declaration	go to state 147
+    declaration_list	go to state 148
+    declaration_list_e	go to state 205
+
+
+
+state 151
+
+    instance_method_definition  ->  '-' '(' VOID . ')' method_selector declaration_list_e compound_statement   (rule 167)
+
+    ')' 	shift, and go to state 206
+
+
+
+state 152
+
+    instance_method_definition  ->  '-' method_selector declaration_list_e . compound_statement   (rule 168)
+
+    '{' 	shift, and go to state 159
+
+    compound_statement	go to state 207
+
+
+
+state 153
+
+    instance_method_definition  ->  '-' method_type method_selector . declaration_list_e compound_statement   (rule 166)
+
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 28
+
+    $default	reduce using rule 22 (declaration_list_e)
+
+    type	go to state 31
+    declaration	go to state 147
+    declaration_list	go to state 148
+    declaration_list_e	go to state 208
+
+
+
+state 154
+
+    synthesize  ->  SYNTHESIZE IDENTIFIER ';' .   (rule 192)
+
+    $default	reduce using rule 192 (synthesize)
+
+
+
+state 155
+
+    class_implementation  ->  IMPLEMENTATION IDENTIFIER ':' IDENTIFIER implementation_body_e . END   (rule 128)
+
+    END 	shift, and go to state 209
+
+
+
+state 156
+
+    class_implementation  ->  IMPLEMENTATION IDENTIFIER ':' CLASS_NAME implementation_body_e . END   (rule 131)
+
+    END 	shift, and go to state 210
+
+
+
+state 157
+
+    class_implementation  ->  IMPLEMENTATION CLASS_NAME ':' IDENTIFIER implementation_body_e . END   (rule 130)
+
+    END 	shift, and go to state 211
+
+
+
+state 158
+
+    class_implementation  ->  IMPLEMENTATION CLASS_NAME ':' CLASS_NAME implementation_body_e . END   (rule 132)
+
+    END 	shift, and go to state 212
+
+
+
+state 159
+
+    compound_statement  ->  '{' . statement_list_e '}'   (rule 106)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    IF  	shift, and go to state 213
+    WHILE	shift, and go to state 214
+    DO  	shift, and go to state 215
+    FOR 	shift, and go to state 216
+    SELF	shift, and go to state 179
+    ID  	shift, and go to state 6
+    RETURN	shift, and go to state 217
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    CLASS_NAME	shift, and go to state 28
+    ';' 	shift, and go to state 218
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+    '{' 	shift, and go to state 159
+
+    $default	reduce using rule 109 (statement_list_e)
+
+    type	go to state 31
+    numeric_constant	go to state 188
+    literal	go to state 189
+    declaration	go to state 219
+    expression	go to state 220
+    if_statement	go to state 221
+    while_statement	go to state 222
+    do_while_statement	go to state 223
+    for_statement	go to state 224
+    statement	go to state 225
+    compound_statement	go to state 226
+    statement_list	go to state 227
+    statement_list_e	go to state 228
+
+
+
+state 160
+
+    function  ->  type IDENTIFIER '(' ')' compound_statement .   (rule 8)
+
+    $default	reduce using rule 8 (function)
+
+
+
+state 161
+
+    class_method_declaration  ->  '+' '(' VOID ')' . method_selector ';'   (rule 150)
+
+    IDENTIFIER	shift, and go to state 62
+
+    method_selector	go to state 229
+
+
+
+state 162
+
+    method_type  ->  '(' CLASS_NAME '*' . ')'   (rule 183)
+
+    ')' 	shift, and go to state 230
+
+
+
+state 163
+
+    method_type  ->  '(' type ')' .   (rule 182)
+
+    $default	reduce using rule 182 (method_type)
+
+
+
+state 164
+
+    method_type  ->  '(' . type ')'   (rule 182)
+    method_type  ->  '(' . CLASS_NAME '*' ')'   (rule 183)
+
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 115
+
+    type	go to state 116
+
+
+
+state 165
+
+    keyword_declaration_without_identifier  ->  IDENTIFIER .   (rule 177)
+
+    $default	reduce using rule 177 (keyword_declaration_without_identifier)
+
+
+
+state 166
+
+    method_selector  ->  IDENTIFIER ':' keyword_declaration_without_identifier . keyword_selector_e   (rule 170)
+    method_selector  ->  IDENTIFIER ':' keyword_declaration_without_identifier . keyword_selector_e ',' parameter_list   (rule 171)
+
+    IDENTIFIER	shift, and go to state 231
+    ':' 	shift, and go to state 232
+
+    $default	reduce using rule 172 (keyword_selector_e)
+
+    keyword_selector_e	go to state 233
+    keyword_selector	go to state 234
+    keyword_declaration	go to state 235
+
+
+
+state 167
+
+    keyword_declaration_without_identifier  ->  method_type . IDENTIFIER   (rule 176)
+
+    IDENTIFIER	shift, and go to state 236
+
+
+
+state 168
+
+    class_method_declaration  ->  '+' method_type method_selector ';' .   (rule 149)
+
+    $default	reduce using rule 149 (class_method_declaration)
+
+
+
+state 169
+
+    instance_method_declaration  ->  '-' '(' VOID ')' . method_selector ';'   (rule 153)
+
+    IDENTIFIER	shift, and go to state 62
+
+    method_selector	go to state 237
+
+
+
+state 170
+
+    instance_method_declaration  ->  '-' method_type method_selector ';' .   (rule 152)
+
+    $default	reduce using rule 152 (instance_method_declaration)
+
+
+
+state 171
+
+    property  ->  PROPERTY '(' ')' CLASS_NAME . '*' IDENTIFIER ';'   (rule 189)
+
+    '*' 	shift, and go to state 238
+
+
+
+state 172
+
+    property  ->  PROPERTY '(' ')' type . IDENTIFIER ';'   (rule 188)
+
+    IDENTIFIER	shift, and go to state 239
+
+
+
+state 173
+
+    property  ->  PROPERTY '(' attribute ')' . type IDENTIFIER ';'   (rule 184)
+    property  ->  PROPERTY '(' attribute ')' . CLASS_NAME '*' IDENTIFIER ';'   (rule 185)
+
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 240
+
+    type	go to state 241
+
+
+
+state 174
+
+    property  ->  PROPERTY CLASS_NAME '*' IDENTIFIER . ';'   (rule 187)
+
+    ';' 	shift, and go to state 242
+
+
+
+state 175
+
+    property  ->  PROPERTY type IDENTIFIER ';' .   (rule 186)
+
+    $default	reduce using rule 186 (property)
+
+
+
+state 176
+
+    expression  ->  '+' . expression   (rule 54)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 243
+
+
+
+state 177
+
+    expression  ->  '-' . expression   (rule 53)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 244
+
+
+
+state 178
+
+    expression  ->  '(' . expression ')'   (rule 49)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 245
+
+
+
+state 179
+
+    expression  ->  SELF .   (rule 50)
+
+    $default	reduce using rule 50 (expression)
+
+
+
+state 180
+
+    numeric_constant  ->  INTEGER_CONSTANT .   (rule 14)
+
+    $default	reduce using rule 14 (numeric_constant)
+
+
+
+state 181
+
+    literal  ->  STRING_CONSTANT .   (rule 15)
+
+    $default	reduce using rule 15 (literal)
+
+
+
+state 182
+
+    literal  ->  CHAR_CONSTANT .   (rule 16)
+
+    $default	reduce using rule 16 (literal)
+
+
+
+state 183
+
+    numeric_constant  ->  FLOAT_CONSTANT .   (rule 13)
+
+    $default	reduce using rule 13 (numeric_constant)
+
+
+
+state 184
+
+    literal  ->  NSSTRING_CONSTANT .   (rule 17)
+
+    $default	reduce using rule 17 (literal)
+
+
+
+state 185
+
+    expression  ->  IDENTIFIER .   (rule 46)
+    expression  ->  IDENTIFIER . '(' expression_list_e ')'   (rule 52)
+
+    '(' 	shift, and go to state 246
+
+    $default	reduce using rule 46 (expression)
+
+
+
+state 186
+
+    expression  ->  '[' . receiver message_selector ']'   (rule 51)
+
+    SELF	shift, and go to state 247
+    SUPER	shift, and go to state 248
+    IDENTIFIER	shift, and go to state 249
+    CLASS_NAME	shift, and go to state 250
+    '[' 	shift, and go to state 251
+
+    receiver	go to state 252
+
+
+
+state 187
+
+    expression  ->  '&' . expression   (rule 55)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 253
+
+
+
+state 188
+
+    expression  ->  numeric_constant .   (rule 48)
+
+    $default	reduce using rule 48 (expression)
+
+
+
+state 189
+
+    expression  ->  literal .   (rule 47)
+
+    $default	reduce using rule 47 (expression)
+
+
+
+state 190
+
+    init_declarator_with_asterisk  ->  declarator_with_asterisk '=' expression .   (rule 37)
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+
+    '=' 	shift, and go to state 254
+    EQUAL	shift, and go to state 255
+    NOT_EQUAL	shift, and go to state 256
+    '<' 	shift, and go to state 257
+    '>' 	shift, and go to state 258
+    LESS_EQUAL	shift, and go to state 259
+    GREATER_EQUAL	shift, and go to state 260
+    '+' 	shift, and go to state 261
+    '-' 	shift, and go to state 262
+    '*' 	shift, and go to state 263
+    '/' 	shift, and go to state 264
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+
+    $default	reduce using rule 37 (init_declarator_with_asterisk)
+
+
+
+state 191
+
+    init_declarator_with_asterisk_list  ->  init_declarator_with_asterisk_list ',' init_declarator_with_asterisk .   (rule 39)
+
+    $default	reduce using rule 39 (init_declarator_with_asterisk_list)
+
+
+
+state 192
+
+    class_interface  ->  INTERFACE IDENTIFIER ':' IDENTIFIER interface_body_e END .   (rule 113)
+
+    $default	reduce using rule 113 (class_interface)
+
+
+
+state 193
+
+    class_interface  ->  INTERFACE IDENTIFIER ':' CLASS_NAME interface_body_e END .   (rule 115)
+
+    $default	reduce using rule 115 (class_interface)
+
+
+
+state 194
+
+    instance_variables_declaration  ->  CLASS_NAME declarator_with_asterisk_list ';' .   (rule 138)
+
+    $default	reduce using rule 138 (instance_variables_declaration)
+
+
+
+state 195
+
+    declarator_with_asterisk_list  ->  declarator_with_asterisk_list ',' . declarator_with_asterisk   (rule 33)
+
+    '*' 	shift, and go to state 71
+
+    declarator_with_asterisk	go to state 267
+
+
+
+state 196
+
+    instance_variables_declaration  ->  type declarator_list ';' .   (rule 137)
+
+    $default	reduce using rule 137 (instance_variables_declaration)
+
+
+
+state 197
+
+    declarator_list  ->  declarator_list ',' . declarator   (rule 35)
+
+    IDENTIFIER	shift, and go to state 82
+
+    declarator	go to state 268
+
+
+
+state 198
+
+    init_declarator_list  ->  init_declarator_list ',' init_declarator .   (rule 27)
+
+    $default	reduce using rule 27 (init_declarator_list)
+
+
+
+state 199
+
+    init_declarator  ->  declarator '=' expression .   (rule 29)
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+
+    '=' 	shift, and go to state 254
+    EQUAL	shift, and go to state 255
+    NOT_EQUAL	shift, and go to state 256
+    '<' 	shift, and go to state 257
+    '>' 	shift, and go to state 258
+    LESS_EQUAL	shift, and go to state 259
+    GREATER_EQUAL	shift, and go to state 260
+    '+' 	shift, and go to state 261
+    '-' 	shift, and go to state 262
+    '*' 	shift, and go to state 263
+    '/' 	shift, and go to state 264
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+
+    $default	reduce using rule 29 (init_declarator)
+
+
+
+state 200
+
+    class_interface  ->  INTERFACE CLASS_NAME ':' IDENTIFIER interface_body_e END .   (rule 116)
+
+    $default	reduce using rule 116 (class_interface)
+
+
+
+state 201
+
+    class_interface  ->  INTERFACE CLASS_NAME ':' CLASS_NAME interface_body_e END .   (rule 118)
+
+    $default	reduce using rule 118 (class_interface)
+
+
+
+state 202
+
+    class_method_definition  ->  '+' '(' VOID ')' . method_selector declaration_list_e compound_statement   (rule 164)
+
+    IDENTIFIER	shift, and go to state 62
+
+    method_selector	go to state 269
+
+
+
+state 203
+
+    declaration_list  ->  declaration_list declaration .   (rule 21)
+
+    $default	reduce using rule 21 (declaration_list)
+
+
+
+state 204
+
+    class_method_definition  ->  '+' method_selector declaration_list_e compound_statement .   (rule 165)
+
+    $default	reduce using rule 165 (class_method_definition)
+
+
+
+state 205
+
+    class_method_definition  ->  '+' method_type method_selector declaration_list_e . compound_statement   (rule 163)
+
+    '{' 	shift, and go to state 159
+
+    compound_statement	go to state 270
+
+
+
+state 206
+
+    instance_method_definition  ->  '-' '(' VOID ')' . method_selector declaration_list_e compound_statement   (rule 167)
+
+    IDENTIFIER	shift, and go to state 62
+
+    method_selector	go to state 271
+
+
+
+state 207
+
+    instance_method_definition  ->  '-' method_selector declaration_list_e compound_statement .   (rule 168)
+
+    $default	reduce using rule 168 (instance_method_definition)
+
+
+
+state 208
+
+    instance_method_definition  ->  '-' method_type method_selector declaration_list_e . compound_statement   (rule 166)
+
+    '{' 	shift, and go to state 159
+
+    compound_statement	go to state 272
+
+
+
+state 209
+
+    class_implementation  ->  IMPLEMENTATION IDENTIFIER ':' IDENTIFIER implementation_body_e END .   (rule 128)
+
+    $default	reduce using rule 128 (class_implementation)
+
+
+
+state 210
+
+    class_implementation  ->  IMPLEMENTATION IDENTIFIER ':' CLASS_NAME implementation_body_e END .   (rule 131)
+
+    $default	reduce using rule 131 (class_implementation)
+
+
+
+state 211
+
+    class_implementation  ->  IMPLEMENTATION CLASS_NAME ':' IDENTIFIER implementation_body_e END .   (rule 130)
+
+    $default	reduce using rule 130 (class_implementation)
+
+
+
+state 212
+
+    class_implementation  ->  IMPLEMENTATION CLASS_NAME ':' CLASS_NAME implementation_body_e END .   (rule 132)
+
+    $default	reduce using rule 132 (class_implementation)
+
+
+
+state 213
+
+    if_statement  ->  IF . '(' expression ')' statement   (rule 89)
+    if_statement  ->  IF . '(' expression ')' statement ELSE statement   (rule 90)
+
+    '(' 	shift, and go to state 273
+
+
+
+state 214
+
+    while_statement  ->  WHILE . '(' expression ')' statement   (rule 91)
+
+    '(' 	shift, and go to state 274
+
+
+
+state 215
+
+    do_while_statement  ->  DO . statement WHILE '(' expression ')' ';'   (rule 92)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    IF  	shift, and go to state 213
+    WHILE	shift, and go to state 214
+    DO  	shift, and go to state 215
+    FOR 	shift, and go to state 216
+    SELF	shift, and go to state 179
+    ID  	shift, and go to state 6
+    RETURN	shift, and go to state 217
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    CLASS_NAME	shift, and go to state 28
+    ';' 	shift, and go to state 218
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+    '{' 	shift, and go to state 159
+
+    type	go to state 31
+    numeric_constant	go to state 188
+    literal	go to state 189
+    declaration	go to state 219
+    expression	go to state 220
+    if_statement	go to state 221
+    while_statement	go to state 222
+    do_while_statement	go to state 223
+    for_statement	go to state 224
+    statement	go to state 275
+    compound_statement	go to state 226
+
+
+
+state 216
+
+    for_statement  ->  FOR . '(' expression_e ';' expression_e ';' expression_e ')' statement   (rule 93)
+    for_statement  ->  FOR . '(' type IDENTIFIER '=' expression ';' expression_e ';' expression_e ')' statement   (rule 94)
+    for_statement  ->  FOR . '(' IDENTIFIER IN expression ')' statement   (rule 95)
+    for_statement  ->  FOR . '(' CLASS_NAME '*' IDENTIFIER IN expression ')' statement   (rule 96)
+
+    '(' 	shift, and go to state 276
+
+
+
+state 217
+
+    statement  ->  RETURN . expression_e ';'   (rule 99)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    $default	reduce using rule 69 (expression_e)
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 277
+    expression_e	go to state 278
+
+
+
+state 218
+
+    statement  ->  ';' .   (rule 97)
+
+    $default	reduce using rule 97 (statement)
+
+
+
+state 219
+
+    statement  ->  declaration .   (rule 105)
+
+    $default	reduce using rule 105 (statement)
+
+
+
+state 220
+
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+    statement  ->  expression . ';'   (rule 98)
+
+    '=' 	shift, and go to state 254
+    EQUAL	shift, and go to state 255
+    NOT_EQUAL	shift, and go to state 256
+    '<' 	shift, and go to state 257
+    '>' 	shift, and go to state 258
+    LESS_EQUAL	shift, and go to state 259
+    GREATER_EQUAL	shift, and go to state 260
+    '+' 	shift, and go to state 261
+    '-' 	shift, and go to state 262
+    '*' 	shift, and go to state 263
+    '/' 	shift, and go to state 264
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+    ';' 	shift, and go to state 279
+
+
+
+state 221
+
+    statement  ->  if_statement .   (rule 100)
+
+    $default	reduce using rule 100 (statement)
+
+
+
+state 222
+
+    statement  ->  while_statement .   (rule 101)
+
+    $default	reduce using rule 101 (statement)
+
+
+
+state 223
+
+    statement  ->  do_while_statement .   (rule 102)
+
+    $default	reduce using rule 102 (statement)
+
+
+
+state 224
+
+    statement  ->  for_statement .   (rule 103)
+
+    $default	reduce using rule 103 (statement)
+
+
+
+state 225
+
+    statement_list  ->  statement .   (rule 107)
+
+    $default	reduce using rule 107 (statement_list)
+
+
+
+state 226
+
+    statement  ->  compound_statement .   (rule 104)
+
+    $default	reduce using rule 104 (statement)
+
+
+
+state 227
+
+    statement_list  ->  statement_list . statement   (rule 108)
+    statement_list_e  ->  statement_list .   (rule 110)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    IF  	shift, and go to state 213
+    WHILE	shift, and go to state 214
+    DO  	shift, and go to state 215
+    FOR 	shift, and go to state 216
+    SELF	shift, and go to state 179
+    ID  	shift, and go to state 6
+    RETURN	shift, and go to state 217
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    CLASS_NAME	shift, and go to state 28
+    ';' 	shift, and go to state 218
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+    '{' 	shift, and go to state 159
+
+    $default	reduce using rule 110 (statement_list_e)
+
+    type	go to state 31
+    numeric_constant	go to state 188
+    literal	go to state 189
+    declaration	go to state 219
+    expression	go to state 220
+    if_statement	go to state 221
+    while_statement	go to state 222
+    do_while_statement	go to state 223
+    for_statement	go to state 224
+    statement	go to state 280
+    compound_statement	go to state 226
+
+
+
+state 228
+
+    compound_statement  ->  '{' statement_list_e . '}'   (rule 106)
+
+    '}' 	shift, and go to state 281
+
+
+
+state 229
+
+    class_method_declaration  ->  '+' '(' VOID ')' method_selector . ';'   (rule 150)
+
+    ';' 	shift, and go to state 282
+
+
+
+state 230
+
+    method_type  ->  '(' CLASS_NAME '*' ')' .   (rule 183)
+
+    $default	reduce using rule 183 (method_type)
+
+
+
+state 231
+
+    keyword_declaration  ->  IDENTIFIER . ':' method_type IDENTIFIER   (rule 180)
+    keyword_declaration  ->  IDENTIFIER . ':' IDENTIFIER   (rule 181)
+
+    ':' 	shift, and go to state 283
+
+
+
+state 232
+
+    keyword_declaration  ->  ':' . method_type IDENTIFIER   (rule 178)
+    keyword_declaration  ->  ':' . IDENTIFIER   (rule 179)
+
+    '(' 	shift, and go to state 164
+    IDENTIFIER	shift, and go to state 284
+
+    method_type	go to state 285
+
+
+
+state 233
+
+    method_selector  ->  IDENTIFIER ':' keyword_declaration_without_identifier keyword_selector_e .   (rule 170)
+    method_selector  ->  IDENTIFIER ':' keyword_declaration_without_identifier keyword_selector_e . ',' parameter_list   (rule 171)
+
+    ',' 	shift, and go to state 286
+
+    $default	reduce using rule 170 (method_selector)
+
+
+
+state 234
+
+    keyword_selector_e  ->  keyword_selector .   (rule 173)
+    keyword_selector  ->  keyword_selector . keyword_declaration   (rule 175)
+
+    IDENTIFIER	shift, and go to state 231
+    ':' 	shift, and go to state 232
+
+    $default	reduce using rule 173 (keyword_selector_e)
+
+    keyword_declaration	go to state 287
+
+
+
+state 235
+
+    keyword_selector  ->  keyword_declaration .   (rule 174)
+
+    $default	reduce using rule 174 (keyword_selector)
+
+
+
+state 236
+
+    keyword_declaration_without_identifier  ->  method_type IDENTIFIER .   (rule 176)
+
+    $default	reduce using rule 176 (keyword_declaration_without_identifier)
+
+
+
+state 237
+
+    instance_method_declaration  ->  '-' '(' VOID ')' method_selector . ';'   (rule 153)
+
+    ';' 	shift, and go to state 288
+
+
+
+state 238
+
+    property  ->  PROPERTY '(' ')' CLASS_NAME '*' . IDENTIFIER ';'   (rule 189)
+
+    IDENTIFIER	shift, and go to state 289
+
+
+
+state 239
+
+    property  ->  PROPERTY '(' ')' type IDENTIFIER . ';'   (rule 188)
+
+    ';' 	shift, and go to state 290
+
+
+
+state 240
+
+    property  ->  PROPERTY '(' attribute ')' CLASS_NAME . '*' IDENTIFIER ';'   (rule 185)
+
+    '*' 	shift, and go to state 291
+
+
+
+state 241
+
+    property  ->  PROPERTY '(' attribute ')' type . IDENTIFIER ';'   (rule 184)
+
+    IDENTIFIER	shift, and go to state 292
+
+
+
+state 242
+
+    property  ->  PROPERTY CLASS_NAME '*' IDENTIFIER ';' .   (rule 187)
+
+    $default	reduce using rule 187 (property)
+
+
+
+state 243
+
+    expression  ->  '+' expression .   (rule 54)
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+
+    $default	reduce using rule 54 (expression)
+
+
+
+state 244
+
+    expression  ->  '-' expression .   (rule 53)
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+
+    $default	reduce using rule 53 (expression)
+
+
+
+state 245
+
+    expression  ->  '(' expression . ')'   (rule 49)
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+
+    '=' 	shift, and go to state 254
+    EQUAL	shift, and go to state 255
+    NOT_EQUAL	shift, and go to state 256
+    '<' 	shift, and go to state 257
+    '>' 	shift, and go to state 258
+    LESS_EQUAL	shift, and go to state 259
+    GREATER_EQUAL	shift, and go to state 260
+    '+' 	shift, and go to state 261
+    '-' 	shift, and go to state 262
+    '*' 	shift, and go to state 263
+    '/' 	shift, and go to state 264
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+    ')' 	shift, and go to state 293
+
+
+
+state 246
+
+    expression  ->  IDENTIFIER '(' . expression_list_e ')'   (rule 52)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    $default	reduce using rule 71 (expression_list_e)
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 294
+    expression_list_e	go to state 295
+    expression_list	go to state 296
+
+
+
+state 247
+
+    receiver  ->  SELF .   (rule 76)
+
+    $default	reduce using rule 76 (receiver)
+
+
+
+state 248
+
+    receiver  ->  SUPER .   (rule 75)
+
+    $default	reduce using rule 75 (receiver)
+
+
+
+state 249
+
+    receiver  ->  IDENTIFIER .   (rule 77)
+
+    $default	reduce using rule 77 (receiver)
+
+
+
+state 250
+
+    receiver  ->  CLASS_NAME .   (rule 78)
+
+    $default	reduce using rule 78 (receiver)
+
+
+
+state 251
+
+    receiver  ->  '[' . receiver message_selector ']'   (rule 79)
+
+    SELF	shift, and go to state 247
+    SUPER	shift, and go to state 248
+    IDENTIFIER	shift, and go to state 249
+    CLASS_NAME	shift, and go to state 250
+    '[' 	shift, and go to state 251
+
+    receiver	go to state 297
+
+
+
+state 252
+
+    expression  ->  '[' receiver . message_selector ']'   (rule 51)
+
+    IDENTIFIER	shift, and go to state 298
+
+    message_selector	go to state 299
+
+
+
+state 253
+
+    expression  ->  '&' expression .   (rule 55)
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+
+    $default	reduce using rule 55 (expression)
+
+
+
+state 254
+
+    expression  ->  expression '=' . expression   (rule 66)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 300
+
+
+
+state 255
+
+    expression  ->  expression EQUAL . expression   (rule 60)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 301
+
+
+
+state 256
+
+    expression  ->  expression NOT_EQUAL . expression   (rule 61)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 302
+
+
+
+state 257
+
+    expression  ->  expression '<' . expression   (rule 63)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 303
+
+
+
+state 258
+
+    expression  ->  expression '>' . expression   (rule 62)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 304
+
+
+
+state 259
+
+    expression  ->  expression LESS_EQUAL . expression   (rule 64)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 305
+
+
+
+state 260
+
+    expression  ->  expression GREATER_EQUAL . expression   (rule 65)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 306
+
+
+
+state 261
+
+    expression  ->  expression '+' . expression   (rule 56)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 307
+
+
+
+state 262
+
+    expression  ->  expression '-' . expression   (rule 57)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 308
+
+
+
+state 263
+
+    expression  ->  expression '*' . expression   (rule 58)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 309
+
+
+
+state 264
+
+    expression  ->  expression '/' . expression   (rule 59)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 310
+
+
+
+state 265
+
+    expression  ->  expression '.' . IDENTIFIER   (rule 67)
+
+    IDENTIFIER	shift, and go to state 311
+
+
+
+state 266
+
+    expression  ->  expression ARROW . IDENTIFIER   (rule 68)
+
+    IDENTIFIER	shift, and go to state 312
+
+
+
+state 267
+
+    declarator_with_asterisk_list  ->  declarator_with_asterisk_list ',' declarator_with_asterisk .   (rule 33)
+
+    $default	reduce using rule 33 (declarator_with_asterisk_list)
+
+
+
+state 268
+
+    declarator_list  ->  declarator_list ',' declarator .   (rule 35)
+
+    $default	reduce using rule 35 (declarator_list)
+
+
+
+state 269
+
+    class_method_definition  ->  '+' '(' VOID ')' method_selector . declaration_list_e compound_statement   (rule 164)
+
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 28
+
+    $default	reduce using rule 22 (declaration_list_e)
+
+    type	go to state 31
+    declaration	go to state 147
+    declaration_list	go to state 148
+    declaration_list_e	go to state 313
+
+
+
+state 270
+
+    class_method_definition  ->  '+' method_type method_selector declaration_list_e compound_statement .   (rule 163)
+
+    $default	reduce using rule 163 (class_method_definition)
+
+
+
+state 271
+
+    instance_method_definition  ->  '-' '(' VOID ')' method_selector . declaration_list_e compound_statement   (rule 167)
+
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 28
+
+    $default	reduce using rule 22 (declaration_list_e)
+
+    type	go to state 31
+    declaration	go to state 147
+    declaration_list	go to state 148
+    declaration_list_e	go to state 314
+
+
+
+state 272
+
+    instance_method_definition  ->  '-' method_type method_selector declaration_list_e compound_statement .   (rule 166)
+
+    $default	reduce using rule 166 (instance_method_definition)
+
+
+
+state 273
+
+    if_statement  ->  IF '(' . expression ')' statement   (rule 89)
+    if_statement  ->  IF '(' . expression ')' statement ELSE statement   (rule 90)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 315
+
+
+
+state 274
+
+    while_statement  ->  WHILE '(' . expression ')' statement   (rule 91)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 316
+
+
+
+state 275
+
+    do_while_statement  ->  DO statement . WHILE '(' expression ')' ';'   (rule 92)
+
+    WHILE	shift, and go to state 317
+
+
+
+state 276
+
+    for_statement  ->  FOR '(' . expression_e ';' expression_e ';' expression_e ')' statement   (rule 93)
+    for_statement  ->  FOR '(' . type IDENTIFIER '=' expression ';' expression_e ';' expression_e ')' statement   (rule 94)
+    for_statement  ->  FOR '(' . IDENTIFIER IN expression ')' statement   (rule 95)
+    for_statement  ->  FOR '(' . CLASS_NAME '*' IDENTIFIER IN expression ')' statement   (rule 96)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    SELF	shift, and go to state 179
+    ID  	shift, and go to state 6
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 318
+    CLASS_NAME	shift, and go to state 319
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    $default	reduce using rule 69 (expression_e)
+
+    type	go to state 320
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 277
+    expression_e	go to state 321
+
+
+
+state 277
+
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+    expression_e  ->  expression .   (rule 70)
+
+    '=' 	shift, and go to state 254
+    EQUAL	shift, and go to state 255
+    NOT_EQUAL	shift, and go to state 256
+    '<' 	shift, and go to state 257
+    '>' 	shift, and go to state 258
+    LESS_EQUAL	shift, and go to state 259
+    GREATER_EQUAL	shift, and go to state 260
+    '+' 	shift, and go to state 261
+    '-' 	shift, and go to state 262
+    '*' 	shift, and go to state 263
+    '/' 	shift, and go to state 264
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+
+    $default	reduce using rule 70 (expression_e)
+
+
+
+state 278
+
+    statement  ->  RETURN expression_e . ';'   (rule 99)
+
+    ';' 	shift, and go to state 322
+
+
+
+state 279
+
+    statement  ->  expression ';' .   (rule 98)
+
+    $default	reduce using rule 98 (statement)
+
+
+
+state 280
+
+    statement_list  ->  statement_list statement .   (rule 108)
+
+    $default	reduce using rule 108 (statement_list)
+
+
+
+state 281
+
+    compound_statement  ->  '{' statement_list_e '}' .   (rule 106)
+
+    $default	reduce using rule 106 (compound_statement)
+
+
+
+state 282
+
+    class_method_declaration  ->  '+' '(' VOID ')' method_selector ';' .   (rule 150)
+
+    $default	reduce using rule 150 (class_method_declaration)
+
+
+
+state 283
+
+    keyword_declaration  ->  IDENTIFIER ':' . method_type IDENTIFIER   (rule 180)
+    keyword_declaration  ->  IDENTIFIER ':' . IDENTIFIER   (rule 181)
+
+    '(' 	shift, and go to state 164
+    IDENTIFIER	shift, and go to state 323
+
+    method_type	go to state 324
+
+
+
+state 284
+
+    keyword_declaration  ->  ':' IDENTIFIER .   (rule 179)
+
+    $default	reduce using rule 179 (keyword_declaration)
+
+
+
+state 285
+
+    keyword_declaration  ->  ':' method_type . IDENTIFIER   (rule 178)
+
+    IDENTIFIER	shift, and go to state 325
+
+
+
+state 286
+
+    method_selector  ->  IDENTIFIER ':' keyword_declaration_without_identifier keyword_selector_e ',' . parameter_list   (rule 171)
+
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 326
+
+    type	go to state 327
+    parameter_list	go to state 328
+    parameter_declaration	go to state 329
+
+
+
+state 287
+
+    keyword_selector  ->  keyword_selector keyword_declaration .   (rule 175)
+
+    $default	reduce using rule 175 (keyword_selector)
+
+
+
+state 288
+
+    instance_method_declaration  ->  '-' '(' VOID ')' method_selector ';' .   (rule 153)
+
+    $default	reduce using rule 153 (instance_method_declaration)
+
+
+
+state 289
+
+    property  ->  PROPERTY '(' ')' CLASS_NAME '*' IDENTIFIER . ';'   (rule 189)
+
+    ';' 	shift, and go to state 330
+
+
+
+state 290
+
+    property  ->  PROPERTY '(' ')' type IDENTIFIER ';' .   (rule 188)
+
+    $default	reduce using rule 188 (property)
+
+
+
+state 291
+
+    property  ->  PROPERTY '(' attribute ')' CLASS_NAME '*' . IDENTIFIER ';'   (rule 185)
+
+    IDENTIFIER	shift, and go to state 331
+
+
+
+state 292
+
+    property  ->  PROPERTY '(' attribute ')' type IDENTIFIER . ';'   (rule 184)
+
+    ';' 	shift, and go to state 332
+
+
+
+state 293
+
+    expression  ->  '(' expression ')' .   (rule 49)
+
+    $default	reduce using rule 49 (expression)
+
+
+
+state 294
+
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+    expression_list  ->  expression .   (rule 73)
+
+    '=' 	shift, and go to state 254
+    EQUAL	shift, and go to state 255
+    NOT_EQUAL	shift, and go to state 256
+    '<' 	shift, and go to state 257
+    '>' 	shift, and go to state 258
+    LESS_EQUAL	shift, and go to state 259
+    GREATER_EQUAL	shift, and go to state 260
+    '+' 	shift, and go to state 261
+    '-' 	shift, and go to state 262
+    '*' 	shift, and go to state 263
+    '/' 	shift, and go to state 264
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+
+    $default	reduce using rule 73 (expression_list)
+
+
+
+state 295
+
+    expression  ->  IDENTIFIER '(' expression_list_e . ')'   (rule 52)
+
+    ')' 	shift, and go to state 333
+
+
+
+state 296
+
+    expression_list_e  ->  expression_list .   (rule 72)
+    expression_list  ->  expression_list . ',' expression   (rule 74)
+
+    ',' 	shift, and go to state 334
+
+    $default	reduce using rule 72 (expression_list_e)
+
+
+
+state 297
+
+    receiver  ->  '[' receiver . message_selector ']'   (rule 79)
+
+    IDENTIFIER	shift, and go to state 298
+
+    message_selector	go to state 335
+
+
+
+state 298
+
+    message_selector  ->  IDENTIFIER .   (rule 80)
+    message_selector  ->  IDENTIFIER . ':' expression keyword_argument_list_e   (rule 81)
+    message_selector  ->  IDENTIFIER . ':' expression keyword_argument_list_e ',' expression_list   (rule 82)
+
+    ':' 	shift, and go to state 336
+
+    $default	reduce using rule 80 (message_selector)
+
+
+
+state 299
+
+    expression  ->  '[' receiver message_selector . ']'   (rule 51)
+
+    ']' 	shift, and go to state 337
+
+
+
+state 300
+
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression '=' expression .   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+
+    '=' 	shift, and go to state 254
+    EQUAL	shift, and go to state 255
+    NOT_EQUAL	shift, and go to state 256
+    '<' 	shift, and go to state 257
+    '>' 	shift, and go to state 258
+    LESS_EQUAL	shift, and go to state 259
+    GREATER_EQUAL	shift, and go to state 260
+    '+' 	shift, and go to state 261
+    '-' 	shift, and go to state 262
+    '*' 	shift, and go to state 263
+    '/' 	shift, and go to state 264
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+
+    $default	reduce using rule 66 (expression)
+
+
+
+state 301
+
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression EQUAL expression .   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+
+    '<' 	shift, and go to state 257
+    '>' 	shift, and go to state 258
+    LESS_EQUAL	shift, and go to state 259
+    GREATER_EQUAL	shift, and go to state 260
+    '+' 	shift, and go to state 261
+    '-' 	shift, and go to state 262
+    '*' 	shift, and go to state 263
+    '/' 	shift, and go to state 264
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+
+    $default	reduce using rule 60 (expression)
+
+
+
+state 302
+
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression NOT_EQUAL expression .   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+
+    '<' 	shift, and go to state 257
+    '>' 	shift, and go to state 258
+    LESS_EQUAL	shift, and go to state 259
+    GREATER_EQUAL	shift, and go to state 260
+    '+' 	shift, and go to state 261
+    '-' 	shift, and go to state 262
+    '*' 	shift, and go to state 263
+    '/' 	shift, and go to state 264
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+
+    $default	reduce using rule 61 (expression)
+
+
+
+state 303
+
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression '<' expression .   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+
+    '+' 	shift, and go to state 261
+    '-' 	shift, and go to state 262
+    '*' 	shift, and go to state 263
+    '/' 	shift, and go to state 264
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+
+    $default	reduce using rule 63 (expression)
+
+
+
+state 304
+
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression '>' expression .   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+
+    '+' 	shift, and go to state 261
+    '-' 	shift, and go to state 262
+    '*' 	shift, and go to state 263
+    '/' 	shift, and go to state 264
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+
+    $default	reduce using rule 62 (expression)
+
+
+
+state 305
+
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression LESS_EQUAL expression .   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+
+    '+' 	shift, and go to state 261
+    '-' 	shift, and go to state 262
+    '*' 	shift, and go to state 263
+    '/' 	shift, and go to state 264
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+
+    $default	reduce using rule 64 (expression)
+
+
+
+state 306
+
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression GREATER_EQUAL expression .   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+
+    '+' 	shift, and go to state 261
+    '-' 	shift, and go to state 262
+    '*' 	shift, and go to state 263
+    '/' 	shift, and go to state 264
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+
+    $default	reduce using rule 65 (expression)
+
+
+
+state 307
+
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression '+' expression .   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+
+    '*' 	shift, and go to state 263
+    '/' 	shift, and go to state 264
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+
+    $default	reduce using rule 56 (expression)
+
+
+
+state 308
+
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression '-' expression .   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+
+    '*' 	shift, and go to state 263
+    '/' 	shift, and go to state 264
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+
+    $default	reduce using rule 57 (expression)
+
+
+
+state 309
+
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression '*' expression .   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+
+    $default	reduce using rule 58 (expression)
+
+
+
+state 310
+
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression '/' expression .   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+
+    $default	reduce using rule 59 (expression)
+
+
+
+state 311
+
+    expression  ->  expression '.' IDENTIFIER .   (rule 67)
+
+    $default	reduce using rule 67 (expression)
+
+
+
+state 312
+
+    expression  ->  expression ARROW IDENTIFIER .   (rule 68)
+
+    $default	reduce using rule 68 (expression)
+
+
+
+state 313
+
+    class_method_definition  ->  '+' '(' VOID ')' method_selector declaration_list_e . compound_statement   (rule 164)
+
+    '{' 	shift, and go to state 159
+
+    compound_statement	go to state 338
+
+
+
+state 314
+
+    instance_method_definition  ->  '-' '(' VOID ')' method_selector declaration_list_e . compound_statement   (rule 167)
+
+    '{' 	shift, and go to state 159
+
+    compound_statement	go to state 339
+
+
+
+state 315
+
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+    if_statement  ->  IF '(' expression . ')' statement   (rule 89)
+    if_statement  ->  IF '(' expression . ')' statement ELSE statement   (rule 90)
+
+    '=' 	shift, and go to state 254
+    EQUAL	shift, and go to state 255
+    NOT_EQUAL	shift, and go to state 256
+    '<' 	shift, and go to state 257
+    '>' 	shift, and go to state 258
+    LESS_EQUAL	shift, and go to state 259
+    GREATER_EQUAL	shift, and go to state 260
+    '+' 	shift, and go to state 261
+    '-' 	shift, and go to state 262
+    '*' 	shift, and go to state 263
+    '/' 	shift, and go to state 264
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+    ')' 	shift, and go to state 340
+
+
+
+state 316
+
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+    while_statement  ->  WHILE '(' expression . ')' statement   (rule 91)
+
+    '=' 	shift, and go to state 254
+    EQUAL	shift, and go to state 255
+    NOT_EQUAL	shift, and go to state 256
+    '<' 	shift, and go to state 257
+    '>' 	shift, and go to state 258
+    LESS_EQUAL	shift, and go to state 259
+    GREATER_EQUAL	shift, and go to state 260
+    '+' 	shift, and go to state 261
+    '-' 	shift, and go to state 262
+    '*' 	shift, and go to state 263
+    '/' 	shift, and go to state 264
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+    ')' 	shift, and go to state 341
+
+
+
+state 317
+
+    do_while_statement  ->  DO statement WHILE . '(' expression ')' ';'   (rule 92)
+
+    '(' 	shift, and go to state 342
+
+
+
+state 318
+
+    expression  ->  IDENTIFIER .   (rule 46)
+    expression  ->  IDENTIFIER . '(' expression_list_e ')'   (rule 52)
+    for_statement  ->  FOR '(' IDENTIFIER . IN expression ')' statement   (rule 95)
+
+    '(' 	shift, and go to state 246
+    IN  	shift, and go to state 343
+
+    $default	reduce using rule 46 (expression)
+
+
+
+state 319
+
+    for_statement  ->  FOR '(' CLASS_NAME . '*' IDENTIFIER IN expression ')' statement   (rule 96)
+
+    '*' 	shift, and go to state 344
+
+
+
+state 320
+
+    for_statement  ->  FOR '(' type . IDENTIFIER '=' expression ';' expression_e ';' expression_e ')' statement   (rule 94)
+
+    IDENTIFIER	shift, and go to state 345
+
+
+
+state 321
+
+    for_statement  ->  FOR '(' expression_e . ';' expression_e ';' expression_e ')' statement   (rule 93)
+
+    ';' 	shift, and go to state 346
+
+
+
+state 322
+
+    statement  ->  RETURN expression_e ';' .   (rule 99)
+
+    $default	reduce using rule 99 (statement)
+
+
+
+state 323
+
+    keyword_declaration  ->  IDENTIFIER ':' IDENTIFIER .   (rule 181)
+
+    $default	reduce using rule 181 (keyword_declaration)
+
+
+
+state 324
+
+    keyword_declaration  ->  IDENTIFIER ':' method_type . IDENTIFIER   (rule 180)
+
+    IDENTIFIER	shift, and go to state 347
+
+
+
+state 325
+
+    keyword_declaration  ->  ':' method_type IDENTIFIER .   (rule 178)
+
+    $default	reduce using rule 178 (keyword_declaration)
+
+
+
+state 326
+
+    parameter_declaration  ->  CLASS_NAME . '*' IDENTIFIER   (rule 45)
+
+    '*' 	shift, and go to state 348
+
+
+
+state 327
+
+    parameter_declaration  ->  type . IDENTIFIER   (rule 44)
+
+    IDENTIFIER	shift, and go to state 349
+
+
+
+state 328
+
+    parameter_list  ->  parameter_list . ',' parameter_declaration   (rule 43)
+    method_selector  ->  IDENTIFIER ':' keyword_declaration_without_identifier keyword_selector_e ',' parameter_list .   (rule 171)
+
+    ',' 	shift, and go to state 350
+
+    $default	reduce using rule 171 (method_selector)
+
+
+
+state 329
+
+    parameter_list  ->  parameter_declaration .   (rule 42)
+
+    $default	reduce using rule 42 (parameter_list)
+
+
+
+state 330
+
+    property  ->  PROPERTY '(' ')' CLASS_NAME '*' IDENTIFIER ';' .   (rule 189)
+
+    $default	reduce using rule 189 (property)
+
+
+
+state 331
+
+    property  ->  PROPERTY '(' attribute ')' CLASS_NAME '*' IDENTIFIER . ';'   (rule 185)
+
+    ';' 	shift, and go to state 351
+
+
+
+state 332
+
+    property  ->  PROPERTY '(' attribute ')' type IDENTIFIER ';' .   (rule 184)
+
+    $default	reduce using rule 184 (property)
+
+
+
+state 333
+
+    expression  ->  IDENTIFIER '(' expression_list_e ')' .   (rule 52)
+
+    $default	reduce using rule 52 (expression)
+
+
+
+state 334
+
+    expression_list  ->  expression_list ',' . expression   (rule 74)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 352
+
+
+
+state 335
+
+    receiver  ->  '[' receiver message_selector . ']'   (rule 79)
+
+    ']' 	shift, and go to state 353
+
+
+
+state 336
+
+    message_selector  ->  IDENTIFIER ':' . expression keyword_argument_list_e   (rule 81)
+    message_selector  ->  IDENTIFIER ':' . expression keyword_argument_list_e ',' expression_list   (rule 82)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 354
+
+
+
+state 337
+
+    expression  ->  '[' receiver message_selector ']' .   (rule 51)
+
+    $default	reduce using rule 51 (expression)
+
+
+
+state 338
+
+    class_method_definition  ->  '+' '(' VOID ')' method_selector declaration_list_e compound_statement .   (rule 164)
+
+    $default	reduce using rule 164 (class_method_definition)
+
+
+
+state 339
+
+    instance_method_definition  ->  '-' '(' VOID ')' method_selector declaration_list_e compound_statement .   (rule 167)
+
+    $default	reduce using rule 167 (instance_method_definition)
+
+
+
+state 340
+
+    if_statement  ->  IF '(' expression ')' . statement   (rule 89)
+    if_statement  ->  IF '(' expression ')' . statement ELSE statement   (rule 90)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    IF  	shift, and go to state 213
+    WHILE	shift, and go to state 214
+    DO  	shift, and go to state 215
+    FOR 	shift, and go to state 216
+    SELF	shift, and go to state 179
+    ID  	shift, and go to state 6
+    RETURN	shift, and go to state 217
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    CLASS_NAME	shift, and go to state 28
+    ';' 	shift, and go to state 218
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+    '{' 	shift, and go to state 159
+
+    type	go to state 31
+    numeric_constant	go to state 188
+    literal	go to state 189
+    declaration	go to state 219
+    expression	go to state 220
+    if_statement	go to state 221
+    while_statement	go to state 222
+    do_while_statement	go to state 223
+    for_statement	go to state 224
+    statement	go to state 355
+    compound_statement	go to state 226
+
+
+
+state 341
+
+    while_statement  ->  WHILE '(' expression ')' . statement   (rule 91)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    IF  	shift, and go to state 213
+    WHILE	shift, and go to state 214
+    DO  	shift, and go to state 215
+    FOR 	shift, and go to state 216
+    SELF	shift, and go to state 179
+    ID  	shift, and go to state 6
+    RETURN	shift, and go to state 217
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    CLASS_NAME	shift, and go to state 28
+    ';' 	shift, and go to state 218
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+    '{' 	shift, and go to state 159
+
+    type	go to state 31
+    numeric_constant	go to state 188
+    literal	go to state 189
+    declaration	go to state 219
+    expression	go to state 220
+    if_statement	go to state 221
+    while_statement	go to state 222
+    do_while_statement	go to state 223
+    for_statement	go to state 224
+    statement	go to state 356
+    compound_statement	go to state 226
+
+
+
+state 342
+
+    do_while_statement  ->  DO statement WHILE '(' . expression ')' ';'   (rule 92)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 357
+
+
+
+state 343
+
+    for_statement  ->  FOR '(' IDENTIFIER IN . expression ')' statement   (rule 95)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 358
+
+
+
+state 344
+
+    for_statement  ->  FOR '(' CLASS_NAME '*' . IDENTIFIER IN expression ')' statement   (rule 96)
+
+    IDENTIFIER	shift, and go to state 359
+
+
+
+state 345
+
+    for_statement  ->  FOR '(' type IDENTIFIER . '=' expression ';' expression_e ';' expression_e ')' statement   (rule 94)
+
+    '=' 	shift, and go to state 360
+
+
+
+state 346
+
+    for_statement  ->  FOR '(' expression_e ';' . expression_e ';' expression_e ')' statement   (rule 93)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    $default	reduce using rule 69 (expression_e)
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 277
+    expression_e	go to state 361
+
+
+
+state 347
+
+    keyword_declaration  ->  IDENTIFIER ':' method_type IDENTIFIER .   (rule 180)
+
+    $default	reduce using rule 180 (keyword_declaration)
+
+
+
+state 348
+
+    parameter_declaration  ->  CLASS_NAME '*' . IDENTIFIER   (rule 45)
+
+    IDENTIFIER	shift, and go to state 362
+
+
+
+state 349
+
+    parameter_declaration  ->  type IDENTIFIER .   (rule 44)
+
+    $default	reduce using rule 44 (parameter_declaration)
+
+
+
+state 350
+
+    parameter_list  ->  parameter_list ',' . parameter_declaration   (rule 43)
+
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    ID  	shift, and go to state 6
+    CLASS_NAME	shift, and go to state 326
+
+    type	go to state 327
+    parameter_declaration	go to state 363
+
+
+
+state 351
+
+    property  ->  PROPERTY '(' attribute ')' CLASS_NAME '*' IDENTIFIER ';' .   (rule 185)
+
+    $default	reduce using rule 185 (property)
+
+
+
+state 352
+
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+    expression_list  ->  expression_list ',' expression .   (rule 74)
+
+    '=' 	shift, and go to state 254
+    EQUAL	shift, and go to state 255
+    NOT_EQUAL	shift, and go to state 256
+    '<' 	shift, and go to state 257
+    '>' 	shift, and go to state 258
+    LESS_EQUAL	shift, and go to state 259
+    GREATER_EQUAL	shift, and go to state 260
+    '+' 	shift, and go to state 261
+    '-' 	shift, and go to state 262
+    '*' 	shift, and go to state 263
+    '/' 	shift, and go to state 264
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+
+    $default	reduce using rule 74 (expression_list)
+
+
+
+state 353
+
+    receiver  ->  '[' receiver message_selector ']' .   (rule 79)
+
+    $default	reduce using rule 79 (receiver)
+
+
+
+state 354
+
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+    message_selector  ->  IDENTIFIER ':' expression . keyword_argument_list_e   (rule 81)
+    message_selector  ->  IDENTIFIER ':' expression . keyword_argument_list_e ',' expression_list   (rule 82)
+
+    '=' 	shift, and go to state 254
+    EQUAL	shift, and go to state 255
+    NOT_EQUAL	shift, and go to state 256
+    '<' 	shift, and go to state 257
+    '>' 	shift, and go to state 258
+    LESS_EQUAL	shift, and go to state 259
+    GREATER_EQUAL	shift, and go to state 260
+    '+' 	shift, and go to state 261
+    '-' 	shift, and go to state 262
+    '*' 	shift, and go to state 263
+    '/' 	shift, and go to state 264
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+    IDENTIFIER	shift, and go to state 364
+    ':' 	shift, and go to state 365
+
+    $default	reduce using rule 83 (keyword_argument_list_e)
+
+    keyword_argument_list_e	go to state 366
+    keyword_argument_list	go to state 367
+    keyword_argument	go to state 368
+
+
+
+state 355
+
+    if_statement  ->  IF '(' expression ')' statement .   (rule 89)
+    if_statement  ->  IF '(' expression ')' statement . ELSE statement   (rule 90)
+
+    ELSE	shift, and go to state 369
+
+    ELSE	[reduce using rule 89 (if_statement)]
+    $default	reduce using rule 89 (if_statement)
+
+
+
+state 356
+
+    while_statement  ->  WHILE '(' expression ')' statement .   (rule 91)
+
+    $default	reduce using rule 91 (while_statement)
+
+
+
+state 357
+
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+    do_while_statement  ->  DO statement WHILE '(' expression . ')' ';'   (rule 92)
+
+    '=' 	shift, and go to state 254
+    EQUAL	shift, and go to state 255
+    NOT_EQUAL	shift, and go to state 256
+    '<' 	shift, and go to state 257
+    '>' 	shift, and go to state 258
+    LESS_EQUAL	shift, and go to state 259
+    GREATER_EQUAL	shift, and go to state 260
+    '+' 	shift, and go to state 261
+    '-' 	shift, and go to state 262
+    '*' 	shift, and go to state 263
+    '/' 	shift, and go to state 264
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+    ')' 	shift, and go to state 370
+
+
+
+state 358
+
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+    for_statement  ->  FOR '(' IDENTIFIER IN expression . ')' statement   (rule 95)
+
+    '=' 	shift, and go to state 254
+    EQUAL	shift, and go to state 255
+    NOT_EQUAL	shift, and go to state 256
+    '<' 	shift, and go to state 257
+    '>' 	shift, and go to state 258
+    LESS_EQUAL	shift, and go to state 259
+    GREATER_EQUAL	shift, and go to state 260
+    '+' 	shift, and go to state 261
+    '-' 	shift, and go to state 262
+    '*' 	shift, and go to state 263
+    '/' 	shift, and go to state 264
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+    ')' 	shift, and go to state 371
+
+
+
+state 359
+
+    for_statement  ->  FOR '(' CLASS_NAME '*' IDENTIFIER . IN expression ')' statement   (rule 96)
+
+    IN  	shift, and go to state 372
+
+
+
+state 360
+
+    for_statement  ->  FOR '(' type IDENTIFIER '=' . expression ';' expression_e ';' expression_e ')' statement   (rule 94)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 373
+
+
+
+state 361
+
+    for_statement  ->  FOR '(' expression_e ';' expression_e . ';' expression_e ')' statement   (rule 93)
+
+    ';' 	shift, and go to state 374
+
+
+
+state 362
+
+    parameter_declaration  ->  CLASS_NAME '*' IDENTIFIER .   (rule 45)
+
+    $default	reduce using rule 45 (parameter_declaration)
+
+
+
+state 363
+
+    parameter_list  ->  parameter_list ',' parameter_declaration .   (rule 43)
+
+    $default	reduce using rule 43 (parameter_list)
+
+
+
+state 364
+
+    keyword_argument  ->  IDENTIFIER . ':' expression   (rule 87)
+
+    ':' 	shift, and go to state 375
+
+
+
+state 365
+
+    keyword_argument  ->  ':' . expression   (rule 88)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 376
+
+
+
+state 366
+
+    message_selector  ->  IDENTIFIER ':' expression keyword_argument_list_e .   (rule 81)
+    message_selector  ->  IDENTIFIER ':' expression keyword_argument_list_e . ',' expression_list   (rule 82)
+
+    ',' 	shift, and go to state 377
+
+    $default	reduce using rule 81 (message_selector)
+
+
+
+state 367
+
+    keyword_argument_list_e  ->  keyword_argument_list .   (rule 84)
+    keyword_argument_list  ->  keyword_argument_list . keyword_argument   (rule 86)
+
+    IDENTIFIER	shift, and go to state 364
+    ':' 	shift, and go to state 365
+
+    $default	reduce using rule 84 (keyword_argument_list_e)
+
+    keyword_argument	go to state 378
+
+
+
+state 368
+
+    keyword_argument_list  ->  keyword_argument .   (rule 85)
+
+    $default	reduce using rule 85 (keyword_argument_list)
+
+
+
+state 369
+
+    if_statement  ->  IF '(' expression ')' statement ELSE . statement   (rule 90)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    IF  	shift, and go to state 213
+    WHILE	shift, and go to state 214
+    DO  	shift, and go to state 215
+    FOR 	shift, and go to state 216
+    SELF	shift, and go to state 179
+    ID  	shift, and go to state 6
+    RETURN	shift, and go to state 217
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    CLASS_NAME	shift, and go to state 28
+    ';' 	shift, and go to state 218
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+    '{' 	shift, and go to state 159
+
+    type	go to state 31
+    numeric_constant	go to state 188
+    literal	go to state 189
+    declaration	go to state 219
+    expression	go to state 220
+    if_statement	go to state 221
+    while_statement	go to state 222
+    do_while_statement	go to state 223
+    for_statement	go to state 224
+    statement	go to state 379
+    compound_statement	go to state 226
+
+
+
+state 370
+
+    do_while_statement  ->  DO statement WHILE '(' expression ')' . ';'   (rule 92)
+
+    ';' 	shift, and go to state 380
+
+
+
+state 371
+
+    for_statement  ->  FOR '(' IDENTIFIER IN expression ')' . statement   (rule 95)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    IF  	shift, and go to state 213
+    WHILE	shift, and go to state 214
+    DO  	shift, and go to state 215
+    FOR 	shift, and go to state 216
+    SELF	shift, and go to state 179
+    ID  	shift, and go to state 6
+    RETURN	shift, and go to state 217
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    CLASS_NAME	shift, and go to state 28
+    ';' 	shift, and go to state 218
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+    '{' 	shift, and go to state 159
+
+    type	go to state 31
+    numeric_constant	go to state 188
+    literal	go to state 189
+    declaration	go to state 219
+    expression	go to state 220
+    if_statement	go to state 221
+    while_statement	go to state 222
+    do_while_statement	go to state 223
+    for_statement	go to state 224
+    statement	go to state 381
+    compound_statement	go to state 226
+
+
+
+state 372
+
+    for_statement  ->  FOR '(' CLASS_NAME '*' IDENTIFIER IN . expression ')' statement   (rule 96)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 382
+
+
+
+state 373
+
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+    for_statement  ->  FOR '(' type IDENTIFIER '=' expression . ';' expression_e ';' expression_e ')' statement   (rule 94)
+
+    '=' 	shift, and go to state 254
+    EQUAL	shift, and go to state 255
+    NOT_EQUAL	shift, and go to state 256
+    '<' 	shift, and go to state 257
+    '>' 	shift, and go to state 258
+    LESS_EQUAL	shift, and go to state 259
+    GREATER_EQUAL	shift, and go to state 260
+    '+' 	shift, and go to state 261
+    '-' 	shift, and go to state 262
+    '*' 	shift, and go to state 263
+    '/' 	shift, and go to state 264
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+    ';' 	shift, and go to state 383
+
+
+
+state 374
+
+    for_statement  ->  FOR '(' expression_e ';' expression_e ';' . expression_e ')' statement   (rule 93)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    $default	reduce using rule 69 (expression_e)
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 277
+    expression_e	go to state 384
+
+
+
+state 375
+
+    keyword_argument  ->  IDENTIFIER ':' . expression   (rule 87)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 385
+
+
+
+state 376
+
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+    keyword_argument  ->  ':' expression .   (rule 88)
+
+    '=' 	shift, and go to state 254
+    EQUAL	shift, and go to state 255
+    NOT_EQUAL	shift, and go to state 256
+    '<' 	shift, and go to state 257
+    '>' 	shift, and go to state 258
+    LESS_EQUAL	shift, and go to state 259
+    GREATER_EQUAL	shift, and go to state 260
+    '+' 	shift, and go to state 261
+    '-' 	shift, and go to state 262
+    '*' 	shift, and go to state 263
+    '/' 	shift, and go to state 264
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+
+    $default	reduce using rule 88 (keyword_argument)
+
+
+
+state 377
+
+    message_selector  ->  IDENTIFIER ':' expression keyword_argument_list_e ',' . expression_list   (rule 82)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 294
+    expression_list	go to state 386
+
+
+
+state 378
+
+    keyword_argument_list  ->  keyword_argument_list keyword_argument .   (rule 86)
+
+    $default	reduce using rule 86 (keyword_argument_list)
+
+
+
+state 379
+
+    if_statement  ->  IF '(' expression ')' statement ELSE statement .   (rule 90)
+
+    $default	reduce using rule 90 (if_statement)
+
+
+
+state 380
+
+    do_while_statement  ->  DO statement WHILE '(' expression ')' ';' .   (rule 92)
+
+    $default	reduce using rule 92 (do_while_statement)
+
+
+
+state 381
+
+    for_statement  ->  FOR '(' IDENTIFIER IN expression ')' statement .   (rule 95)
+
+    $default	reduce using rule 95 (for_statement)
+
+
+
+state 382
+
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+    for_statement  ->  FOR '(' CLASS_NAME '*' IDENTIFIER IN expression . ')' statement   (rule 96)
+
+    '=' 	shift, and go to state 254
+    EQUAL	shift, and go to state 255
+    NOT_EQUAL	shift, and go to state 256
+    '<' 	shift, and go to state 257
+    '>' 	shift, and go to state 258
+    LESS_EQUAL	shift, and go to state 259
+    GREATER_EQUAL	shift, and go to state 260
+    '+' 	shift, and go to state 261
+    '-' 	shift, and go to state 262
+    '*' 	shift, and go to state 263
+    '/' 	shift, and go to state 264
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+    ')' 	shift, and go to state 387
+
+
+
+state 383
+
+    for_statement  ->  FOR '(' type IDENTIFIER '=' expression ';' . expression_e ';' expression_e ')' statement   (rule 94)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    $default	reduce using rule 69 (expression_e)
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 277
+    expression_e	go to state 388
+
+
+
+state 384
+
+    for_statement  ->  FOR '(' expression_e ';' expression_e ';' expression_e . ')' statement   (rule 93)
+
+    ')' 	shift, and go to state 389
+
+
+
+state 385
+
+    expression  ->  expression . '+' expression   (rule 56)
+    expression  ->  expression . '-' expression   (rule 57)
+    expression  ->  expression . '*' expression   (rule 58)
+    expression  ->  expression . '/' expression   (rule 59)
+    expression  ->  expression . EQUAL expression   (rule 60)
+    expression  ->  expression . NOT_EQUAL expression   (rule 61)
+    expression  ->  expression . '>' expression   (rule 62)
+    expression  ->  expression . '<' expression   (rule 63)
+    expression  ->  expression . LESS_EQUAL expression   (rule 64)
+    expression  ->  expression . GREATER_EQUAL expression   (rule 65)
+    expression  ->  expression . '=' expression   (rule 66)
+    expression  ->  expression . '.' IDENTIFIER   (rule 67)
+    expression  ->  expression . ARROW IDENTIFIER   (rule 68)
+    keyword_argument  ->  IDENTIFIER ':' expression .   (rule 87)
+
+    '=' 	shift, and go to state 254
+    EQUAL	shift, and go to state 255
+    NOT_EQUAL	shift, and go to state 256
+    '<' 	shift, and go to state 257
+    '>' 	shift, and go to state 258
+    LESS_EQUAL	shift, and go to state 259
+    GREATER_EQUAL	shift, and go to state 260
+    '+' 	shift, and go to state 261
+    '-' 	shift, and go to state 262
+    '*' 	shift, and go to state 263
+    '/' 	shift, and go to state 264
+    '.' 	shift, and go to state 265
+    ARROW	shift, and go to state 266
+
+    $default	reduce using rule 87 (keyword_argument)
+
+
+
+state 386
+
+    expression_list  ->  expression_list . ',' expression   (rule 74)
+    message_selector  ->  IDENTIFIER ':' expression keyword_argument_list_e ',' expression_list .   (rule 82)
+
+    ',' 	shift, and go to state 334
+
+    $default	reduce using rule 82 (message_selector)
+
+
+
+state 387
+
+    for_statement  ->  FOR '(' CLASS_NAME '*' IDENTIFIER IN expression ')' . statement   (rule 96)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    IF  	shift, and go to state 213
+    WHILE	shift, and go to state 214
+    DO  	shift, and go to state 215
+    FOR 	shift, and go to state 216
+    SELF	shift, and go to state 179
+    ID  	shift, and go to state 6
+    RETURN	shift, and go to state 217
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    CLASS_NAME	shift, and go to state 28
+    ';' 	shift, and go to state 218
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+    '{' 	shift, and go to state 159
+
+    type	go to state 31
+    numeric_constant	go to state 188
+    literal	go to state 189
+    declaration	go to state 219
+    expression	go to state 220
+    if_statement	go to state 221
+    while_statement	go to state 222
+    do_while_statement	go to state 223
+    for_statement	go to state 224
+    statement	go to state 390
+    compound_statement	go to state 226
+
+
+
+state 388
+
+    for_statement  ->  FOR '(' type IDENTIFIER '=' expression ';' expression_e . ';' expression_e ')' statement   (rule 94)
+
+    ';' 	shift, and go to state 391
+
+
+
+state 389
+
+    for_statement  ->  FOR '(' expression_e ';' expression_e ';' expression_e ')' . statement   (rule 93)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    IF  	shift, and go to state 213
+    WHILE	shift, and go to state 214
+    DO  	shift, and go to state 215
+    FOR 	shift, and go to state 216
+    SELF	shift, and go to state 179
+    ID  	shift, and go to state 6
+    RETURN	shift, and go to state 217
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    CLASS_NAME	shift, and go to state 28
+    ';' 	shift, and go to state 218
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+    '{' 	shift, and go to state 159
+
+    type	go to state 31
+    numeric_constant	go to state 188
+    literal	go to state 189
+    declaration	go to state 219
+    expression	go to state 220
+    if_statement	go to state 221
+    while_statement	go to state 222
+    do_while_statement	go to state 223
+    for_statement	go to state 224
+    statement	go to state 392
+    compound_statement	go to state 226
+
+
+
+state 390
+
+    for_statement  ->  FOR '(' CLASS_NAME '*' IDENTIFIER IN expression ')' statement .   (rule 96)
+
+    $default	reduce using rule 96 (for_statement)
+
+
+
+state 391
+
+    for_statement  ->  FOR '(' type IDENTIFIER '=' expression ';' expression_e ';' . expression_e ')' statement   (rule 94)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    SELF	shift, and go to state 179
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+
+    $default	reduce using rule 69 (expression_e)
+
+    numeric_constant	go to state 188
+    literal	go to state 189
+    expression	go to state 277
+    expression_e	go to state 393
+
+
+
+state 392
+
+    for_statement  ->  FOR '(' expression_e ';' expression_e ';' expression_e ')' statement .   (rule 93)
+
+    $default	reduce using rule 93 (for_statement)
+
+
+
+state 393
+
+    for_statement  ->  FOR '(' type IDENTIFIER '=' expression ';' expression_e ';' expression_e . ')' statement   (rule 94)
+
+    ')' 	shift, and go to state 394
+
+
+
+state 394
+
+    for_statement  ->  FOR '(' type IDENTIFIER '=' expression ';' expression_e ';' expression_e ')' . statement   (rule 94)
+
+    '+' 	shift, and go to state 176
+    '-' 	shift, and go to state 177
+    '(' 	shift, and go to state 178
+    INT 	shift, and go to state 1
+    CHAR	shift, and go to state 2
+    FLOAT	shift, and go to state 3
+    IF  	shift, and go to state 213
+    WHILE	shift, and go to state 214
+    DO  	shift, and go to state 215
+    FOR 	shift, and go to state 216
+    SELF	shift, and go to state 179
+    ID  	shift, and go to state 6
+    RETURN	shift, and go to state 217
+    INTEGER_CONSTANT	shift, and go to state 180
+    STRING_CONSTANT	shift, and go to state 181
+    CHAR_CONSTANT	shift, and go to state 182
+    FLOAT_CONSTANT	shift, and go to state 183
+    NSSTRING_CONSTANT	shift, and go to state 184
+    IDENTIFIER	shift, and go to state 185
+    CLASS_NAME	shift, and go to state 28
+    ';' 	shift, and go to state 218
+    '[' 	shift, and go to state 186
+    '&' 	shift, and go to state 187
+    '{' 	shift, and go to state 159
+
+    type	go to state 31
+    numeric_constant	go to state 188
+    literal	go to state 189
+    declaration	go to state 219
+    expression	go to state 220
+    if_statement	go to state 221
+    while_statement	go to state 222
+    do_while_statement	go to state 223
+    for_statement	go to state 224
+    statement	go to state 395
+    compound_statement	go to state 226
+
+
+
+state 395
+
+    for_statement  ->  FOR '(' type IDENTIFIER '=' expression ';' expression_e ';' expression_e ')' statement .   (rule 94)
+
+    $default	reduce using rule 94 (for_statement)
+
+
+
+state 396
+
+    $   	go to state 397
+
+
+
+state 397
+
+    $   	go to state 398
+
+
+
+state 398
+
+    $default	accept

@@ -251,6 +251,7 @@ enum expression_type
     NUMERIIC_CONSTANT_EXPRESSION_TYPE,
     PRIORITY_EXPRESSION_TYPE,
     SELF_EXPRESSION_TYPE,
+    SUPER_EXPRESSION_TYPE,
     MESSAGE_EXPRESSION_EXPRESSION_TYPE,
     FUNCTION_CALL_EXPRESSION_TYPE,
     UMINUS_EXPRESSION_TYPE,
@@ -294,6 +295,7 @@ class Expression_node
         static Expression_node* createExpressionNodeFromNumericConstant(Numeric_constant_node *value);
         static Expression_node* createExpressionNodeFromSimpleExpression(expression_type type, Expression_node *expression);
         static Expression_node* createExpressionNodeFromSelf();
+        static Expression_node* createExpressionNodeFromSuper();
         static Expression_node* createExpressionNodeFromOperator(expression_type type, Expression_node *leftExpression, Expression_node *rightExpression);
         static Expression_node* createExpressionNodeFromMessageExpression(Receiver_node *receiver, Message_selector_node *arguments);
         static Expression_node* createExpressionNodeFromFunctionCall(char *name, Expression_list_node *argumentsList);

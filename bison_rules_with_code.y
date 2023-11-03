@@ -317,7 +317,7 @@ do_while_statement: DO statement WHILE '(' expression ')' ';'	{$$ = Do_while_sta
 				  ;
 
 for_statement: FOR '(' expression_e ';' expression_e ';' expression_e ')' statement						{$$ = For_statement_node::createForStatementNode($3, $5, $7, $9);}
-			 | FOR '(' type init_declarator_list_e ';' expression_e ';' expression_e ')'	statement	{$$ =For_statement_node::createForStatementNodeFromForWithDeclaration($3, $4, $6, $8, $10)}			
+			 | FOR '(' type init_declarator_list_e ';' expression_e ';' expression_e ')' statement		{$$ =For_statement_node::createForStatementNodeFromForWithDeclaration($3, $4, $6, $8, $10)}			
 			 | FOR '(' IDENTIFIER IN expression ')' statement											{$$ = For_statement_node::createForStatementNodeFromForeach(FOREACH_FOR_TYPE, NULL, $3, $5, $7);}
 			 | FOR '(' CLASS_NAME '*' IDENTIFIER IN expression ')' statement							{$$ = For_statement_node::createForStatementNodeFromForeach(FOREACH_WITH_DECLARATION_FOR_TYPE, Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $3), $5, $7, $9);}
 			 ;

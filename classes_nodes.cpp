@@ -1370,7 +1370,7 @@ string Expression_node::toDot(string labelConection)
     {
         res += to_string(id) + "[label=\"self_expression\"];\n";
     }
-    else if (SUPER_EXPRESSION_TYPE)
+    else if (type == SUPER_EXPRESSION_TYPE)
     {
         res += to_string(id) + "[label=\"super_expression\"];\n";
     }
@@ -2400,6 +2400,10 @@ string Attribute_node::toDot(string labelConection)
     else if (type == READWRITE_ATTRIBUTE_TYPE)
     {
         res += "[label=\"readwrite\"];\n";
+    }
+    else if (type == EMPTY_ATTRIBUTE_TYPE)
+    {
+        res += "[label=\"empty\"];\n";
     }
     return res;
 }

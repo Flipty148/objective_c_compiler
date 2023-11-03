@@ -464,16 +464,14 @@ method_type: '(' type ')'	{$$ = $2;}
 		   | '(' CLASS_NAME '*' ')' {$$ = Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $2);}
 		   ;
 
-property: PROPERTY '(' attribute ')' type IDENTIFIER ';'	{$$ = Property_node::createPropertyNode($3, $5, $6);}
-		| PROPERTY '(' attribute ')' CLASS_NAME '*' IDENTIFIER ';'	{$$ = Property_node::createPropertyNode($3, Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $5), $7);}
-		| PROPERTY type IDENTIFIER ';'	{$$ = Property_node::createPropertyNode(NULL, $2, $3);}
-		| PROPERTY CLASS_NAME '*' IDENTIFIER ';'	{$$ = Property_node::createPropertyNode(NULL, Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $2), $4);}
-		| PROPERTY '(' ')' type IDENTIFIER ';'	{$$ = Property_node::createPropertyNode(NULL, $4, $5);}
-		| PROPERTY '(' ')' CLASS_NAME '*' IDENTIFIER ';'	{$$ = Property_node::createPropertyNode(NULL, Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $4), $6);}
+property: PROPERTY attribute type IDENTIFIER ';'	{$$ = Property_node::createPropertyNode($2, $3, $4);}
+		| PROPERTY attribute CLASS_NAME '*' IDENTIFIER ';'	{$$ = Property_node::createPropertyNode($2, Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $3), $5);}
 		;
 
-attribute: READONLY		{$$ = Attribute_node::createAttributeNode(READONLY_ATTRIBUTE_TYPE);}
-		 | READWRITE	{$$ = Attribute_node::createAttributeNode(READWRITE_ATTRIBUTE_TYPE);}
+attribute: /*empty*/			{$$ = Attribute_node::createAttributeNode(EMPTY_ATTRIBUTE_TYPE);}
+		 | '(' ')'				{$$ = Attribute_node::createAttributeNode(EMPTY_ATTRIBUTE_TYPE);}
+		 | '(' READONLY ')'		{$$ = Attribute_node::createAttributeNode(READONLY_ATTRIBUTE_TYPE);}
+		 | '(' READWRITE ')'	{$$ = Attribute_node::createAttributeNode(READWRITE_ATTRIBUTE_TYPE);}
 		 ;
 
 synthesize: SYNTHESIZE IDENTIFIER ';'	{$$ = Synthesize_node::createSynthesizeNode($2)}

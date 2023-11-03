@@ -857,7 +857,8 @@ class Property_node
 
 enum attrribute_type {
     READONLY_ATTRIBUTE_TYPE,
-    READWRITE_ATTRIBUTE_TYPE
+    READWRITE_ATTRIBUTE_TYPE,
+    EMPTY_ATTRIBUTE_TYPE
 };
 
 class Attribute_node

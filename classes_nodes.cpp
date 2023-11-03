@@ -537,17 +537,17 @@ For_statement_node* For_statement_node::createForStatementNode(Expression_node *
     return res;
 }
 
-For_statement_node* For_statement_node::createForStatementNodeFromForWithDeclaration(Type_node *varType, char *loopVar, Expression_node *initExpression, Expression_node *condition, Expression_node *loopExpression, Statement_node *body)
+For_statement_node* For_statement_node::createForStatementNodeFromForWithDeclaration(Type_node *type, Init_declarator_list_node *initList, Expression_node *condition, Expression_node *loopExpression, Statement_node *body)
 {
     For_statement_node *res = new For_statement_node;
     res->id = maxId++;
     res->type = FOR_WITH_DECLARATION_FOR_TYPE;
-    res->InitExpression = initExpression;
+    res->InitExpression = NULL;
     res->ConditionExpression = condition;
     res->LoopExpression = loopExpression;
     res->LoopBody = body;
-    res->name = loopVar;
-    res->NameType = varType;
+    res->NameType = type;
+    res->InitList = initList;
     return res;
 }
 
@@ -1199,9 +1199,11 @@ vector<Init_declarator_node*>* Init_declarator_list_node::getElements()
     return res;
 }
 
-string Init_declarator_list_node::toDot()
+string Init_declarator_list_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
+    if (labelConection!= "")
+        res += "[label=\"" + labelConection + "\"]";
     res += ";\n";
     res += to_string(id) + "[label=\"init_declarator_list\"];\n";
     vector<Init_declarator_node*>* elements = getElements();
@@ -1831,11 +1833,8 @@ string For_statement_node::toDot(string labelConection)
         res += to_string(id);
         res += NameType->toDot("type");
 
-        res += to_string(id) + ".1 [label=\"" + name + "\"];\n";
-        res += to_string(id) + "->" + to_string(id) + ".1 [label=\"identifier\"]; \n";
-
         res += to_string(id);
-        res += InitExpression->toDot("init_expression");
+        res += InitList->toDot("init_list");
 
         if (ConditionExpression!= NULL)
         {
@@ -2095,8 +2094,11 @@ string Instance_variables_node::toDot(string labelConection)
     res += ";\n";
     res += to_string(id) + "[label=\"instance_variables\"];\n";
 
-    res += to_string(id);
-    res += DeclarationList->toDot();
+    if (DeclarationList != NULL)
+    {
+        res += to_string(id);
+        res += DeclarationList->toDot();
+    }
 
     return res;
 }

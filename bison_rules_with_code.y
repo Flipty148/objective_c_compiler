@@ -127,9 +127,9 @@
 %type <Class_list> class_list
 %type <Instance_variables> instance_variables
 %type <Interface_declaration_list> interface_declaration_list
-%type <Method_declaration> method_declaration class_method_declaration instance_method_declaration
+%type <Method_declaration> method_declaration 
 %type <Implementation_definition_list> implementation_definition_list
-%type <Method_definition> method_definition class_method_definition instance_method_definition
+%type <Method_definition> method_definition 
 %type <Method_selector> method_selector
 %type <Keyword_selector> keyword_selector keyword_selector_e
 %type <Keyword_declaration> keyword_declaration keyword_declaration_without_identifier
@@ -141,7 +141,7 @@
 %type <Declarator> declarator declarator_with_asterisk
 %type <Declarator_list> declarator_list declarator_with_asterisk_list
 %type <Instance_variables_declaration> instance_variables_declaration
-%type <Instance_variables_declaration_list> instance_variables_declaration_list
+%type <Instance_variables_declaration_list> instance_variables_declaration_list instance_variables_declaration_list_e
 %type <Synthesize> synthesize
 
 
@@ -317,7 +317,7 @@ do_while_statement: DO statement WHILE '(' expression ')' ';'	{$$ = Do_while_sta
 				  ;
 
 for_statement: FOR '(' expression_e ';' expression_e ';' expression_e ')' statement						{$$ = For_statement_node::createForStatementNode($3, $5, $7, $9);}
-			 | FOR '(' type IDENTIFIER '=' expression ';' expression_e ';' expression_e ')'	statement	{$$ =For_statement_node::createForStatementNodeFromForWithDeclaration($3, $4, $6, $8, $10, $12)}			
+			 | FOR '(' type init_declarator_list_e ';' expression_e ';' expression_e ')'	statement	{$$ =For_statement_node::createForStatementNodeFromForWithDeclaration($3, $4, $6, $8, $10)}			
 			 | FOR '(' IDENTIFIER IN expression ')' statement											{$$ = For_statement_node::createForStatementNodeFromForeach(FOREACH_FOR_TYPE, NULL, $3, $5, $7);}
 			 | FOR '(' CLASS_NAME '*' IDENTIFIER IN expression ')' statement							{$$ = For_statement_node::createForStatementNodeFromForeach(FOREACH_WITH_DECLARATION_FOR_TYPE, Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $3), $5, $7, $9);}
 			 ;
@@ -390,8 +390,12 @@ class_list: IDENTIFIER					{$$ = Class_list_node::createClassListNode($1);}
 		  | class_list ',' IDENTIFIER	{$$ = Class_list_node::addToClassListNode($1, $3);}
 		  ;
 
-instance_variables: '{' instance_variables_declaration_list '}'	{$$ = Instance_variables_node::createInstanceVariablesNode($2);}
+instance_variables: '{' instance_variables_declaration_list_e '}'	{$$ = Instance_variables_node::createInstanceVariablesNode($2);}
 				   ;
+
+instance_variables_declaration_list_e: /*empty*/							{$$ = NULL;}
+								| instance_variables_declaration_list	{$$ = $1;}
+								;
 
 instance_variables_declaration: type declarator_list ';'						{$$ = Instance_variables_declaration_node::createInstanceVariablesDeclarationNode($1, $2);}
 							  | CLASS_NAME declarator_with_asterisk_list ';'	{$$ = Instance_variables_declaration_node::createInstanceVariablesDeclarationNode(Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $1), $2);}
@@ -409,19 +413,13 @@ interface_declaration_list: declaration										{$$ = Interface_declaration_lis
 						  | interface_declaration_list property				{$$ = Interface_declaration_list_node::addPropertyToInterfaceDeclarationListNode($1, $2);}
 						  ;
 
-method_declaration: class_method_declaration		{$$ = $1;}
-				  | instance_method_declaration		{$$ = $1;}
+method_declaration: '+' method_type method_selector ';'		{$$ = Method_declaration_node::createMethodDeclarationNode(CLASS_METHOD_DECLARATION_TYPE, $2, $3);}
+				  | '+' '(' VOID ')' method_selector ';'	{$$ = Method_declaration_node::createMethodDeclarationNode(CLASS_METHOD_DECLARATION_TYPE, Type_node::createTypeNode(VOID_TYPE), $5);}
+				  | '+' method_selector ';'					{$$ = Method_declaration_node::createMethodDeclarationNode(CLASS_METHOD_DECLARATION_TYPE, NULL, $2);}
+				  |  '-' method_type method_selector ';' 	{$$ = Method_declaration_node::createMethodDeclarationNode(INSTANCE_METHOD_DECLARATION_TYPE, $2, $3);}
+				  | '-' '(' VOID ')' method_selector ';'	{$$ = Method_declaration_node::createMethodDeclarationNode(INSTANCE_METHOD_DECLARATION_TYPE, Type_node::createTypeNode(VOID_TYPE), $5);}
+				  | '-' method_selector ';'					{$$ = Method_declaration_node::createMethodDeclarationNode(INSTANCE_METHOD_DECLARATION_TYPE, NULL, $2);}
 				  ;
-
-class_method_declaration: '+' method_type method_selector ';'	{$$ = Method_declaration_node::createMethodDeclarationNode(CLASS_METHOD_DECLARATION_TYPE, $2, $3);}
-						| '+' '(' VOID ')' method_selector ';'	{$$ = Method_declaration_node::createMethodDeclarationNode(CLASS_METHOD_DECLARATION_TYPE, Type_node::createTypeNode(VOID_TYPE), $5);}
-						| '+' method_selector ';'				{$$ = Method_declaration_node::createMethodDeclarationNode(CLASS_METHOD_DECLARATION_TYPE, NULL, $2);}
-						;
-
-instance_method_declaration: '-' method_type method_selector ';' 	{$$ = Method_declaration_node::createMethodDeclarationNode(INSTANCE_METHOD_DECLARATION_TYPE, $2, $3);}
-						   | '-' '(' VOID ')' method_selector ';'	{$$ = Method_declaration_node::createMethodDeclarationNode(INSTANCE_METHOD_DECLARATION_TYPE, Type_node::createTypeNode(VOID_TYPE), $5);}
-						   | '-' method_selector ';'				{$$ = Method_declaration_node::createMethodDeclarationNode(INSTANCE_METHOD_DECLARATION_TYPE, NULL, $2);}
-						   ;
 
 implementation_definition_list: declaration											{$$ = Implementation_definition_list_node::createImplementationDefinitionListNodeFromDeclaration($1);}
 							  | synthesize											{$$ = Implementation_definition_list_node::createImplementationDefinitionListNodeFromSynthesize($1);}
@@ -431,19 +429,13 @@ implementation_definition_list: declaration											{$$ = Implementation_defin
 							  | implementation_definition_list method_definition	{$$ = Implementation_definition_list_node::addMethodDeclarationToImplementationDefinitionListNode($1, $2);}
 							  ;
 
-method_definition: class_method_definition		{$$ = $1;}
-				 | instance_method_definition	{$$ = $1;}
+method_definition: '+' method_type method_selector declaration_list_e compound_statement	{$$ = Method_definition_node::createMethodDefinitionNode(CLASS_METHOD_DEFINITION_TYPE, $2, $3, $4, $5);}
+				 | '+' '(' VOID ')' method_selector declaration_list_e compound_statement	{$$ = Method_definition_node::createMethodDefinitionNode(CLASS_METHOD_DEFINITION_TYPE, Type_node::createTypeNode(VOID_TYPE), $5, $6, $7);}
+				 | '+' method_selector declaration_list_e compound_statement				{$$ = Method_definition_node::createMethodDefinitionNode(CLASS_METHOD_DEFINITION_TYPE, NULL, $2, $3, $4);}
+				 | '-' method_type method_selector declaration_list_e compound_statement	{$$ = Method_definition_node::createMethodDefinitionNode(INSTANCE_METHOD_DEFINITION_TYPE, $2, $3, $4, $5);}
+				 | '-' '(' VOID ')' method_selector declaration_list_e compound_statement	{$$ = Method_definition_node::createMethodDefinitionNode(INSTANCE_METHOD_DEFINITION_TYPE, Type_node::createTypeNode(VOID_TYPE), $5, $6, $7);}
+				 | '-' method_selector declaration_list_e compound_statement				{$$ = Method_definition_node::createMethodDefinitionNode(INSTANCE_METHOD_DEFINITION_TYPE, NULL, $2, $3, $4);}
 				 ;
-
-class_method_definition: '+' method_type method_selector declaration_list_e compound_statement		{$$ = Method_definition_node::createMethodDefinitionNode(CLASS_METHOD_DEFINITION_TYPE, $2, $3, $4, $5);}
-					   | '+' '(' VOID ')' method_selector declaration_list_e compound_statement		{$$ = Method_definition_node::createMethodDefinitionNode(CLASS_METHOD_DEFINITION_TYPE, Type_node::createTypeNode(VOID_TYPE), $5, $6, $7);}
-					   | '+' method_selector declaration_list_e compound_statement					{$$ = Method_definition_node::createMethodDefinitionNode(CLASS_METHOD_DEFINITION_TYPE, NULL, $2, $3, $4);}
-					   ;
-
-instance_method_definition: '-' method_type method_selector declaration_list_e compound_statement	{$$ = Method_definition_node::createMethodDefinitionNode(INSTANCE_METHOD_DEFINITION_TYPE, $2, $3, $4, $5);}
-					   	  | '-' '(' VOID ')' method_selector declaration_list_e compound_statement	{$$ = Method_definition_node::createMethodDefinitionNode(INSTANCE_METHOD_DEFINITION_TYPE, Type_node::createTypeNode(VOID_TYPE), $5, $6, $7);}
-						  | '-' method_selector declaration_list_e compound_statement				{$$ = Method_definition_node::createMethodDefinitionNode(INSTANCE_METHOD_DEFINITION_TYPE, NULL, $2, $3, $4);}
-					   	  ;
 
 method_selector: IDENTIFIER																						{$$ = Method_selector_node::createMethodSelectorNode($1, NULL, NULL, NULL);}
 			   | IDENTIFIER ':' keyword_declaration_without_identifier keyword_selector_e						{$$ = Method_selector_node::createMethodSelectorNode($1, $3, $4, NULL);}

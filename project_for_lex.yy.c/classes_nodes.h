@@ -154,7 +154,7 @@ class Init_declarator_list_node
         static Init_declarator_list_node* createInitDeclaratorListNode(Init_declarator_node *initDeclarator);
         static Init_declarator_list_node* addToInitDeclaratorListNode(Init_declarator_list_node *list, Init_declarator_node *initDeclarator);
 
-        string toDot();
+        string toDot(string labelConection="");
         vector<Init_declarator_node*>* getElements();
 };
 
@@ -251,6 +251,7 @@ enum expression_type
     NUMERIIC_CONSTANT_EXPRESSION_TYPE,
     PRIORITY_EXPRESSION_TYPE,
     SELF_EXPRESSION_TYPE,
+    SUPER_EXPRESSION_TYPE,
     MESSAGE_EXPRESSION_EXPRESSION_TYPE,
     FUNCTION_CALL_EXPRESSION_TYPE,
     UMINUS_EXPRESSION_TYPE,
@@ -294,6 +295,7 @@ class Expression_node
         static Expression_node* createExpressionNodeFromNumericConstant(Numeric_constant_node *value);
         static Expression_node* createExpressionNodeFromSimpleExpression(expression_type type, Expression_node *expression);
         static Expression_node* createExpressionNodeFromSelf();
+        static Expression_node* createExpressionNodeFromSuper();
         static Expression_node* createExpressionNodeFromOperator(expression_type type, Expression_node *leftExpression, Expression_node *rightExpression);
         static Expression_node* createExpressionNodeFromMessageExpression(Receiver_node *receiver, Message_selector_node *arguments);
         static Expression_node* createExpressionNodeFromFunctionCall(char *name, Expression_list_node *argumentsList);
@@ -503,9 +505,10 @@ class For_statement_node : public Statement_node
         Statement_node *LoopBody;
         char *name;
         Type_node *NameType;
+        Init_declarator_list_node *InitList;
 
         static For_statement_node* createForStatementNode(Expression_node *initExpression, Expression_node *condition, Expression_node *loopExpression, Statement_node *body);
-        static For_statement_node* createForStatementNodeFromForWithDeclaration(Type_node *varType, char *loopVar, Expression_node *initExpression, Expression_node *condition, Expression_node *loopExpression, Statement_node *body);
+        static For_statement_node* createForStatementNodeFromForWithDeclaration(Type_node *type, Init_declarator_list_node *initList, Expression_node *condition, Expression_node *loopExpression, Statement_node *body);
         static For_statement_node* createForStatementNodeFromForeach(for_type type, Type_node *varType, char *loopVar, Expression_node *expression, Statement_node *body);
 
         string toDot(string labelConection="");

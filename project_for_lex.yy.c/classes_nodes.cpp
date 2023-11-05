@@ -844,7 +844,7 @@ Implementation_definition_list_node* Implementation_definition_list_node::create
     return res;
 }
 
-Implementation_definition_list_node* Implementation_definition_list_node::createImplementationDefinitionListNodeFromSynthesize(Synthesize_node *implementationDefinition)
+Implementation_definition_list_node* Implementation_definition_list_node::createImplementationDefinitionListNodeFromSynthesize(char *implementationDefinition)
 {
     Implementation_definition_list_node *res = new Implementation_definition_list_node;
     res->id = maxId++;
@@ -877,7 +877,7 @@ Implementation_definition_list_node* Implementation_definition_list_node::addMet
     return list;
 }
 
-Implementation_definition_list_node* Implementation_definition_list_node::addSynthesizeToImplementationDefinitionListNode(Implementation_definition_list_node *list, Synthesize_node *implementationDefinition)
+Implementation_definition_list_node* Implementation_definition_list_node::addSynthesizeToImplementationDefinitionListNode(Implementation_definition_list_node *list, char *implementationDefinition)
 {
     implementation_definition Definition;
     Definition.synthesize = implementationDefinition;
@@ -966,17 +966,6 @@ Attribute_node* Attribute_node::createAttributeNode(attrribute_type type)
     Attribute_node *res = new Attribute_node;
     res->id = maxId++;
     res->type = type;
-    return res;
-}
-
-// ---------- synthesize ----------
-
-Synthesize_node* Synthesize_node::createSynthesizeNode(char *name)
-{
-    Synthesize_node *res = new Synthesize_node;
-    res->id = maxId++;
-    res->Name = name;
-    res->Next = NULL;
     return res;
 }
 
@@ -2059,13 +2048,21 @@ string Implementation_definition_list_node::toDot(string labelConection)
 
     for (int i = 0; i < Definitions->size(); i++)
     {
-        res += to_string(id);
         if (Definitions->at(i).declaration!= NULL)
+        {
+            res += to_string(id);
             res += Definitions->at(i).declaration->toDot(to_string(i));
+        }
         else if (Definitions->at(i).method_definition!= NULL)
+        {
+            res += to_string(id);
             res += Definitions->at(i).method_definition->toDot(to_string(i));
+        }
         else if (Definitions->at(i).synthesize!= NULL)
-            res += Definitions->at(i).synthesize->toDot(to_string(i));
+        {
+            res += to_string(id) + ".1 [label=\"synthesize: " + Definitions->at(i).synthesize + "\"];\n";
+            res += to_string(id) + "->" + to_string(id) + ".1 [label=\"" + to_string(i) + "\"];\n";
+        }
     }
 
     return res;
@@ -2247,22 +2244,6 @@ string Attribute_node::toDot(string labelConection)
     {
         res += "[label=\"empty\"];\n";
     }
-    return res;
-}
-
-// ---------- Synthesize_node ----------
-
-string Synthesize_node::toDot(string labelConection)
-{
-    string res = "->" + to_string(id);
-    if (labelConection!= "")
-        res += "[label=\"" + labelConection + "\"]";
-    res += ";\n";
-    res += to_string(id) + "[label=\"synthesize\"];\n";
-
-    res += to_string(id) + "->" + to_string(id) + ".1 [label=\"name\"];\n";
-    res += to_string(id) + ".1 [label=\"" + Name + "\"];\n";
-
     return res;
 }
 

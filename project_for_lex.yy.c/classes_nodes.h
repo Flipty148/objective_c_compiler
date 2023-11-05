@@ -30,7 +30,6 @@ class Attribute_node;
 class Function_and_class_list_node;
 class Function_node;
 class Instance_variables_declaration_list_node;
-class Synthesize_node;
 class Expression_list_node;
 
 
@@ -711,16 +710,16 @@ class Implementation_definition_list_node
         struct implementation_definition {
             Declaration_node *declaration;
             Method_definition_node *method_definition;
-            Synthesize_node *synthesize;
+            char *synthesize;
         };
         vector<implementation_definition> *Definitions;
 
         static Implementation_definition_list_node* createImplementationDefinitionListNodeFromDeclaration(Declaration_node *implementationDefinition);
         static Implementation_definition_list_node* createImplementationDefinitionListNodeFromMethodDeclaration(Method_definition_node *implementationDefinition);
-        static Implementation_definition_list_node* createImplementationDefinitionListNodeFromSynthesize(Synthesize_node *implementationDefinition);
+        static Implementation_definition_list_node* createImplementationDefinitionListNodeFromSynthesize(char *implementationDefinition);
         static Implementation_definition_list_node* addDeclarationToImplementationDefinitionListNode(Implementation_definition_list_node *list, Declaration_node *implementationDefinition);
         static Implementation_definition_list_node* addMethodDeclarationToImplementationDefinitionListNode(Implementation_definition_list_node *list, Method_definition_node *implementationDefinition);
-        static Implementation_definition_list_node* addSynthesizeToImplementationDefinitionListNode(Implementation_definition_list_node *list, Synthesize_node *implementationDefinition);
+        static Implementation_definition_list_node* addSynthesizeToImplementationDefinitionListNode(Implementation_definition_list_node *list, char *implementationDefinition);
 
         string toDot(string labelConection="");
 };
@@ -827,20 +826,6 @@ class Attribute_node
         enum attrribute_type type;
 
         static Attribute_node* createAttributeNode(attrribute_type type);
-
-        string toDot(string labelConection="");
-};
-
-// ---------- synthesize ----------
-
-class Synthesize_node
-{
-    public:
-        int id;
-        char *Name;
-        Synthesize_node *Next;
-
-        static Synthesize_node* createSynthesizeNode(char *name);
 
         string toDot(string labelConection="");
 };

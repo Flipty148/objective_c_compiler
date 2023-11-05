@@ -57,7 +57,6 @@
 	Declarator_list_node *Declarator_list;
 	Instance_variables_declaration_node *Instance_variables_declaration;
 	Instance_variables_declaration_list_node *Instance_variables_declaration_list;
-	Synthesize_node *Synthesize;
 }
 
 // ---------- Операции с их приоритетом ----------
@@ -138,7 +137,6 @@
 %type <Declarator_list> declarator_list declarator_with_asterisk_list
 %type <Instance_variables_declaration> instance_variables_declaration
 %type <Instance_variables_declaration_list> instance_variables_declaration_list instance_variables_declaration_list_e
-%type <Synthesize> synthesize
 
 
 %start program
@@ -410,10 +408,10 @@ method_declaration: '+' method_type method_selector ';'		{$$ = Method_declaratio
 				  ;
 
 implementation_definition_list: declaration											{$$ = Implementation_definition_list_node::createImplementationDefinitionListNodeFromDeclaration($1);}
-							  | synthesize											{$$ = Implementation_definition_list_node::createImplementationDefinitionListNodeFromSynthesize($1);}
+							  | SYNTHESIZE IDENTIFIER ';'											{$$ = Implementation_definition_list_node::createImplementationDefinitionListNodeFromSynthesize($2);}
 							  | method_definition									{$$ = Implementation_definition_list_node::createImplementationDefinitionListNodeFromMethodDeclaration($1);}
 							  | implementation_definition_list declaration			{$$ = Implementation_definition_list_node::addDeclarationToImplementationDefinitionListNode($1, $2);}
-							  | implementation_definition_list synthesize			{$$ = Implementation_definition_list_node::addSynthesizeToImplementationDefinitionListNode($1, $2);}
+							  | implementation_definition_list SYNTHESIZE IDENTIFIER ';'			{$$ = Implementation_definition_list_node::addSynthesizeToImplementationDefinitionListNode($1, $3);}
 							  | implementation_definition_list method_definition	{$$ = Implementation_definition_list_node::addMethodDeclarationToImplementationDefinitionListNode($1, $2);}
 							  ;
 
@@ -461,9 +459,6 @@ attribute: /*empty*/			{$$ = Attribute_node::createAttributeNode(EMPTY_ATTRIBUTE
 		 | '(' READONLY ')'		{$$ = Attribute_node::createAttributeNode(READONLY_ATTRIBUTE_TYPE);}
 		 | '(' READWRITE ')'	{$$ = Attribute_node::createAttributeNode(READWRITE_ATTRIBUTE_TYPE);}
 		 ;
-
-synthesize: SYNTHESIZE IDENTIFIER ';'	{$$ = Synthesize_node::createSynthesizeNode($2)}
-		  ;
 
 %%
 

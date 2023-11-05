@@ -205,7 +205,7 @@ Init_declarator_list_node* Init_declarator_list_node::addToInitDeclaratorListNod
 
 // ---------- init_declarator ----------
 
-Init_declarator_node* Init_declarator_node::createInitDeclaratorNode(init_declarator_type type, Declarator_node *declarator, Expression_node *expression)
+Init_declarator_node* Init_declarator_node::createInitDeclaratorNode(init_declarator_type type, char *declarator, Expression_node *expression)
 {
     Init_declarator_node *res = new Init_declarator_node;
     res->id = maxId++;
@@ -216,32 +216,20 @@ Init_declarator_node* Init_declarator_node::createInitDeclaratorNode(init_declar
     return res;
 }
 
-// ---------- declarator ----------
-
-Declarator_node* Declarator_node::createDeclaratorNode(char *name)
-{
-    Declarator_node *res = new Declarator_node;
-    res->id = maxId++;
-    res->name = name;
-    res->Next = NULL;
-    return res;
-}
-
 // ---------- declarator_list ----------
 
-Declarator_list_node* Declarator_list_node::createDeclaratorListNode(Declarator_node *declarator)
+Declarator_list_node* Declarator_list_node::createDeclaratorListNode(char *declarator)
 {
     Declarator_list_node *res = new Declarator_list_node;
     res->id = maxId++;
-    res->First = declarator;
-    res->Last = declarator;
+    res->Declarators = new vector<char *>;
+    res->Declarators->push_back(declarator);
     return res;
 }
 
-Declarator_list_node* Declarator_list_node::addToDeclaratorListNode(Declarator_list_node *list, Declarator_node *declarator)
+Declarator_list_node* Declarator_list_node::addToDeclaratorListNode(Declarator_list_node *list, char *declarator)
 {
-    list->Last->Next = declarator;
-    list->Last = declarator;
+    list->Declarators->push_back(declarator);
     return list;
 }
 
@@ -1186,8 +1174,8 @@ string Init_declarator_node::toDot(string labelConection)
         res += "[label=\"" + labelConection + "\"]";
     res += ";\n";
     res += to_string(id) + "[label=\"init_declarator\"];\n";
-    res += to_string(id);
-    res += Declarator->toDot("declarator");
+    res += to_string(id) + ".1 [label=\"" + Declarator + "\"];\n";
+    res += to_string(id) + "->" + to_string(id) + ".1[label=\"declarator\"];\n";
     if (type == DECLARATOR_WITH_INITIALIZING_TYPE)
     {
         res += to_string(id);
@@ -1196,34 +1184,7 @@ string Init_declarator_node::toDot(string labelConection)
     return res;
 }
 
-// ---------- Declarator_node ----------
-
-string Declarator_node::toDot(string labelConection)
-{
-    string res = "->" + to_string(id);
-    if (labelConection!= "")
-        res += "[label=\"" + labelConection + "\"]";
-    res += ";\n";
-    res += to_string(id) + "[label=\"";
-    res += name;
-    res += "\"];\n";
-    return res;
-}
-
 // ---------- Declarator_list_node ----------
-
-vector<Declarator_node*>* Declarator_list_node::getElements()
-{
-    vector<Declarator_node*>* res = new vector<Declarator_node*>;
-    Declarator_node *current = First;
-    res->push_back(current);
-    while (current->Next!= NULL)
-    {
-        current = current->Next;
-        res->push_back(current);
-    }
-    return res;
-}
 
 string Declarator_list_node::toDot(string labelConection)
 {
@@ -1232,13 +1193,11 @@ string Declarator_list_node::toDot(string labelConection)
         res += "[label=\"" + labelConection + "\"]"; 
     res+= ";\n";
     res += to_string(id) + "[label=\"declarator_list\"];\n";
-    vector<Declarator_node*>* elements = getElements();
-    for (int i = 0; i < elements->size(); i++)
+    for (int i = 0; i < Declarators->size(); i++)
     {
-        res += to_string(id);
-        res += elements->at(i)->toDot(to_string(i));
+        res += to_string(id) + "." + to_string(i) + "[label=\"" + Declarators->at(i) + "\"];\n";
+        res += to_string(id) + "->" + to_string(id) + "." + to_string(i) + "[label=\"" + to_string(i) +"\"];\n";
     }
-    delete elements;
     return res;
 }
 

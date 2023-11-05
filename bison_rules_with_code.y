@@ -55,7 +55,6 @@
 	Class_list_node *Class_list;
 	Function_and_class_list_node *Function_and_class_list;
 	Function_node *Function;
-	Declarator_node *Declarator;
 	Declarator_list_node *Declarator_list;
 	Instance_variables_declaration_node *Instance_variables_declaration;
 	Instance_variables_declaration_list_node *Instance_variables_declaration_list;
@@ -138,7 +137,6 @@
 %type <Program> program 
 %type <Function_and_class_list> function_and_class_list
 %type <Function> function
-%type <Declarator> declarator declarator_with_asterisk
 %type <Declarator_list> declarator_list declarator_with_asterisk_list
 %type <Instance_variables_declaration> instance_variables_declaration
 %type <Instance_variables_declaration_list> instance_variables_declaration_list instance_variables_declaration_list_e
@@ -203,25 +201,19 @@ init_declarator_list: init_declarator							{$$ = Init_declarator_list_node::cre
 					| init_declarator_list ',' init_declarator	{$$ = Init_declarator_list_node::addToInitDeclaratorListNode($1, $3);}
 					;
 
-init_declarator: declarator						{$$ = Init_declarator_node::createInitDeclaratorNode(SIMPLE_DECLARATOR_TYPE, $1, NULL);}
-			   | declarator '=' expression		{$$ = Init_declarator_node::createInitDeclaratorNode(DECLARATOR_WITH_INITIALIZING_TYPE, $1, $3);}
+init_declarator: IDENTIFIER						{$$ = Init_declarator_node::createInitDeclaratorNode(SIMPLE_DECLARATOR_TYPE, $1, NULL);}
+			   | IDENTIFIER '=' expression		{$$ = Init_declarator_node::createInitDeclaratorNode(DECLARATOR_WITH_INITIALIZING_TYPE, $1, $3);}
 			   ;
 
-declarator: IDENTIFIER	{$$ = Declarator_node::createDeclaratorNode($1);}
-		  ;
+declarator_with_asterisk_list: '*' IDENTIFIER										{$$ = Declarator_list_node::createDeclaratorListNode($2);}
+							 | declarator_with_asterisk_list ',' '*' IDENTIFIER 	{$$ = Declarator_list_node::addToDeclaratorListNode($1, $4);}
 
-declarator_with_asterisk: '*' IDENTIFIER	{$$ = Declarator_node::createDeclaratorNode($2);}
-						;
-
-declarator_with_asterisk_list: declarator_with_asterisk										{$$ = Declarator_list_node::createDeclaratorListNode($1);}
-							 | declarator_with_asterisk_list ',' declarator_with_asterisk	{$$ = Declarator_list_node::addToDeclaratorListNode($1, $3);}
-
-declarator_list: declarator							{$$ = Declarator_list_node::createDeclaratorListNode($1);}
-			   | declarator_list ',' declarator		{$$ = Declarator_list_node::addToDeclaratorListNode($1,$3);}
+declarator_list: IDENTIFIER							{$$ = Declarator_list_node::createDeclaratorListNode($1);}
+			   | declarator_list ',' IDENTIFIER		{$$ = Declarator_list_node::addToDeclaratorListNode($1,$3);}
 			   ;
 
-init_declarator_with_asterisk: declarator_with_asterisk					{$$ = Init_declarator_node::createInitDeclaratorNode(SIMPLE_DECLARATOR_TYPE, $1, NULL);}
-			   				 | declarator_with_asterisk '=' expression	{$$ = Init_declarator_node::createInitDeclaratorNode(DECLARATOR_WITH_INITIALIZING_TYPE, $1, $3);}
+init_declarator_with_asterisk: '*' IDENTIFIER					{$$ = Init_declarator_node::createInitDeclaratorNode(SIMPLE_DECLARATOR_TYPE, $2, NULL);}
+			   				 | '*' IDENTIFIER '=' expression	{$$ = Init_declarator_node::createInitDeclaratorNode(DECLARATOR_WITH_INITIALIZING_TYPE, $2, $4);}
 							 ;
 
 init_declarator_with_asterisk_list: init_declarator_with_asterisk											{$$ = Init_declarator_list_node::createInitDeclaratorListNode($1);}								

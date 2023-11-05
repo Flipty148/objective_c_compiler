@@ -30,7 +30,6 @@ class Keyword_declaration_node;
 class Attribute_node;
 class Function_and_class_list_node;
 class Function_node;
-class Declarator_node;
 class Instance_variables_declaration_list_node;
 class Synthesize_node;
 class Expression_list_node;
@@ -197,25 +196,11 @@ class Init_declarator_node
     public:
         int id;
         enum init_declarator_type type;
-        Declarator_node *Declarator;
         Expression_node *expression;
         Init_declarator_node *Next;
+        char *Declarator;
 
-        static Init_declarator_node* createInitDeclaratorNode(init_declarator_type type, Declarator_node *declarator, Expression_node *expression);
-        
-        string toDot(string labelConection="");
-};
-
-// ---------- declarator ----------
-
-class Declarator_node
-{
-    public:
-        int id;
-        char *name;
-        Declarator_node *Next;
-
-        static Declarator_node* createDeclaratorNode(char *name);
+        static Init_declarator_node* createInitDeclaratorNode(init_declarator_type type, char *declarator, Expression_node *expression);
         
         string toDot(string labelConection="");
 };
@@ -226,13 +211,11 @@ class Declarator_list_node
 {
     public:
         int id;
-        Declarator_node *First;
-        Declarator_node *Last;
+        std::vector<char*> *Declarators;
 
-        static Declarator_list_node* createDeclaratorListNode(Declarator_node *declarator);
-        static Declarator_list_node* addToDeclaratorListNode(Declarator_list_node *list, Declarator_node *declarator);
+        static Declarator_list_node* createDeclaratorListNode(char *declarator);
+        static Declarator_list_node* addToDeclaratorListNode(Declarator_list_node *list, char *declarator);
 
-        vector<Declarator_node*>* getElements();
         string toDot(string labelConection="");
 };
 

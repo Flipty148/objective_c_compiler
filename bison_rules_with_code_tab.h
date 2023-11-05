@@ -47,7 +47,6 @@ typedef union {
 	Class_list_node *Class_list;
 	Function_and_class_list_node *Function_and_class_list;
 	Function_node *Function;
-	Declarator_node *Declarator;
 	Declarator_list_node *Declarator_list;
 	Instance_variables_declaration_node *Instance_variables_declaration;
 	Instance_variables_declaration_list_node *Instance_variables_declaration_list;

@@ -490,7 +490,8 @@ If_statement_node* If_statement_node::createIfStatementNode(if_type type, Expres
 {
     If_statement_node *res = new If_statement_node;
     res->id = maxId++;
-    res->type = type;
+    res->IfType = type;
+    res->type = IF_STATEMENT_TYPE;
     res->Condition = condition;
     res->TrueBranch = trueBranch;
     res->FalseBranch = falseBranch;
@@ -505,6 +506,7 @@ While_statement_node* While_statement_node::createWhileStatementNode(Expression_
 {
     While_statement_node *res = new While_statement_node;
     res->id = maxId++;
+    res->type = WHILE_STATEMENT_TYPE;
     res->LoopCondition = condition;
     res->LoopBody = body;
     return res;
@@ -516,6 +518,7 @@ Do_while_statement_node* Do_while_statement_node::createDoWhileStatementNode(Exp
 {
     Do_while_statement_node *res = new Do_while_statement_node;
     res->id = maxId++;
+    res->type = DO_WHILE_STATEMENT_TYPE;
     res->LoopCondition = condition;
     res->LoopBody = body;
     return res;
@@ -527,7 +530,8 @@ For_statement_node* For_statement_node::createForStatementNode(Expression_node *
 {
     For_statement_node *res = new For_statement_node;
     res->id = maxId++;
-    res->type = FOR_FOR_TYPE;
+    res->ForType = FOR_FOR_TYPE;
+    res->type = FOR_STATEMENT_TYPE;
     res->InitExpression = initExpression;
     res->ConditionExpression = condition;
     res->LoopExpression = loopExpression;
@@ -541,7 +545,8 @@ For_statement_node* For_statement_node::createForStatementNodeFromForWithDeclara
 {
     For_statement_node *res = new For_statement_node;
     res->id = maxId++;
-    res->type = FOR_WITH_DECLARATION_FOR_TYPE;
+    res->ForType = FOR_WITH_DECLARATION_FOR_TYPE;
+    res->type = FOR_STATEMENT_TYPE;
     res->InitExpression = NULL;
     res->ConditionExpression = condition;
     res->LoopExpression = loopExpression;
@@ -555,7 +560,8 @@ For_statement_node* For_statement_node::createForStatementNodeFromForeach(for_ty
 {
     For_statement_node *res = new For_statement_node;
     res->id = maxId++;
-    res->type = type;
+    res->ForType = type;
+    res->type = FOR_STATEMENT_TYPE;
     res->InitExpression = NULL;
     res->ConditionExpression = NULL;
     res->LoopExpression = expression;
@@ -575,32 +581,6 @@ Statement_node* Statement_node::createStatementNodeFromSimpleStatement(statement
     res->id = maxId++;
     res->type = type;
     res->Expression = expression;
-    res->Statement = NULL;
-    res->Declaration = NULL;
-    res->Next = NULL;
-    return res;
-}
-
-Statement_node* Statement_node::createStatementNodeFromComplexStatement(statement_type type, Statement_node *statement)
-{
-    Statement_node *res = new Statement_node;
-    res->id = maxId++;
-    res->type = type;
-    res->Expression = NULL;
-    res->Statement = statement;
-    res->Declaration = NULL;
-    res->Next = NULL;
-    return res;
-}
-
-Statement_node* Statement_node::createStatementNodeFromDeclaration(Declaration_node *declaration)
-{
-    Statement_node *res = new Statement_node;
-    res->id = maxId++;
-    res->type = DECLARATION_STATEMENT_TYPE;
-    res->Expression = NULL;
-    res->Statement = NULL;
-    res->Declaration = declaration;
     res->Next = NULL;
     return res;
 }
@@ -1696,42 +1676,6 @@ string Statement_node::toDot(string labelConection)
             res += Expression->toDot("expression");
         }
     }
-    else if (type == IF_STATEMENT_TYPE)
-    {
-        res += to_string(id) + "[label=\"if_statement\"];\n";
-        res += to_string(id);
-        res += Statement->toDot();
-    }
-    else if (type == WHILE_STATEMENT_TYPE)
-    {
-        res += to_string(id) + "[label=\"while_statement\"]; \n";
-        res += to_string(id);
-        res += Statement->toDot();
-    }
-    else if (type == FOR_STATEMENT_TYPE)
-    {
-        res += to_string(id) + "[label=\"for_statement\"]; \n";
-        res += to_string(id);
-        res += Statement->toDot();
-    }
-    else if (type == DO_WHILE_STATEMENT_TYPE)
-    {
-        res += to_string(id) + "[label=\"do_while_statement\"];\n";
-        res += to_string(id);
-        res += Statement->toDot();
-    }
-    else if (type == COMPOUND_STATEMENT_TYPE)
-    {
-        res += to_string(id) + "[label=\"compound_statement\"]; \n";
-        res += to_string(id);
-        res += Statement->toDot();
-    }
-    else if (type == DECLARATION_STATEMENT_TYPE)
-    {
-        res += to_string(id) + "[label=\"declaration_statement\"]; \n";
-        res += to_string(id);
-        res += Declaration->toDot();
-    }
     return res;
 }
 
@@ -1807,7 +1751,7 @@ string For_statement_node::toDot(string labelConection)
     res += ";\n";
     res += to_string(id) + "[label=\"for\"];\n";
     
-    if (type == FOR_FOR_TYPE)
+    if (ForType == FOR_FOR_TYPE)
     {
         if (InitExpression!= NULL)
         {
@@ -1828,7 +1772,7 @@ string For_statement_node::toDot(string labelConection)
         res += to_string(id);
         res += LoopBody->toDot("body");
     }
-    else if (type == FOR_WITH_DECLARATION_FOR_TYPE)
+    else if (ForType == FOR_WITH_DECLARATION_FOR_TYPE)
     {
         res += to_string(id);
         res += NameType->toDot("type");
@@ -1849,7 +1793,7 @@ string For_statement_node::toDot(string labelConection)
         res += to_string(id);
         res += LoopBody->toDot("body");
     }
-    else if (type == FOREACH_FOR_TYPE)
+    else if (ForType == FOREACH_FOR_TYPE)
     {
         res += to_string(id) + ".1 [label=\"" + name + "\"];\n";
         res += to_string(id) + "->" + to_string(id) + ".1 [label=\"identifier\"];\n";
@@ -1860,7 +1804,7 @@ string For_statement_node::toDot(string labelConection)
         res += to_string(id);
         res += LoopBody->toDot("body");
     }
-    else if (type == FOREACH_WITH_DECLARATION_FOR_TYPE)
+    else if (ForType == FOREACH_WITH_DECLARATION_FOR_TYPE)
     {
         res += to_string(id);
         res += NameType->toDot("type");

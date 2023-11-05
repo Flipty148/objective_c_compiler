@@ -317,7 +317,8 @@ do_while_statement: DO statement WHILE '(' expression ')' ';'	{$$ = Do_while_sta
 				  ;
 
 for_statement: FOR '(' expression_e ';' expression_e ';' expression_e ')' statement						{$$ = For_statement_node::createForStatementNode($3, $5, $7, $9);}
-			 | FOR '(' type init_declarator_list_e ';' expression_e ';' expression_e ')' statement		{$$ =For_statement_node::createForStatementNodeFromForWithDeclaration($3, $4, $6, $8, $10)}			
+			 | FOR '(' type init_declarator_list_e ';' expression_e ';' expression_e ')' statement		{$$ =For_statement_node::createForStatementNodeFromForWithDeclaration($3, $4, $6, $8, $10);}
+			 | FOR '(' CLASS_NAME '*' init_declarator_list_e ';' expression_e ';' expression_e ')' statement		{$$ =For_statement_node::createForStatementNodeFromForWithDeclaration(Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $3), $5, $7, $9, $11);}		
 			 | FOR '(' IDENTIFIER IN expression ')' statement											{$$ = For_statement_node::createForStatementNodeFromForeach(FOREACH_FOR_TYPE, NULL, $3, $5, $7);}
 			 | FOR '(' CLASS_NAME '*' IDENTIFIER IN expression ')' statement							{$$ = For_statement_node::createForStatementNodeFromForeach(FOREACH_WITH_DECLARATION_FOR_TYPE, Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $3), $5, $7, $9);}
 			 ;
@@ -327,12 +328,12 @@ for_statement: FOR '(' expression_e ';' expression_e ';' expression_e ')' statem
 statement: ';'							{$$ = Statement_node::createStatementNodeFromSimpleStatement(EMPTY_STATEMENT_TYPE, NULL);}
 		 | expression ';'				{$$ = Statement_node::createStatementNodeFromSimpleStatement(SIMPLE_STATEMENT_TYPE, $1);}
 		 | RETURN expression_e ';'		{$$ = Statement_node::createStatementNodeFromSimpleStatement(RETURN_STATEMENT_TYPE, $2);}
-		 | if_statement					{$$ = Statement_node::createStatementNodeFromComplexStatement(IF_STATEMENT_TYPE, $1);}
-		 | while_statement				{$$ = Statement_node::createStatementNodeFromComplexStatement(WHILE_STATEMENT_TYPE, $1);}
-		 | do_while_statement			{$$ = Statement_node::createStatementNodeFromComplexStatement(DO_WHILE_STATEMENT_TYPE, $1);}
-		 | for_statement				{$$ = Statement_node::createStatementNodeFromComplexStatement(FOR_STATEMENT_TYPE, $1);}
-		 | compound_statement			{$$ = Statement_node::createStatementNodeFromComplexStatement(COMPOUND_STATEMENT_TYPE, $1);}
-		 | declaration					{$$ = Statement_node::createStatementNodeFromDeclaration($1);}
+		 | if_statement					{$$ = $1;}
+		 | while_statement				{$$ = $1;}
+		 | do_while_statement			{$$ = $1;}
+		 | for_statement				{$$ = $1;}
+		 | compound_statement			{$$ = $1;}
+		 | declaration					{$$ = $1;}
 		 ;
 
 compound_statement: '{' statement_list_e '}'	{$$ = Compound_statement_node::createCompoundStatementNode($2);}

@@ -110,9 +110,36 @@ class Literal_node
 
 // -------------------- Объявления --------------------
 
+// ---------- statement ----------
+
+enum statement_type {
+    EMPTY_STATEMENT_TYPE,
+    SIMPLE_STATEMENT_TYPE,
+    RETURN_STATEMENT_TYPE,
+    IF_STATEMENT_TYPE,
+    WHILE_STATEMENT_TYPE,
+    DO_WHILE_STATEMENT_TYPE,
+    FOR_STATEMENT_TYPE,
+    COMPOUND_STATEMENT_TYPE,
+    DECLARATION_STATEMENT_TYPE
+};
+
+class Statement_node
+{
+    public:
+        int id;
+        enum statement_type type;
+        Expression_node *Expression;
+        Statement_node *Next;
+
+        static Statement_node* createStatementNodeFromSimpleStatement(statement_type type, Expression_node *expression);
+
+        virtual string toDot(string labelConection="");
+};
+
 // ---------- declaration ----------
 
-class Declaration_node 
+class Declaration_node : public Statement_node
 {
     public:
         int id;
@@ -401,36 +428,7 @@ class Keyword_argument_node
 
 // -------------------- Операторы --------------------
 
-// ---------- statement ----------
 
-enum statement_type {
-    EMPTY_STATEMENT_TYPE,
-    SIMPLE_STATEMENT_TYPE,
-    RETURN_STATEMENT_TYPE,
-    IF_STATEMENT_TYPE,
-    WHILE_STATEMENT_TYPE,
-    DO_WHILE_STATEMENT_TYPE,
-    FOR_STATEMENT_TYPE,
-    COMPOUND_STATEMENT_TYPE,
-    DECLARATION_STATEMENT_TYPE
-};
-
-class Statement_node
-{
-    public:
-        int id;
-        enum statement_type type;
-        Expression_node *Expression;
-        Statement_node *Statement;
-        Declaration_node *Declaration;
-        Statement_node *Next;
-
-        static Statement_node* createStatementNodeFromSimpleStatement(statement_type type, Expression_node *expression);
-        static Statement_node* createStatementNodeFromComplexStatement(statement_type type, Statement_node *statement);
-        static Statement_node* createStatementNodeFromDeclaration(Declaration_node *declaration);
-
-        virtual string toDot(string labelConection="");
-};
 
 // ---------- Управляющие структуры: развилки ----------
 
@@ -445,7 +443,7 @@ class If_statement_node : public Statement_node
 {
     public:
         int id;
-        enum if_type type;
+        enum if_type IfType;
         Expression_node *Condition;
         Statement_node *TrueBranch;
         Statement_node *FalseBranch;
@@ -498,7 +496,7 @@ class For_statement_node : public Statement_node
 {
     public:
         int id;
-        enum for_type type;
+        enum for_type ForType;
         Expression_node *InitExpression;
         Expression_node *ConditionExpression;
         Expression_node *LoopExpression;

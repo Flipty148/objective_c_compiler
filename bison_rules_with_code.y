@@ -41,7 +41,6 @@
 	Implementation_body_node *Implementation_body;
 	Class_implementation_node *Class_implementation;
 	Class_declaration_list_node *Class_declaration_list;
-	Instance_variables_node *Instance_variables;
 	Interface_declaration_list_node *Interface_declaration_list;
 	Method_declaration_node *Method_declaration;
 	Implementation_definition_list_node *Implementation_definition_list;
@@ -124,7 +123,6 @@
 %type <Class_implementation> class_implementation
 %type <Class_declaration_list> class_declaration_list 
 %type <Class_list> class_list
-%type <Instance_variables> instance_variables
 %type <Interface_declaration_list> interface_declaration_list
 %type <Method_declaration> method_declaration 
 %type <Implementation_definition_list> implementation_definition_list
@@ -356,7 +354,7 @@ interface_body_e: /*empty*/			{$$ = NULL;}
 				| interface_body	{$$ = $1;}
 				;
 
-interface_body: instance_variables interface_declaration_list	{$$ = Interface_body_node::createInterfaceBodyNode($1, $2);}
+interface_body: '{' instance_variables_declaration_list_e '}' interface_declaration_list	{$$ = Interface_body_node::createInterfaceBodyNode($2, $4);}
 			  | interface_declaration_list						{$$ = Interface_body_node::createInterfaceBodyNode(NULL, $1);}
 			  ;
 
@@ -364,7 +362,7 @@ implementation_body_e: /*empty*/			{$$ = NULL;}
 					 | implementation_body	{$$ = $1;}
 					 ;
 
-implementation_body: instance_variables implementation_definition_list	{$$ = Implementation_body_node::createImplementationBodyNode($1, $2);}
+implementation_body: '{' instance_variables_declaration_list_e '}' implementation_definition_list	{$$ = Implementation_body_node::createImplementationBodyNode($2, $4);}
 			       | implementation_definition_list						{$$ = Implementation_body_node::createImplementationBodyNode(NULL, $1);}
 				   ;
 
@@ -382,9 +380,6 @@ class_declaration_list: CLASS class_list ';'	{$$ = Class_declaration_list_node::
 class_list: IDENTIFIER					{$$ = Class_list_node::createClassListNode($1);}
 		  | class_list ',' IDENTIFIER	{$$ = Class_list_node::addToClassListNode($1, $3);}
 		  ;
-
-instance_variables: '{' instance_variables_declaration_list_e '}'	{$$ = Instance_variables_node::createInstanceVariablesNode($2);}
-				   ;
 
 instance_variables_declaration_list_e: /*empty*/							{$$ = NULL;}
 								| instance_variables_declaration_list	{$$ = $1;}

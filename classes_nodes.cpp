@@ -627,7 +627,7 @@ Class_interface_node* Class_interface_node::createClassInterfaceNode(char *class
 
 // ---------- interface_body ----------
 
-Interface_body_node* Interface_body_node::createInterfaceBodyNode(Instance_variables_node *variables, Interface_declaration_list_node *declarationList)
+Interface_body_node* Interface_body_node::createInterfaceBodyNode(Instance_variables_declaration_list_node *variables, Interface_declaration_list_node *declarationList)
 {
     Interface_body_node *res= new Interface_body_node;
     res->id = maxId++;
@@ -638,7 +638,7 @@ Interface_body_node* Interface_body_node::createInterfaceBodyNode(Instance_varia
 
 // ---------- implementation_body ----------
 
-Implementation_body_node* Implementation_body_node::createImplementationBodyNode(Instance_variables_node *variables, Implementation_definition_list_node *definitionList)
+Implementation_body_node* Implementation_body_node::createImplementationBodyNode(Instance_variables_declaration_list_node *variables, Implementation_definition_list_node *definitionList)
 {
     Implementation_body_node *res= new Implementation_body_node;
     res->id = maxId++;
@@ -700,16 +700,6 @@ Class_declaration_list_node* Class_declaration_list_node::createClassDeclaration
         string classStr = className;
         ClassNames.insert(classStr);
     }
-    return res;
-}
-
-// ---------- instance_variables ----------
-
-Instance_variables_node* Instance_variables_node::createInstanceVariablesNode(Instance_variables_declaration_list_node *declarationList)
-{
-    Instance_variables_node *res= new Instance_variables_node;
-    res->id = maxId++;
-    res->DeclarationList = declarationList;
     return res;
 }
 
@@ -1950,25 +1940,6 @@ string Class_list_node::toDot(string labelConection)
     {
         res += to_string(id) + "." + to_string(i) + " [label=\"" + Class_names->at(i) + "\"];\n";
         res += to_string(id) + "->" + to_string(id) + "." + to_string(i) + " [label=\"" + to_string(i) + "\"];\n";
-    }
-
-    return res;
-}
-
-// ---------- Instance_variables_node ----------
-
-string Instance_variables_node::toDot(string labelConection)
-{
-    string res = "->" + to_string(id);
-    if (labelConection!= "")
-        res += "[label=\"" + labelConection + "\"]";
-    res += ";\n";
-    res += to_string(id) + "[label=\"instance_variables\"];\n";
-
-    if (DeclarationList != NULL)
-    {
-        res += to_string(id);
-        res += DeclarationList->toDot();
     }
 
     return res;

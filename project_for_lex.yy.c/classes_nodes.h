@@ -17,7 +17,6 @@ class Statement_list_node;
 class Class_interface_node;
 class Class_implementation_node;
 class Interface_body_node;
-class Instance_variables_node;
 class Interface_declaration_list_node;
 class Implementation_definition_list_node;
 class Class_list_node;
@@ -564,10 +563,10 @@ class Interface_body_node
 {
     public:
         int id;
-        Instance_variables_node *Variables;
+        Instance_variables_declaration_list_node *Variables;
         Interface_declaration_list_node *Declaration_list;
 
-        static Interface_body_node* createInterfaceBodyNode(Instance_variables_node *variables, Interface_declaration_list_node *declarationList);
+        static Interface_body_node* createInterfaceBodyNode(Instance_variables_declaration_list_node *variables, Interface_declaration_list_node *declarationList);
 
         string toDot(string labelConection="");
 };
@@ -578,10 +577,10 @@ class Implementation_body_node
 {
     public:
         int id;
-        Instance_variables_node *Variables;
+        Instance_variables_declaration_list_node *Variables;
         Implementation_definition_list_node *Declaration_list;
 
-        static Implementation_body_node* createImplementationBodyNode(Instance_variables_node *variables, Implementation_definition_list_node *definitionList);
+        static Implementation_body_node* createImplementationBodyNode(Instance_variables_declaration_list_node *variables, Implementation_definition_list_node *definitionList);
 
         string toDot(string labelConection="");
 };
@@ -625,19 +624,6 @@ class Class_list_node
     static Class_list_node* addToClassListNode(Class_list_node *list, char *className);
 
     string toDot(string labelConection="");
-};
-
-// ---------- instance_variables ----------
-
-class Instance_variables_node
-{
-    public:
-        int id;
-        Instance_variables_declaration_list_node *DeclarationList;
-
-        static Instance_variables_node* createInstanceVariablesNode(Instance_variables_declaration_list_node *declarationList);
-
-        string toDot(string labelConection="");
 };
 
 // ---------- instance_variables_declaration --------

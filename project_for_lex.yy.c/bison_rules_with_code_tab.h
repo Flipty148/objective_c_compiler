@@ -33,7 +33,6 @@ typedef union {
 	Implementation_body_node *Implementation_body;
 	Class_implementation_node *Class_implementation;
 	Class_declaration_list_node *Class_declaration_list;
-	Instance_variables_node *Instance_variables;
 	Interface_declaration_list_node *Interface_declaration_list;
 	Method_declaration_node *Method_declaration;
 	Implementation_definition_list_node *Implementation_definition_list;

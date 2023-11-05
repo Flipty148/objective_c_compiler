@@ -552,17 +552,9 @@ class Class_block_node {
     public:
         int id;
         enum class_block_type type;
-        union statement
-        {
-            Class_interface_node *Interface;
-            Class_implementation_node *Implementation;
-        } statement; 
         Class_block_node *Next;
 
-        static Class_block_node* createClassBlockNodeFromInterface(Class_interface_node *interface);
-        static Class_block_node* createClassBlockNodeFromImplementation(Class_implementation_node *implementation); 
-
-        string toDot(string labelConection="");    
+        virtual string toDot(string labelConection="");
 };
 
 

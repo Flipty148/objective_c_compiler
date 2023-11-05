@@ -1552,11 +1552,11 @@ case 112:
     break;}
 case 113:
 #line 350 "bison_rules_with_code.y"
-{yyval.Class_block = Class_block_node::createClassBlockNodeFromInterface(yyvsp[0].Class_interface);;
+{yyval.Class_block = yyvsp[0].Class_interface;;
     break;}
 case 114:
 #line 351 "bison_rules_with_code.y"
-{yyval.Class_block = Class_block_node::createClassBlockNodeFromImplementation(yyvsp[0].Class_implementation);;
+{yyval.Class_block = yyvsp[0].Class_implementation;;
     break;}
 case 115:
 #line 355 "bison_rules_with_code.y"

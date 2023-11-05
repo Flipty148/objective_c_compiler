@@ -613,27 +613,6 @@ Statement_list_node* Statement_list_node::addToStatementListNode(Statement_list_
     return list;
 }
 
-// ----------- class_statement ----------
-
-Class_block_node* Class_block_node::createClassBlockNodeFromInterface(Class_interface_node *interface)
-{
-    Class_block_node *res = new Class_block_node;
-    res->id = maxId++;
-    res->type = INTERFACE_CLASS_BLOCK_TYPE;
-    res->statement.Interface = interface;
-    res->Next = NULL;
-    return res;
-}
-
-Class_block_node* Class_block_node::createClassBlockNodeFromImplementation(Class_implementation_node *implementation)
-{
-    Class_block_node *res = new Class_block_node;
-    res->id = maxId++;
-    res->type = IMPLEMENTATION_CLASS_BLOCK_TYPE;
-    res->statement.Implementation = implementation;
-    res->Next = NULL;
-    return res;
-}
 
 // -------------------- Классы --------------------
 
@@ -643,6 +622,7 @@ Class_interface_node* Class_interface_node::createClassInterfaceNode(char *class
 {
     Class_interface_node *res = new Class_interface_node;
     res->id = maxId++;
+    res->type = INTERFACE_CLASS_BLOCK_TYPE;
     res->ClassName = className;
     res->SuperclassName = superclassName;
     res->Body = body;
@@ -685,6 +665,7 @@ Class_implementation_node* Class_implementation_node::createClassImplementationN
 {
     Class_implementation_node *res = new Class_implementation_node;
     res->id = maxId++;
+    res->type = IMPLEMENTATION_CLASS_BLOCK_TYPE;
     res->ClassName = className;
     res->SuperclassName = superclassName;
     res->Body = body;
@@ -1873,26 +1854,13 @@ string Statement_list_node::toDot(string labelConection)
     return res;
 }
 
-// ---------- Class_block_node ----------
+// -------------------- Классы --------------------
+
 
 string Class_block_node::toDot(string labelConection)
 {
-    string res = "->" + to_string(id);
-    if (labelConection!= "")
-        res += "[label=\"" + labelConection + "\"]";
-    res += ";\n";
-    res += to_string(id) + "[label=\"class_block\"];\n";
-
-    res += to_string(id);
-    if (type == INTERFACE_CLASS_BLOCK_TYPE)
-        res += statement.Interface->toDot("interface");
-    else if (type == IMPLEMENTATION_CLASS_BLOCK_TYPE)
-        res += statement.Implementation->toDot("implementation");
-
-    return res;
+    return string();
 }
-
-// -------------------- Классы --------------------
 
 // ---------- Class_interface_node ----------
 

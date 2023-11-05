@@ -347,8 +347,8 @@ statement_list_e: /*empty*/			{$$ = NULL;}
 				| statement_list	{$$ = $1;}
 				;
 
-class_block: class_interface		{$$ = Class_block_node::createClassBlockNodeFromInterface($1);}
-	 	   | class_implementation	{$$ = Class_block_node::createClassBlockNodeFromImplementation($1);}
+class_block: class_interface		{$$ = $1;}
+	 	   | class_implementation	{$$ = $1;}
 		   ;
 
 // ---------- Классы ----------

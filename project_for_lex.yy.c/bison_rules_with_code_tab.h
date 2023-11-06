@@ -49,6 +49,7 @@ typedef union {
 	Declarator_list_node *Declarator_list;
 	Instance_variables_declaration_node *Instance_variables_declaration;
 	Instance_variables_declaration_list_node *Instance_variables_declaration_list;
+	Declarator_node *Declarator;
 } YYSTYPE;
 #define	EQUAL	258
 #define	NOT_EQUAL	259

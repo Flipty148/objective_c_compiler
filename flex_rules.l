@@ -151,20 +151,23 @@ UNDERLINE_LETTER [A-Za-z_]
     str += c;}
 <STRING_SC,CHAR_SC,NSSTRING_SC>\n {printf("ERROR! Multiline string\n"); lineCount++;}
 <STRING_SC,CHAR_SC,NSSTRING_SC><<EOF>> {printf("ERROR! haven't found closing quotes.\n"); BEGIN(INITIAL);}
-<STRING_SC,NSSTRING_SC>\" {std::cout << "Found String literal: " << str.c_str() << std::endl;BEGIN(INITIAL);
-      
+<STRING_SC,NSSTRING_SC>\" {std::cout << "Found String literal: " << str.c_str() << std::endl;
+
       if (YY_START == STRING_SC)
       {
         yylval.String_constant = new char[str.length()];
         strcpy(yylval.String_constant, str.c_str()); 
+        BEGIN(INITIAL);
         return STRING_CONSTANT;
       }
       else
       {
         yylval.NSString_constant = new char[str.length()];
         strcpy(yylval.NSString_constant, str.c_str()); 
+        BEGIN(INITIAL);
         return NSSTRING_CONSTANT;
       }
+
 }
 <CHAR_SC>\' {
     if(str.size() != 1)
@@ -174,9 +177,12 @@ UNDERLINE_LETTER [A-Za-z_]
     else
     {
         std::cout << "Found char: " + str << std::endl;BEGIN(INITIAL);
+        yylval.Char_constant = new char[str.length()];
         strcpy(yylval.Char_constant, str.c_str());
+        BEGIN(INITIAL);
         return CHAR_CONSTANT;
     }
+    
 }
 
 

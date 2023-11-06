@@ -212,22 +212,48 @@ Init_declarator_node* Init_declarator_node::createInitDeclaratorNode(init_declar
     res->type = type;
     res->Declarator = declarator;
     res->expression = expression;
+    res->ArraySize = NULL;
+    res->InitializerList = NULL;
     res->Next = NULL;
+    return res;
+}
+
+Init_declarator_node* Init_declarator_node::createInitDeclaratorNodeFromArray(init_declarator_type type, char *declarator, Expression_node *arraySize, Expression_node *expression, Expression_list_node *initializerList)
+{
+    Init_declarator_node *res = new Init_declarator_node;
+    res->id = maxId++;
+    res->type = type;
+    res->Declarator = declarator;
+    res->expression = expression;
+    res->ArraySize = arraySize;
+    res->InitializerList = initializerList;
+    res->Next = NULL;
+    return res;
+}
+
+// ---------- declarator ----------
+
+Declarator_node* Declarator_node::createDeclaratorNode(char *identifier, Expression_node *expression)
+{
+    Declarator_node *res = new Declarator_node;
+    res->id = maxId++;
+    res->Identifier = identifier;
+    res->Expression = expression;
     return res;
 }
 
 // ---------- declarator_list ----------
 
-Declarator_list_node* Declarator_list_node::createDeclaratorListNode(char *declarator)
+Declarator_list_node* Declarator_list_node::createDeclaratorListNode(Declarator_node *declarator)
 {
     Declarator_list_node *res = new Declarator_list_node;
     res->id = maxId++;
-    res->Declarators = new vector<char *>;
+    res->Declarators = new vector<Declarator_node*>;
     res->Declarators->push_back(declarator);
     return res;
 }
 
-Declarator_list_node* Declarator_list_node::addToDeclaratorListNode(Declarator_list_node *list, char *declarator)
+Declarator_list_node* Declarator_list_node::addToDeclaratorListNode(Declarator_list_node *list, Declarator_node *declarator)
 {
     list->Declarators->push_back(declarator);
     return list;
@@ -1160,6 +1186,51 @@ string Init_declarator_node::toDot(string labelConection)
         res += to_string(id);
         res += expression->toDot("expression"); 
     }
+    if (type == ARRAY_DECLARATOR_TYPE)
+    {
+        if (ArraySize!= NULL)
+        {
+            res += to_string(id);
+            res += ArraySize->toDot("array_size");
+        }
+    }
+    if (type == ARRAY_WITH_INITIALIZING_DECLARATOR_TYPE)
+    {
+        if (ArraySize!= NULL)
+        {
+            res += to_string(id);
+            res += ArraySize->toDot("array_size");
+        }
+        if (expression!= NULL)
+        {
+            res += to_string(id);
+            res += expression->toDot("expression");
+        }
+        if (InitializerList != NULL)
+        {
+            res += to_string(id);
+            res += InitializerList->toDot("initializer_list");
+        }
+    }
+    return res;
+}
+
+// ---------- Declarator_node ----------
+
+string Declarator_node::toDot(string labelConection)
+{
+    string res = "->" + to_string(id);
+    if (labelConection!= "")
+        res += "[label=\"" + labelConection + "\"]";
+    res += ";\n";
+    res += to_string(id) + "[label=\"declarator\"];\n";
+    res += to_string(id) + ".1 [label=\"" + Identifier + "\"];\n";
+    res += to_string(id) + "->" + to_string(id) + ".1[label=\"identifier\"];\n";
+    if (Expression!= NULL)
+    {
+        res += to_string(id);
+        res += Expression->toDot("array_size");
+    }
     return res;
 }
 
@@ -1174,8 +1245,8 @@ string Declarator_list_node::toDot(string labelConection)
     res += to_string(id) + "[label=\"declarator_list\"];\n";
     for (int i = 0; i < Declarators->size(); i++)
     {
-        res += to_string(id) + "." + to_string(i) + "[label=\"" + Declarators->at(i) + "\"];\n";
-        res += to_string(id) + "->" + to_string(id) + "." + to_string(i) + "[label=\"" + to_string(i) +"\"];\n";
+        res += to_string(id);
+        res += Declarators->at(i)->toDot(to_string(i));
     }
     return res;
 }
@@ -1410,6 +1481,14 @@ string Expression_node::toDot(string labelConection)
         res += Left->toDot("left");
         res += to_string(id) + ".1 [label=\"" + name + "\"];\n";
         res += to_string(id) + "->" + to_string(id) + ".1 [label=\"name\"];\n";
+    }
+    else if (type == ARRAY_ELEMENT_ACCESS_EXPRESSION_TYPE)
+    {
+        res += to_string(id) + "[label=\"[]\"];\n";
+        res += to_string(id);
+        res += Left->toDot("left");
+        res += to_string(id);
+        res += Right->toDot("right");
     }
 
     return res;

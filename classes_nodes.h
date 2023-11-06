@@ -186,7 +186,9 @@ class Init_declarator_list_node
 
 enum init_declarator_type {
     SIMPLE_DECLARATOR_TYPE,
-    DECLARATOR_WITH_INITIALIZING_TYPE
+    DECLARATOR_WITH_INITIALIZING_TYPE,
+    ARRAY_DECLARATOR_TYPE,
+    ARRAY_WITH_INITIALIZING_DECLARATOR_TYPE
 };
 
 class Init_declarator_node
@@ -195,11 +197,27 @@ class Init_declarator_node
         int id;
         enum init_declarator_type type;
         Expression_node *expression;
+        Expression_node *ArraySize;
         Init_declarator_node *Next;
         char *Declarator;
+        Expression_list_node *InitializerList;
 
         static Init_declarator_node* createInitDeclaratorNode(init_declarator_type type, char *declarator, Expression_node *expression);
+        static Init_declarator_node* createInitDeclaratorNodeFromArray(init_declarator_type type, char *declarator, Expression_node *arraySize, Expression_node *expression, Expression_list_node *initializerList);
         
+        string toDot(string labelConection="");
+};
+
+// ---------- declarator ----------
+class Declarator_node
+{
+    public:
+        int id;
+        char *Identifier;
+        Expression_node *Expression;
+
+        static Declarator_node* createDeclaratorNode(char *identifier, Expression_node *expression);
+
         string toDot(string labelConection="");
 };
 
@@ -209,10 +227,10 @@ class Declarator_list_node
 {
     public:
         int id;
-        std::vector<char*> *Declarators;
+        std::vector<Declarator_node*> *Declarators;
 
-        static Declarator_list_node* createDeclaratorListNode(char *declarator);
-        static Declarator_list_node* addToDeclaratorListNode(Declarator_list_node *list, char *declarator);
+        static Declarator_list_node* createDeclaratorListNode(Declarator_node *declarator);
+        static Declarator_list_node* addToDeclaratorListNode(Declarator_list_node *list, Declarator_node *declarator);
 
         string toDot(string labelConection="");
 };
@@ -277,7 +295,8 @@ enum expression_type
     GREATER_EQUAL_EXPRESSION_TYPE,
     ASSIGNMENT_EXPRESSION_TYPE,
     DOT_EXPRESSION_TYPE,
-    ARROW_EXPRESSION_TYPE
+    ARROW_EXPRESSION_TYPE,
+    ARRAY_ELEMENT_ACCESS_EXPRESSION_TYPE
 };
 
 class Expression_node

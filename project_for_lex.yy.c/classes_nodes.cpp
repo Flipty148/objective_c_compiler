@@ -540,7 +540,7 @@ Do_while_statement_node* Do_while_statement_node::createDoWhileStatementNode(Exp
 
 // ---------- for_statement ----------
 
-For_statement_node* For_statement_node::createForStatementNode(Expression_node *initExpression, Expression_node *condition, Expression_node *loopExpression, Statement_node *body)
+For_statement_node* For_statement_node::createForStatementNode(Expression_list_node *initExpression, Expression_node *condition, Expression_list_node *loopExpression, Statement_node *body)
 {
     For_statement_node *res = new For_statement_node;
     res->id = maxId++;
@@ -555,7 +555,7 @@ For_statement_node* For_statement_node::createForStatementNode(Expression_node *
     return res;
 }
 
-For_statement_node* For_statement_node::createForStatementNodeFromForWithDeclaration(Type_node *type, Init_declarator_list_node *initList, Expression_node *condition, Expression_node *loopExpression, Statement_node *body)
+For_statement_node* For_statement_node::createForStatementNodeFromForWithDeclaration(Type_node *type, Init_declarator_list_node *initList, Expression_node *condition, Expression_list_node *loopExpression, Statement_node *body)
 {
     For_statement_node *res = new For_statement_node;
     res->id = maxId++;
@@ -577,8 +577,8 @@ For_statement_node* For_statement_node::createForStatementNodeFromForeach(for_ty
     res->ForType = type;
     res->type = FOR_STATEMENT_TYPE;
     res->InitExpression = NULL;
-    res->ConditionExpression = NULL;
-    res->LoopExpression = expression;
+    res->LoopExpression = NULL;
+    res->ConditionExpression = expression;
     res->LoopBody = body;
     res->name = loopVar;
     res->NameType = varType;
@@ -1797,7 +1797,7 @@ string For_statement_node::toDot(string labelConection)
         res += to_string(id) + "->" + to_string(id) + ".1 [label=\"identifier\"];\n";
 
         res += to_string(id);
-        res += LoopExpression->toDot("expression");
+        res += ConditionExpression->toDot("expression");
 
         res += to_string(id);
         res += LoopBody->toDot("body");
@@ -1811,7 +1811,7 @@ string For_statement_node::toDot(string labelConection)
         res += to_string(id) + "->" + to_string(id) + ".1 [label=\"identifier\"];\n";
 
         res += to_string(id);
-        res += LoopExpression->toDot("expression");
+        res += ConditionExpression->toDot("expression");
 
         res += to_string(id);
         res += LoopBody->toDot("body");

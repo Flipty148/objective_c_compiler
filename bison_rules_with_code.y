@@ -323,9 +323,9 @@ while_statement: WHILE '(' expression ')' statement		{$$  = While_statement_node
 do_while_statement: DO statement WHILE '(' expression ')' ';'	{$$ = Do_while_statement_node::createDoWhileStatementNode($5, $2);}
 				  ;
 
-for_statement: FOR '(' expression_e ';' expression_e ';' expression_e ')' statement						{$$ = For_statement_node::createForStatementNode($3, $5, $7, $9);}
-			 | FOR '(' type init_declarator_list_e ';' expression_e ';' expression_e ')' statement		{$$ =For_statement_node::createForStatementNodeFromForWithDeclaration($3, $4, $6, $8, $10);}
-			 | FOR '(' CLASS_NAME '*' init_declarator_list_e ';' expression_e ';' expression_e ')' statement		{$$ =For_statement_node::createForStatementNodeFromForWithDeclaration(Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $3), $5, $7, $9, $11);}		
+for_statement: FOR '(' expression_list_e ';' expression_e ';' expression_list_e ')' statement						{$$ = For_statement_node::createForStatementNode($3, $5, $7, $9);}
+			 | FOR '(' type init_declarator_list_e ';' expression_e ';' expression_list_e ')' statement		{$$ =For_statement_node::createForStatementNodeFromForWithDeclaration($3, $4, $6, $8, $10);}
+			 | FOR '(' CLASS_NAME '*' init_declarator_list_e ';' expression_e ';' expression_list_e ')' statement		{$$ =For_statement_node::createForStatementNodeFromForWithDeclaration(Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $3), $5, $7, $9, $11);}		
 			 | FOR '(' IDENTIFIER IN expression ')' statement											{$$ = For_statement_node::createForStatementNodeFromForeach(FOREACH_FOR_TYPE, NULL, $3, $5, $7);}
 			 | FOR '(' CLASS_NAME '*' IDENTIFIER IN expression ')' statement							{$$ = For_statement_node::createForStatementNodeFromForeach(FOREACH_WITH_DECLARATION_FOR_TYPE, Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $3), $5, $7, $9);}
 			 ;

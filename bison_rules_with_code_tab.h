@@ -25,7 +25,6 @@ typedef union {
 	Do_while_statement_node *Do_while;
 	For_statement_node *For;
 	Statement_node *Statement;
-	Compound_statement_node *Compound_statement;
 	Statement_list_node *Statement_list;
 	Class_block_node *Class_block;
 	Class_interface_node *Class_interface;

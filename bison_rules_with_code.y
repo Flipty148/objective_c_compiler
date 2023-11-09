@@ -33,7 +33,6 @@
 	Do_while_statement_node *Do_while;
 	For_statement_node *For;
 	Statement_node *Statement;
-	Compound_statement_node *Compound_statement;
 	Statement_list_node *Statement_list;
 	Class_block_node *Class_block;
 	Class_interface_node *Class_interface;
@@ -115,7 +114,6 @@
 %type <Do_while> do_while_statement
 %type <For> for_statement
 %type <Statement> statement
-%type <Compound_statement> compound_statement
 %type <Statement_list> statement_list_e statement_list
 %type <Class_block> class_block
 %type <Class_interface> class_interface
@@ -159,7 +157,7 @@ function_and_class_list: class_block									{$$ = Function_and_class_list_node:
 
 // ---------- Заглушки для списка функций ----------
 
-function: type IDENTIFIER '(' ')' compound_statement /*Заглушка, тут должно быть определение функции*/ {$$ = Function_node::createFunctionNode($1, $2, $5);}
+function: type IDENTIFIER '(' ')' '{' statement_list_e '}' /*Заглушка, тут должно быть определение функции*/ {$$ = Function_node::createFunctionNode($1, $2, $6);}
 		;
 		
 // ---------- Типы ----------
@@ -339,12 +337,9 @@ statement: ';'							{$$ = Statement_node::createStatementNodeFromSimpleStatemen
 		 | while_statement				{$$ = $1;}
 		 | do_while_statement			{$$ = $1;}
 		 | for_statement				{$$ = $1;}
-		 | compound_statement			{$$ = $1;}
+		 | '{' statement_list_e '}'		{$$ = $2;}
 		 | declaration					{$$ = $1;}
 		 ;
-
-compound_statement: '{' statement_list_e '}'	{$$ = Compound_statement_node::createCompoundStatementNode($2);}
-				  ;
 
 statement_list: statement					{$$ = Statement_list_node::createStatementListNode($1);}
 			  | statement_list statement	{$$ = Statement_list_node::addToStatementListNode($1, $2);}
@@ -434,12 +429,12 @@ implementation_definition_list: declaration											{$$ = Implementation_defin
 							  | implementation_definition_list method_definition	{$$ = Implementation_definition_list_node::addMethodDeclarationToImplementationDefinitionListNode($1, $2);}
 							  ;
 
-method_definition: '+' method_type method_selector declaration_list_e compound_statement	{$$ = Method_definition_node::createMethodDefinitionNode(CLASS_METHOD_DEFINITION_TYPE, $2, $3, $4, $5);}
-				 | '+' '(' VOID ')' method_selector declaration_list_e compound_statement	{$$ = Method_definition_node::createMethodDefinitionNode(CLASS_METHOD_DEFINITION_TYPE, Type_node::createTypeNode(VOID_TYPE), $5, $6, $7);}
-				 | '+' method_selector declaration_list_e compound_statement				{$$ = Method_definition_node::createMethodDefinitionNode(CLASS_METHOD_DEFINITION_TYPE, NULL, $2, $3, $4);}
-				 | '-' method_type method_selector declaration_list_e compound_statement	{$$ = Method_definition_node::createMethodDefinitionNode(INSTANCE_METHOD_DEFINITION_TYPE, $2, $3, $4, $5);}
-				 | '-' '(' VOID ')' method_selector declaration_list_e compound_statement	{$$ = Method_definition_node::createMethodDefinitionNode(INSTANCE_METHOD_DEFINITION_TYPE, Type_node::createTypeNode(VOID_TYPE), $5, $6, $7);}
-				 | '-' method_selector declaration_list_e compound_statement				{$$ = Method_definition_node::createMethodDefinitionNode(INSTANCE_METHOD_DEFINITION_TYPE, NULL, $2, $3, $4);}
+method_definition: '+' method_type method_selector declaration_list_e '{' statement_list_e '}'	{$$ = Method_definition_node::createMethodDefinitionNode(CLASS_METHOD_DEFINITION_TYPE, $2, $3, $4, $6);}
+				 | '+' '(' VOID ')' method_selector declaration_list_e '{' statement_list_e '}'	{$$ = Method_definition_node::createMethodDefinitionNode(CLASS_METHOD_DEFINITION_TYPE, Type_node::createTypeNode(VOID_TYPE), $5, $6, $8);}
+				 | '+' method_selector declaration_list_e '{' statement_list_e '}'				{$$ = Method_definition_node::createMethodDefinitionNode(CLASS_METHOD_DEFINITION_TYPE, NULL, $2, $3, $5);}
+				 | '-' method_type method_selector declaration_list_e '{' statement_list_e '}'	{$$ = Method_definition_node::createMethodDefinitionNode(INSTANCE_METHOD_DEFINITION_TYPE, $2, $3, $4, $6);}
+				 | '-' '(' VOID ')' method_selector declaration_list_e '{' statement_list_e '}'	{$$ = Method_definition_node::createMethodDefinitionNode(INSTANCE_METHOD_DEFINITION_TYPE, Type_node::createTypeNode(VOID_TYPE), $5, $6, $8);}
+				 | '-' method_selector declaration_list_e '{' statement_list_e '}'				{$$ = Method_definition_node::createMethodDefinitionNode(INSTANCE_METHOD_DEFINITION_TYPE, NULL, $2, $3, $5);}
 				 ;
 
 method_selector: IDENTIFIER																						{$$ = Method_selector_node::createMethodSelectorNode($1, NULL, NULL, NULL);}

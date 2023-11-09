@@ -512,22 +512,9 @@ class For_statement_node : public Statement_node
         string toDot(string labelConection="");
 };
 
-// ---------- compound_statement ----------
-
-class Compound_statement_node : public Statement_node
-{
-    public:
-        int id;
-        Statement_list_node *Statements;
-
-        static Compound_statement_node* createCompoundStatementNode(Statement_list_node *statements);
-
-        string toDot(string labelConection="");
-};
-
 // ---------- statement_list ----------
 
-class Statement_list_node
+class Statement_list_node : public Statement_node
 {
     public:
         int id;
@@ -758,10 +745,10 @@ class Method_definition_node
         Type_node *MethodType;
         Method_selector_node *MethodSelector;
         Declaration_list_node *DeclarationList;
-        Compound_statement_node *MethodBody;
+        Statement_list_node *MethodBody;
         Method_definition_node *Next;
 
-        static Method_definition_node* createMethodDefinitionNode(method_definition_type type, Type_node *methodType, Method_selector_node *selector, Declaration_list_node *declarationList, Compound_statement_node *methodBody);
+        static Method_definition_node* createMethodDefinitionNode(method_definition_type type, Type_node *methodType, Method_selector_node *selector, Declaration_list_node *declarationList, Statement_list_node *methodBody);
 
         string toDot(string labelConection="");
 };
@@ -895,10 +882,10 @@ class Function_node
         int id;
         Type_node *Type;
         char *Name;
-        Compound_statement_node *statement;
+        Statement_list_node *statement;
         Function_node *Next;
 
-        static Function_node* createFunctionNode(Type_node *type, char *name, Compound_statement_node *statement);
+        static Function_node* createFunctionNode(Type_node *type, char *name, Statement_list_node *statement);
         
         string toDot(string labelConection="");
 };

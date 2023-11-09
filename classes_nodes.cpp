@@ -88,7 +88,7 @@ Function_and_class_list_node* Function_and_class_list_node::addToFunctionAndClas
 
 // ---------- function ----------
 
-Function_node* Function_node::createFunctionNode(Type_node *type, char *name, Compound_statement_node *statement)
+Function_node* Function_node::createFunctionNode(Type_node *type, char *name, Statement_list_node *statement)
 {
     Function_node *res = new Function_node;
     res->id = maxId++;
@@ -599,22 +599,13 @@ Statement_node* Statement_node::createStatementNodeFromSimpleStatement(statement
     return res;
 }
 
-// ---------- compound_statement ----------
-
-Compound_statement_node* Compound_statement_node::createCompoundStatementNode(Statement_list_node *statements)
-{
-    Compound_statement_node *res = new Compound_statement_node;
-    res->id = maxId++;
-    res->Statements = statements;
-    return res;
-}
-
 // ---------- statement_list ----------
 
 Statement_list_node* Statement_list_node::createStatementListNode(Statement_node *statement)
 {
     Statement_list_node *res = new Statement_list_node;
     res->id = maxId++;
+    res->type = COMPOUND_STATEMENT_TYPE;
     res->First = statement;
     res->Last = statement;
     return res;
@@ -915,7 +906,7 @@ Implementation_definition_list_node* Implementation_definition_list_node::addSyn
 
 // ---------- method_definition, class_method_definition, instance_method_definition ----------
 
-Method_definition_node* Method_definition_node::createMethodDefinitionNode(method_definition_type type, Type_node *methodType, Method_selector_node *selector, Declaration_list_node *declarationList, Compound_statement_node *methodBody)
+Method_definition_node* Method_definition_node::createMethodDefinitionNode(method_definition_type type, Type_node *methodType, Method_selector_node *selector, Declaration_list_node *declarationList, Statement_list_node *methodBody)
 {
     Method_definition_node *res = new Method_definition_node;
     res->id = maxId++;
@@ -1819,24 +1810,6 @@ string For_statement_node::toDot(string labelConection)
     return res;
 }
 
-// ----------- Compound_statement_node ----------
-
-string Compound_statement_node::toDot(string labelConection)
-{
-    string res = "->" + to_string(id);
-    if (labelConection!= "")
-        res += "[label=\"" + labelConection + "\"]";
-    res += ";\n";
-
-    res += to_string(id) + "[label=\"compound\"];\n";
-
-    if (Statements!= NULL)
-    {
-        res += to_string(id);
-        res += Statements->toDot();
-    }
-    return res;
-}
 
 // ---------- Statement_list_node ----------
 
@@ -2176,8 +2149,11 @@ string Method_definition_node::toDot(string labelConection)
         res += DeclarationList->toDot("declaration_list");
     }
 
-    res += to_string(id);
-    res += MethodBody->toDot("body");
+    if (MethodBody != NULL)
+    {
+        res += to_string(id);
+        res += MethodBody->toDot("body");
+    }
 
     return res;
 }
@@ -2380,7 +2356,10 @@ string Function_node::toDot(string labelConection)
     res += Name;
     res += "\"];\n";
 
-    res += to_string(id);
-    res += statement->toDot("body");
+    if (statement != NULL)
+    {
+        res += to_string(id);
+        res += statement->toDot("body");
+    }
     return res;
 }

@@ -1896,8 +1896,11 @@ string Interface_body_node::toDot(string labelConection)
         res += Variables->toDot("variables");
     }
 
-    res += to_string(id);
-    res += Declaration_list->toDot("declaration_list");
+    if (Declaration_list != NULL)
+    {
+        res += to_string(id);
+        res += Declaration_list->toDot("declaration_list");
+    }
 
     return res;
 }
@@ -1918,8 +1921,11 @@ string Implementation_body_node::toDot(string labelConection)
         res += Variables->toDot("variables");
     }
 
-    res += to_string(id);
-    res += Declaration_list->toDot("definition_list");
+    if (Declaration_list != NULL)
+    {
+        res += to_string(id);
+        res += Declaration_list->toDot("definition_list");
+    }
 
     return res;
 }

@@ -122,9 +122,9 @@
 %type <Class_implementation> class_implementation
 %type <Class_declaration_list> class_declaration_list 
 %type <Class_list> class_list
-%type <Interface_declaration_list> interface_declaration_list
+%type <Interface_declaration_list> interface_declaration_list interface_declaration_list_e
 %type <Method_declaration> method_declaration 
-%type <Implementation_definition_list> implementation_definition_list
+%type <Implementation_definition_list> implementation_definition_list implementation_definition_list_e
 %type <Method_definition> method_definition 
 %type <Method_selector> method_selector
 %type <Keyword_selector> keyword_selector keyword_selector_e
@@ -366,7 +366,7 @@ interface_body_e: /*empty*/			{$$ = NULL;}
 				| interface_body	{$$ = $1;}
 				;
 
-interface_body: '{' instance_variables_declaration_list_e '}' interface_declaration_list	{$$ = Interface_body_node::createInterfaceBodyNode($2, $4);}
+interface_body: '{' instance_variables_declaration_list_e '}' interface_declaration_list_e	{$$ = Interface_body_node::createInterfaceBodyNode($2, $4);}
 			  | interface_declaration_list						{$$ = Interface_body_node::createInterfaceBodyNode(NULL, $1);}
 			  ;
 
@@ -374,7 +374,7 @@ implementation_body_e: /*empty*/			{$$ = NULL;}
 					 | implementation_body	{$$ = $1;}
 					 ;
 
-implementation_body: '{' instance_variables_declaration_list_e '}' implementation_definition_list	{$$ = Implementation_body_node::createImplementationBodyNode($2, $4);}
+implementation_body: '{' instance_variables_declaration_list_e '}' implementation_definition_list_e	{$$ = Implementation_body_node::createImplementationBodyNode($2, $4);}
 			       | implementation_definition_list						{$$ = Implementation_body_node::createImplementationBodyNode(NULL, $1);}
 				   ;
 
@@ -405,6 +405,10 @@ instance_variables_declaration_list: instance_variables_declaration											{$
 								   | instance_variables_declaration_list instance_variables_declaration		{$$ = Instance_variables_declaration_list_node::addToInstanceVariablesDeclarationListNode($1, $2);}
 								   ;
 
+interface_declaration_list_e: /*empty*/						{$$ = NULL;}
+							| interface_declaration_list	{$$ = $1;}
+							;
+
 interface_declaration_list: declaration										{$$ = Interface_declaration_list_node::createInterfaceDeclarationListNodeFromDeclaration($1);}
 						  | property										{$$ = Interface_declaration_list_node::createInterfaceDeclarationListNodeFromProperty($1);}
 						  | method_declaration								{$$ = Interface_declaration_list_node::createInterfaceDeclarationListNodeFromMethodDeclaration($1);}
@@ -420,6 +424,10 @@ method_declaration: '+' method_type method_selector ';'		{$$ = Method_declaratio
 				  | '-' '(' VOID ')' method_selector ';'	{$$ = Method_declaration_node::createMethodDeclarationNode(INSTANCE_METHOD_DECLARATION_TYPE, Type_node::createTypeNode(VOID_TYPE), $5);}
 				  | '-' method_selector ';'					{$$ = Method_declaration_node::createMethodDeclarationNode(INSTANCE_METHOD_DECLARATION_TYPE, NULL, $2);}
 				  ;
+
+implementation_definition_list_e: /*empty*/							{$$ = NULL;}
+								| implementation_definition_list	{$$ = $1;}
+								;
 
 implementation_definition_list: declaration											{$$ = Implementation_definition_list_node::createImplementationDefinitionListNodeFromDeclaration($1);}
 							  | SYNTHESIZE IDENTIFIER ';'											{$$ = Implementation_definition_list_node::createImplementationDefinitionListNodeFromSynthesize($2);}

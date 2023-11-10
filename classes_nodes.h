@@ -275,7 +275,6 @@ enum expression_type
     IDENTIFIER_EXPRESSION_TYPE,
     LITERAL_EXPRESSION_TYPE,
     NUMERIIC_CONSTANT_EXPRESSION_TYPE,
-    PRIORITY_EXPRESSION_TYPE,
     SELF_EXPRESSION_TYPE,
     SUPER_EXPRESSION_TYPE,
     MESSAGE_EXPRESSION_EXPRESSION_TYPE,
@@ -316,6 +315,7 @@ class Expression_node
         Message_selector_node *Arguments;
         Expression_node *Next;
         Expression_list_node *ArgumentsList;
+        bool isPriority = false;
 
         static Expression_node* createExpressionNodeFromIdentifier(char *name);
         static Expression_node* createExpressionNodeFromLiteral(Literal_node *value);
@@ -327,6 +327,7 @@ class Expression_node
         static Expression_node* createExpressionNodeFromMessageExpression(Receiver_node *receiver, Message_selector_node *arguments);
         static Expression_node* createExpressionNodeFromFunctionCall(char *name, Expression_list_node *argumentsList);
         static Expression_node* createExpressionNodeFromMemberAccessOperator(expression_type type, Expression_node *expression, char *memberName);
+        static Expression_node* setPriority(Expression_node *expression, bool priority);
 
         string toDot(string labelConection="");
 };

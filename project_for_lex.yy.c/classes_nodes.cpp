@@ -413,6 +413,12 @@ Expression_node* Expression_node::createExpressionNodeFromMemberAccessOperator(e
     return res;
 }
 
+Expression_node* Expression_node::setPriority(Expression_node *expression, bool priority)
+{
+    expression->isPriority = priority;
+    return expression;
+}
+
 // ---------- expression_list ----------
 
 Expression_list_node* Expression_list_node::createExpressionListNode(Expression_node *expression)
@@ -1300,7 +1306,10 @@ string Expression_node::toDot(string labelConection)
     if (labelConection!= "")
         res += "[label=\"" + labelConection + "\"]";
     res += ";\n";
-    res += to_string(id) + "[label=\"expression\"];\n";
+    if (isPriority)
+        res += to_string(id) + "[label=\"(expression)\"];\n";
+    else
+        res += to_string(id) + "[label=\"expression\"];\n";
     if (type == IDENTIFIER_EXPRESSION_TYPE)
     {
         res += to_string(id);
@@ -1321,23 +1330,29 @@ string Expression_node::toDot(string labelConection)
         res += to_string(id);
         res += constant.num->toDot();
     }
-    else if (type == PRIORITY_EXPRESSION_TYPE)
-    {
-        res += to_string(id) + "[label=\"priority_expression\"];\n";
-        res += to_string(id);
-        res += Right->toDot();
-    }
     else if (type == SELF_EXPRESSION_TYPE)
     {
-        res += to_string(id) + "[label=\"self_expression\"];\n";
+        res += to_string(id);
+        if (isPriority)
+            res += "[label=\"(self_expression)\"];\n";
+        else
+            res += "[label=\"self_expression\"];\n"; 
     }
     else if (type == SUPER_EXPRESSION_TYPE)
     {
-        res += to_string(id) + "[label=\"super_expression\"];\n";
+        res += to_string(id);
+        if (isPriority)
+            res += "[label=\"(super_expression)\"];\n";
+        else 
+            res += "[label=\"super_expression\"];\n";
     }
     else if (type == MESSAGE_EXPRESSION_EXPRESSION_TYPE)
     {
-        res += to_string(id) + "[label=\"message_expression\"];\n";
+        res += to_string(id);
+        if (isPriority)
+            res += "[label=\"(message_expression)\"];\n";
+        else
+            res += "[label=\"message_expression\"];\n";
         res += to_string(id);
         res += Receiver->toDot("receiver");
         res += to_string(id);
@@ -1345,7 +1360,11 @@ string Expression_node::toDot(string labelConection)
     }
     else if (type == FUNCTION_CALL_EXPRESSION_TYPE)
     {
-        res += to_string(id) + "[label=\"function_call_expression\"];\n";
+        res += to_string(id);
+        if (isPriority)
+            res += "[label=\"(function_call_expression)\"];\n";
+        else
+            res += "[label=\"function_call_expression\"];\n";
         res += to_string(id) + ".1 [label=\""+ name +"\"];\n";
         res += to_string(id) + "->" + to_string(id) + ".1 [label=\"name\"];\n";
         res += to_string(id);
@@ -1353,25 +1372,41 @@ string Expression_node::toDot(string labelConection)
     }
     else if (type == UMINUS_EXPRESSION_TYPE)
     {
-        res += to_string(id) + "[label=\"-\"];\n";
+        res += to_string(id);
+        if (isPriority)
+            res += "[label=\"(-)\"];\n";
+        else
+            res += "[label=\"-\"];\n";
         res += to_string(id);
         res += Right->toDot();
     }
     else if (type == UPLUS_EXPRESSION_TYPE)
     {
-        res += to_string(id) + "[label=\"+\"];\n";
+        res += to_string(id);
+        if (isPriority)
+            res += "[label=\"(+)\"];\n";
+        else
+            res += "[label=\"+\"];\n";
         res += to_string(id);
         res += Right->toDot();
     }
     else if (type == UAMPERSAND_EXPRESSION_TYPE)
     {
-        res += to_string(id) + "[label=\"&\"];\n";
+        res += to_string(id);
+        if (isPriority)
+            res += "[label=\"(&)\"];\n";
+        else
+            res += "[label=\"&\"];\n";
         res += to_string(id);
         res += Right->toDot();
     }
     else if (type == PLUS_EXPRESSION_TYPE)
     {
-        res += to_string(id) + "[label=\"+\"];\n";
+        res += to_string(id);
+        if (isPriority)
+            res += "[label=\"(+)\"];\n";
+        else
+            res += "[label=\"+\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
         res += to_string(id);
@@ -1379,7 +1414,11 @@ string Expression_node::toDot(string labelConection)
     }
     else if (type == MINUS_EXPRESSION_TYPE)
     {
-        res += to_string(id) + "[label=\"-\"];\n";
+        res += to_string(id);
+        if (isPriority)
+            res += "[label=\"(-)\"];\n";
+        else
+            res += "[label=\"-\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
         res += to_string(id);
@@ -1387,7 +1426,11 @@ string Expression_node::toDot(string labelConection)
     }
     else if (type == MUL_EXPRESSION_TYPE)
     {
-        res += to_string(id) + "[label=\"*\"];\n";
+        res += to_string(id);
+        if (isPriority)
+            res += "[label=\"(*)\"];\n";
+        else
+            res += "[label=\"*\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
         res += to_string(id);
@@ -1395,7 +1438,11 @@ string Expression_node::toDot(string labelConection)
     }
     else if (type == DIV_EXPRESSION_TYPE)
     {
-        res += to_string(id) + "[label=\"/\"];\n";
+        res += to_string(id);
+        if (isPriority)
+            res += "[label=\"(/)\"];\n";
+        else
+            res += "[label=\"/\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
         res += to_string(id);
@@ -1403,7 +1450,11 @@ string Expression_node::toDot(string labelConection)
     }
     else if (type == EQUAL_EXPRESSION_TYPE)
     {
-        res += to_string(id) + "[label=\"==\"];\n";
+        res += to_string(id);
+        if (isPriority)
+            res += "[label=\"(==)\"];\n";
+        else
+            res += "[label=\"==\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
         res += to_string(id);
@@ -1411,7 +1462,11 @@ string Expression_node::toDot(string labelConection)
     }
     else if (type == NOT_EQUAL_EXPRESSION_TYPE)
     {
-        res += to_string(id) + "[label=\"!=\"];\n";
+        res += to_string(id);
+        if (isPriority)
+            res += "[label=\"(!=)\"];\n";
+        else
+            res += "[label=\"!=\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
         res += to_string(id);
@@ -1419,7 +1474,11 @@ string Expression_node::toDot(string labelConection)
     }
     else if (type == GREATER_EXPRESSION_TYPE)
     {
-        res += to_string(id) + "[label=\">\"];\n";
+        res += to_string(id);
+        if (isPriority)
+            res += "[label=\"(>)\"];\n";
+        else
+            res += "[label=\">\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
         res += to_string(id);
@@ -1427,7 +1486,11 @@ string Expression_node::toDot(string labelConection)
     }
     else if (type == LESS_EXPRESSION_TYPE)
     {
-        res += to_string(id) + "[label=\"<\"];\n";
+        res += to_string(id);
+        if (isPriority)
+            res += "[label=\"(<)\"];\n";
+        else
+            res += "[label=\"<\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
         res += to_string(id);
@@ -1435,7 +1498,11 @@ string Expression_node::toDot(string labelConection)
     }
     else if (type == GREATER_EQUAL_EXPRESSION_TYPE)
     {
-        res += to_string(id) + "[label=\">=\"];\n";
+        res += to_string(id);
+        if (isPriority)
+            res += "[label=\"(>=)\"];\n";
+        else
+            res += "[label=\">=\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
         res += to_string(id);
@@ -1443,7 +1510,11 @@ string Expression_node::toDot(string labelConection)
     }
     else if (type == LESS_EQUAL_EXPRESSION_TYPE)
     {
-        res += to_string(id) + "[label=\"<=\"];\n";
+        res += to_string(id);
+        if (isPriority)
+            res += "[label=\"(<=)\"];\n";
+        else
+            res += "[label=\"<=\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
         res += to_string(id);
@@ -1451,7 +1522,11 @@ string Expression_node::toDot(string labelConection)
     }
     else if (type == ASSIGNMENT_EXPRESSION_TYPE)
     {
-        res += to_string(id) + "[label=\"=\"];\n";
+        res += to_string(id);
+        if (isPriority)
+            res += "[label=\"(=)\"];\n";
+        else
+            res += "[label=\"=\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
         res += to_string(id);
@@ -1459,7 +1534,11 @@ string Expression_node::toDot(string labelConection)
     }
     else if (type == DOT_EXPRESSION_TYPE)
     {
-        res += to_string(id) + "[label=\".\"];\n";
+        res += to_string(id);
+        if (isPriority)
+            res += "[label=\"(.)\"];\n";
+        else
+            res += "[label=\".\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
         res += to_string(id) + ".1 [label=\"" + name + "\"];\n";
@@ -1467,7 +1546,11 @@ string Expression_node::toDot(string labelConection)
     }
     else if (type == ARROW_EXPRESSION_TYPE)
     {
-        res += to_string(id) + "[label=\"->\"];\n";
+        res += to_string(id);
+        if (isPriority)
+            res += "[label=\"(->)\"];\n";
+        else
+            res += "[label=\"->\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
         res += to_string(id) + ".1 [label=\"" + name + "\"];\n";
@@ -1475,7 +1558,11 @@ string Expression_node::toDot(string labelConection)
     }
     else if (type == ARRAY_ELEMENT_ACCESS_EXPRESSION_TYPE)
     {
-        res += to_string(id) + "[label=\"[]\"];\n";
+        res += to_string(id);
+        if (isPriority)
+            res += "[label=\"([])\"];\n";
+        else
+            res += "[label=\"[]\"];\n";
         res += to_string(id);
         res += Left->toDot("left");
         res += to_string(id);

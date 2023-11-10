@@ -1379,7 +1379,7 @@ case 56:
     break;}
 case 57:
 #line 252 "bison_rules_with_code.y"
-{yyval.Expression = Expression_node::createExpressionNodeFromSimpleExpression(PRIORITY_EXPRESSION_TYPE, yyvsp[-1].Expression);;
+{yyval.Expression = Expression_node::setPriority(yyvsp[-1].Expression, true);;
     break;}
 case 58:
 #line 253 "bison_rules_with_code.y"

@@ -52,3 +52,4 @@ dkms.conf
 */.vs/
 */Debug/
 *.vcxproj.user
+.vscode/c_cpp_properties.json

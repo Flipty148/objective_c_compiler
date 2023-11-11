@@ -73,7 +73,8 @@ UNDERLINE_LETTER [A-Za-z_]
 "-" {printf("Found arithmetic operation -: %s\n", yytext);  return (unsigned char)'-';}
 "*" {printf("Found arithmetic operation *: %s\n", yytext);  return (unsigned char)'*';}
 "/" {printf("Found arithmetic operation /: %s\n", yytext);  return (unsigned char)'/';}
-
+"++" {printf("ERROR! Unsupported operation '++': %s\n", yytext);}
+"--" {printf("ERROR! Unsupported operation '--': %s\n", yytext);}
 
 "==" {printf("Found comparison operation ==: %s\n", yytext);    return EQUAL;}
 "!=" {printf("Found comparison operation !=: %s\n", yytext);    return NOT_EQUAL;}
@@ -84,6 +85,10 @@ UNDERLINE_LETTER [A-Za-z_]
 
 
 "=" {printf("Found assignment operation =: %s\n", yytext);      return (unsigned char)'=';}
+"+=" {printf("ERROR! Unsupported operation '+=': %s\n", yytext);}
+"-=" {printf("ERROR! Unsupported operation '-=': %s\n", yytext);}
+"*=" {printf("ERROR! Unsupported operation '*=': %s\n", yytext);}
+"/=" {printf("ERROR! Unsupported operation '/=': %s\n", yytext);}
 
 "." {printf("Found member access operator '.' %s\n", yytext);   return (unsigned char)'.';}
 "->" {printf("Found member access operator '->' %s\n", yytext);     return ARROW;}

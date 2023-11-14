@@ -45,7 +45,7 @@ public:
     ConstantsTableElement* Name; // Ссылка на константу с именем функции
     ConstantsTableElement* Descriptor; // Ссылка на константу с дескриптором функции
     Statement_node* BodyStart; // Ссылка на узел начала тела функции
-    //TODO ссылка на таблицу локальных переменных
+	LocalVariablesTable* LocalVariables; // Ссылка на соответствующую таблицу локальных переменных
 };
 
 class FunctionsTable
@@ -65,9 +65,9 @@ public:
 	ConstantsTableElement* Name; // Ссылка на константу с именем класса
     ConstantsTableElement* SuperclassName; // Ссылка на константу с именем родительского класса
     bool IsImplementation; //Флаг, который показывает является ли класс реализацией (ВОЗМОЖНО, СТОИТ ДОБАВИТЬ ИМЕННО НАЛИЧИЕ РЕАЛИЗАЦИИ КЛАССА)
-    //TODO ссылка на таблицу полей класса
-    //TODO ссылка на таблицу методов
-    //TODO ссылка на таблицу свойств
+	FieldsTable* Fields; // Ссылка на соответствующую таблицу полей класса
+	MethodsTable* Methods; // Ссылка на соответстующую таблицу методов класса
+	PropertiesTable* Properties; // Ссылка на соответствующую таблицу свойств класса
 };
 
 class ClassesTable
@@ -88,6 +88,12 @@ public:
 	ConstantsTableElement* Descriptor; // Ссылка на константу с дескриптором поля
     bool IsInstance; // Флаг, показывающий является ли поле частью экземпляра класса
     //TODO значение
+
+    /* Может как-то так
+    int number;
+    string str;
+    auto obj;
+    */
 };
 
 class FieldsTable
@@ -107,7 +113,7 @@ public:
 	ConstantsTableElement* Descriptor; // Ссылка на константу с дескриптором метода (НУЖНО ЛИ НА KEYWORD ИЛИ ИХ НУЖНО ПРЕОБРАЗОВЫВАТЬ К СТАНДАРТНОМУ ДЕСКРИПТОРУ ФУНКЦИИ?)
     bool IsClassMethod; // Флаг, который показывает принадлежность метода к классу, а не объекту
 	Statement_node* BodyStart; // Ссылка на узел начала тела метода
-    //TODO ссылка на таблицу локальных переменных
+	LocalVariablesTable* LocalVariables; // Ссылка на соотвветсвующую таблицу локальных переменных
 };
 
 class MethodsTable

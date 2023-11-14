@@ -1,4 +1,6 @@
 #include <iostream>
+#include <map>
+#include <hash_set>
 #include "classes_nodes.h"
 using namespace std;
 // ---------- Таблица констант ----------
@@ -26,6 +28,12 @@ public:
 	ConstantsTableElement* SecondRef; // Ссылка на 2-ую константу
 };
 
+class ConstantsTable
+{
+private:
+    hash_set<ConstantsTableElement*> items; // Таблица констант
+};
+
 // ---------- Таблица функций ----------
 
 class FunctionsTableElement
@@ -38,6 +46,12 @@ public:
     ConstantsTableElement* Descriptor; // Ссылка на константу с дескриптором функции
     Statement_node* BodyStart; // Ссылка на узел начала тела функции
     //TODO ссылка на таблицу локальных переменных
+};
+
+class FunctionsTable
+{
+private:
+    map<string, FunctionsTableElement*> items; // Таблица функций, в качестве ключа - Имя функции
 };
 
 // ---------- Таблица классов ----------
@@ -56,6 +70,12 @@ public:
     //TODO ссылка на таблицу свойств
 };
 
+class ClassesTable
+{
+private:
+    map<string, ClassesTableElement*> items; // Таблица классов, в качестве ключа - Имя класса
+};
+
 // ---------- Таблица полей класса ----------
 
 class FieldsTableElement
@@ -68,6 +88,11 @@ public:
 	ConstantsTableElement* Descriptor; // Ссылка на константу с дескриптором поля
     bool IsInstance; // Флаг, показывающий является ли поле частью экземпляра класса
     //TODO значение
+};
+
+class FieldsTable
+{
+    map < string, FieldTableElement*> items; //Таблица полей класса, в качестве ключа - Имя поля класса
 };
 
 // ---------- Таблица методов ----------
@@ -85,6 +110,12 @@ public:
     //TODO ссылка на таблицу локальных переменных
 };
 
+class MethodsTable
+{
+private:
+	map< string, MethodsTableElement* > items; //Таблица методов класса, в качестве ключа - Имя метода класса
+};
+
 // ----------- Таблица свойств ----------
 
 class PropertiesTableElement
@@ -99,6 +130,12 @@ public:
     //TODO значение
 };
 
+class PropertiesTable
+{
+private:
+	map<string, PropertiesTableElement*> items; // Таблица  свойств класса, в качестве ключа - Имя свойства класса
+};
+
 // ---------- Таблица локальных переменных ----------
 
 class LocalVariablesTableElement
@@ -109,4 +146,10 @@ public:
 	int Id; // Номер локальной переменной
 	string Name; // Имя локальной переменной
     //TODO значение
+};
+
+class LocalVariablesTable
+{
+private:
+	map<string, LocalVariablesTableElement*> items; // Таблица локальных переменных, в качестве ключа - Имя локальной переменной
 };

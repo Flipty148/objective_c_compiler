@@ -87,13 +87,7 @@ public:
     ConstantsTableElement* Name; // Ссылка на константу с именем поля
 	ConstantsTableElement* Descriptor; // Ссылка на константу с дескриптором поля
     bool IsInstance; // Флаг, показывающий является ли поле частью экземпляра класса
-    //TODO значение
-
-    /* Может как-то так
-    int number;
-    string str;
-    auto obj;
-    */
+    Type_node* Type;
 };
 
 class FieldsTable
@@ -133,7 +127,7 @@ public:
     ConstantsTableElement* Name; // Ссылка на константу с именем свойства
 	ConstantsTableElement* Descriptor; // Ссылка на константу с дескриптором типа константы
     bool isReadonly; // Флаг, который показывает, что свойство доступно только для чтения
-    //TODO значение
+    Type_node* Type; // Тип свойства
 };
 
 class PropertiesTable
@@ -151,7 +145,7 @@ public:
 
 	int Id; // Номер локальной переменной
 	string Name; // Имя локальной переменной
-    //TODO значение
+    Type_node* Type; //Тип переменной
 };
 
 class LocalVariablesTable

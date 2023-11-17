@@ -1,6 +1,5 @@
 #include <iostream>
 #include <map>
-#include <hash_set>
 #include "classes_nodes.h"
 using namespace std;
 // ---------- Таблица констант ----------
@@ -18,20 +17,20 @@ enum constantType {
 class ConstantsTableElement
 {
 public:
-    static int maxId; // Наибольший номер константы
-
     int Id; // Номер константы
     constantType Type; // Тип константы
     string Utf8String; // Строка для значения UTF-8 констант
     int Number; // Число для значения Integer констант
-    ConstantsTableElement* FirstRef; // Ссылка на 1-ую константу 
-	ConstantsTableElement* SecondRef; // Ссылка на 2-ую константу
+    int FirstRef; // Ссылка на 1-ую константу 
+	int SecondRef; // Ссылка на 2-ую константу
 };
 
 class ConstantsTable
 {
+public:
+    int maxId; // Наибольший номер константы
 private:
-    hash_set<ConstantsTableElement*> items; // Таблица констант
+    vector<ConstantsTableElement> items; // Таблица констант
 };
 
 // ---------- Таблица функций ----------
@@ -39,12 +38,9 @@ private:
 class FunctionsTableElement
 {
 public:
-	static int maxId; // Наибольший номер функции
-
-    int Id; // Номер функции
-    ConstantsTableElement* Name; // Ссылка на константу с именем функции
-    ConstantsTableElement* Descriptor; // Ссылка на константу с дескриптором функции
-    Statement_node* BodyStart; // Ссылка на узел начала тела функции
+    int Name; // Ссылка на константу с именем функции
+    int Descriptor; // Ссылка на константу с дескриптором функции
+    Statement_node* BodyRoot; // Ссылка на узел начала тела функции
 	LocalVariablesTable* LocalVariables; // Ссылка на соответствующую таблицу локальных переменных
 };
 
@@ -59,15 +55,13 @@ private:
 class ClassesTableElement
 {
 public:
-	static int maxId; // Наибольший номер класса
-
-	int Id; // Номер класса
-	ConstantsTableElement* Name; // Ссылка на константу с именем класса
-    ConstantsTableElement* SuperclassName; // Ссылка на константу с именем родительского класса
+	int Name; // Ссылка на константу с именем класса
+    int SuperclassName; // Ссылка на константу с именем родительского класса
     bool IsImplementation; //Флаг, который показывает является ли класс реализацией (ВОЗМОЖНО, СТОИТ ДОБАВИТЬ ИМЕННО НАЛИЧИЕ РЕАЛИЗАЦИИ КЛАССА)
 	FieldsTable* Fields; // Ссылка на соответствующую таблицу полей класса
 	MethodsTable* Methods; // Ссылка на соответстующую таблицу методов класса
 	PropertiesTable* Properties; // Ссылка на соответствующую таблицу свойств класса
+    ConstantsTable* ConstantTable; // Таблица констант
 };
 
 class ClassesTable
@@ -81,13 +75,10 @@ private:
 class FieldsTableElement
 {
 public:
-    static int maxId; // Наибольший номер поля класса
-
-	int Id; // Номер поля класса
-    ConstantsTableElement* Name; // Ссылка на константу с именем поля
-	ConstantsTableElement* Descriptor; // Ссылка на константу с дескриптором поля
+    int Name; // Ссылка на константу с именем поля
+	int Descriptor; // Ссылка на константу с дескриптором поля
     bool IsInstance; // Флаг, показывающий является ли поле частью экземпляра класса
-    Type_node* Type;
+    Type Type;
 };
 
 class FieldsTable
@@ -100,14 +91,14 @@ class FieldsTable
 class MethodsTableElement
 {
 public:
-	static int maxId; // Наибольший номер метода класса
-
-	int Id; // Номер метода класса
-    ConstantsTableElement* Name; // Ссылка на константу с именем метода
-	ConstantsTableElement* Descriptor; // Ссылка на константу с дескриптором метода (НУЖНО ЛИ НА KEYWORD ИЛИ ИХ НУЖНО ПРЕОБРАЗОВЫВАТЬ К СТАНДАРТНОМУ ДЕСКРИПТОРУ ФУНКЦИИ?)
+    int Name; // Ссылка на константу с именем метода
+	int Descriptor; // Ссылка на константу с дескриптором метода (НУЖНО ЛИ НА KEYWORD ИЛИ ИХ НУЖНО ПРЕОБРАЗОВЫВАТЬ К СТАНДАРТНОМУ ДЕСКРИПТОРУ ФУНКЦИИ?)
     bool IsClassMethod; // Флаг, который показывает принадлежность метода к классу, а не объекту
 	Statement_node* BodyStart; // Ссылка на узел начала тела метода
 	LocalVariablesTable* LocalVariables; // Ссылка на соотвветсвующую таблицу локальных переменных
+    Type ReturnType; //Тип возвращаемого значепаарния
+    vector<Type> ParamsTypes; //Тип параметров
+    vector<Type> KeywordsTypes; //Тип параметров keyword
 };
 
 class MethodsTable
@@ -121,13 +112,10 @@ private:
 class PropertiesTableElement
 {
 public:
-    static int maxId; // Наибольший номер свойства класса
-
-    int Id; // Номер свойства класса
-    ConstantsTableElement* Name; // Ссылка на константу с именем свойства
-	ConstantsTableElement* Descriptor; // Ссылка на константу с дескриптором типа константы
+    int Name; // Ссылка на константу с именем свойства
+	int Descriptor; // Ссылка на константу с дескриптором типа константы
     bool isReadonly; // Флаг, который показывает, что свойство доступно только для чтения
-    Type_node* Type; // Тип свойства
+    Type Type; // Тип свойства
 };
 
 class PropertiesTable
@@ -141,15 +129,23 @@ private:
 class LocalVariablesTableElement
 {
 public:
-	static int maxId; // Наибольший номер локальной переменной
-
 	int Id; // Номер локальной переменной
 	string Name; // Имя локальной переменной
-    Type_node* Type; //Тип переменной
+    Type Type; //Тип переменной
 };
 
 class LocalVariablesTable
 {
+public:
+    int maxId; // Наибольший номер локальной переменной
 private:
+    
 	map<string, LocalVariablesTableElement*> items; // Таблица локальных переменных, в качестве ключа - Имя локальной переменной
+};
+
+// ---------- Типы ----------
+class Type {
+    type_type DataType; // Тип данных
+    string ClassName; //Имя класса
+    int ArrSize; // Размер массива
 };

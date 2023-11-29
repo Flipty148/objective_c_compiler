@@ -29,8 +29,7 @@ class ConstantsTable
 {
 public:
     int maxId; // Наибольший номер константы
-private:
-    vector<ConstantsTableElement> items; // Таблица констант
+    map<int, ConstantsTableElement> items; // Таблица констант
 };
 
 // ---------- Таблица функций ----------
@@ -46,7 +45,7 @@ public:
 
 class FunctionsTable
 {
-private:
+public:
     map<string, FunctionsTableElement*> items; // Таблица функций, в качестве ключа - Имя функции
 };
 
@@ -66,7 +65,7 @@ public:
 
 class ClassesTable
 {
-private:
+public:
     map<string, ClassesTableElement*> items; // Таблица классов, в качестве ключа - Имя класса
 };
 
@@ -83,7 +82,8 @@ public:
 
 class FieldsTable
 {
-    map < string, FieldTableElement*> items; //Таблица полей класса, в качестве ключа - Имя поля класса
+public:
+    map < string, FieldsTableElement*> items; //Таблица полей класса, в качестве ключа - Имя поля класса
 };
 
 // ---------- Таблица методов ----------
@@ -103,7 +103,7 @@ public:
 
 class MethodsTable
 {
-private:
+public:
 	map< string, MethodsTableElement* > items; //Таблица методов класса, в качестве ключа - Имя метода класса
 };
 
@@ -120,7 +120,7 @@ public:
 
 class PropertiesTable
 {
-private:
+public:
 	map<string, PropertiesTableElement*> items; // Таблица  свойств класса, в качестве ключа - Имя свойства класса
 };
 
@@ -138,8 +138,6 @@ class LocalVariablesTable
 {
 public:
     int maxId; // Наибольший номер локальной переменной
-private:
-    
 	map<string, LocalVariablesTableElement*> items; // Таблица локальных переменных, в качестве ключа - Имя локальной переменной
 };
 

@@ -2,6 +2,14 @@
 #include <map>
 #include "classes_nodes.h"
 using namespace std;
+
+class LocalVariablesTable;
+class FieldsTable;
+class MethodsTable;
+class PropertiesTable;
+class Type;
+
+
 // ---------- Таблица констант ----------
 
 enum constantType {
@@ -18,11 +26,14 @@ class ConstantsTableElement
 {
 public:
     int Id = NULL; // Номер константы
-    constantType Type = NULL; // Тип константы
+    constantType Type; // Тип константы
     string Utf8String = NULL; // Строка для значения UTF-8 констант
     int Number = NULL; // Число для значения Integer констант
     int FirstRef = NULL; // Ссылка на 1-ую константу 
 	int SecondRef = NULL; // Ссылка на 2-ую константу
+
+    ConstantsTableElement(int id, constantType type, string utf8string);
+    ConstantsTableElement(int id, constantType type, int number = NULL, int firstRef = NULL, int secondRef = NULL);
 };
 
 class ConstantsTable
@@ -30,6 +41,12 @@ class ConstantsTable
 public:
     int maxId = 1; // Наибольший номер константы
     map<int, ConstantsTableElement*> items; // Таблица констант
+
+    int findOrAddConstant(constantType type, string utf8string);
+    int findOrAddConstant(constantType type, int number = NULL, int firstRef = NULL, int secondRef = NULL);
+
+private:
+    int findConstant(constantType type, string utf8string=NULL, int number=NULL, int firstRef=NULL, int secondRef=NULL);
 };
 
 // ---------- Таблица функций ----------
@@ -61,6 +78,8 @@ public:
 	MethodsTable* Methods; // Ссылка на соответстующую таблицу методов класса
 	PropertiesTable* Properties; // Ссылка на соответствующую таблицу свойств класса
     ConstantsTable* ConstantTable; // Таблица констант
+
+    ClassesTableElement(string name, int superclassName, bool isImplementation, FieldsTable* fields, MethodsTable* methods, PropertiesTable* properties, ConstantsTable* constantTable);
 };
 
 class ClassesTable
@@ -77,7 +96,7 @@ public:
     int Name = NULL; // Ссылка на константу с именем поля
 	int Descriptor = NULL; // Ссылка на константу с дескриптором поля
     bool IsInstance = NULL; // Флаг, показывающий является ли поле частью экземпляра класса
-    Type Type;
+    Type *Type;
 };
 
 class FieldsTable
@@ -96,9 +115,9 @@ public:
     bool IsClassMethod = NULL; // Флаг, который показывает принадлежность метода к классу, а не объекту
 	Statement_node* BodyStart = NULL; // Ссылка на узел начала тела метода
 	LocalVariablesTable* LocalVariables = NULL; // Ссылка на соотвветсвующую таблицу локальных переменных
-    Type ReturnType; //Тип возвращаемого значепаарния
-    vector<Type> ParamsTypes = NULL; //Тип параметров
-    vector<Type> KeywordsTypes = NULL; //Тип параметров keyword
+    Type *ReturnType; //Тип возвращаемого значепаарния
+    vector<Type> ParamsTypes; //Тип параметров
+    vector<Type> KeywordsTypes; //Тип параметров keyword
 };
 
 class MethodsTable
@@ -115,7 +134,7 @@ public:
     int Name = NULL; // Ссылка на константу с именем свойства
 	int Descriptor = NULL; // Ссылка на константу с дескриптором типа константы
     bool isReadonly = NULL; // Флаг, который показывает, что свойство доступно только для чтения
-    Type Type; // Тип свойства
+    Type *Type; // Тип свойства
 };
 
 class PropertiesTable
@@ -131,7 +150,7 @@ class LocalVariablesTableElement
 public:
 	int Id = NULL; // Номер локальной переменной
 	string Name = NULL; // Имя локальной переменной
-    Type Type; //Тип переменной
+    Type *Type; //Тип переменной
 };
 
 class LocalVariablesTable

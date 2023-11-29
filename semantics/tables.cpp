@@ -198,3 +198,28 @@ Type::Type(type_type dataType, int arrSize)
 	DataType = dataType;
 	ArrSize = arrSize;
 }
+
+// -------------------- FunctionsTableElement --------------------
+
+FunctionsTableElement::FunctionsTableElement(int name, int descriptor, Statement_node* bodyRoot)
+{
+	Name = name;
+	Descriptor = descriptor;
+	BodyRoot = bodyRoot;
+	LocalVariables = new LocalVariablesTable();
+}
+
+// -------------------- FunctionsTable --------------------
+
+void FunctionsTable::addFunction(ConstantsTable *constantTable, string name, string descriptor, Statement_node* bodyRoot)
+{
+	if (items.count(name) != 0)
+	{
+		string msg = "Function '" + name + "' already exists";
+		throw new exception(msg.c_str());
+	}
+	int NameId = constantTable->findOrAddConstant(UTF8, name);
+	int DescriptorId = constantTable->findOrAddConstant(UTF8, descriptor);
+	FunctionsTableElement *function = new FunctionsTableElement(NameId, DescriptorId, bodyRoot);
+	items[name] = function;
+}

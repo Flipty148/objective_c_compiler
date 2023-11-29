@@ -59,12 +59,16 @@ public:
     int Descriptor = NULL; // Ссылка на константу с дескриптором функции
     Statement_node* BodyRoot = NULL; // Ссылка на узел начала тела функции
 	LocalVariablesTable* LocalVariables = NULL; // Ссылка на соответствующую таблицу локальных переменных
+
+    FunctionsTableElement(int name, int descriptor, Statement_node* bodyRoot);
 };
 
 class FunctionsTable
 {
 public:
     map<string, FunctionsTableElement*> items; // Таблица функций, в качестве ключа - Имя функции
+
+    void addFunction(ConstantsTable *constantTable, string name, string descriptor, Statement_node* bodyRoot);
 };
 
 // ---------- Таблица классов ----------

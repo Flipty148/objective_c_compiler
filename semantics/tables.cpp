@@ -148,6 +148,11 @@ PropertiesTableElement::PropertiesTableElement(int name, int descriptor, bool is
 
  void PropertiesTable::addProperty(ConstantsTable *constantTable, string name, string descriptor, bool isReadonly, Type *type)
  {
+	 if (items.count(name) != 0)
+	 {
+		 string msg = "Property '" + name + "' already exists";
+		 throw new exception(msg.c_str());
+	 }
 	 int NameId = constantTable->findOrAddConstant(UTF8, name);
 	 int DescriptorId = constantTable->findOrAddConstant(UTF8, descriptor);
 	 PropertiesTableElement *property = new PropertiesTableElement(NameId, DescriptorId, isReadonly, type);

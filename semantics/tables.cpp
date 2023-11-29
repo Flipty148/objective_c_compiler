@@ -21,6 +21,14 @@ ConstantsTableElement::ConstantsTableElement(int id, constantType type, int numb
 	SecondRef = secondRef;
 }
 
+// -------------------- ConstantsTable --------------------
+
+ConstantsTable::ConstantsTable()
+{
+	items[maxId] = new ConstantsTableElement(maxId, UTF8, "Code");
+	maxId++;
+}
+
 int ConstantsTable::findOrAddConstant(constantType type, string utf8string)
 {
 	int res = findConstant(type, utf8string);
@@ -56,3 +64,87 @@ int ConstantsTable::findConstant(constantType type, string utf8string, int numbe
 	}
 	return -1;
 }
+
+// -------------------- ClassesTableElement --------------------
+
+ClassesTableElement::ClassesTableElement(string name, string superclassName, bool isImplementation)
+{
+	ConstantTable = new ConstantsTable();
+	Fields = new FieldsTable();
+	Methods = new MethodsTable();
+	Properties = new PropertiesTable();
+	Name = ConstantTable->findOrAddConstant(UTF8, name);
+	SuperclassName = ConstantTable->findOrAddConstant(UTF8, superclassName);
+	IsImplementation = isImplementation;
+}
+
+// -------------------- ClassesTable --------------------
+void ClassesTable::addClass(string name, string superclassName, bool isImplementation)
+{
+	ClassesTableElement *element = new ClassesTableElement(name, superclassName, isImplementation);
+	items[name] = element;
+}
+
+// ------------------- FieldsTableElement --------------------
+
+FieldsTableElement::FieldsTableElement(int name, int descriptor, bool isInstance, Type type)
+{
+	Name = name;
+	Descriptor = descriptor;
+	IsInstance = isInstance;
+	this->type = type;
+}
+
+// -------------------- FieldsTable --------------------
+
+void FieldsTable::addField(ConstantsTable *constantTable, string name, string descriptor, bool isInstance, Type type)
+{
+	int NameId = constantTable->findOrAddConstant(UTF8, name);
+	int DescriptorId = constantTable->findOrAddConstant(UTF8, descriptor);
+	FieldsTableElement *field = new FieldsTableElement(NameId, DescriptorId, isInstance, type);
+	items[name] = field;
+}
+
+// -------------------- MethodsTableElement --------------------
+
+MethodsTableElement::MethodsTableElement(int name, int descriptor, bool isClassMethod, Statement_node* bodyStart, Type returnType, vector<Type>* paramsTypes, vector<Type>* keywordsTypes)
+{
+	Name = name;
+	Descriptor = descriptor;
+	IsClassMethod = isClassMethod;
+	BodyStart = bodyStart;
+	ReturnType = returnType;
+	ParamsTypes = paramsTypes;
+	KeywordsTypes = keywordsTypes;
+	LocalVariables = new LocalVariablesTable();
+}
+
+// -------------------- MethodsTable --------------------
+
+void MethodsTable::addMethod(ConstantsTable *constantTable, string name, string descriptor, bool isClassMethod, Statement_node* bodyStart, Type returnType, vector<Type>* paramsTypes, vector<Type>* keywordsTypes)
+{
+	int NameId = constantTable->findOrAddConstant(UTF8, name);
+	int DescriptorId = constantTable->findOrAddConstant(UTF8, descriptor);
+	MethodsTableElement *method = new MethodsTableElement(NameId, DescriptorId, isClassMethod, bodyStart, returnType, paramsTypes, keywordsTypes);
+	items[name] = method;
+}
+
+// -------------------- PropertiesTableElement --------------------
+
+PropertiesTableElement::PropertiesTableElement(int name, int descriptor, bool isReadonly, Type type)
+{
+	Name = name;
+	Descriptor = descriptor;
+	IsReadonly = isReadonly;
+	this->type = type;
+}
+
+// -------------------- PropertiesTable --------------------
+
+ void PropertiesTable::addProperty(ConstantsTable *constantTable, string name, string descriptor, bool isReadonly, Type type)
+ {
+	 int NameId = constantTable->findOrAddConstant(UTF8, name);
+	 int DescriptorId = constantTable->findOrAddConstant(UTF8, descriptor);
+	 PropertiesTableElement *property = new PropertiesTableElement(NameId, DescriptorId, isReadonly, type);
+	 items[name] = property;
+ }

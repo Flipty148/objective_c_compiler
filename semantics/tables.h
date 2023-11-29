@@ -166,6 +166,8 @@ public:
 	int Id = NULL; // Номер локальной переменной
 	string Name = NULL; // Имя локальной переменной
     Type type; //Тип переменной
+
+    LocalVariablesTableElement(int id, string name, Type type);
 };
 
 class LocalVariablesTable
@@ -173,6 +175,8 @@ class LocalVariablesTable
 public:
     int maxId = 0; // Наибольший номер локальной переменной
 	map<string, LocalVariablesTableElement*> items; // Таблица локальных переменных, в качестве ключа - Имя локальной переменной
+
+    int findOrAddLocalVariable(string name, Type type);
 };
 
 // ---------- Типы ----------

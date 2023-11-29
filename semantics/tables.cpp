@@ -148,3 +148,27 @@ PropertiesTableElement::PropertiesTableElement(int name, int descriptor, bool is
 	 PropertiesTableElement *property = new PropertiesTableElement(NameId, DescriptorId, isReadonly, type);
 	 items[name] = property;
  }
+
+ // ------------------- LocalVariablesTableElement --------------------
+
+ LocalVariablesTableElement::LocalVariablesTableElement(int id, string name, Type type)
+ {
+	 Id = id;
+	 Name = name;
+	 this->type = type;
+ }
+
+// -------------------- LocalVariablesTable --------------------
+
+int LocalVariablesTable::findOrAddLocalVariable(string name, Type type)
+{
+	if (items.count(name) == 0)
+	{
+		items[name] = new LocalVariablesTableElement(maxId++, name, type);
+	}
+	else {
+		string msg = "Variable '" + name + "' already exists";
+		throw new exception(msg.c_str());
+	}
+	return items[name]->Id;
+}

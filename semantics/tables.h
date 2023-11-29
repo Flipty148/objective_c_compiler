@@ -17,19 +17,19 @@ enum constantType {
 class ConstantsTableElement
 {
 public:
-    int Id; // Номер константы
-    constantType Type; // Тип константы
-    string Utf8String; // Строка для значения UTF-8 констант
-    int Number; // Число для значения Integer констант
-    int FirstRef; // Ссылка на 1-ую константу 
-	int SecondRef; // Ссылка на 2-ую константу
+    int Id = NULL; // Номер константы
+    constantType Type = NULL; // Тип константы
+    string Utf8String = NULL; // Строка для значения UTF-8 констант
+    int Number = NULL; // Число для значения Integer констант
+    int FirstRef = NULL; // Ссылка на 1-ую константу 
+	int SecondRef = NULL; // Ссылка на 2-ую константу
 };
 
 class ConstantsTable
 {
 public:
-    int maxId; // Наибольший номер константы
-    map<int, ConstantsTableElement> items; // Таблица констант
+    int maxId = 1; // Наибольший номер константы
+    map<int, ConstantsTableElement*> items; // Таблица констант
 };
 
 // ---------- Таблица функций ----------
@@ -37,10 +37,10 @@ public:
 class FunctionsTableElement
 {
 public:
-    int Name; // Ссылка на константу с именем функции
-    int Descriptor; // Ссылка на константу с дескриптором функции
-    Statement_node* BodyRoot; // Ссылка на узел начала тела функции
-	LocalVariablesTable* LocalVariables; // Ссылка на соответствующую таблицу локальных переменных
+    int Name = NULL; // Ссылка на константу с именем функции
+    int Descriptor = NULL; // Ссылка на константу с дескриптором функции
+    Statement_node* BodyRoot = NULL; // Ссылка на узел начала тела функции
+	LocalVariablesTable* LocalVariables = NULL; // Ссылка на соответствующую таблицу локальных переменных
 };
 
 class FunctionsTable
@@ -74,9 +74,9 @@ public:
 class FieldsTableElement
 {
 public:
-    int Name; // Ссылка на константу с именем поля
-	int Descriptor; // Ссылка на константу с дескриптором поля
-    bool IsInstance; // Флаг, показывающий является ли поле частью экземпляра класса
+    int Name = NULL; // Ссылка на константу с именем поля
+	int Descriptor = NULL; // Ссылка на константу с дескриптором поля
+    bool IsInstance = NULL; // Флаг, показывающий является ли поле частью экземпляра класса
     Type Type;
 };
 
@@ -91,14 +91,14 @@ public:
 class MethodsTableElement
 {
 public:
-    int Name; // Ссылка на константу с именем метода
-	int Descriptor; // Ссылка на константу с дескриптором метода (НУЖНО ЛИ НА KEYWORD ИЛИ ИХ НУЖНО ПРЕОБРАЗОВЫВАТЬ К СТАНДАРТНОМУ ДЕСКРИПТОРУ ФУНКЦИИ?)
-    bool IsClassMethod; // Флаг, который показывает принадлежность метода к классу, а не объекту
-	Statement_node* BodyStart; // Ссылка на узел начала тела метода
-	LocalVariablesTable* LocalVariables; // Ссылка на соотвветсвующую таблицу локальных переменных
+    int Name = NULL; // Ссылка на константу с именем метода
+	int Descriptor = NULL; // Ссылка на константу с дескриптором метода (НУЖНО ЛИ НА KEYWORD ИЛИ ИХ НУЖНО ПРЕОБРАЗОВЫВАТЬ К СТАНДАРТНОМУ ДЕСКРИПТОРУ ФУНКЦИИ?)
+    bool IsClassMethod = NULL; // Флаг, который показывает принадлежность метода к классу, а не объекту
+	Statement_node* BodyStart = NULL; // Ссылка на узел начала тела метода
+	LocalVariablesTable* LocalVariables = NULL; // Ссылка на соотвветсвующую таблицу локальных переменных
     Type ReturnType; //Тип возвращаемого значепаарния
-    vector<Type> ParamsTypes; //Тип параметров
-    vector<Type> KeywordsTypes; //Тип параметров keyword
+    vector<Type> ParamsTypes = NULL; //Тип параметров
+    vector<Type> KeywordsTypes = NULL; //Тип параметров keyword
 };
 
 class MethodsTable
@@ -112,9 +112,9 @@ public:
 class PropertiesTableElement
 {
 public:
-    int Name; // Ссылка на константу с именем свойства
-	int Descriptor; // Ссылка на константу с дескриптором типа константы
-    bool isReadonly; // Флаг, который показывает, что свойство доступно только для чтения
+    int Name = NULL; // Ссылка на константу с именем свойства
+	int Descriptor = NULL; // Ссылка на константу с дескриптором типа константы
+    bool isReadonly = NULL; // Флаг, который показывает, что свойство доступно только для чтения
     Type Type; // Тип свойства
 };
 
@@ -129,15 +129,15 @@ public:
 class LocalVariablesTableElement
 {
 public:
-	int Id; // Номер локальной переменной
-	string Name; // Имя локальной переменной
+	int Id = NULL; // Номер локальной переменной
+	string Name = NULL; // Имя локальной переменной
     Type Type; //Тип переменной
 };
 
 class LocalVariablesTable
 {
 public:
-    int maxId; // Наибольший номер локальной переменной
+    int maxId = 0; // Наибольший номер локальной переменной
 	map<string, LocalVariablesTableElement*> items; // Таблица локальных переменных, в качестве ключа - Имя локальной переменной
 };
 

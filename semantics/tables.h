@@ -99,9 +99,9 @@ public:
     int Name = NULL; // Ссылка на константу с именем поля
 	int Descriptor = NULL; // Ссылка на константу с дескриптором поля
     bool IsInstance = NULL; // Флаг, показывающий является ли поле частью экземпляра класса
-    Type type;
+    Type *type;
 
-    FieldsTableElement(int name, int descriptor, bool isInstance, Type type);
+    FieldsTableElement(int name, int descriptor, bool isInstance, Type *type);
 };
 
 class FieldsTable
@@ -109,7 +109,7 @@ class FieldsTable
 public:
     map < string, FieldsTableElement*> items; //Таблица полей класса, в качестве ключа - Имя поля класса
 
-    void addField(ConstantsTable *constantTable, string name, string descriptor, bool isInstance, Type type);
+    void addField(ConstantsTable *constantTable, string name, string descriptor, bool isInstance, Type *type);
 };
 
 // ---------- Таблица методов ----------
@@ -122,11 +122,11 @@ public:
     bool IsClassMethod = NULL; // Флаг, который показывает принадлежность метода к классу, а не объекту
 	Statement_node* BodyStart = NULL; // Ссылка на узел начала тела метода
 	LocalVariablesTable* LocalVariables = NULL; // Ссылка на соотвветсвующую таблицу локальных переменных
-    Type ReturnType; //Тип возвращаемого значепаарния
+    Type *ReturnType; //Тип возвращаемого значепаарния
     vector<Type> *ParamsTypes = NULL; //Тип параметров
     vector<Type> *KeywordsTypes = NULL; //Тип параметров keyword
 
-    MethodsTableElement(int name, int descriptor, bool isClassMethod, Statement_node* bodyStart, Type returnType, vector<Type>* paramsTypes, vector<Type>* keywordsTypes);
+    MethodsTableElement(int name, int descriptor, bool isClassMethod, Statement_node* bodyStart, Type *returnType, vector<Type>* paramsTypes, vector<Type>* keywordsTypes);
 };
 
 class MethodsTable
@@ -134,7 +134,7 @@ class MethodsTable
 public:
 	map< string, MethodsTableElement* > items; //Таблица методов класса, в качестве ключа - Имя метода класса
 
-    void addMethod(ConstantsTable *constantTable, string name, string descriptor, bool isClassMethod, Statement_node* bodyStart, Type returnType, vector<Type>* paramsTypes, vector<Type>* keywordsTypes);
+    void addMethod(ConstantsTable *constantTable, string name, string descriptor, bool isClassMethod, Statement_node* bodyStart, Type *returnType, vector<Type>* paramsTypes, vector<Type>* keywordsTypes);
 };
 
 // ----------- Таблица свойств ----------
@@ -145,9 +145,9 @@ public:
     int Name = NULL; // Ссылка на константу с именем свойства
 	int Descriptor = NULL; // Ссылка на константу с дескриптором типа константы
     bool IsReadonly = NULL; // Флаг, который показывает, что свойство доступно только для чтения
-    Type type; // Тип свойства
+    Type *type; // Тип свойства
 
-    PropertiesTableElement(int name, int descriptor, bool isReadonly, Type type);
+    PropertiesTableElement(int name, int descriptor, bool isReadonly, Type *type);
 };
 
 class PropertiesTable
@@ -155,7 +155,7 @@ class PropertiesTable
 public:
 	map<string, PropertiesTableElement*> items; // Таблица  свойств класса, в качестве ключа - Имя свойства класса
 
-    void addProperty(ConstantsTable *constantTable, string name, string descriptor, bool isReadonly, Type type);
+    void addProperty(ConstantsTable *constantTable, string name, string descriptor, bool isReadonly, Type *type);
 };
 
 // ---------- Таблица локальных переменных ----------
@@ -165,9 +165,9 @@ class LocalVariablesTableElement
 public:
 	int Id = NULL; // Номер локальной переменной
 	string Name = NULL; // Имя локальной переменной
-    Type type; //Тип переменной
+    Type *type; //Тип переменной
 
-    LocalVariablesTableElement(int id, string name, Type type);
+    LocalVariablesTableElement(int id, string name, Type *type);
 };
 
 class LocalVariablesTable
@@ -176,7 +176,7 @@ public:
     int maxId = 0; // Наибольший номер локальной переменной
 	map<string, LocalVariablesTableElement*> items; // Таблица локальных переменных, в качестве ключа - Имя локальной переменной
 
-    int findOrAddLocalVariable(string name, Type type);
+    int findOrAddLocalVariable(string name, Type *type);
 };
 
 // ---------- Типы ----------
@@ -186,4 +186,9 @@ public:
     type_type DataType; // Тип данных
     string ClassName; //Имя класса
     int ArrSize; // Размер массива
+
+    Type(type_type dataType, string className, int arrSize);
+    Type(type_type dataType, string className);
+    Type(type_type dataType);
+    Type(type_type dataType, int arrSize);
 };

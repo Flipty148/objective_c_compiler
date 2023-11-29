@@ -87,7 +87,7 @@ void ClassesTable::addClass(string name, string superclassName, bool isImplement
 
 // ------------------- FieldsTableElement --------------------
 
-FieldsTableElement::FieldsTableElement(int name, int descriptor, bool isInstance, Type type)
+FieldsTableElement::FieldsTableElement(int name, int descriptor, bool isInstance, Type *type)
 {
 	Name = name;
 	Descriptor = descriptor;
@@ -97,7 +97,7 @@ FieldsTableElement::FieldsTableElement(int name, int descriptor, bool isInstance
 
 // -------------------- FieldsTable --------------------
 
-void FieldsTable::addField(ConstantsTable *constantTable, string name, string descriptor, bool isInstance, Type type)
+void FieldsTable::addField(ConstantsTable *constantTable, string name, string descriptor, bool isInstance, Type *type)
 {
 	int NameId = constantTable->findOrAddConstant(UTF8, name);
 	int DescriptorId = constantTable->findOrAddConstant(UTF8, descriptor);
@@ -107,7 +107,7 @@ void FieldsTable::addField(ConstantsTable *constantTable, string name, string de
 
 // -------------------- MethodsTableElement --------------------
 
-MethodsTableElement::MethodsTableElement(int name, int descriptor, bool isClassMethod, Statement_node* bodyStart, Type returnType, vector<Type>* paramsTypes, vector<Type>* keywordsTypes)
+MethodsTableElement::MethodsTableElement(int name, int descriptor, bool isClassMethod, Statement_node* bodyStart, Type *returnType, vector<Type>* paramsTypes, vector<Type>* keywordsTypes)
 {
 	Name = name;
 	Descriptor = descriptor;
@@ -121,7 +121,7 @@ MethodsTableElement::MethodsTableElement(int name, int descriptor, bool isClassM
 
 // -------------------- MethodsTable --------------------
 
-void MethodsTable::addMethod(ConstantsTable *constantTable, string name, string descriptor, bool isClassMethod, Statement_node* bodyStart, Type returnType, vector<Type>* paramsTypes, vector<Type>* keywordsTypes)
+void MethodsTable::addMethod(ConstantsTable *constantTable, string name, string descriptor, bool isClassMethod, Statement_node* bodyStart, Type *returnType, vector<Type>* paramsTypes, vector<Type>* keywordsTypes)
 {
 	int NameId = constantTable->findOrAddConstant(UTF8, name);
 	int DescriptorId = constantTable->findOrAddConstant(UTF8, descriptor);
@@ -131,7 +131,7 @@ void MethodsTable::addMethod(ConstantsTable *constantTable, string name, string 
 
 // -------------------- PropertiesTableElement --------------------
 
-PropertiesTableElement::PropertiesTableElement(int name, int descriptor, bool isReadonly, Type type)
+PropertiesTableElement::PropertiesTableElement(int name, int descriptor, bool isReadonly, Type *type)
 {
 	Name = name;
 	Descriptor = descriptor;
@@ -141,7 +141,7 @@ PropertiesTableElement::PropertiesTableElement(int name, int descriptor, bool is
 
 // -------------------- PropertiesTable --------------------
 
- void PropertiesTable::addProperty(ConstantsTable *constantTable, string name, string descriptor, bool isReadonly, Type type)
+ void PropertiesTable::addProperty(ConstantsTable *constantTable, string name, string descriptor, bool isReadonly, Type *type)
  {
 	 int NameId = constantTable->findOrAddConstant(UTF8, name);
 	 int DescriptorId = constantTable->findOrAddConstant(UTF8, descriptor);
@@ -151,7 +151,7 @@ PropertiesTableElement::PropertiesTableElement(int name, int descriptor, bool is
 
  // ------------------- LocalVariablesTableElement --------------------
 
- LocalVariablesTableElement::LocalVariablesTableElement(int id, string name, Type type)
+ LocalVariablesTableElement::LocalVariablesTableElement(int id, string name, Type *type)
  {
 	 Id = id;
 	 Name = name;
@@ -160,7 +160,7 @@ PropertiesTableElement::PropertiesTableElement(int name, int descriptor, bool is
 
 // -------------------- LocalVariablesTable --------------------
 
-int LocalVariablesTable::findOrAddLocalVariable(string name, Type type)
+int LocalVariablesTable::findOrAddLocalVariable(string name, Type *type)
 {
 	if (items.count(name) == 0)
 	{
@@ -171,4 +171,30 @@ int LocalVariablesTable::findOrAddLocalVariable(string name, Type type)
 		throw new exception(msg.c_str());
 	}
 	return items[name]->Id;
+}
+
+// -------------------- Type --------------------
+
+Type::Type(type_type dataType, string className, int arrSize)
+{
+	DataType = dataType;
+	ClassName = className;
+	ArrSize = arrSize;
+}
+
+Type::Type(type_type dataType, string className)
+{
+	DataType = dataType;
+	ClassName = className;
+}
+
+Type::Type(type_type dataType)
+{
+	DataType = dataType;
+}
+
+Type::Type(type_type dataType, int arrSize)
+{
+	DataType = dataType;
+	ArrSize = arrSize;
 }

@@ -8,7 +8,7 @@ ConstantsTableElement::ConstantsTableElement(int id, constantType type, string u
 {
 	Id = id;
 	Type = type;
-	Utf8String = utf8string;
+	Utf8String = new string(utf8string);
 }
 
 
@@ -31,7 +31,7 @@ ConstantsTable::ConstantsTable()
 
 int ConstantsTable::findOrAddConstant(constantType type, string utf8string)
 {
-	int res = findConstant(type, utf8string);
+	int res = findConstant(type, &utf8string);
 	if (res == -1)
 	{
 		res = maxId++;
@@ -51,7 +51,7 @@ int ConstantsTable::findOrAddConstant(constantType type, int number, int firstRe
 	return res;
 }
 
-int ConstantsTable::findConstant(constantType type, string utf8string, int number, int firstRef, int secondRef)
+int ConstantsTable::findConstant(constantType type, string *utf8string, int number, int firstRef, int secondRef)
 {
 	auto iter = items.cbegin();
 	while (iter != items.cend())
@@ -75,16 +75,23 @@ ClassesTableElement::ClassesTableElement(string name, string superclassName, boo
 	Properties = new PropertiesTable();
 	Name = ConstantTable->findOrAddConstant(UTF8, name);
 	SuperclassName = ConstantTable->findOrAddConstant(UTF8, superclassName);
-	ThisClass = ConstantTable->findOrAddConstant(Class, Name);
-	Superclass = ConstantTable->findOrAddConstant(Class, SuperclassName);
-	IsImplementation = isImplementation
+	ThisClass = ConstantTable->findOrAddConstant(Class, NULL, Name);
+	Superclass = ConstantTable->findOrAddConstant(Class, NULL, SuperclassName);
+	IsImplementation = isImplementation;
 }
 
 // -------------------- ClassesTable --------------------
+map<string, ClassesTableElement*> ClassesTable::items;
+
 void ClassesTable::addClass(string name, string superclassName, bool isImplementation)
 {
-	ClassesTableElement *element = new ClassesTableElement(name, superclassName, isImplementation);
-	items[name] = element;
+	//TODO: check if class already exists
+	//TODO: check superclass name is RTL
+	ClassesTableElement *element = new ClassesTableElement("global/" + name, "global/" + superclassName, isImplementation);
+	if (isImplementation)
+		items[name + ".implementation"] = element;
+	else
+		items[name + ".interface"] = element;
 }
 
 // ------------------- FieldsTableElement --------------------

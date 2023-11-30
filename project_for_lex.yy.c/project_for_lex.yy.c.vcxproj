@@ -132,10 +132,12 @@
     <ClCompile Include="bison_rules_with_code_tab.cpp" />
     <ClCompile Include="classes_nodes.cpp" />
     <ClCompile Include="lex.yy.cpp" />
+    <ClCompile Include="tables.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bison_rules_with_code_tab.h" />
     <ClInclude Include="classes_nodes.h" />
+    <ClInclude Include="tables.h" />
     <ClInclude Include="unistd.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

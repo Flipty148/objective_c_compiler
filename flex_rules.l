@@ -303,4 +303,6 @@ int main(int argc, char* argv[])
     ofstream out("dot.dot");
     out << res;
     out.close();
+    
+    root->fillClassesTable();
 }

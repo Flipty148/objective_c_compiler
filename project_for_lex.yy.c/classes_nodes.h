@@ -849,6 +849,7 @@ class Program_node
         static Program_node* createProgramNode(Function_and_class_list_node *list);
         
         string toDot();
+		void fillClassesTable();
 };
 
 // ---------- function_and_class_list ----------
@@ -873,6 +874,7 @@ class Function_and_class_list_node
         static Function_and_class_list_node* addToFunctionAndClassListNodeFromClassDeclarationList(Function_and_class_list_node *list, Class_declaration_list_node *classDeclarationList);
 
         string toDot();
+        void fillTables();
 };
 
 // ---------- function ----------

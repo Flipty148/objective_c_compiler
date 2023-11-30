@@ -1,4 +1,4 @@
-#include "classes_nodes.h"
+#include "tables.h"
 #include <string>
 using namespace std;
 long maxId = 0; // Глобальный id узла
@@ -2410,6 +2410,11 @@ string Program_node::toDot()
     return res;
 }
 
+void Program_node::fillClassesTable()
+{
+	list->fillTables();
+}
+
 // ---------- Function_and_class_list_node ----------
 
 string Function_and_class_list_node::toDot()
@@ -2429,6 +2434,31 @@ string Function_and_class_list_node::toDot()
     }
 
     return res;
+}
+
+void Function_and_class_list_node::fillTables()
+{
+    for (int i = 0; i < FunctionsAndClasses->size(); i++)
+    { //Для каждого элемента в списке
+        if (FunctionsAndClasses->at(i).class_block != NULL)
+		{ //Если элемент - класс
+            Class_block_node* cur = FunctionsAndClasses->at(i).class_block;
+            if (cur->type == IMPLEMENTATION_CLASS_BLOCK_TYPE)
+            { // Реализация
+                Class_implementation_node* curImplementation = (Class_implementation_node*)cur;
+				string className = curImplementation->ClassName; // Имя сласса
+				string superclassName = curImplementation->SuperclassName; // Имя суперкласса
+				ClassesTable::addClass(className, superclassName, true); // Добавление класса в таблицу
+            }
+            else if (cur->type == INTERFACE_CLASS_BLOCK_TYPE)
+            { // Интерфейс
+                Class_interface_node* curInterface = (Class_interface_node*)cur;
+				string className = curInterface->ClassName; // Имя класса
+				string superclassName = curInterface->SuperclassName; // Имя суперкласса
+				ClassesTable::addClass(className, superclassName, false); // Добавление класса в таблицу
+            }
+        }
+    }
 }
 
 // ---------- Function_node ----------

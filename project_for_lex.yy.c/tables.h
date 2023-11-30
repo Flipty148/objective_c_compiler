@@ -27,7 +27,7 @@ class ConstantsTableElement
 public:
     int Id = NULL; // Номер константы
     constantType Type; // Тип константы
-    string Utf8String = NULL; // Строка для значения UTF-8 констант
+    string *Utf8String = NULL; // Строка для значения UTF-8 констант
     int Number = NULL; // Число для значения Integer констант
     int FirstRef = NULL; // Ссылка на 1-ую константу 
 	int SecondRef = NULL; // Ссылка на 2-ую константу
@@ -47,7 +47,7 @@ public:
 
     ConstantsTable();
 private:
-    int findConstant(constantType type, string utf8string=NULL, int number=NULL, int firstRef=NULL, int secondRef=NULL);
+    int findConstant(constantType type, string *utf8string, int number=NULL, int firstRef=NULL, int secondRef=NULL);
 };
 
 // ---------- Таблица функций ----------
@@ -92,9 +92,9 @@ public:
 class ClassesTable
 {
 public:
-    map<string, ClassesTableElement*> items; // Таблица классов, в качестве ключа - Имя класса
+    static map<string, ClassesTableElement*> items; // Таблица классов, в качестве ключа - Имя класса
 
-    void addClass(string name, string superclassName, bool isImplementation);
+    static void addClass(string name, string superclassName, bool isImplementation);
 };
 
 // ---------- Таблица полей класса ----------

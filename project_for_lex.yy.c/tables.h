@@ -82,7 +82,8 @@ public:
 	int ThisClass; // Ссылка на константу текущего класса
 	int Superclass; // Ссылка на константу родительского класса
 	FieldsTable* Fields; // Ссылка на соответствующую таблицу полей класса
-	MethodsTable* Methods; // Ссылка на соответстующую таблицу методов класса
+	MethodsTable* StaticMethods; // Ссылка на соответстующую таблицу методов класса
+	MethodsTable* DynamicMethods; // Ссылка на соответстующую таблицу методов класса
 	PropertiesTable* Properties; // Ссылка на соответствующую таблицу свойств класса
     ConstantsTable* ConstantTable; // Таблица констант
 

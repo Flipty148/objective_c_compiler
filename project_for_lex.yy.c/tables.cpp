@@ -71,7 +71,8 @@ ClassesTableElement::ClassesTableElement(string name, string superclassName, boo
 {
 	ConstantTable = new ConstantsTable();
 	Fields = new FieldsTable();
-	Methods = new MethodsTable();
+	StaticMethods = new MethodsTable();
+	DynamicMethods = new MethodsTable();
 	Properties = new PropertiesTable();
 	Name = ConstantTable->findOrAddConstant(UTF8, name);
 	SuperclassName = ConstantTable->findOrAddConstant(UTF8, superclassName);

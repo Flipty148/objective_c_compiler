@@ -85,13 +85,19 @@ map<string, ClassesTableElement*> ClassesTable::items;
 
 void ClassesTable::addClass(string name, string superclassName, bool isImplementation)
 {
-	//TODO: check if class already exists
 	//TODO: check superclass name is RTL
+	//TODO: Добавить проверку на наличие реализации метода
 	ClassesTableElement *element = new ClassesTableElement("global/" + name, "global/" + superclassName, isImplementation);
-	if (isImplementation)
-		items[name + ".implementation"] = element;
+	if (!isImplementation && items.count("global/" + name) && items["global/" + name]->IsImplementation) {
+		string msg = "Class interface'" + name + "' after implementation";
+		throw std::exception(msg.c_str());
+	}
+	else if (items.count("global/" + name) && items["global/" + name]->IsImplementation == isImplementation) {
+		string msg = "Rediifnition of class '" + name + "'";
+		throw std::exception(msg.c_str());
+	}
 	else
-		items[name + ".interface"] = element;
+		items["global/" + name] = element;
 }
 
 // ------------------- FieldsTableElement --------------------

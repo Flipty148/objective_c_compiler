@@ -20,4 +20,26 @@ public class Program {
     public static void print(Object o) {
         System.out.print(o);
     }
+
+    //---------- Read Methods ----------
+    /**
+     * Считывает строку с консоли
+     * */
+    public static String read() {
+        return  System.console().readLine();
+    }
+
+    /**
+     * Считывает целое число с консоли
+     * */
+    public static int readInt() {
+        return  Integer.parseInt(read());
+    }
+
+    /**
+     * Считывает символ с консоли
+     * */
+    public static char readChar() {
+        return  read().charAt(0);
+    }
 }

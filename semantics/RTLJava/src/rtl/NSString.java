@@ -22,7 +22,7 @@ public class NSString extends  NSObject {
 
     /**
      * Создание строки на основе строки c. <br/>
-     * + (id)stringWithCString
+     * + (id)stringWithCString: (const char *)byteString
      * */
 
     public static NSString stringWithCStringStatic(char[] s) {
@@ -31,7 +31,7 @@ public class NSString extends  NSObject {
 
     /**
      * Создание строки на основе другой строки. <br/>
-     * + (id)stringWithString
+     * + (id)stringWithString: (NSString *)aString
      * */
     public static NSString stringWithStringStatic(NSString s) {
         return new NSString(s);
@@ -68,7 +68,7 @@ public class NSString extends  NSObject {
 
     /**
      * Возвращает символ по индексу. <br/>
-     * - (unichar)characterAtIndex
+     * - (unichar)characterAtIndex: (NSUInteger)index
      * */
     public char characterAtIndex(int index) {
         return string.charAt(index);
@@ -76,7 +76,7 @@ public class NSString extends  NSObject {
 
     /**
      * Возвращает результат проверки того, что строка начинается с prefix. <br/>
-     * - (BOOL)hasPrefix
+     * - (BOOL)hasPrefix: (NSString *)aString
      * */
     public boolean hasPrefix(NSString prefix) {
         return string.startsWith(prefix.string);
@@ -84,7 +84,7 @@ public class NSString extends  NSObject {
 
     /**
      * Возвращает результат проверки того, что строка заканчивается на suffix. <br/>
-     * - (BOOL)hasSuffix
+     * - (BOOL)hasSuffix: (NSString *)aString
      * */
     public boolean hasSuffix(NSString suffix) {
         return string.endsWith(suffix.string);
@@ -105,7 +105,7 @@ public class NSString extends  NSObject {
 
     /**
      * Возвращает равенство строк. <br/>
-     * - (BOOL)isEqual
+     * - (BOOL)isEqual: (id)anObject
      * */
     public boolean isEqual(NSObject other) {
         if (!(other instanceof NSString)) return false;
@@ -120,9 +120,9 @@ public class NSString extends  NSObject {
 
     /**
      * Возвращает равенство строк. <br/>
-     * - (BOOL)isEqualString
+     * - (BOOL)isEqualToString: (NSString *)aString
      * */
-    public boolean isEqualString(NSString other) {
+    public boolean isEqualToString(NSString other) {
         return string.equals(other.string);
     }
 
@@ -153,7 +153,7 @@ public class NSString extends  NSObject {
 
     /**
      * Возвращает новую строку с добавлением другой строки. <br/>
-     * - (NSString *)stringByAppendingString
+     * - (NSString *)stringByAppendingString: (NSString *)aString
      * */
     public NSString stringByAppendingString(NSString other) {
         return new NSString(string + other.string);

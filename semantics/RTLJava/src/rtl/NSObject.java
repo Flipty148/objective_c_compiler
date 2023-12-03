@@ -44,7 +44,8 @@ public class NSObject {
     }
 
     /**
-     * Проверяет является ли класс самим классом или его подклассом
+     * Проверяет является ли класс самим классом или его подклассом. <br/>
+     * - (BOOL)isSubclassOfClass: (Class)aClass
      * @param aClass Класс
      * @return Является ли класс самим классом или его подклассом
      */
@@ -53,7 +54,8 @@ public class NSObject {
     }
 
     /**
-     * Возвращает имя класса
+     * Возвращает имя класса. <br/>
+     * - (NSString *)className
      * @return Имя класса
      * //TODO заменить на NSString
      */
@@ -62,7 +64,8 @@ public class NSObject {
     }
 
     /**
-     * Возвращает суперкласс
+     * Возвращает суперкласс. <br/>
+     * - (Class *)superclass
      * @return суперкласс
      */
     public Class<?> superclass() {

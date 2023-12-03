@@ -159,5 +159,8 @@ public class NSString extends  NSObject {
         return new NSString(string + other.string);
     }
 
+    public NSString description() {
+        return new NSString(string);
+    }
 
 }

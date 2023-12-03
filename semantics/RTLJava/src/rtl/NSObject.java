@@ -68,5 +68,24 @@ public class NSObject {
     public Class<?> superclass() {
         return getclass().getSuperclass();
     }
+
+    /**
+     * Возвращает описание. <br/>
+     * - (NSString *)description
+     * @return описание
+     */
+    public NSString description() {
+        return NSString.stringWithCStringStatic("nsobject implementation".toCharArray());
+    }
+
+    /**
+     * Проверяет равен ли объект другому. <br/>
+     * - (BOOL)isEqual: (id)object
+     * @param object Объект
+     * @return Равен ли объект другому
+     */
+    public boolean isEqual(NSObject object) {
+        return this == object;
+    }
 }
 

@@ -62,12 +62,15 @@ class FunctionsTableElement
 public:
     int Name = NULL; // Ссылка на константу с именем функции
     int Descriptor = NULL; // Ссылка на константу с дескриптором функции
-    Statement_node* BodyRoot = NULL; // Ссылка на узел начала тела функции
+    Statement_node* BodyStart = NULL; // Ссылка на узел начала тела функции
 	LocalVariablesTable* LocalVariables = NULL; // Ссылка на соответствующую таблицу локальных переменных
+	string NameStr; // Имя функции
+	string DescriptorStr; // Дескриптор функции
 
-    FunctionsTableElement(int name, int descriptor, Statement_node* bodyRoot);
+    FunctionsTableElement(int name, int descriptor, Statement_node* bodyStart, string nameStr, string descriptorStr);
 
-	string toCsvString(char separator = ';'); //Преобразование в строку формата CSV
+	string toCsvString(string funcName, char separator = ';'); //Преобразование в строку формата CSV
+	void refTablesToCsvFile(string filename, string filepath, char separator = ';');
 };
 
 class FunctionsTable
@@ -75,9 +78,9 @@ class FunctionsTable
 public:
     map<string, FunctionsTableElement*> items; // Таблица функций, в качестве ключа - Имя функции
 
-    void addFunction(ConstantsTable *constantTable, string name, string descriptor, Statement_node* bodyRoot);
+    void addFunction(ConstantsTable *constantTable, string name, string descriptor, Statement_node* bodyStart);
 
-	void toCsvFile(string filename, char separator = ';'); //Преобразование в CSV-файл
+	void toCsvFile(string filename, string filepath, char separator = ';'); //Преобразование в CSV-файл
 };
 
 // ---------- Таблица классов ----------

@@ -153,7 +153,7 @@ string ClassesTableElement::toCsvString(char separator)
 	string res = "";
 	res += to_string(Name) + '(' + *ConstantTable->getConstant(Name)->Utf8String + ')' + separator;
 	res += to_string(SuperclassName) + '(' + *ConstantTable->getConstant(SuperclassName)->Utf8String + ')' + separator;
-	res += to_string(IsImplementation) + separator;
+	res += (IsImplementation ? "true" : "false") + separator;
 	res += to_string(ThisClass) + separator;
 	res += to_string(Superclass) + separator;
 	res += *ConstantTable->getConstant(Name)->Utf8String + "_FieldsTable.csv" + separator;

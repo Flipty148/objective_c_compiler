@@ -229,7 +229,7 @@ class Type
 public:
     type_type DataType; // Тип данных
     string ClassName; //Имя класса
-    int ArrSize; // Размер массива
+    int ArrSize = -1; // Размер массива
 
     Type(type_type dataType, string className, int arrSize);
     Type(type_type dataType, string className);

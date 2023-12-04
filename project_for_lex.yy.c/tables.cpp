@@ -489,6 +489,43 @@ Type::Type(type_type dataType, int arrSize)
 	ArrSize = arrSize;
 }
 
+string Type::toString()
+{
+	string res = "";
+
+	// Формирование строки с типом
+	switch (DataType)
+	{
+	case INT_TYPE:
+		res += "int";
+		break;
+	case CHAR_TYPE:
+		res += "char";
+		break;
+	case FLOAT_TYPE:
+		res += "float";
+		break;
+	case ID_TYPE:
+		res += "id";
+		break;
+	case CLASS_NAME_TYPE:
+		res += ClassName;
+		break;
+	case VOID_TYPE:
+		res += "void";
+		break;
+	default:
+		break;
+	}
+
+	// Формирование строки с учетом массива
+	if (ArrSize != -1)
+	{
+		res += "[" + to_string(ArrSize) + "]";
+	}
+	return res;
+}
+
 // -------------------- FunctionsTableElement --------------------
 
 FunctionsTableElement::FunctionsTableElement(int name, int descriptor, Statement_node* bodyRoot)

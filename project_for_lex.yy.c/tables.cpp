@@ -1,5 +1,7 @@
 #include "tables.h"
 #include <iostream>
+#include <fstream>
+#include <string>
 using namespace std;
 
 // -------------------- ConstantsTableElement --------------------
@@ -19,6 +21,52 @@ ConstantsTableElement::ConstantsTableElement(int id, constantType type, int numb
 	Number = number;
 	FirstRef = firstRef;
 	SecondRef = secondRef;
+}
+
+string ConstantsTableElement::toCsvString(char separator = ';')
+{
+	string res = "";
+	res += to_string(Id) + separator; // Добавление ID
+
+	// Добавление типа и значения
+	switch (Type)
+	{
+	case constantType::UTF8:
+		res += "UTF8" + separator;
+		res += *Utf8String;
+		break;
+	case constantType::Integer:
+		res += "Integer" + separator;
+		res += to_string(Number);
+		break;
+	case constantType::String:
+		res += "String" + separator;
+		res += to_string(FirstRef);
+		break;
+	case constantType::Class:
+		res += "Class" + separator;
+		res += to_string(FirstRef);
+		break;
+	case constantType::NameAndType:
+		res += "NameAndType" + separator;
+		res += to_string(FirstRef) + ", ";
+		res += to_string(SecondRef);
+		break;
+	case constantType::FieldRef:
+		res += "FieldRef" + separator;
+		res += to_string(FirstRef) + ", ";
+		res += to_string(SecondRef);
+		break;
+	case constantType::MethodRef:
+		res += "MethodRef" + separator;
+		res += to_string(FirstRef) + ", ";
+		res += to_string(SecondRef);
+		break;
+	default:
+		break;
+	}
+
+	return res;
 }
 
 // -------------------- ConstantsTable --------------------
@@ -65,14 +113,28 @@ int ConstantsTable::findConstant(constantType type, string *utf8string, int numb
 	return -1;
 }
 
+void ConstantsTable::toCsvFile(string filename, char separator = ';')
+{
+	ofstream out(filename); //Созданте и открытие потока на запись в файл
+	out << "ID" << separator << "Type" << separator << "Value" << endl; // Запись заголовка
+	auto iter = items.cbegin(); // Итератор
+	while (iter != items.cend()) 
+	{
+
+		string str = iter->second->toCsvString(separator); // Получение строки
+		out << str << endl; //Запись строки
+		++iter;
+	}
+	out.close(); // Закрытие потока для записи
+}
+
 // -------------------- ClassesTableElement --------------------
 
 ClassesTableElement::ClassesTableElement(string name, string superclassName, bool isImplementation)
 {
 	ConstantTable = new ConstantsTable();
 	Fields = new FieldsTable();
-	StaticMethods = new MethodsTable();
-	DynamicMethods = new MethodsTable();
+	Methods = new MethodsTable();
 	Properties = new PropertiesTable();
 	Name = ConstantTable->findOrAddConstant(UTF8, name);
 	SuperclassName = ConstantTable->findOrAddConstant(UTF8, superclassName);

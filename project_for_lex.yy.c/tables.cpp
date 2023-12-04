@@ -237,7 +237,7 @@ FieldsTableElement::FieldsTableElement(int name, int descriptor, bool isInstance
 	DescriptorStr = descriptorStr;
 }
 
-string FieldsTableElement::toCsvString(char separator = ';')
+string FieldsTableElement::toCsvString(char separator)
 {
 	string res = "";
 	res += to_string(Name) + " (" + NameStr + ")" + separator; //Добавление имени
@@ -257,7 +257,7 @@ void FieldsTable::addField(ConstantsTable *constantTable, string name, string de
 	items[name] = field;
 }
 
-void FieldsTable::toCsvFile(string filename, string filepath, char separator = ';')
+void FieldsTable::toCsvFile(string filename, string filepath, char separator)
 {
 	ofstream out(filepath + filename); //Создание и открытие потока на запись в файл
 	out << "Name" << separator << "Descriptor" << separator << "IsInstance" << separator << "Type" << endl; // Запись заголовков
@@ -287,7 +287,7 @@ MethodsTableElement::MethodsTableElement(int name, int descriptor, bool isClassM
 	DescriptorStr = descriptorStr;
 }
 
-string MethodsTableElement::toCsvString(string methodName, char separator = ';')
+string MethodsTableElement::toCsvString(string methodName, char separator)
 {
 	string res = "";
 	res += to_string(Name) + " (" + NameStr + ")" + separator; //Добавление имени
@@ -328,7 +328,7 @@ string MethodsTableElement::toCsvString(string methodName, char separator = ';')
 	return res;
 }
 
-void MethodsTableElement::refTablesToCsvFile(string methodName, string filepath, char separator = ';')
+void MethodsTableElement::refTablesToCsvFile(string methodName, string filepath, char separator)
 {
 	if (LocalVariables->items.size() > 0)
 		LocalVariables->toCsvFile(methodName + "_LocalVariablesTable.csv", filepath, separator);
@@ -349,7 +349,7 @@ void MethodsTable::addMethod(ConstantsTable *constantTable, string name, string 
 	items[name] = method;
 }
 
-void MethodsTable::toCsvFile(string filename, string filepath, char separator = ';')
+void MethodsTable::toCsvFile(string filename, string filepath, char separator)
 {
 	ofstream out(filepath + filename); //Создание и открытие потока на запись в файл
 	out << "Name" << separator << "Descriptor" << separator << "IsClassMethod" << separator << "ReturnType" << separator << "ParamsTypes" << separator << "KeywordsTypes" << "BodyStartStatementId" << "LocalVariablesTableName" << endl; // Запись заголовков
@@ -367,12 +367,24 @@ void MethodsTable::toCsvFile(string filename, string filepath, char separator = 
 
 // -------------------- PropertiesTableElement --------------------
 
-PropertiesTableElement::PropertiesTableElement(int name, int descriptor, bool isReadonly, Type *type)
+PropertiesTableElement::PropertiesTableElement(int name, int descriptor, bool isReadonly, Type *type, string nameStr, string descriptorStr)
 {
 	Name = name;
 	Descriptor = descriptor;
 	IsReadonly = isReadonly;
 	this->type = type;
+	NameStr = nameStr;
+	DescriptorStr = descriptorStr;
+}
+
+string PropertiesTableElement::toCsvString(char separator)
+{
+	string res = "";
+	res += to_string(Name) + " (" + NameStr + ")" + separator; //Добавление имени
+	res += to_string(Descriptor) + " (" + DescriptorStr + ")" + separator; //Добавление дескриптора
+	res += (IsReadonly ? "true" : "false") + separator; //Добавление флага, который показывает принадлежность свойства к экземпляру
+	res += type->toString() + separator; //Добавление типа
+	return res;
 }
 
 // -------------------- PropertiesTable --------------------
@@ -386,8 +398,22 @@ PropertiesTableElement::PropertiesTableElement(int name, int descriptor, bool is
 	 }
 	 int NameId = constantTable->findOrAddConstant(UTF8, name);
 	 int DescriptorId = constantTable->findOrAddConstant(UTF8, descriptor);
-	 PropertiesTableElement *property = new PropertiesTableElement(NameId, DescriptorId, isReadonly, type);
+	 PropertiesTableElement *property = new PropertiesTableElement(NameId, DescriptorId, isReadonly, type, name, descriptor);
 	 items[name] = property;
+ }
+
+ void PropertiesTable::toCsvFile(string filename, string filepath, char separator)
+ {
+	 ofstream out(filepath + filename); //Создание и открытие потока на запись в файл
+	 out << "Name" << separator << "Descriptor" << separator << "IsReadonly" << separator << "Type" << endl; // Запись заголовков
+	 auto iter = items.cbegin();
+	 while (iter != items.cend())
+	 {
+		 string str = iter->second->toCsvString(separator); // Формирование строки
+		 out << str << endl; //Запись строки в файл
+		 ++iter;
+	 }
+	 out.close(); // Закрытие потока
  }
 
  // ------------------- LocalVariablesTableElement --------------------

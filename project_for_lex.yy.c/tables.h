@@ -180,8 +180,10 @@ public:
 	int Descriptor = NULL; // Ссылка на константу с дескриптором типа константы
     bool IsReadonly = NULL; // Флаг, который показывает, что свойство доступно только для чтения
     Type *type; // Тип свойства
+	string NameStr; // Имя свойства
+	string DescriptorStr; // Дескриптор свойства
 
-    PropertiesTableElement(int name, int descriptor, bool isReadonly, Type *type);
+    PropertiesTableElement(int name, int descriptor, bool isReadonly, Type *type, string nameStr, string descriptorStr);
 
 	string toCsvString(char separator = ';'); //Преобразование в строку формата CSV
 };

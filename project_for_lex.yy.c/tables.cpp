@@ -273,7 +273,7 @@ void FieldsTable::toCsvFile(string filename, string filepath, char separator = '
 
 // -------------------- MethodsTableElement --------------------
 
-MethodsTableElement::MethodsTableElement(int name, int descriptor, bool isClassMethod, Statement_node* bodyStart, Type *returnType, vector<Type>* paramsTypes, vector<Type>* keywordsTypes, string nameStr, string descriptorStr)
+MethodsTableElement::MethodsTableElement(int name, int descriptor, bool isClassMethod, Statement_node* bodyStart, Type *returnType, vector<Type*>* paramsTypes, vector<Type*>* keywordsTypes, string nameStr, string descriptorStr)
 {
 	Name = name;
 	Descriptor = descriptor;
@@ -287,9 +287,56 @@ MethodsTableElement::MethodsTableElement(int name, int descriptor, bool isClassM
 	DescriptorStr = descriptorStr;
 }
 
+string MethodsTableElement::toCsvString(string methodName, char separator = ';')
+{
+	string res = "";
+	res += to_string(Name) + " (" + NameStr + ")" + separator; //Добавление имени
+	res += to_string(Descriptor) + " (" + DescriptorStr + ")" + separator; //Добавление дескриптора
+	res += (IsClassMethod ? "true" : "false") + separator; //Добавление флага, который показывает принадлежность метода к классу
+	res += ReturnType->toString() + separator; //Добавление типа возвращаемого значения
+
+	// Формирование строки с типами параметров
+	string paramsTypesStr = "";
+	for (int i = 0; i < ParamsTypes->size(); i++)
+	{
+		paramsTypesStr += ParamsTypes->at(i)->toString();
+		if (i != ParamsTypes->size() - 1)
+		{
+			paramsTypesStr += ",";
+		}
+	}
+
+	// Формирование строки с типами ключевых слов
+	string keywordsTypesStr = "";
+	for (int i = 0; i < KeywordsTypes->size(); i++)
+	{
+		keywordsTypesStr += KeywordsTypes->at(i)->toString();
+		if (i != KeywordsTypes->size() - 1)
+		{
+			keywordsTypesStr += ",";
+		}
+	}
+
+	res += paramsTypesStr + separator; //Добавление типов параметров
+	res += keywordsTypesStr + separator; //Добавление типов ключевых слов
+	res += to_string(BodyStart->id) + separator; //Добавление ID узла начала тела метода
+
+	if (LocalVariables->items.size() > 0)
+		res += methodName + "_LocalVariablesTable.csv"; //Добавление имени таблицы локальных переменных
+	else
+		res += "emptyTable"; 
+	return res;
+}
+
+void MethodsTableElement::refTablesToCsvFile(string methodName, string filepath, char separator = ';')
+{
+	if (LocalVariables->items.size() > 0)
+		LocalVariables->toCsvFile(methodName + "_LocalVariablesTable.csv", filepath, separator);
+}
+
 // -------------------- MethodsTable --------------------
 
-void MethodsTable::addMethod(ConstantsTable *constantTable, string name, string descriptor, bool isClassMethod, Statement_node* bodyStart, Type *returnType, vector<Type>* paramsTypes, vector<Type>* keywordsTypes)
+void MethodsTable::addMethod(ConstantsTable *constantTable, string name, string descriptor, bool isClassMethod, Statement_node* bodyStart, Type *returnType, vector<Type*>* paramsTypes, vector<Type*>* keywordsTypes)
 {
 	if (items.count(name) != 0)
 	{
@@ -300,6 +347,22 @@ void MethodsTable::addMethod(ConstantsTable *constantTable, string name, string 
 	int DescriptorId = constantTable->findOrAddConstant(UTF8, descriptor);
 	MethodsTableElement *method = new MethodsTableElement(NameId, DescriptorId, isClassMethod, bodyStart, returnType, paramsTypes, keywordsTypes, name, descriptor);
 	items[name] = method;
+}
+
+void MethodsTable::toCsvFile(string filename, string filepath, char separator = ';')
+{
+	ofstream out(filepath + filename); //Создание и открытие потока на запись в файл
+	out << "Name" << separator << "Descriptor" << separator << "IsClassMethod" << separator << "ReturnType" << separator << "ParamsTypes" << separator << "KeywordsTypes" << "BodyStartStatementId" << "LocalVariablesTableName" << endl; // Запись заголовков
+	auto iter = items.cbegin();
+	while (iter != items.cend())
+	{
+		string methodName = filename.substr(0, filename.find(".")) + "_" + iter->first;
+		string str = iter->second->toCsvString(methodName, separator); // Формирование строки
+		out << str << endl; //Запись строки в файл
+		iter->second->refTablesToCsvFile(methodName, filepath, separator); // Запись вложенных таблиц метода
+		++iter;
+	}
+	out.close(); // Закрытие потока
 }
 
 // -------------------- PropertiesTableElement --------------------

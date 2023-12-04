@@ -149,16 +149,16 @@ public:
 	Statement_node* BodyStart = NULL; // Ссылка на узел начала тела метода
 	LocalVariablesTable* LocalVariables = NULL; // Ссылка на соотвветсвующую таблицу локальных переменных
     Type *ReturnType; //Тип возвращаемого значепаарния
-    vector<Type> *ParamsTypes = NULL; //Тип параметров
-    vector<Type> *KeywordsTypes = NULL; //Тип параметров keyword
+    vector<Type*> *ParamsTypes = NULL; //Тип параметров
+    vector<Type*> *KeywordsTypes = NULL; //Тип параметров keyword
 
 	string NameStr; // Имя метода
 	string DescriptorStr; // Дескриптор метода
 
-    MethodsTableElement(int name, int descriptor, bool isClassMethod, Statement_node* bodyStart, Type *returnType, vector<Type>* paramsTypes, vector<Type>* keywordsTypes, string nameStr, string descriptorStr);
+    MethodsTableElement(int name, int descriptor, bool isClassMethod, Statement_node* bodyStart, Type *returnType, vector<Type*>* paramsTypes, vector<Type*>* keywordsTypes, string nameStr, string descriptorStr);
 
-	string toCsvString(char separator = ';'); //Преобразование в строку формата CSV
-	void refTablesToCsvFile(string filepath, char separator = ';');
+	string toCsvString(string methodName, char separator = ';'); //Преобразование в строку формата CSV
+	void refTablesToCsvFile(string methodName, string filepath, char separator = ';');
 };
 
 class MethodsTable
@@ -166,7 +166,7 @@ class MethodsTable
 public:
 	map< string, MethodsTableElement* > items; //Таблица методов класса, в качестве ключа - Имя метода класса
 
-    void addMethod(ConstantsTable *constantTable, string name, string descriptor, bool isClassMethod, Statement_node* bodyStart, Type *returnType, vector<Type>* paramsTypes, vector<Type>* keywordsTypes);
+    void addMethod(ConstantsTable *constantTable, string name, string descriptor, bool isClassMethod, Statement_node* bodyStart, Type *returnType, vector<Type*>* paramsTypes, vector<Type*>* keywordsTypes);
 
 	void toCsvFile(string filename, string filepath, char separator = ';'); //Преобразование в CSV-файл
 };

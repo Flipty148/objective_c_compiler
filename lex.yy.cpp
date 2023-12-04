@@ -563,13 +563,14 @@ char *yytext;
 
 /*Подключение библиотек*/
 #line 17 "flex_rules.l"
-    #include "classes_nodes.h"
+    #include "tables.h"
     #include "bison_rules_with_code_tab.h"
     #include <stdio.h>
     #include <string.h>
     #include <stdlib.h>
     #include <iostream>
     #include <fstream>
+    #include <filesystem>
     extern int yyparse(void);
     extern Program_node *root;
     extern set<string> ClassNames;
@@ -577,7 +578,7 @@ char *yytext;
     void removeSymbol(char *string, char symbol);
     void removeFloatSuffix(char *string);
     int countChar(const char *str, char character);
-#line 582 "lex.yy.c"
+#line 583 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -724,7 +725,7 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 33 "flex_rules.l"
+#line 34 "flex_rules.l"
 
 
     char tmp[10000];
@@ -734,7 +735,7 @@ YY_DECL
 
 
 
-#line 739 "lex.yy.c"
+#line 740 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -819,287 +820,287 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 42 "flex_rules.l"
+#line 43 "flex_rules.l"
 {printf("Found keyword INT: %s\n", yytext);   return INT;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 43 "flex_rules.l"
+#line 44 "flex_rules.l"
 {printf("Found keyword CHAR: %s\n", yytext);     return CHAR;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 44 "flex_rules.l"
+#line 45 "flex_rules.l"
 {printf("Found keyword IF: %s\n", yytext);     return IF;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 45 "flex_rules.l"
+#line 46 "flex_rules.l"
 {printf("Found keyword ELSE: %s\n", yytext);     return ELSE;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 46 "flex_rules.l"
+#line 47 "flex_rules.l"
 {printf("Found keyword WHILE: %s\n", yytext);   return WHILE;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 47 "flex_rules.l"
+#line 48 "flex_rules.l"
 {printf("Found keyword DO: %s\n", yytext);     return DO;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 48 "flex_rules.l"
+#line 49 "flex_rules.l"
 {printf("Found keyword FOR: %s\n", yytext);   return FOR;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 49 "flex_rules.l"
+#line 50 "flex_rules.l"
 {printf("Found keyword IN: %s\n", yytext);     return IN;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 50 "flex_rules.l"
+#line 51 "flex_rules.l"
 {printf("Found keyword INTERFACE: %s\n", yytext);      return INTERFACE;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 51 "flex_rules.l"
+#line 52 "flex_rules.l"
 {printf("Found keyword END: %s\n", yytext);      return END;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 52 "flex_rules.l"
+#line 53 "flex_rules.l"
 {printf("Found keyword IMPLEMENTATION: %s\n", yytext);    return IMPLEMENTATION;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 53 "flex_rules.l"
+#line 54 "flex_rules.l"
 {printf("Found keyword PROPERTY: %s\n", yytext);    return PROPERTY;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 54 "flex_rules.l"
+#line 55 "flex_rules.l"
 {printf("Found keyword SYNTHESIZE: %s\n", yytext);    return SYNTHESIZE;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 55 "flex_rules.l"
+#line 56 "flex_rules.l"
 {printf("Found keyword FLOAT: %s\n", yytext);       return FLOAT;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 56 "flex_rules.l"
+#line 57 "flex_rules.l"
 {printf("Found keyword READONLY: %s\n", yytext);     return READONLY;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 57 "flex_rules.l"
+#line 58 "flex_rules.l"
 {printf("Found keyword READWRITE: %s\n", yytext);   return READWRITE;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 58 "flex_rules.l"
+#line 59 "flex_rules.l"
 {printf("Found keyword ENUM: %s\n", yytext);     return ENUM;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 59 "flex_rules.l"
+#line 60 "flex_rules.l"
 {printf("Found keyword UNSIGNED: %s\n", yytext);}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 60 "flex_rules.l"
+#line 61 "flex_rules.l"
 {printf("Found suffix U: %s\n", yytext);}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 61 "flex_rules.l"
+#line 62 "flex_rules.l"
 {printf("Found keyword LONG: %s\n", yytext);}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 62 "flex_rules.l"
+#line 63 "flex_rules.l"
 {printf("Found suffix L: %s\n", yytext);}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 63 "flex_rules.l"
+#line 64 "flex_rules.l"
 {printf("Found keyword RETURN: %s\n", yytext);     return RETURN;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 64 "flex_rules.l"
+#line 65 "flex_rules.l"
 {printf("Found keyword SELF: %s\n", yytext);     return SELF;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 65 "flex_rules.l"
+#line 66 "flex_rules.l"
 {printf("Found keyword SUPER: %s\n", yytext);   return SUPER;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 66 "flex_rules.l"
+#line 67 "flex_rules.l"
 {printf("Found keyword ID: %s\n", yytext);     return ID;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 67 "flex_rules.l"
+#line 68 "flex_rules.l"
 {printf("Found keyword CLASS: %s\n", yytext);  return CLASS;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 68 "flex_rules.l"
+#line 69 "flex_rules.l"
 {printf("Found keyword VOID: %s\n", yytext);     return VOID;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 72 "flex_rules.l"
+#line 73 "flex_rules.l"
 {printf("Found arithmetic operation +: %s\n", yytext);  return (unsigned char)'+';}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 73 "flex_rules.l"
+#line 74 "flex_rules.l"
 {printf("Found arithmetic operation -: %s\n", yytext);  return (unsigned char)'-';}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 74 "flex_rules.l"
+#line 75 "flex_rules.l"
 {printf("Found arithmetic operation *: %s\n", yytext);  return (unsigned char)'*';}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 75 "flex_rules.l"
+#line 76 "flex_rules.l"
 {printf("Found arithmetic operation /: %s\n", yytext);  return (unsigned char)'/';}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 76 "flex_rules.l"
+#line 77 "flex_rules.l"
 {printf("ERROR! Unsupported operation '++': %s\n", yytext);}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 77 "flex_rules.l"
+#line 78 "flex_rules.l"
 {printf("ERROR! Unsupported operation '--': %s\n", yytext);}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 79 "flex_rules.l"
+#line 80 "flex_rules.l"
 {printf("Found comparison operation ==: %s\n", yytext);    return EQUAL;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 80 "flex_rules.l"
+#line 81 "flex_rules.l"
 {printf("Found comparison operation !=: %s\n", yytext);    return NOT_EQUAL;}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 81 "flex_rules.l"
+#line 82 "flex_rules.l"
 {printf("Found comparison operation >: %s\n", yytext);      return (unsigned char)'>';}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 82 "flex_rules.l"
+#line 83 "flex_rules.l"
 {printf("Found comparison operation <: %s\n", yytext);      return (unsigned char)'<';}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 83 "flex_rules.l"
+#line 84 "flex_rules.l"
 {printf("Found comparison operation >=: %s\n", yytext);    return GREATER_EQUAL;}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 84 "flex_rules.l"
+#line 85 "flex_rules.l"
 {printf("Found comparison operation <=: %s\n", yytext);    return LESS_EQUAL;}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 87 "flex_rules.l"
+#line 88 "flex_rules.l"
 {printf("Found assignment operation =: %s\n", yytext);      return (unsigned char)'=';}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 88 "flex_rules.l"
+#line 89 "flex_rules.l"
 {printf("ERROR! Unsupported operation '+=': %s\n", yytext);}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 89 "flex_rules.l"
+#line 90 "flex_rules.l"
 {printf("ERROR! Unsupported operation '-=': %s\n", yytext);}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 90 "flex_rules.l"
+#line 91 "flex_rules.l"
 {printf("ERROR! Unsupported operation '*=': %s\n", yytext);}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 91 "flex_rules.l"
+#line 92 "flex_rules.l"
 {printf("ERROR! Unsupported operation '/=': %s\n", yytext);}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 93 "flex_rules.l"
+#line 94 "flex_rules.l"
 {printf("Found member access operator '.' %s\n", yytext);   return (unsigned char)'.';}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 94 "flex_rules.l"
+#line 95 "flex_rules.l"
 {printf("Found member access operator '->' %s\n", yytext);     return ARROW;}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 97 "flex_rules.l"
+#line 98 "flex_rules.l"
 {printf("Found bracket (: %s\n", yytext);   return (unsigned char)'(';}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 98 "flex_rules.l"
+#line 99 "flex_rules.l"
 {printf("Found bracket ): %s\n", yytext);   return (unsigned char)')';}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 99 "flex_rules.l"
+#line 100 "flex_rules.l"
 {printf("Found bracket {: %s\n", yytext);   return (unsigned char)'{';}
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 100 "flex_rules.l"
+#line 101 "flex_rules.l"
 {printf("Found bracket }: %s\n", yytext);   return (unsigned char)'}';}
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 101 "flex_rules.l"
+#line 102 "flex_rules.l"
 {printf("Found bracket [: %s\n", yytext);   return (unsigned char)'[';}
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 102 "flex_rules.l"
+#line 103 "flex_rules.l"
 {printf("Found bracket ]: %s\n", yytext);   return (unsigned char)']';}
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 105 "flex_rules.l"
+#line 106 "flex_rules.l"
 {printf("Found delimiter ;: %s\n", yytext);     return (unsigned char)';';}
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 106 "flex_rules.l"
+#line 107 "flex_rules.l"
 {printf("Found delimiter :: %s\n", yytext);     return (unsigned char)':';}
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 107 "flex_rules.l"
+#line 108 "flex_rules.l"
 {printf("Found delimiter ,: %s\n", yytext);     return (unsigned char)',';}
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 109 "flex_rules.l"
+#line 110 "flex_rules.l"
 {printf("Found integer: %d\n", atoi(yytext));   yylval.Integer_constant=atoi(yytext); return INTEGER_CONSTANT;}
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 110 "flex_rules.l"
+#line 111 "flex_rules.l"
 {
     char* a;
     long number = strtol(yytext+2, &a,16);
@@ -1110,14 +1111,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 117 "flex_rules.l"
+#line 118 "flex_rules.l"
 {
     printf("ERROR! Incorrect hex number: %s in row: %d\n", yytext, lineCount);
 }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 120 "flex_rules.l"
+#line 121 "flex_rules.l"
 {
     char *a;
     long number = strtol(yytext+2, &a,8);
@@ -1128,99 +1129,99 @@ YY_RULE_SETUP
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 127 "flex_rules.l"
+#line 128 "flex_rules.l"
 {
     printf("ERROR! Incorrect octal number: %s in row: %d\n", yytext, lineCount);
 }
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 131 "flex_rules.l"
+#line 132 "flex_rules.l"
 {str = ""; BEGIN(CHAR_SC);}
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 132 "flex_rules.l"
+#line 133 "flex_rules.l"
 {str = ""; BEGIN(STRING_SC);}
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 133 "flex_rules.l"
+#line 134 "flex_rules.l"
 {str = ""; BEGIN(NSSTRING_SC);}
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 134 "flex_rules.l"
+#line 135 "flex_rules.l"
 {str += yytext;}
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 135 "flex_rules.l"
+#line 136 "flex_rules.l"
 {str += yytext;}
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 136 "flex_rules.l"
+#line 137 "flex_rules.l"
 {str += "\b";}
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 137 "flex_rules.l"
+#line 138 "flex_rules.l"
 {str += "\f";}
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 138 "flex_rules.l"
+#line 139 "flex_rules.l"
 {str += "\n";}
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 139 "flex_rules.l"
+#line 140 "flex_rules.l"
 {str += "\r";}
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 140 "flex_rules.l"
+#line 141 "flex_rules.l"
 {str += "\t";}
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 141 "flex_rules.l"
+#line 142 "flex_rules.l"
 {str += "\v";}
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 142 "flex_rules.l"
+#line 143 "flex_rules.l"
 {str += "\'";}
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 143 "flex_rules.l"
+#line 144 "flex_rules.l"
 {str += "\"";}
 	YY_BREAK
 case 74:
 YY_RULE_SETUP
-#line 144 "flex_rules.l"
+#line 145 "flex_rules.l"
 {str += "\\";}
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 145 "flex_rules.l"
+#line 146 "flex_rules.l"
 {str += '\0';}
 	YY_BREAK
 case 76:
 YY_RULE_SETUP
-#line 146 "flex_rules.l"
+#line 147 "flex_rules.l"
 {str += '\0';}
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 147 "flex_rules.l"
+#line 148 "flex_rules.l"
 {str += '\0';}
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 148 "flex_rules.l"
+#line 149 "flex_rules.l"
 {
     char *a;
     char c =strtol(yytext+2, &a, 16);
@@ -1228,12 +1229,12 @@ YY_RULE_SETUP
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
-#line 152 "flex_rules.l"
+#line 153 "flex_rules.l"
 {printf("ERROR! Incorrect hex digit in string.\n");}
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 153 "flex_rules.l"
+#line 154 "flex_rules.l"
 {
     char *a;
     char c =strtol(yytext+1, &a, 8);
@@ -1241,18 +1242,18 @@ YY_RULE_SETUP
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
-#line 157 "flex_rules.l"
+#line 158 "flex_rules.l"
 {printf("ERROR! Multiline string\n"); lineCount++;}
 	YY_BREAK
 case YY_STATE_EOF(STRING_SC):
 case YY_STATE_EOF(CHAR_SC):
 case YY_STATE_EOF(NSSTRING_SC):
-#line 158 "flex_rules.l"
+#line 159 "flex_rules.l"
 {printf("ERROR! haven't found closing quotes.\n"); BEGIN(INITIAL);}
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
-#line 159 "flex_rules.l"
+#line 160 "flex_rules.l"
 {std::cout << "Found String literal: " << str.c_str() << std::endl;
 
       if (YY_START == STRING_SC)
@@ -1274,7 +1275,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
-#line 177 "flex_rules.l"
+#line 178 "flex_rules.l"
 {
     if(str.size() != 1)
     {
@@ -1293,7 +1294,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
-#line 195 "flex_rules.l"
+#line 196 "flex_rules.l"
 {
     strcpy(tmp, yytext);
     removeFloatSuffix(tmp);
@@ -1304,7 +1305,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
-#line 203 "flex_rules.l"
+#line 204 "flex_rules.l"
 {
     strcpy(tmp, yytext);
     removeFloatSuffix(tmp);
@@ -1315,7 +1316,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 211 "flex_rules.l"
+#line 212 "flex_rules.l"
 {printf("Found identifier: %s\n", yytext);
     str = "";
     str += yytext;
@@ -1329,12 +1330,12 @@ YY_RULE_SETUP
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 221 "flex_rules.l"
+#line 222 "flex_rules.l"
 {printf("ERROR! Incorrect identifier: %s\n", yytext);}
 	YY_BREAK
 case 88:
 YY_RULE_SETUP
-#line 224 "flex_rules.l"
+#line 225 "flex_rules.l"
 {printf("Found line comment: %s\n", yytext);
     strcpy(tmp, yytext);
     lineCount += countChar(tmp, '\n');
@@ -1342,64 +1343,64 @@ YY_RULE_SETUP
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
-#line 230 "flex_rules.l"
+#line 231 "flex_rules.l"
 {tmp[0] = '\0'; BEGIN(MULTILINE_COMMENT);}
 	YY_BREAK
 case 90:
 YY_RULE_SETUP
-#line 231 "flex_rules.l"
+#line 232 "flex_rules.l"
 {strcat(tmp, yytext);}
 	YY_BREAK
 case 91:
 YY_RULE_SETUP
-#line 232 "flex_rules.l"
+#line 233 "flex_rules.l"
 {lineCount++; strcat(tmp, yytext);}
 	YY_BREAK
 case 92:
 YY_RULE_SETUP
-#line 233 "flex_rules.l"
+#line 234 "flex_rules.l"
 {strcat(tmp, yytext);}
 	YY_BREAK
 case 93:
 YY_RULE_SETUP
-#line 234 "flex_rules.l"
+#line 235 "flex_rules.l"
 {lineCount++; strcat(tmp, yytext);}
 	YY_BREAK
 case 94:
 YY_RULE_SETUP
-#line 235 "flex_rules.l"
+#line 236 "flex_rules.l"
 {printf("Found multiline comment: %s\n", tmp);BEGIN(INITIAL);}
 	YY_BREAK
 case YY_STATE_EOF(MULTILINE_COMMENT):
-#line 237 "flex_rules.l"
+#line 238 "flex_rules.l"
 {printf("ERROR! Multiline comment \"%s\" isn't closed in row: %d\n", tmp, lineCount); BEGIN(INITIAL);}
 	YY_BREAK
 case 95:
 YY_RULE_SETUP
-#line 239 "flex_rules.l"
+#line 240 "flex_rules.l"
 {printf("");}
 	YY_BREAK
 case 96:
 YY_RULE_SETUP
-#line 241 "flex_rules.l"
+#line 242 "flex_rules.l"
 {lineCount++;}
 	YY_BREAK
 case 97:
 YY_RULE_SETUP
-#line 242 "flex_rules.l"
+#line 243 "flex_rules.l"
 {lineCount++;}
 	YY_BREAK
 case 98:
 YY_RULE_SETUP
-#line 244 "flex_rules.l"
+#line 245 "flex_rules.l"
 {printf("unrecognized element: %s\n", yytext);}
 	YY_BREAK
 case 99:
 YY_RULE_SETUP
-#line 246 "flex_rules.l"
+#line 247 "flex_rules.l"
 ECHO;
 	YY_BREAK
-#line 1404 "lex.yy.c"
+#line 1405 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2259,7 +2260,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 246 "flex_rules.l"
+#line 247 "flex_rules.l"
 
 
 //Проверка на содержание символа в строке
@@ -2322,4 +2323,8 @@ int main(int argc, char* argv[])
     out.close();
     
     root->fillClassesTable();
+
+    path p  = path("./out/")
+    remove_all(p);
+    ClassesTable::toCsvFile("./out/");
 }

@@ -111,7 +111,7 @@ public:
 
     static void addClass(string name, string superclassName, bool isImplementation);
 
-	void toCsvFile(string filepath, char separator = ';'); //Преобразование в CSV-файл
+	static void toCsvFile(string filepath, char separator = ';'); //Преобразование в CSV-файл
 };
 
 // ---------- Таблица полей класса ----------

@@ -14,13 +14,14 @@ UNDERLINE_LETTER [A-Za-z_]
 
 /*Подключение библиотек*/
 %{
-    #include "classes_nodes.h"
+    #include "tables.h"
     #include "bison_rules_with_code_tab.h"
     #include <stdio.h>
     #include <string.h>
     #include <stdlib.h>
     #include <iostream>
     #include <fstream>
+    #include <filesystem>
     extern int yyparse(void);
     extern Program_node *root;
     extern set<string> ClassNames;
@@ -305,4 +306,9 @@ int main(int argc, char* argv[])
     out.close();
     
     root->fillClassesTable();
+
+    filesystem::path p = filesystem::path("./out/");
+    filesystem::remove_all(p);
+    filesystem::create_directory(p);
+    ClassesTable::toCsvFile("./out/");
 }

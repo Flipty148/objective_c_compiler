@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <algorithm>
 using namespace std;
 
 // -------------------- ConstantsTableElement --------------------
@@ -32,33 +33,33 @@ string ConstantsTableElement::toCsvString(char separator)
 	switch (Type)
 	{
 	case constantType::UTF8:
-		res += "UTF8" + separator;
+		res += string("UTF8") + separator;
 		res += *Utf8String;
 		break;
 	case constantType::Integer:
-		res += "Integer" + separator;
+		res += string("Integer") + separator;
 		res += to_string(Number);
 		break;
 	case constantType::String:
-		res += "String" + separator;
+		res += string("String") + separator;
 		res += to_string(FirstRef);
 		break;
 	case constantType::Class:
-		res += "Class" + separator;
+		res += string("Class") + separator;
 		res += to_string(FirstRef);
 		break;
 	case constantType::NameAndType:
-		res += "NameAndType" + separator;
+		res += string("NameAndType") + separator;
 		res += to_string(FirstRef) + ", ";
 		res += to_string(SecondRef);
 		break;
 	case constantType::FieldRef:
-		res += "FieldRef" + separator;
+		res += string("FieldRef") + separator;
 		res += to_string(FirstRef) + ", ";
 		res += to_string(SecondRef);
 		break;
 	case constantType::MethodRef:
-		res += "MethodRef" + separator;
+		res += string("MethodRef") + separator;
 		res += to_string(FirstRef) + ", ";
 		res += to_string(SecondRef);
 		break;
@@ -153,24 +154,24 @@ string ClassesTableElement::toCsvString(char separator)
 	string res = "";
 	res += to_string(Name) + '(' + *ConstantTable->getConstant(Name)->Utf8String + ')' + separator;
 	res += to_string(SuperclassName) + '(' + *ConstantTable->getConstant(SuperclassName)->Utf8String + ')' + separator;
-	res += (IsImplementation ? "true" : "false") + separator;
+	res += string((IsImplementation ? "true" : "false")) + separator;
 	res += to_string(ThisClass) + separator;
 	res += to_string(Superclass) + separator;
 
 	if (Fields->items.size() > 0)
 		res += *ConstantTable->getConstant(Name)->Utf8String + "_FieldsTable.csv" + separator;
 	else
-		res += "emptyTable" + separator;
+		res += string("emptyTable") + separator;
 
 	if (Methods->items.size() >0 )
 		res += *ConstantTable->getConstant(Name)->Utf8String + "_MethodsTable.csv" + separator;
 	else
-		res += "emptyTable" + separator;
+		res += string("emptyTable") + separator;
 
 	if (Properties->items.size() > 0)
 		res += *ConstantTable->getConstant(Name)->Utf8String + "_PropertiesTable.csv" + separator;
 	else
-		res += "emptyTable" + separator;
+		res += string("emptyTable") + separator;
 		
 	res += *ConstantTable->getConstant(Name)->Utf8String + "_ConstantsTable.csv";
 	return res;
@@ -178,16 +179,18 @@ string ClassesTableElement::toCsvString(char separator)
 
 void ClassesTableElement::refTablesToCsvFile(string filepath, char separator)
 {
+	string className = *ConstantTable->getConstant(Name)->Utf8String;
+	replace(className.begin(), className.end(), '/', '_');
 	if (Fields->items.size() > 0)
-		Fields->toCsvFile(*ConstantTable->getConstant(Name)->Utf8String + "_FieldsTable.csv", filepath, separator); //Записать таблицу полей в файл
+		Fields->toCsvFile(className, filepath, separator); //Записать таблицу полей в файл
 	
 	if (Methods->items.size() > 0)
-		Methods->toCsvFile(*ConstantTable->getConstant(Name)->Utf8String + "_MethodsTable.csv", filepath, separator); //Записать таблицу методов в файл
+		Methods->toCsvFile(className + "_MethodsTable.csv", filepath, separator); //Записать таблицу методов в файл
 
 	if (Properties->items.size() > 0)
-		Properties->toCsvFile(*ConstantTable->getConstant(Name)->Utf8String + "_PropertiesTable.csv", filepath, separator); //Записать таблицу свойств в файл
+		Properties->toCsvFile(className + "_PropertiesTable.csv", filepath, separator); //Записать таблицу свойств в файл
 
-	ConstantTable->toCsvFile(*ConstantTable->getConstant(Name)->Utf8String + "_ConstantsTable.csv", filepath, separator); //Записать таблицу констант в файл
+	ConstantTable->toCsvFile(className + "_ConstantsTable.csv", filepath, separator); //Записать таблицу констант в файл
 }
 
 // -------------------- ClassesTable --------------------
@@ -213,7 +216,7 @@ void ClassesTable::addClass(string name, string superclassName, bool isImplement
 void ClassesTable::toCsvFile(string filepath, char separator)
 {
 	ofstream out(filepath + "ClassesTable.csv"); //Создание и открытие потока на запись в файл
-	out << "Name" << separator << "SuperclassName" << separator << "IsImplementation" << "ThisClass" << "Superclass" << "FieldsTableName" << "MethodsTableName" << "PropertiesTableName" << "ConstantsTableName" << endl; // Запись заголовков
+	out << "Name" << separator << "SuperclassName" << separator << "IsImplementation" << separator << "ThisClass" << separator << "Superclass" << separator << "FieldsTableName" << separator << "MethodsTableName" << separator << "PropertiesTableName" << separator << "ConstantsTableName" << endl; // Запись заголовков
 	auto iter = items.cbegin();
 	while (iter != items.cend())
 	{
@@ -242,7 +245,7 @@ string FieldsTableElement::toCsvString(char separator)
 	string res = "";
 	res += to_string(Name) + " (" + NameStr + ")" + separator; //Добавление имени
 	res += to_string(Descriptor) + " (" + DescriptorStr + ")" + separator; //Добавление дескриптора
-	res += (IsInstance ? "true" : "false") + separator; //Добавление флага, который показывает принадлежность поля к экземпляру
+	res += string((IsInstance ? "true" : "false")) + separator; //Добавление флага, который показывает принадлежность поля к экземпляру
 	res += type->toString() + separator; //Добавление типа
 	return res;
 }
@@ -292,7 +295,7 @@ string MethodsTableElement::toCsvString(string methodName, char separator)
 	string res = "";
 	res += to_string(Name) + " (" + NameStr + ")" + separator; //Добавление имени
 	res += to_string(Descriptor) + " (" + DescriptorStr + ")" + separator; //Добавление дескриптора
-	res += (IsClassMethod ? "true" : "false") + separator; //Добавление флага, который показывает принадлежность метода к классу
+	res += string((IsClassMethod ? "true" : "false")) + separator; //Добавление флага, который показывает принадлежность метода к классу
 	res += ReturnType->toString() + separator; //Добавление типа возвращаемого значения
 
 	// Формирование строки с типами параметров
@@ -302,7 +305,7 @@ string MethodsTableElement::toCsvString(string methodName, char separator)
 		paramsTypesStr += ParamsTypes->at(i)->toString();
 		if (i != ParamsTypes->size() - 1)
 		{
-			paramsTypesStr += ",";
+			paramsTypesStr += ',';
 		}
 	}
 
@@ -313,7 +316,7 @@ string MethodsTableElement::toCsvString(string methodName, char separator)
 		keywordsTypesStr += KeywordsTypes->at(i)->toString();
 		if (i != KeywordsTypes->size() - 1)
 		{
-			keywordsTypesStr += ",";
+			keywordsTypesStr += ',';
 		}
 	}
 
@@ -324,7 +327,7 @@ string MethodsTableElement::toCsvString(string methodName, char separator)
 	if (LocalVariables->items.size() > 0)
 		res += methodName + "_LocalVariablesTable.csv"; //Добавление имени таблицы локальных переменных
 	else
-		res += "emptyTable"; 
+		res += string("emptyTable"); 
 	return res;
 }
 
@@ -352,7 +355,7 @@ void MethodsTable::addMethod(ConstantsTable *constantTable, string name, string 
 void MethodsTable::toCsvFile(string filename, string filepath, char separator)
 {
 	ofstream out(filepath + filename); //Создание и открытие потока на запись в файл
-	out << "Name" << separator << "Descriptor" << separator << "IsClassMethod" << separator << "ReturnType" << separator << "ParamsTypes" << separator << "KeywordsTypes" << "BodyStartStatementId" << "LocalVariablesTableName" << endl; // Запись заголовков
+	out << "Name" << separator << "Descriptor" << separator << "IsClassMethod" << separator << "ReturnType" << separator << "ParamsTypes" << separator << "KeywordsTypes" << separator << "BodyStartStatementId" << separator << "LocalVariablesTableName" << endl; // Запись заголовков
 	auto iter = items.cbegin();
 	while (iter != items.cend())
 	{
@@ -382,7 +385,7 @@ string PropertiesTableElement::toCsvString(char separator)
 	string res = "";
 	res += to_string(Name) + " (" + NameStr + ")" + separator; //Добавление имени
 	res += to_string(Descriptor) + " (" + DescriptorStr + ")" + separator; //Добавление дескриптора
-	res += (IsReadonly ? "true" : "false") + separator; //Добавление флага, который показывает принадлежность свойства к экземпляру
+	res += string((IsReadonly ? "true" : "false")) + separator; //Добавление флага, который показывает принадлежность свойства к экземпляру
 	res += type->toString() + separator; //Добавление типа
 	return res;
 }
@@ -425,7 +428,7 @@ string PropertiesTableElement::toCsvString(char separator)
 	 this->type = type;
  }
 
- string LocalVariablesTableElement::toCsvString(char separator = ';')
+ string LocalVariablesTableElement::toCsvString(char separator)
  {
 	 string res = "";
 	 res += to_string(Id) + separator;
@@ -497,22 +500,22 @@ string Type::toString()
 	switch (DataType)
 	{
 	case INT_TYPE:
-		res += "int";
+		res += string("int");
 		break;
 	case CHAR_TYPE:
-		res += "char";
+		res += string("char");
 		break;
 	case FLOAT_TYPE:
-		res += "float";
+		res += string("float");
 		break;
 	case ID_TYPE:
-		res += "id";
+		res += string("id");
 		break;
 	case CLASS_NAME_TYPE:
 		res += ClassName;
 		break;
 	case VOID_TYPE:
-		res += "void";
+		res += string("void");
 		break;
 	default:
 		break;
@@ -521,7 +524,7 @@ string Type::toString()
 	// Формирование строки с учетом массива
 	if (ArrSize != -1)
 	{
-		res += "[" + to_string(ArrSize) + "]";
+		res += '[' + to_string(ArrSize) + ']';
 	}
 	return res;
 }
@@ -548,7 +551,7 @@ string FunctionsTableElement::toCsvString(string funcName, char separator)
 	return res;
 }
 
-void FunctionsTableElement::refTablesToCsvFile(string filename, string filepath, char separator = ';')
+void FunctionsTableElement::refTablesToCsvFile(string filename, string filepath, char separator)
 {
 	if (LocalVariables->items.size() > 0)
 		LocalVariables->toCsvFile(filename, filepath, separator);
@@ -569,7 +572,7 @@ void FunctionsTable::addFunction(ConstantsTable *constantTable, string name, str
 	items[name] = function;
 }
 
-void FunctionsTable::toCsvFile(string filename, string filepath, char separator = ';')
+void FunctionsTable::toCsvFile(string filename, string filepath, char separator)
 {
 	ofstream out(filepath + filename); //Создание и открытие потока на запись в файл
 	out << "Name" << separator << "Descriptor" << "BodyStartStatementId" << "LocalVariablesTableName" << endl; // Запись заголовков

@@ -23,7 +23,7 @@ ConstantsTableElement::ConstantsTableElement(int id, constantType type, int numb
 	SecondRef = secondRef;
 }
 
-string ConstantsTableElement::toCsvString(char separator = ';')
+string ConstantsTableElement::toCsvString(char separator)
 {
 	string res = "";
 	res += to_string(Id) + separator; // Добавление ID
@@ -113,7 +113,12 @@ int ConstantsTable::findConstant(constantType type, string *utf8string, int numb
 	return -1;
 }
 
-void ConstantsTable::toCsvFile(string filename, char separator = ';')
+ConstantsTableElement* ConstantsTable::getConstant(int id)
+{
+	return items[id];
+}
+
+void ConstantsTable::toCsvFile(string filename, char separator)
 {
 	ofstream out(filename); //Созданте и открытие потока на запись в файл
 	out << "ID" << separator << "Type" << separator << "Value" << endl; // Запись заголовка
@@ -143,6 +148,29 @@ ClassesTableElement::ClassesTableElement(string name, string superclassName, boo
 	IsImplementation = isImplementation;
 }
 
+string ClassesTableElement::toCsvString(char separator)
+{
+	string res = "";
+	res += to_string(Name) + '(' + *ConstantTable->getConstant(Name)->Utf8String + ')' + separator;
+	res += to_string(SuperclassName) + '(' + *ConstantTable->getConstant(SuperclassName)->Utf8String + ')' + separator;
+	res += to_string(IsImplementation) + separator;
+	res += to_string(ThisClass) + separator;
+	res += to_string(Superclass) + separator;
+	res += *ConstantTable->getConstant(Name)->Utf8String + "_FieldsTable.csv" + separator;
+	res += *ConstantTable->getConstant(Name)->Utf8String + "_MethodsTable.csv" + separator;
+	res += *ConstantTable->getConstant(Name)->Utf8String + "_PropertiesTable.csv" + separator;
+	res += *ConstantTable->getConstant(Name)->Utf8String + "_ConstantsTable.csv";
+	return res;
+}
+
+void ClassesTableElement::refTablesToCsvFile(string filepath, char separator)
+{
+	Fields->toCsvFile(filepath + *ConstantTable->getConstant(Name)->Utf8String + "_FieldsTable.csv", separator);
+	Methods->toCsvFile(filepath + *ConstantTable->getConstant(Name)->Utf8String + "_MethodsTable.csv", separator);
+	Properties->toCsvFile(filepath + *ConstantTable->getConstant(Name)->Utf8String + "_PropertiesTable.csv", separator);
+	ConstantTable->toCsvFile(filepath + *ConstantTable->getConstant(Name)->Utf8String + "_ConstantsTable.csv", separator);
+}
+
 // -------------------- ClassesTable --------------------
 map<string, ClassesTableElement*> ClassesTable::items;
 
@@ -161,6 +189,21 @@ void ClassesTable::addClass(string name, string superclassName, bool isImplement
 	}
 	else
 		items["global/" + name] = element;
+}
+
+void ClassesTable::toCsvFile(string filepath, char separator)
+{
+	ofstream out(filepath + "ClassesTable.csv");
+	out << "Name" << separator << "SuperclassName" << separator << "IsImplementation" << "ThisClass" << "Superclass" << "FieldsTableName" << "MethodsTableName" << "PropertiesTableName" << "ConstantsTableName" << endl;
+	auto iter = items.cbegin();
+	while (iter != items.cend())
+	{
+		string str = iter->second->toCsvString(separator);
+		out << str << endl;
+		iter->second->refTablesToCsvFile(filepath, separator);
+		++iter;
+	}
+	out.close();
 }
 
 // ------------------- FieldsTableElement --------------------

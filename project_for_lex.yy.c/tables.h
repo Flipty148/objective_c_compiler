@@ -46,6 +46,7 @@ public:
 
     int findOrAddConstant(constantType type, string utf8string);
     int findOrAddConstant(constantType type, int number = NULL, int firstRef = NULL, int secondRef = NULL);
+	ConstantsTableElement* getConstant(int id);
 
     ConstantsTable();
 
@@ -97,6 +98,7 @@ public:
     ClassesTableElement(string name, string superclassName, bool isImplementation);
 
 	string toCsvString(char separator = ';'); //Преобразование в строку формата CSV
+	void refTablesToCsvFile(string filepath, char separator = ';');
 };
 
 class ClassesTable
@@ -106,7 +108,7 @@ public:
 
     static void addClass(string name, string superclassName, bool isImplementation);
 
-	void toCsvFile(string filename, char separator = ';'); //Преобразование в CSV-файл
+	void toCsvFile(string filepath, char separator = ';'); //Преобразование в CSV-файл
 };
 
 // ---------- Таблица полей класса ----------

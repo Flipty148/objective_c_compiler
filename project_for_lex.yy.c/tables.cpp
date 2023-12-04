@@ -1,4 +1,4 @@
-#include "tables.h"
+﻿#include "tables.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -26,9 +26,9 @@ ConstantsTableElement::ConstantsTableElement(int id, constantType type, int numb
 string ConstantsTableElement::toCsvString(char separator)
 {
 	string res = "";
-	res += to_string(Id) + separator; // ���������� ID
+	res += to_string(Id) + separator; //Добавление ID
 
-	// ���������� ���� � ��������
+	// Добавление типа и значения
 	switch (Type)
 	{
 	case constantType::UTF8:
@@ -120,17 +120,17 @@ ConstantsTableElement* ConstantsTable::getConstant(int id)
 
 void ConstantsTable::toCsvFile(string filename, char separator)
 {
-	ofstream out(filename); //�������� � �������� ������ �� ������ � ����
-	out << "ID" << separator << "Type" << separator << "Value" << endl; // ������ ���������
-	auto iter = items.cbegin(); // ��������
+	ofstream out(filename); //Создание и открытие потока на запись в файл
+	out << "ID" << separator << "Type" << separator << "Value" << endl; // Запись заголовков
+	auto iter = items.cbegin();
 	while (iter != items.cend()) 
 	{
 
-		string str = iter->second->toCsvString(separator); // ��������� ������
-		out << str << endl; //������ ������
+		string str = iter->second->toCsvString(separator); // Формирование строки
+		out << str << endl; //Запись строки в файл
 		++iter;
 	}
-	out.close(); // �������� ������ ��� ������
+	out.close(); // Закрытие потока
 }
 
 // -------------------- ClassesTableElement --------------------
@@ -165,10 +165,10 @@ string ClassesTableElement::toCsvString(char separator)
 
 void ClassesTableElement::refTablesToCsvFile(string filepath, char separator)
 {
-	Fields->toCsvFile(filepath + *ConstantTable->getConstant(Name)->Utf8String + "_FieldsTable.csv", separator);
-	Methods->toCsvFile(filepath + *ConstantTable->getConstant(Name)->Utf8String + "_MethodsTable.csv", separator);
-	Properties->toCsvFile(filepath + *ConstantTable->getConstant(Name)->Utf8String + "_PropertiesTable.csv", separator);
-	ConstantTable->toCsvFile(filepath + *ConstantTable->getConstant(Name)->Utf8String + "_ConstantsTable.csv", separator);
+	Fields->toCsvFile(filepath + *ConstantTable->getConstant(Name)->Utf8String + "_FieldsTable.csv", separator); //Записать таблицу полей в файл
+	Methods->toCsvFile(filepath + *ConstantTable->getConstant(Name)->Utf8String + "_MethodsTable.csv", separator); //Записать таблицу методов в файл
+	Properties->toCsvFile(filepath + *ConstantTable->getConstant(Name)->Utf8String + "_PropertiesTable.csv", separator); //Записать таблицу свойств в файл
+	ConstantTable->toCsvFile(filepath + *ConstantTable->getConstant(Name)->Utf8String + "_ConstantsTable.csv", separator); //Записать таблицу констант в файл
 }
 
 // -------------------- ClassesTable --------------------
@@ -177,7 +177,7 @@ map<string, ClassesTableElement*> ClassesTable::items;
 void ClassesTable::addClass(string name, string superclassName, bool isImplementation)
 {
 	//TODO: check superclass name is RTL
-	//TODO: �������� �������� �� ������� ���������� ������
+	//TODO: Добавить проверку на наличие реализации метода при наличии интерфейса
 	ClassesTableElement *element = new ClassesTableElement("global/" + name, "global/" + superclassName, isImplementation);
 	if (!isImplementation && items.count("global/" + name) && items["global/" + name]->IsImplementation) {
 		string msg = "Class interface'" + name + "' after implementation";
@@ -193,17 +193,17 @@ void ClassesTable::addClass(string name, string superclassName, bool isImplement
 
 void ClassesTable::toCsvFile(string filepath, char separator)
 {
-	ofstream out(filepath + "ClassesTable.csv");
-	out << "Name" << separator << "SuperclassName" << separator << "IsImplementation" << "ThisClass" << "Superclass" << "FieldsTableName" << "MethodsTableName" << "PropertiesTableName" << "ConstantsTableName" << endl;
+	ofstream out(filepath + "ClassesTable.csv"); //Создание и открытие потока на запись в файл
+	out << "Name" << separator << "SuperclassName" << separator << "IsImplementation" << "ThisClass" << "Superclass" << "FieldsTableName" << "MethodsTableName" << "PropertiesTableName" << "ConstantsTableName" << endl; // Запись заголовков
 	auto iter = items.cbegin();
 	while (iter != items.cend())
 	{
-		string str = iter->second->toCsvString(separator);
-		out << str << endl;
-		iter->second->refTablesToCsvFile(filepath, separator);
+		string str = iter->second->toCsvString(separator); // Формирование строки
+		out << str << endl; //Запись строки в файл
+		iter->second->refTablesToCsvFile(filepath, separator); // Запись вложенных таблиц класса
 		++iter;
 	}
-	out.close();
+	out.close(); // Закрытие потока
 }
 
 // ------------------- FieldsTableElement --------------------

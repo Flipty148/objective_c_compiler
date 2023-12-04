@@ -98,7 +98,7 @@ public:
     ClassesTableElement(string name, string superclassName, bool isImplementation);
 
 	string toCsvString(char separator = ';'); //Преобразование в строку формата CSV
-	void refTablesToCsvFile(string filepath, char separator = ';');
+	void refTablesToCsvFile(string filepath, char separator = ';'); //Запись вложенных таблиц в файлы
 };
 
 class ClassesTable

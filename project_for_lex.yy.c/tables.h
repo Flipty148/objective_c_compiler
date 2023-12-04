@@ -34,6 +34,8 @@ public:
 
     ConstantsTableElement(int id, constantType type, string utf8string);
     ConstantsTableElement(int id, constantType type, int number = NULL, int firstRef = NULL, int secondRef = NULL);
+
+	string toCsvString(char separator = ';'); //Преобразование в строку формата CSV
 };
 
 class ConstantsTable
@@ -46,6 +48,8 @@ public:
     int findOrAddConstant(constantType type, int number = NULL, int firstRef = NULL, int secondRef = NULL);
 
     ConstantsTable();
+
+	void toCsvFile(string filename, char separator = ';'); //Преобразование в CSV-файл
 private:
     int findConstant(constantType type, string *utf8string, int number=NULL, int firstRef=NULL, int secondRef=NULL);
 };
@@ -61,6 +65,8 @@ public:
 	LocalVariablesTable* LocalVariables = NULL; // Ссылка на соответствующую таблицу локальных переменных
 
     FunctionsTableElement(int name, int descriptor, Statement_node* bodyRoot);
+
+	string toCsvString(char separator = ';'); //Преобразование в строку формата CSV
 };
 
 class FunctionsTable
@@ -69,6 +75,8 @@ public:
     map<string, FunctionsTableElement*> items; // Таблица функций, в качестве ключа - Имя функции
 
     void addFunction(ConstantsTable *constantTable, string name, string descriptor, Statement_node* bodyRoot);
+
+	void toCsvFile(string filename, char separator = ';'); //Преобразование в CSV-файл
 };
 
 // ---------- Таблица классов ----------
@@ -87,6 +95,8 @@ public:
     ConstantsTable* ConstantTable; // Таблица констант
 
     ClassesTableElement(string name, string superclassName, bool isImplementation);
+
+	string toCsvString(char separator = ';'); //Преобразование в строку формата CSV
 };
 
 class ClassesTable
@@ -95,6 +105,8 @@ public:
     static map<string, ClassesTableElement*> items; // Таблица классов, в качестве ключа - Имя класса
 
     static void addClass(string name, string superclassName, bool isImplementation);
+
+	void toCsvFile(string filename, char separator = ';'); //Преобразование в CSV-файл
 };
 
 // ---------- Таблица полей класса ----------
@@ -108,6 +120,8 @@ public:
     Type *type;
 
     FieldsTableElement(int name, int descriptor, bool isInstance, Type *type);
+
+	string toCsvString(char separator = ';'); //Преобразование в строку формата CSV
 };
 
 class FieldsTable
@@ -116,6 +130,8 @@ public:
     map < string, FieldsTableElement*> items; //Таблица полей класса, в качестве ключа - Имя поля класса
 
     void addField(ConstantsTable *constantTable, string name, string descriptor, bool isInstance, Type *type);
+
+	void toCsvFile(string filename, char separator = ';'); //Преобразование в CSV-файл
 };
 
 // ---------- Таблица методов ----------
@@ -133,6 +149,8 @@ public:
     vector<Type> *KeywordsTypes = NULL; //Тип параметров keyword
 
     MethodsTableElement(int name, int descriptor, bool isClassMethod, Statement_node* bodyStart, Type *returnType, vector<Type>* paramsTypes, vector<Type>* keywordsTypes);
+
+	string toCsvString(char separator = ';'); //Преобразование в строку формата CSV
 };
 
 class MethodsTable
@@ -141,6 +159,8 @@ public:
 	map< string, MethodsTableElement* > items; //Таблица методов класса, в качестве ключа - Имя метода класса
 
     void addMethod(ConstantsTable *constantTable, string name, string descriptor, bool isClassMethod, Statement_node* bodyStart, Type *returnType, vector<Type>* paramsTypes, vector<Type>* keywordsTypes);
+
+	void toCsvFile(string filename, char separator = ';'); //Преобразование в CSV-файл
 };
 
 // ----------- Таблица свойств ----------
@@ -154,6 +174,8 @@ public:
     Type *type; // Тип свойства
 
     PropertiesTableElement(int name, int descriptor, bool isReadonly, Type *type);
+
+	string toCsvString(char separator = ';'); //Преобразование в строку формата CSV
 };
 
 class PropertiesTable
@@ -162,6 +184,8 @@ public:
 	map<string, PropertiesTableElement*> items; // Таблица  свойств класса, в качестве ключа - Имя свойства класса
 
     void addProperty(ConstantsTable *constantTable, string name, string descriptor, bool isReadonly, Type *type);
+
+	void toCsvFile(string filename, char separator = ';'); //Преобразование в CSV-файл
 };
 
 // ---------- Таблица локальных переменных ----------
@@ -174,6 +198,8 @@ public:
     Type *type; //Тип переменной
 
     LocalVariablesTableElement(int id, string name, Type *type);
+
+	string toCsvString(char separator = ';'); //Преобразование в строку формата CSV
 };
 
 class LocalVariablesTable
@@ -183,6 +209,8 @@ public:
 	map<string, LocalVariablesTableElement*> items; // Таблица локальных переменных, в качестве ключа - Имя локальной переменной
 
     int findOrAddLocalVariable(string name, Type *type);
+
+	void toCsvFile(string filename, char separator = ';'); //Преобразование в CSV-файл
 };
 
 // ---------- Типы ----------

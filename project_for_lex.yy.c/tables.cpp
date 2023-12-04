@@ -208,12 +208,24 @@ void ClassesTable::toCsvFile(string filepath, char separator)
 
 // ------------------- FieldsTableElement --------------------
 
-FieldsTableElement::FieldsTableElement(int name, int descriptor, bool isInstance, Type *type)
+FieldsTableElement::FieldsTableElement(int name, int descriptor, bool isInstance, Type *type, string nameStr, string descriptorStr)
 {
 	Name = name;
 	Descriptor = descriptor;
 	IsInstance = isInstance;
 	this->type = type;
+	NameStr = nameStr;
+	DescriptorStr = descriptorStr;
+}
+
+string FieldsTableElement::toCsvString(char separator = ';')
+{
+	string res = "";
+	res += to_string(Name) + " (" + NameStr + ")" + separator; //Добавление имени
+	res += to_string(Descriptor) + " (" + DescriptorStr + ")" + separator; //Добавление дескриптора
+	res += (IsInstance ? "true" : "false") + separator; //Добавление флага, который показывает принадлежность поля к экземпляру
+	res += type->toString() + separator; //Добавление типа
+	return res;
 }
 
 // -------------------- FieldsTable --------------------
@@ -222,8 +234,22 @@ void FieldsTable::addField(ConstantsTable *constantTable, string name, string de
 {
 	int NameId = constantTable->findOrAddConstant(UTF8, name);
 	int DescriptorId = constantTable->findOrAddConstant(UTF8, descriptor);
-	FieldsTableElement *field = new FieldsTableElement(NameId, DescriptorId, isInstance, type);
+	FieldsTableElement *field = new FieldsTableElement(NameId, DescriptorId, isInstance, type, name, descriptor);
 	items[name] = field;
+}
+
+void FieldsTable::toCsvFile(string filename, char separator = ';')
+{
+	ofstream out(filename); //Создание и открытие потока на запись в файл
+	out << "Name" << separator << "Descriptor" << separator << "IsInstance" << separator << "Type" << endl; // Запись заголовков
+	auto iter = items.cbegin();
+	while (iter != items.cend())
+	{
+		string str = iter->second->toCsvString(separator); // Формирование строки
+		out << str << endl; //Запись строки в файл
+		++iter;
+	}
+	out.close(); // Закрытие потока
 }
 
 // -------------------- MethodsTableElement --------------------

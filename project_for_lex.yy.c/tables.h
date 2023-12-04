@@ -119,9 +119,11 @@ public:
     int Name = NULL; // Ссылка на константу с именем поля
 	int Descriptor = NULL; // Ссылка на константу с дескриптором поля
     bool IsInstance = NULL; // Флаг, показывающий является ли поле частью экземпляра класса
-    Type *type;
+	Type* type; // Тип поля
+	string NameStr; // Имя поля
+	string DescriptorStr; // Дескриптор поля
 
-    FieldsTableElement(int name, int descriptor, bool isInstance, Type *type);
+    FieldsTableElement(int name, int descriptor, bool isInstance, Type *type, string nameStr, string descriptorStr);
 
 	string toCsvString(char separator = ';'); //Преобразование в строку формата CSV
 };
@@ -227,4 +229,6 @@ public:
     Type(type_type dataType, string className);
     Type(type_type dataType);
     Type(type_type dataType, int arrSize);
+
+	string toString();
 };

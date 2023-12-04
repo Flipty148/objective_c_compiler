@@ -118,9 +118,9 @@ ConstantsTableElement* ConstantsTable::getConstant(int id)
 	return items[id];
 }
 
-void ConstantsTable::toCsvFile(string filename, char separator)
+void ConstantsTable::toCsvFile(string filename, string filepath, char separator)
 {
-	ofstream out(filename); //Создание и открытие потока на запись в файл
+	ofstream out(filepath + filename); //Создание и открытие потока на запись в файл
 	out << "ID" << separator << "Type" << separator << "Value" << endl; // Запись заголовков
 	auto iter = items.cbegin();
 	while (iter != items.cend()) 
@@ -179,15 +179,15 @@ string ClassesTableElement::toCsvString(char separator)
 void ClassesTableElement::refTablesToCsvFile(string filepath, char separator)
 {
 	if (Fields->items.size() > 0)
-		Fields->toCsvFile(filepath + *ConstantTable->getConstant(Name)->Utf8String + "_FieldsTable.csv", separator); //Записать таблицу полей в файл
+		Fields->toCsvFile(*ConstantTable->getConstant(Name)->Utf8String + "_FieldsTable.csv", filepath, separator); //Записать таблицу полей в файл
 	
 	if (Methods->items.size() > 0)
-		Methods->toCsvFile(filepath + *ConstantTable->getConstant(Name)->Utf8String + "_MethodsTable.csv", separator); //Записать таблицу методов в файл
+		Methods->toCsvFile(*ConstantTable->getConstant(Name)->Utf8String + "_MethodsTable.csv", filepath, separator); //Записать таблицу методов в файл
 
 	if (Properties->items.size() > 0)
-		Properties->toCsvFile(filepath + *ConstantTable->getConstant(Name)->Utf8String + "_PropertiesTable.csv", separator); //Записать таблицу свойств в файл
+		Properties->toCsvFile(*ConstantTable->getConstant(Name)->Utf8String + "_PropertiesTable.csv", filepath, separator); //Записать таблицу свойств в файл
 
-	ConstantTable->toCsvFile(filepath + *ConstantTable->getConstant(Name)->Utf8String + "_ConstantsTable.csv", separator); //Записать таблицу констант в файл
+	ConstantTable->toCsvFile(*ConstantTable->getConstant(Name)->Utf8String + "_ConstantsTable.csv", filepath, separator); //Записать таблицу констант в файл
 }
 
 // -------------------- ClassesTable --------------------
@@ -257,9 +257,9 @@ void FieldsTable::addField(ConstantsTable *constantTable, string name, string de
 	items[name] = field;
 }
 
-void FieldsTable::toCsvFile(string filename, char separator = ';')
+void FieldsTable::toCsvFile(string filename, string filepath, char separator = ';')
 {
-	ofstream out(filename); //Создание и открытие потока на запись в файл
+	ofstream out(filepath + filename); //Создание и открытие потока на запись в файл
 	out << "Name" << separator << "Descriptor" << separator << "IsInstance" << separator << "Type" << endl; // Запись заголовков
 	auto iter = items.cbegin();
 	while (iter != items.cend())
@@ -273,7 +273,7 @@ void FieldsTable::toCsvFile(string filename, char separator = ';')
 
 // -------------------- MethodsTableElement --------------------
 
-MethodsTableElement::MethodsTableElement(int name, int descriptor, bool isClassMethod, Statement_node* bodyStart, Type *returnType, vector<Type>* paramsTypes, vector<Type>* keywordsTypes)
+MethodsTableElement::MethodsTableElement(int name, int descriptor, bool isClassMethod, Statement_node* bodyStart, Type *returnType, vector<Type>* paramsTypes, vector<Type>* keywordsTypes, string nameStr, string descriptorStr)
 {
 	Name = name;
 	Descriptor = descriptor;
@@ -283,6 +283,8 @@ MethodsTableElement::MethodsTableElement(int name, int descriptor, bool isClassM
 	ParamsTypes = paramsTypes;
 	KeywordsTypes = keywordsTypes;
 	LocalVariables = new LocalVariablesTable();
+	NameStr = nameStr;
+	DescriptorStr = descriptorStr;
 }
 
 // -------------------- MethodsTable --------------------
@@ -296,7 +298,7 @@ void MethodsTable::addMethod(ConstantsTable *constantTable, string name, string 
 	}
 	int NameId = constantTable->findOrAddConstant(UTF8, name);
 	int DescriptorId = constantTable->findOrAddConstant(UTF8, descriptor);
-	MethodsTableElement *method = new MethodsTableElement(NameId, DescriptorId, isClassMethod, bodyStart, returnType, paramsTypes, keywordsTypes);
+	MethodsTableElement *method = new MethodsTableElement(NameId, DescriptorId, isClassMethod, bodyStart, returnType, paramsTypes, keywordsTypes, name, descriptor);
 	items[name] = method;
 }
 

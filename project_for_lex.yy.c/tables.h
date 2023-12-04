@@ -50,7 +50,7 @@ public:
 
     ConstantsTable();
 
-	void toCsvFile(string filename, char separator = ';'); //Преобразование в CSV-файл
+	void toCsvFile(string filename, string filepath, char separator = ';'); //Преобразование в CSV-файл
 private:
     int findConstant(constantType type, string *utf8string, int number=NULL, int firstRef=NULL, int secondRef=NULL);
 };
@@ -135,7 +135,7 @@ public:
 
     void addField(ConstantsTable *constantTable, string name, string descriptor, bool isInstance, Type *type);
 
-	void toCsvFile(string filename, char separator = ';'); //Преобразование в CSV-файл
+	void toCsvFile(string filename, string filepath, char separator = ';'); //Преобразование в CSV-файл
 };
 
 // ---------- Таблица методов ----------
@@ -152,9 +152,13 @@ public:
     vector<Type> *ParamsTypes = NULL; //Тип параметров
     vector<Type> *KeywordsTypes = NULL; //Тип параметров keyword
 
-    MethodsTableElement(int name, int descriptor, bool isClassMethod, Statement_node* bodyStart, Type *returnType, vector<Type>* paramsTypes, vector<Type>* keywordsTypes);
+	string NameStr; // Имя метода
+	string DescriptorStr; // Дескриптор метода
+
+    MethodsTableElement(int name, int descriptor, bool isClassMethod, Statement_node* bodyStart, Type *returnType, vector<Type>* paramsTypes, vector<Type>* keywordsTypes, string nameStr, string descriptorStr);
 
 	string toCsvString(char separator = ';'); //Преобразование в строку формата CSV
+	void refTablesToCsvFile(string filepath, char separator = ';');
 };
 
 class MethodsTable
@@ -164,7 +168,7 @@ public:
 
     void addMethod(ConstantsTable *constantTable, string name, string descriptor, bool isClassMethod, Statement_node* bodyStart, Type *returnType, vector<Type>* paramsTypes, vector<Type>* keywordsTypes);
 
-	void toCsvFile(string filename, char separator = ';'); //Преобразование в CSV-файл
+	void toCsvFile(string filename, string filepath, char separator = ';'); //Преобразование в CSV-файл
 };
 
 // ----------- Таблица свойств ----------
@@ -189,7 +193,7 @@ public:
 
     void addProperty(ConstantsTable *constantTable, string name, string descriptor, bool isReadonly, Type *type);
 
-	void toCsvFile(string filename, char separator = ';'); //Преобразование в CSV-файл
+	void toCsvFile(string filename, string filepath, char separator = ';'); //Преобразование в CSV-файл
 };
 
 // ---------- Таблица локальных переменных ----------
@@ -214,7 +218,7 @@ public:
 
     int findOrAddLocalVariable(string name, Type *type);
 
-	void toCsvFile(string filename, char separator = ';'); //Преобразование в CSV-файл
+	void toCsvFile(string filename, string fileoath, char separator = ';'); //Преобразование в CSV-файл
 };
 
 // ---------- Типы ----------

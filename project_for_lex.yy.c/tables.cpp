@@ -156,18 +156,37 @@ string ClassesTableElement::toCsvString(char separator)
 	res += (IsImplementation ? "true" : "false") + separator;
 	res += to_string(ThisClass) + separator;
 	res += to_string(Superclass) + separator;
-	res += *ConstantTable->getConstant(Name)->Utf8String + "_FieldsTable.csv" + separator;
-	res += *ConstantTable->getConstant(Name)->Utf8String + "_MethodsTable.csv" + separator;
-	res += *ConstantTable->getConstant(Name)->Utf8String + "_PropertiesTable.csv" + separator;
+
+	if (Fields->items.size() > 0)
+		res += *ConstantTable->getConstant(Name)->Utf8String + "_FieldsTable.csv" + separator;
+	else
+		res += "emptyTable" + separator;
+
+	if (Methods->items.size() >0 )
+		res += *ConstantTable->getConstant(Name)->Utf8String + "_MethodsTable.csv" + separator;
+	else
+		res += "emptyTable" + separator;
+
+	if (Properties->items.size() > 0)
+		res += *ConstantTable->getConstant(Name)->Utf8String + "_PropertiesTable.csv" + separator;
+	else
+		res += "emptyTable" + separator;
+		
 	res += *ConstantTable->getConstant(Name)->Utf8String + "_ConstantsTable.csv";
 	return res;
 }
 
 void ClassesTableElement::refTablesToCsvFile(string filepath, char separator)
 {
-	Fields->toCsvFile(filepath + *ConstantTable->getConstant(Name)->Utf8String + "_FieldsTable.csv", separator); //Записать таблицу полей в файл
-	Methods->toCsvFile(filepath + *ConstantTable->getConstant(Name)->Utf8String + "_MethodsTable.csv", separator); //Записать таблицу методов в файл
-	Properties->toCsvFile(filepath + *ConstantTable->getConstant(Name)->Utf8String + "_PropertiesTable.csv", separator); //Записать таблицу свойств в файл
+	if (Fields->items.size() > 0)
+		Fields->toCsvFile(filepath + *ConstantTable->getConstant(Name)->Utf8String + "_FieldsTable.csv", separator); //Записать таблицу полей в файл
+	
+	if (Methods->items.size() > 0)
+		Methods->toCsvFile(filepath + *ConstantTable->getConstant(Name)->Utf8String + "_MethodsTable.csv", separator); //Записать таблицу методов в файл
+
+	if (Properties->items.size() > 0)
+		Properties->toCsvFile(filepath + *ConstantTable->getConstant(Name)->Utf8String + "_PropertiesTable.csv", separator); //Записать таблицу свойств в файл
+
 	ConstantTable->toCsvFile(filepath + *ConstantTable->getConstant(Name)->Utf8String + "_ConstantsTable.csv", separator); //Записать таблицу констант в файл
 }
 

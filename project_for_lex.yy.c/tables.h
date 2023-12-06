@@ -46,8 +46,8 @@ public:
 
     int findOrAddConstant(constantType type, string utf8string);
     int findOrAddConstant(constantType type, int number = NULL, int firstRef = NULL, int secondRef = NULL);
-	ConstantsTableElement* getConstant(int id);
-	string getConstantString(int id);
+	ConstantsTableElement* getConstant(int id); //Получение константы
+	string getConstantString(int id); //Получение значения UTF8 константы
 
     ConstantsTable();
 

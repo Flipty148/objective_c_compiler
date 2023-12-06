@@ -209,23 +209,24 @@ void ClassesTable::addClass(string name, string superclassName, bool isImplement
 {
 	//TODO: check superclass name is RTL
 	//TODO: Добавить проверку на наличие реализации метода при наличии интерфейса
-	ClassesTableElement *element = new ClassesTableElement("global/" + name, "global/" + superclassName, isImplementation);
+	//TODO: Проверка на соответствие необходимых элементов в реализации и интерфейсе
+	ClassesTableElement *element = new ClassesTableElement("global/" + name, "global/" + superclassName, isImplementation); // Новый добавляемый элемент
 
 
-	if (!isImplementation && items.count("global/" + name) && items["global/" + name]->IsImplementation) {
+	if (!isImplementation && items.count("global/" + name) && items["global/" + name]->IsImplementation) { // Проверка, чтобы интерфейс класса при его наличии находился раньше реализации
 		string msg = "Class interface'" + name + "' after implementation";
 		throw std::exception(msg.c_str());
 	}
-	else if (items.count("global/" + name) && items["global/" + name]->IsImplementation == isImplementation) {
+	else if (items.count("global/" + name) && items["global/" + name]->IsImplementation == isImplementation) { // Проверка на повторное объявление класса
 		string msg = "Rediifnition of class '" + name + "'";
 		throw std::exception(msg.c_str());
 	}
-	else if (items.count("/global" + name) && items["global/" + name]->ConstantTable->getConstantString(items["global/" + name]->SuperclassName) != superclassName) {
+	else if (items.count("/global" + name) && items["global/" + name]->ConstantTable->getConstantString(items["global/" + name]->SuperclassName) != superclassName) { // Проверка на совпадение суперкласса в интерфейсе и реаизации
 		string msg = "Class '" + name + "' with different superclass";
 		throw std::exception(msg.c_str());
 	}
 	else
-		items["global/" + name] = element;
+		items["global/" + name] = element; // Добавление (обновление элемента в таблице классов)
 }
 
 void ClassesTable::toCsvFile(string filepath, char separator)

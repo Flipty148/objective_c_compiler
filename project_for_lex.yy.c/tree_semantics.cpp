@@ -15,7 +15,45 @@ void Function_and_class_list_node::fillTables()
                 Class_implementation_node* curImplementation = (Class_implementation_node*)cur;
                 string className = curImplementation->ClassName; // Имя сласса
                 string *superclassName = curImplementation->SuperclassName == NULL ? NULL : new string(curImplementation->SuperclassName); // Имя суперкласса
-                ClassesTable::addClass(className, superclassName, true); // Добавление класса в таблицу
+				ClassesTableElement *element = ClassesTable::addClass(className, superclassName, true); // Добавление класса в таблицу
+
+				if (curImplementation->Body != NULL)
+				{
+					map<string, int>* indexes = new map<string, int>;
+					map<string, Type*> instanceVariables = curImplementation->Body->getInstanceVariables(indexes);
+
+					if (element->IsHaveInterface) { // У класса был интерфейс
+						// Проверить instance variables
+						if (instanceVariables.size() > 0) {
+							// Сверить instance variables
+							for (auto it = instanceVariables.begin(); it != instanceVariables.end(); it++)
+							{
+								if (!element->Fields->items.count(it->first)) {
+									string msg = "Instance variable '" + it->first + "' not found in interface '" + className + "'\n";
+									throw std::exception(msg.c_str());
+								}
+
+								if (element->Fields->items[it->first]->InstanceIndex != (*indexes)[it->first])
+								{
+									string msg = "Instance variable '" + it->first + "' in class '" + className + "' has different position from the position specified in the interface'\n";
+									throw std::exception(msg.c_str());
+								}
+								if (it->second->getDescriptor() != element->Fields->items[it->first]->DescriptorStr)
+								{
+									string msg = "Instance variable '" + it->first + "' in class '" + className + "' has different type from the type specified in the interface'\n";
+									throw std::exception(msg.c_str());
+								}
+							}
+						}
+					}
+					else { // У класса не было интерфейса
+						// Добавить instance variables
+						for (auto it = instanceVariables.begin(); it != instanceVariables.end(); it++)
+						{
+							element->Fields->addField(element->ConstantTable, it->first, it->second->getDescriptor(), true, it->second);
+						}
+					}
+				}
             }
             else if (cur->type == INTERFACE_CLASS_BLOCK_TYPE)
             { // Интерфейс
@@ -24,11 +62,13 @@ void Function_and_class_list_node::fillTables()
                 string superclassName = curInterface->SuperclassName; // Имя суперкласса
                 ClassesTableElement* element = ClassesTable::addClass(className, &superclassName, false); // Добавление класса в таблицу
 
-				// Добавление instance variables
-				map<string, Type*> instanceVariables = curInterface->Body->getInstanceVariables();
-				for (auto it = instanceVariables.begin(); it != instanceVariables.end(); it++)
-				{
-                    element->Fields->addField(element->ConstantTable, it->first, it->second->getDescriptor(), true, it->second);
+				if (curInterface->Body != NULL) {
+					// Добавление instance variables
+					map<string, Type*> instanceVariables = curInterface->Body->getInstanceVariables();
+					for (auto it = instanceVariables.begin(); it != instanceVariables.end(); it++)
+					{
+						element->Fields->addField(element->ConstantTable, it->first, it->second->getDescriptor(), true, it->second);
+					}
 				}
             }
         }
@@ -101,4 +141,23 @@ vector<string> Instance_variables_declaration_node::getInstanceVariables(vector<
         }
     }
 	return names;
+}
+
+// ---------- Implementation_body_node ----------
+map<string, Type*> Implementation_body_node::getInstanceVariables(map<string, int> *indexes)
+{
+	Instance_variables_declaration_node* first = Variables->First;
+	map<string, Type*> res;
+	while (first != NULL)
+	{
+		vector<Type*>* types = new vector<Type*>;
+		vector <string> names = first->getInstanceVariables(types);
+		for (int i = 0; i < names.size(); i++)
+		{
+			res[names[i]] = types->at(i);
+			(*indexes)[names[i]] = i + 1;
+		}
+		first = first->Next;
+	}
+	return res;
 }

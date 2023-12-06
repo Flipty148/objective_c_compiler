@@ -236,6 +236,7 @@ ClassesTableElement* ClassesTable::addClass(string name, string* superclassName,
 	}
 	else if (items.count(fullName) && !items[fullName]->IsImplementation && isImplementation) { // Объявление реализации после интерфейса
 		items[fullName]->IsImplementation = true;
+		items[fullName]->IsHaveInterface = true;
 		delete element;
 	}
 	else {
@@ -262,11 +263,12 @@ void ClassesTable::toCsvFile(string filepath, char separator)
 
 // ------------------- FieldsTableElement --------------------
 
-FieldsTableElement::FieldsTableElement(int name, int descriptor, bool isInstance, Type *type, string nameStr, string descriptorStr)
+FieldsTableElement::FieldsTableElement(int name, int descriptor, bool isInstance, int instanceIndex, Type *type, string nameStr, string descriptorStr)
 {
 	Name = name;
 	Descriptor = descriptor;
 	IsInstance = isInstance;
+	InstanceIndex = instanceIndex;
 	this->type = type;
 	NameStr = nameStr;
 	DescriptorStr = descriptorStr;
@@ -288,7 +290,8 @@ void FieldsTable::addField(ConstantsTable *constantTable, string name, string de
 {
 	int NameId = constantTable->findOrAddConstant(UTF8, name);
 	int DescriptorId = constantTable->findOrAddConstant(UTF8, descriptor);
-	FieldsTableElement *field = new FieldsTableElement(NameId, DescriptorId, isInstance, type, name, descriptor);
+	FieldsTableElement *field = new FieldsTableElement(NameId, DescriptorId, isInstance, maxInstanceIndex, type, name, descriptor);
+	maxInstanceIndex++;
 	items[name] = field;
 }
 

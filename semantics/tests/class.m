@@ -18,4 +18,10 @@
 @end
 
 @implementation MyClass2
+{
+    int a,d[15];
+}
+@end
+
+@implementation MyClass3
 @end

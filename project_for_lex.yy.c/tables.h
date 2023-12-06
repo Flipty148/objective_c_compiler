@@ -91,6 +91,7 @@ public:
     int Name; // Ссылка на константу с именем класса
     int SuperclassName; // Ссылка на константу с именем родительского класса
     bool IsImplementation; //Флаг, который показывает является ли класс реализацией (ВОЗМОЖНО, СТОИТ ДОБАВИТЬ ИМЕННО НАЛИЧИЕ РЕАЛИЗАЦИИ КЛАССА)
+    bool IsHaveInterface = false; // Флаг, который показывает имеет ли реализация интерфейс
     int ThisClass; // Ссылка на константу текущего класса
     int Superclass; // Ссылка на константу родительского класса
     FieldsTable* Fields; // Ссылка на соответствующую таблицу полей класса
@@ -122,11 +123,12 @@ public:
     int Name = NULL; // Ссылка на константу с именем поля
     int Descriptor = NULL; // Ссылка на константу с дескриптором поля
     bool IsInstance = NULL; // Флаг, показывающий является ли поле частью экземпляра класса
+	int InstanceIndex = NULL; // Индекс instance variable в списке (нужно, так как важен их порядок)
     Type* type; // Тип поля
     string NameStr; // Имя поля
     string DescriptorStr; // Дескриптор поля
 
-    FieldsTableElement(int name, int descriptor, bool isInstance, Type* type, string nameStr, string descriptorStr);
+    FieldsTableElement(int name, int descriptor, bool isInstance, int instanceIndex, Type* type, string nameStr, string descriptorStr);
 
     string toCsvString(char separator = ';'); //Преобразование в строку формата CSV
 };
@@ -134,6 +136,7 @@ public:
 class FieldsTable
 {
 public:
+	int maxInstanceIndex = 1;
     map < string, FieldsTableElement*> items; //Таблица полей класса, в качестве ключа - Имя поля класса
 
     void addField(ConstantsTable* constantTable, string name, string descriptor, bool isInstance, Type* type);

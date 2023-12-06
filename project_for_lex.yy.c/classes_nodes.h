@@ -595,6 +595,8 @@ class Implementation_body_node
         static Implementation_body_node* createImplementationBodyNode(Instance_variables_declaration_list_node *variables, Implementation_definition_list_node *definitionList);
 
         string toDot(string labelConection="");
+
+        map<string, Type*> getInstanceVariables(map<string, int>* indexes); // Функция возвращающая поля объекта
 };
 
 // ---------- class_implementation ----------

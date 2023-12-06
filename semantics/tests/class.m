@@ -1,6 +1,6 @@
 @interface Myclass:NSObject
 {
-    int a;
+    int a[10], c;
 }
     int b;
     + (int) func: (int) first :(int) second;
@@ -8,11 +8,14 @@
 
 @implementation Myclass:NSObject
 {
-    int a;
+    int a[10], c;
 }
     int b;
     + (int) func: (int) first :(int) second
     {
         return first + second;
     }
+@end
+
+@implementation MyClass2
 @end

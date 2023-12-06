@@ -1,7 +1,11 @@
 #include <vector>
 #include <set>
 #include <iostream>
+#include <map>
+
 using namespace std;
+
+class Type;
 
 //---------- Прототипы классов ----------
 class Init_declarator_list_node;
@@ -575,6 +579,8 @@ class Interface_body_node
         static Interface_body_node* createInterfaceBodyNode(Instance_variables_declaration_list_node *variables, Interface_declaration_list_node *declarationList);
 
         string toDot(string labelConection="");
+
+        map<string, Type*> getInstanceVariables(); // Функция возвращающая поля объекта
 };
 
 // ---------- implementation_body ----------
@@ -638,13 +644,15 @@ class Instance_variables_declaration_node
 {
     public:
         int id;
-        Type_node *Type;
+        Type_node *type;
         Declarator_list_node *DeclaratorList;
         Instance_variables_declaration_node *Next;
 
         static Instance_variables_declaration_node* createInstanceVariablesDeclarationNode(Type_node *type, Declarator_list_node *declaratorList);
 
         string toDot(string labelConection="");
+
+		vector<string> getInstanceVariables(vector<Type*> *types); // Функция возвращающая поля объекта
 };
 
 // ---------- instance_variables_declaration_list ----------

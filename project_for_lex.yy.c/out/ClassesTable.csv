@@ -1,2 +1,3 @@
 Name;SuperclassName;IsImplementation;ThisClass;Superclass;FieldsTableName;MethodsTableName;PropertiesTableName;ConstantsTableName
-2(global/Myclass);3(global/NSObject);true;4;5;emptyTable;emptyTable;emptyTable;global/Myclass_ConstantsTable.csv
+2(global/MyClass2);empty;true;3;0;emptyTable;emptyTable;emptyTable;global/MyClass2_ConstantsTable.csv
+2(global/Myclass);3(global/NSObject);true;4;5;global/Myclass_FieldsTable.csv;emptyTable;emptyTable;global/Myclass_ConstantsTable.csv

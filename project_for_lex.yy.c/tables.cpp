@@ -1,8 +1,8 @@
-﻿#include "tables.h"
-#include <iostream>
+﻿#include <iostream>
 #include <fstream>
 #include <string>
 #include <algorithm>
+#include "tables.h"
 using namespace std;
 
 // -------------------- ConstantsTableElement --------------------
@@ -145,16 +145,18 @@ void ConstantsTable::toCsvFile(string filename, string filepath, char separator)
 
 // -------------------- ClassesTableElement --------------------
 
-ClassesTableElement::ClassesTableElement(string name, string superclassName, bool isImplementation)
+ClassesTableElement::ClassesTableElement(string name, string *superclassName, bool isImplementation)
 {
 	ConstantTable = new ConstantsTable();
 	Fields = new FieldsTable();
 	Methods = new MethodsTable();
 	Properties = new PropertiesTable();
 	Name = ConstantTable->findOrAddConstant(UTF8, name);
-	SuperclassName = ConstantTable->findOrAddConstant(UTF8, superclassName);
+	if (superclassName != NULL)
+		SuperclassName = ConstantTable->findOrAddConstant(UTF8, *superclassName);
 	ThisClass = ConstantTable->findOrAddConstant(Class, NULL, Name);
-	Superclass = ConstantTable->findOrAddConstant(Class, NULL, SuperclassName);
+	if (superclassName != NULL)
+		Superclass = ConstantTable->findOrAddConstant(Class, NULL, SuperclassName);
 	IsImplementation = isImplementation;
 }
 
@@ -162,7 +164,10 @@ string ClassesTableElement::toCsvString(char separator)
 {
 	string res = "";
 	res += to_string(Name) + '(' + *ConstantTable->getConstant(Name)->Utf8String + ')' + separator;
-	res += to_string(SuperclassName) + '(' + *ConstantTable->getConstant(SuperclassName)->Utf8String + ')' + separator;
+	if (SuperclassName != NULL)
+		res += to_string(SuperclassName) + '(' + *ConstantTable->getConstant(SuperclassName)->Utf8String + ')' + separator;
+	else
+		res += string("empty") + separator;
 	res += string((IsImplementation ? "true" : "false")) + separator;
 	res += to_string(ThisClass) + separator;
 	res += to_string(Superclass) + separator;
@@ -191,7 +196,7 @@ void ClassesTableElement::refTablesToCsvFile(string filepath, char separator)
 	string className = *ConstantTable->getConstant(Name)->Utf8String;
 	replace(className.begin(), className.end(), '/', '_');
 	if (Fields->items.size() > 0)
-		Fields->toCsvFile(className, filepath, separator); //Записать таблицу полей в файл
+		Fields->toCsvFile(className + "_FieldsTable.csv", filepath, separator); //Записать таблицу полей в файл
 	
 	if (Methods->items.size() > 0)
 		Methods->toCsvFile(className + "_MethodsTable.csv", filepath, separator); //Записать таблицу методов в файл
@@ -205,28 +210,39 @@ void ClassesTableElement::refTablesToCsvFile(string filepath, char separator)
 // -------------------- ClassesTable --------------------
 map<string, ClassesTableElement*> ClassesTable::items;
 
-void ClassesTable::addClass(string name, string superclassName, bool isImplementation)
+ClassesTableElement* ClassesTable::addClass(string name, string* superclassName, bool isImplementation)
 {
 	//TODO: check superclass name is RTL
 	//TODO: Добавить проверку на наличие реализации метода при наличии интерфейса
 	//TODO: Проверка на соответствие необходимых элементов в реализации и интерфейсе
-	ClassesTableElement *element = new ClassesTableElement("global/" + name, "global/" + superclassName, isImplementation); // Новый добавляемый элемент
+	string fullName = "global/" + name;
+	string* fullSuperclassName = NULL;
+	if (superclassName != NULL)
+		fullSuperclassName = new string("global/" +  * superclassName);
+	ClassesTableElement *element = new ClassesTableElement("global/" + name, fullSuperclassName, isImplementation); // Новый добавляемый элемент
 
 
-	if (!isImplementation && items.count("global/" + name) && items["global/" + name]->IsImplementation) { // Проверка, чтобы интерфейс класса при его наличии находился раньше реализации
+	if (!isImplementation && items.count(fullName) && items[fullName]->IsImplementation) { // Проверка, чтобы интерфейс класса при его наличии находился раньше реализации
 		string msg = "Class interface'" + name + "' after implementation";
 		throw std::exception(msg.c_str());
 	}
-	else if (items.count("global/" + name) && items["global/" + name]->IsImplementation == isImplementation) { // Проверка на повторное объявление класса
+	else if (items.count(fullName) && items[fullName]->IsImplementation == isImplementation) { // Проверка на повторное объявление класса
 		string msg = "Rediifnition of class '" + name + "'";
 		throw std::exception(msg.c_str());
 	}
-	else if (items.count("/global" + name) && items["global/" + name]->ConstantTable->getConstantString(items["global/" + name]->SuperclassName) != superclassName) { // Проверка на совпадение суперкласса в интерфейсе и реаизации
+	else if (superclassName != NULL && items.count(fullName) && items[fullName]->ConstantTable->getConstantString(items[fullName]->SuperclassName) != *fullSuperclassName) { // Проверка на совпадение суперкласса в интерфейсе и реаизации
 		string msg = "Class '" + name + "' with different superclass";
 		throw std::exception(msg.c_str());
 	}
-	else
-		items["global/" + name] = element; // Добавление (обновление элемента в таблице классов)
+	else if (items.count(fullName) && !items[fullName]->IsImplementation && isImplementation) { // Объявление реализации после интерфейса
+		items[fullName]->IsImplementation = true;
+		delete element;
+	}
+	else {
+		items[fullName] = element; // Добавление (обновление элемента в таблице классов)
+	}
+
+	return items[fullName];
 }
 
 void ClassesTable::toCsvFile(string filepath, char separator)
@@ -541,6 +557,39 @@ string Type::toString()
 	if (ArrSize != -1)
 	{
 		res += '[' + to_string(ArrSize) + ']';
+	}
+	return res;
+}
+
+string Type::getDescriptor()
+{
+	string res = "";
+	if (ArrSize != -1)
+	{
+		res += '[';
+	}
+	switch (DataType)
+	{
+	case INT_TYPE:
+		res += string("I");
+		break;
+	case CHAR_TYPE:
+		res += string("I");
+		break;
+	case FLOAT_TYPE:
+		res += string("F");
+		break;
+	case ID_TYPE:
+		res += string("Lrtl/NSObject;");
+		break;
+	case CLASS_NAME_TYPE:
+		res += 'L' + ClassName + ';';
+		break;
+	case VOID_TYPE:
+		res += string("V");
+		break;
+	default:
+		break;
 	}
 	return res;
 }

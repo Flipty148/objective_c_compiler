@@ -19,6 +19,22 @@ void Function_and_class_list_node::fillTables()
 
 				if (curImplementation->Body != NULL)
 				{
+					// Добавление переменных
+					map<string, Expression_node*> initializers;
+					map<string, Type*> vars = curImplementation->Body->getVariables(&initializers);
+					for (auto it = vars.begin(); it != vars.end(); it++) {
+						if (element->Fields->items.count(it->first) && element->Fields->items[it->first]->InitialValue != NULL && initializers[it->first] != NULL) {
+							string msg = "Variable '" + it->first + "' redifinition in class '" + className + "'\n";
+							throw std::exception(msg.c_str());
+						}
+						if (element->Fields->items.count(it->first) && (element->Fields->items[it->first]->DescriptorStr != it->second->getDescriptor() || element->Fields->items[it->first]->type->ArrSize != it->second->ArrSize)) {
+							string msg = "Variable '" + it->first + "' in class '" + className + "' has conflict types.\n";
+							throw std::exception(msg.c_str());
+						}
+						if (!element->Fields->items.count(it->first))
+							element->Fields->addField(element->ConstantTable, it->first, it->second->getDescriptor(), false, it->second, initializers[it->first]);
+					}
+
 					map<string, int>* indexes = new map<string, int>;
 					map<string, Type*> instanceVariables = curImplementation->Body->getInstanceVariables(indexes);
 
@@ -67,6 +83,14 @@ void Function_and_class_list_node::fillTables()
 					map<string, Expression_node*> initializers;
 					map<string, Type*> vars = curInterface->Body->getVariables(&initializers);
 					for (auto it = vars.begin(); it != vars.end(); it++) {
+						if (element->Fields->items.count(it->first) && element->Fields->items[it->first]->InitialValue != NULL && initializers[it->first] != NULL) {
+							string msg = "Variable '" + it->first + "' redifinition in class '" + className + "'\n";
+							throw std::exception(msg.c_str());
+						}
+						if (element->Fields->items.count(it->first) && (element->Fields->items[it->first]->DescriptorStr != it->second->getDescriptor() || element->Fields->items[it->first]->type->ArrSize != it->second->ArrSize)) {
+							string msg = "Variable '" + it->first + "' in class '" + className + "' has conflict types.\n";
+							throw std::exception(msg.c_str());
+						}
 						element->Fields->addField(element->ConstantTable, it->first, it->second->getDescriptor(), false, it->second, initializers[it->first]);
 					}
 
@@ -184,6 +208,28 @@ map<string, Type*> Implementation_body_node::getInstanceVariables(map<string, in
 			(*indexes)[names[i]] = i + 1;
 		}
 		first = first->Next;
+	}
+	return res;
+}
+
+map<string, Type*> Implementation_body_node::getVariables(map<string, Expression_node*>* initializers)
+{
+	map<string, Type*> res;
+	if (Declaration_list != NULL)
+	{
+		vector<Implementation_definition_list_node::implementation_definition>* definitions = Declaration_list->Definitions; //Список определений
+		for (auto it = definitions->cbegin(); it < definitions->cend(); it++)
+		{
+			Declaration_node* declaration = it->declaration;
+			if (declaration != NULL)
+			{
+				map<string, Type*> cur = declaration->getDeclaration(initializers);
+				for (auto iterator = cur.begin(); iterator != cur.end(); iterator++)
+				{
+					res[iterator->first] = iterator->second;
+				}
+			}
+		}
 	}
 	return res;
 }

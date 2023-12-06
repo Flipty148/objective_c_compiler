@@ -599,6 +599,7 @@ class Implementation_body_node
         string toDot(string labelConection="");
 
         map<string, Type*> getInstanceVariables(map<string, int>* indexes); // Функция возвращающая поля объекта
+        map<string, Type*> getVariables(map<string, Expression_node*>* initializers); // Функция возвращающая поля объекта (не instance variables)
 };
 
 // ---------- class_implementation ----------

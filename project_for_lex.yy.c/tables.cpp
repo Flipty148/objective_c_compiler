@@ -119,6 +119,15 @@ ConstantsTableElement* ConstantsTable::getConstant(int id)
 	return items[id];
 }
 
+string ConstantsTable::getConstantString(int id)
+{
+	if (items[id]->Type != constantType::UTF8)
+	{
+		return "";
+	}
+	return *items[id]->Utf8String;
+}
+
 void ConstantsTable::toCsvFile(string filename, string filepath, char separator)
 {
 	ofstream out(filepath + filename); //Создание и открытие потока на запись в файл
@@ -201,12 +210,18 @@ void ClassesTable::addClass(string name, string superclassName, bool isImplement
 	//TODO: check superclass name is RTL
 	//TODO: Добавить проверку на наличие реализации метода при наличии интерфейса
 	ClassesTableElement *element = new ClassesTableElement("global/" + name, "global/" + superclassName, isImplementation);
+
+
 	if (!isImplementation && items.count("global/" + name) && items["global/" + name]->IsImplementation) {
 		string msg = "Class interface'" + name + "' after implementation";
 		throw std::exception(msg.c_str());
 	}
 	else if (items.count("global/" + name) && items["global/" + name]->IsImplementation == isImplementation) {
 		string msg = "Rediifnition of class '" + name + "'";
+		throw std::exception(msg.c_str());
+	}
+	else if (items.count("/global" + name) && items["global/" + name]->ConstantTable->getConstantString(items["global/" + name]->SuperclassName) != superclassName) {
+		string msg = "Class '" + name + "' with different superclass";
 		throw std::exception(msg.c_str());
 	}
 	else

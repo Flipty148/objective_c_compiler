@@ -50,7 +50,7 @@ void Function_and_class_list_node::fillTables()
 						// Добавить instance variables
 						for (auto it = instanceVariables.begin(); it != instanceVariables.end(); it++)
 						{
-							element->Fields->addField(element->ConstantTable, it->first, it->second->getDescriptor(), true, it->second);
+							element->Fields->addField(element->ConstantTable, it->first, it->second->getDescriptor(), true, it->second, NULL);
 						}
 					}
 				}
@@ -63,11 +63,18 @@ void Function_and_class_list_node::fillTables()
                 ClassesTableElement* element = ClassesTable::addClass(className, &superclassName, false); // Добавление класса в таблицу
 
 				if (curInterface->Body != NULL) {
+					// Добавление переменных
+					map<string, Expression_node*> initializers;
+					map<string, Type*> vars = curInterface->Body->getVariables(&initializers);
+					for (auto it = vars.begin(); it != vars.end(); it++) {
+						element->Fields->addField(element->ConstantTable, it->first, it->second->getDescriptor(), false, it->second, initializers[it->first]);
+					}
+
 					// Добавление instance variables
 					map<string, Type*> instanceVariables = curInterface->Body->getInstanceVariables();
 					for (auto it = instanceVariables.begin(); it != instanceVariables.end(); it++)
 					{
-						element->Fields->addField(element->ConstantTable, it->first, it->second->getDescriptor(), true, it->second);
+						element->Fields->addField(element->ConstantTable, it->first, it->second->getDescriptor(), true, it->second, NULL);
 					}
 				}
             }
@@ -97,6 +104,25 @@ map<string, Type*> Interface_body_node::getInstanceVariables()
 			res[names[i]] = types->at(i);
 		}
 		first = first->Next;
+	}
+	return res;
+}
+
+map<string, Type*> Interface_body_node::getVariables(map<string, Expression_node*>* initializers)
+{
+	vector<Interface_declaration_list_node::interface_declaration>* declarations = Declaration_list->Declarations; //Список объявлений
+	map<string, Type*> res;
+	for (auto it = declarations->cbegin(); it < declarations->cend(); it++)
+	{
+		Declaration_node* declaration = it->declaration;
+		if (declaration != NULL)
+		{
+			 map<string,Type*> cur = declaration->getDeclaration(initializers);
+			 for (auto iterator = cur.begin(); iterator != cur.end(); iterator++)
+			 {
+				 res[iterator->first] = iterator->second;
+			 }
+		}
 	}
 	return res;
 }
@@ -158,6 +184,88 @@ map<string, Type*> Implementation_body_node::getInstanceVariables(map<string, in
 			(*indexes)[names[i]] = i + 1;
 		}
 		first = first->Next;
+	}
+	return res;
+}
+
+// ---------- Declaration_node ----------
+
+map<string, Type*> Declaration_node::getDeclaration(map<string, Expression_node*>* initializators)
+{
+	vector<Init_declarator_node*>* declarators = init_declarator_list->getElements(); //Деклараторы
+	map<string, Type*> res;
+	for (auto it = declarators->begin(); it < declarators->end(); it++)
+	{
+		string name = string((*it)->Declarator); //Имя
+		type_type type = this->type->type; //Тип
+		Expression_node* arrSize = (*it)->ArraySize; //Размер массива
+		Expression_node* initializer = (*it)->expression; // Инициализатор
+		Expression_list_node* initializerList = (*it)->InitializerList; // Инициализатор массива
+		if (type == CLASS_NAME_TYPE)
+		{
+			string className = this->type->ClassName;
+			if (arrSize != NULL || initializerList != NULL)
+			{ // Массив типа класса
+				int arraySize;
+				if (arrSize != NULL)
+				{
+					arraySize = arrSize->constant.num->number.Int;
+				}
+				else
+				{
+					arraySize = initializerList->getElements()->size();
+				}
+				Type* curType = new Type(type, className, arraySize);
+				res[name] = curType;
+				if (initializators->count(name) && (*initializators)[name] != NULL && initializerList != NULL) {
+					string msg = "Variable '" + name + "' redifinition";
+					throw new exception(msg.c_str());
+				}
+				(*initializators)[name] = initializerList;
+			}
+			else
+			{ //Тип класса
+				Type* curType = new Type(type, className);
+				res[name] = curType;
+				if (initializators->count(name) && (*initializators)[name] != NULL && initializer != NULL) {
+					string msg = "Variable '" + name + "' redifinition";
+					throw new exception(msg.c_str());
+				}
+				(*initializators)[name] = initializer;
+			}
+		}
+		else
+		{ 
+			if (arrSize != NULL || initializerList != NULL)
+			{ // Массив примитивного типа
+				int arraySize;
+				if (arrSize != NULL)
+				{
+					arraySize = arrSize->constant.num->number.Int;
+				}
+				else
+				{
+					arraySize = initializerList->getElements()->size();
+				}
+				Type* curType = new Type(type, arraySize);
+				res[name] = curType;
+				if (initializators->count(name) && (*initializators)[name] != NULL && initializerList != NULL) {
+					string msg = "Variable '" + name + "' redifinition";
+					throw new exception(msg.c_str());
+				}
+				(*initializators)[name] = initializerList;
+			}
+			else
+			{ //Примитивный тип
+				Type* curType = new Type(type);
+				res[name] = curType;
+				if (initializators->count(name) && (*initializators)[name] != NULL && initializer != NULL) {
+					string msg = "Variable '" + name + "' redifinition";
+					throw new exception(msg.c_str());
+				}
+				(*initializators)[name] = initializer;
+			}
+		}
 	}
 	return res;
 }

@@ -1,3 +1,4 @@
-Name;Descriptor;IsInstance;Type
-6 (a);7 ([I);true;int[10];
-8 (c);9 (I);true;int;
+Name;Descriptor;IsInstance;Type;InitValueIdNode
+6 (a);7 ([I);true;int[10];empty
+8 (b);9 (I);false;int;10
+10 (c);9 (I);true;int;empty

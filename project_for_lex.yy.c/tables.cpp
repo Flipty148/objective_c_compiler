@@ -102,10 +102,12 @@ int ConstantsTable::findOrAddConstant(constantType type, int number, int firstRe
 
 int ConstantsTable::findConstant(constantType type, string *utf8string, int number, int firstRef, int secondRef)
 {
+	string compared = utf8string == NULL ? "" : *utf8string;
 	auto iter = items.cbegin();
 	while (iter != items.cend())
 	{
-		if (iter->second->Type == type && iter->second->Utf8String == utf8string && iter->second->Number == number && iter->second->FirstRef == firstRef && iter->second->SecondRef == secondRef)
+		string curStr = iter->second->Utf8String == NULL ? "" : *iter->second->Utf8String;
+		if (iter->second->Type == type && curStr == compared && iter->second->Number == number && iter->second->FirstRef == firstRef && iter->second->SecondRef == secondRef)
 		{
 			return iter->first;
 		}
@@ -263,7 +265,7 @@ void ClassesTable::toCsvFile(string filepath, char separator)
 
 // ------------------- FieldsTableElement --------------------
 
-FieldsTableElement::FieldsTableElement(int name, int descriptor, bool isInstance, int instanceIndex, Type *type, string nameStr, string descriptorStr)
+FieldsTableElement::FieldsTableElement(int name, int descriptor, bool isInstance, int instanceIndex, Type *type, string nameStr, string descriptorStr, Expression_node* initialValue)
 {
 	Name = name;
 	Descriptor = descriptor;
@@ -272,6 +274,7 @@ FieldsTableElement::FieldsTableElement(int name, int descriptor, bool isInstance
 	this->type = type;
 	NameStr = nameStr;
 	DescriptorStr = descriptorStr;
+	InitialValue = initialValue;
 }
 
 string FieldsTableElement::toCsvString(char separator)
@@ -281,24 +284,35 @@ string FieldsTableElement::toCsvString(char separator)
 	res += to_string(Descriptor) + " (" + DescriptorStr + ")" + separator; //Добавление дескриптора
 	res += string((IsInstance ? "true" : "false")) + separator; //Добавление флага, который показывает принадлежность поля к экземпляру
 	res += type->toString() + separator; //Добавление типа
+	if (InitialValue == NULL)
+		res += string("empty");
+	else
+		res += to_string(InitialValue->id); //Добавление id узла инициализации
 	return res;
 }
 
 // -------------------- FieldsTable --------------------
 
-void FieldsTable::addField(ConstantsTable *constantTable, string name, string descriptor, bool isInstance, Type *type)
+void FieldsTable::addField(ConstantsTable* constantTable, string name, string descriptor, bool isInstance, Type* type, Expression_node* initValue)
 {
 	int NameId = constantTable->findOrAddConstant(UTF8, name);
 	int DescriptorId = constantTable->findOrAddConstant(UTF8, descriptor);
-	FieldsTableElement *field = new FieldsTableElement(NameId, DescriptorId, isInstance, maxInstanceIndex, type, name, descriptor);
-	maxInstanceIndex++;
-	items[name] = field;
+	if (isInstance) {
+		FieldsTableElement* field = new FieldsTableElement(NameId, DescriptorId, isInstance, maxInstanceIndex, type, name, descriptor, initValue);
+		maxInstanceIndex++;
+		items[name] = field;
+	}
+	else {
+		FieldsTableElement* field = new FieldsTableElement(NameId, DescriptorId, isInstance, 0, type, name, descriptor, initValue);
+		items[name] = field;
+	}
+	
 }
 
 void FieldsTable::toCsvFile(string filename, string filepath, char separator)
 {
 	ofstream out(filepath + filename); //Создание и открытие потока на запись в файл
-	out << "Name" << separator << "Descriptor" << separator << "IsInstance" << separator << "Type" << endl; // Запись заголовков
+	out << "Name" << separator << "Descriptor" << separator << "IsInstance" << separator << "Type" << separator << "InitValueIdNode" <<  endl; // Запись заголовков
 	auto iter = items.cbegin();
 	while (iter != items.cend())
 	{

@@ -127,8 +127,9 @@ public:
     Type* type; // Тип поля
     string NameStr; // Имя поля
     string DescriptorStr; // Дескриптор поля
+	Expression_node* InitialValue = NULL; // Инициализирующее выражение
 
-    FieldsTableElement(int name, int descriptor, bool isInstance, int instanceIndex, Type* type, string nameStr, string descriptorStr);
+    FieldsTableElement(int name, int descriptor, bool isInstance, int instanceIndex, Type* type, string nameStr, string descriptorStr, Expression_node* initialValue);
 
     string toCsvString(char separator = ';'); //Преобразование в строку формата CSV
 };
@@ -139,7 +140,7 @@ public:
 	int maxInstanceIndex = 1;
     map < string, FieldsTableElement*> items; //Таблица полей класса, в качестве ключа - Имя поля класса
 
-    void addField(ConstantsTable* constantTable, string name, string descriptor, bool isInstance, Type* type);
+    void addField(ConstantsTable* constantTable, string name, string descriptor, bool isInstance, Type* type, Expression_node* initValue);
 
     void toCsvFile(string filename, string filepath, char separator = ';'); //Преобразование в CSV-файл
 };

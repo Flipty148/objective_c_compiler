@@ -2,7 +2,9 @@
 {
     int a[10], c;
 }
-    int b;
+    int b = 5;
+    int a[10];
+    int c[20];
     + (int) func: (int) first :(int) second;
 @end
 
@@ -11,6 +13,7 @@
     int a[10], c;
 }
     int b;
+    int a[10];
     + (int) func: (int) first :(int) second
     {
         return first + second;

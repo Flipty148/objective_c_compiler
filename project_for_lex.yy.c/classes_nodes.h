@@ -151,6 +151,7 @@ class Declaration_node : public Statement_node
         static Declaration_node* createDeclarationNode(Type_node *type, Init_declarator_list_node *initDeclarators);
 
         string toDot(string labelConection="");
+        map<string, Type*> getDeclaration(map<string, Expression_node*>* initializators);
 };
 
 
@@ -338,7 +339,7 @@ class Expression_node
 
 // ---------- expression_list ----------
 
-class Expression_list_node
+class Expression_list_node : public Expression_node
 {
     public:
         int id;
@@ -581,6 +582,7 @@ class Interface_body_node
         string toDot(string labelConection="");
 
         map<string, Type*> getInstanceVariables(); // Функция возвращающая поля объекта
+		map<string, Type*> getVariables(map<string, Expression_node*> *initializers); // Функция возвращающая поля объекта (не instance variables)
 };
 
 // ---------- implementation_body ----------

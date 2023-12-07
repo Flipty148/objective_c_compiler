@@ -62,12 +62,75 @@ void Function_and_class_list_node::fillTables()
 								}
 							}
 						}
+
+						// Добавление методов
+						map<string, vector<string>*> keywordsNames; //Словарь для имен keywords
+						map<string, vector<Type*>*> keywordsTypes; //Словарь для типов keywords
+						map<string, vector<string>*> parametersNames; //Словарь для имен параметров
+						map<string, vector<Type*>*> parametersTypes; //Словарь для типов параметров
+						map<string, bool> isClassMethod; //Словарь, содержащий принадлежность метода к классу
+						map<string, Statement_node*> startNodes; //Словарь, содержащий стартовые узлы тел методов
+						map<string, Type*> methods = curImplementation->Body->getMethods(&keywordsNames, &keywordsTypes, &parametersNames, &parametersTypes, &isClassMethod, &startNodes); //Получение методов
+						for (auto it = methods.begin(); it != methods.end(); it++)
+						{
+							// Формирование дескриптора
+							string descriptor = "(";
+							for (int i = 0; i < keywordsTypes[it->first]->size(); i++) {
+								descriptor += keywordsTypes[it->first]->at(i)->getDescriptor();
+							}
+							descriptor += ")";
+							descriptor += it->second->getDescriptor();
+							if (element->Methods->items.count(it->first))
+							{ //Метод есть. Проверка.
+								MethodsTableElement *curMethod = element->Methods->items[it->first];
+								if (descriptor != curMethod->DescriptorStr) {
+									string msg = "Method '" + it->first + "' in class '" + className + "' has different type from the type specified in the interface\n";
+									throw std::exception(msg.c_str());
+								}
+								curMethod->BodyStart = startNodes[it->first]; //Добавление тела
+							}
+							else
+							{ //Метода нет. Добавление.
+								bool isClass = isClassMethod[it->first];// Признак принадлежности к классу
+								vector<Type*>* curParametersTypes = parametersTypes[it->first]; // Типы параметров
+								vector<Type*>* curKeywordsTypes = keywordsTypes[it->first]; // Типы keywords
+								Statement_node* curStart = startNodes[it->first]; // Узел начала тела метода
+
+								element->Methods->addMethod(element->ConstantTable, it->first, descriptor, isClass, curStart, it->second, curParametersTypes, curKeywordsTypes); //Добавление метода
+							}
+						}
 					}
 					else { // У класса не было интерфейса
 						// Добавить instance variables
 						for (auto it = instanceVariables.begin(); it != instanceVariables.end(); it++)
 						{
 							element->Fields->addField(element->ConstantTable, it->first, it->second->getDescriptor(), true, it->second, NULL);
+						}
+
+						// Добавление методов
+						map<string, vector<string>*> keywordsNames; //Словарь для имен keywords
+						map<string, vector<Type*>*> keywordsTypes; //Словарь для типов keywords
+						map<string, vector<string>*> parametersNames; //Словарь для имен параметров
+						map<string, vector<Type*>*> parametersTypes; //Словарь для типов параметров
+						map<string, bool> isClassMethod; //Словарь, содержащий принадлежность метода к классу
+						map<string, Statement_node*> startNodes; //Словарь, содержащий стартовые узлы тел методов
+						map<string, Type*> methods = curImplementation->Body->getMethods(&keywordsNames, &keywordsTypes, &parametersNames, &parametersTypes, &isClassMethod, &startNodes); //Получение методов
+						for (auto it = methods.begin(); it != methods.end(); it++)
+						{
+							// Формирование дескриптора
+							string descriptor = "(";
+							for (int i = 0; i < keywordsTypes[it->first]->size(); i++) {
+								descriptor += keywordsTypes[it->first]->at(i)->getDescriptor();
+							}
+							descriptor += ")";
+							descriptor += it->second->getDescriptor();
+
+							bool isClass = isClassMethod[it->first];// Признак принадлежности к классу
+							vector<Type*>* curParametersTypes = parametersTypes[it->first]; // Типы параметров
+							vector<Type*>* curKeywordsTypes = keywordsTypes[it->first]; // Типы keywords
+							Statement_node* curStart = startNodes[it->first]; // Узел начала тела метода
+
+							element->Methods->addMethod(element->ConstantTable, it->first, descriptor, isClass, curStart, it->second, curParametersTypes, curKeywordsTypes); //Добавление метода
 						}
 					}
 				}
@@ -122,7 +185,7 @@ void Function_and_class_list_node::fillTables()
 						bool isClass = isClassMethod[it->first];// Признак принадлежности к классу
 						vector<Type*>* curParametersTypes = parametersTypes[it->first]; // Типы параметров
 						vector<Type*>* curKeywordsTypes = keywordsTypes[it->first]; // Типы keywords
-						
+
 						element->Methods->addMethod(element->ConstantTable, it->first, descriptor, isClass, NULL, it->second, curParametersTypes, curKeywordsTypes); //Добавление метода
 					}
 				}
@@ -178,33 +241,37 @@ map<string, Type*> Interface_body_node::getVariables(map<string, Expression_node
 
 map<string, Type*> Interface_body_node::getMethods(map<string, vector<string>*>* keywordsNames, map<string, vector<Type*>*> *keywordsTypes, map<string, vector<string>*>* parametersNames, map<string, vector<Type*>*> *parametersTypes, map<string, bool>* isClassMethod)
 {
-	vector<Interface_declaration_list_node::interface_declaration>* declarations = Declaration_list->Declarations; //Список объявлений
 	map<string, Type*> res;
-	for (auto it = declarations->cbegin(); it < declarations->cend(); it++)
+	if (Declaration_list != NULL)
 	{
-		Method_declaration_node* declaration = it->method_declaration;
-		if (declaration != NULL)
+		vector<Interface_declaration_list_node::interface_declaration>* declarations = Declaration_list->Declarations; //Список объявлений
+		
+		for (auto it = declarations->cbegin(); it < declarations->cend(); it++)
 		{
-			vector<string>* curKeywordsNames = new vector<string>;
-			vector<Type*>* curKeywordsTypes = new vector<Type*>;
-			vector<string>* curParametersNames = new vector<string>;
-			vector<Type*>* curParametersTypes = new vector<Type*>;
-			bool isClass;
-			Type* returnType = new Type(VOID_TYPE);
-			string methodName = declaration->getMethod(&returnType, curKeywordsNames, curKeywordsTypes, curParametersNames, curParametersTypes, &isClass);
-			if (isClass)
-				methodName += string("Static");
-			if (res.count(methodName))
+			Method_declaration_node* declaration = it->method_declaration;
+			if (declaration != NULL)
 			{
-				string msg = "Method '" + methodName + "' redeclaration.\n";
-				throw std::exception(msg.c_str());
+				vector<string>* curKeywordsNames = new vector<string>;
+				vector<Type*>* curKeywordsTypes = new vector<Type*>;
+				vector<string>* curParametersNames = new vector<string>;
+				vector<Type*>* curParametersTypes = new vector<Type*>;
+				bool isClass;
+				Type* returnType = new Type(VOID_TYPE);
+				string methodName = declaration->getMethod(&returnType, curKeywordsNames, curKeywordsTypes, curParametersNames, curParametersTypes, &isClass);
+				if (isClass)
+					methodName += string("Static");
+				if (res.count(methodName))
+				{
+					string msg = "Method '" + methodName + "' redeclaration.\n";
+					throw std::exception(msg.c_str());
+				}
+				(*keywordsNames)[methodName] = curKeywordsNames;
+				(*keywordsTypes)[methodName] = curKeywordsTypes;
+				(*parametersNames)[methodName] = curParametersNames;
+				(*parametersTypes)[methodName] = curParametersTypes;
+				(*isClassMethod)[methodName] = isClass;
+				res[methodName] = returnType;
 			}
-			(*keywordsNames)[methodName] = curKeywordsNames;
-			(*keywordsTypes)[methodName] = curKeywordsTypes;
-			(*parametersNames)[methodName] = curParametersNames;
-			(*parametersTypes)[methodName] = curParametersTypes;
-			(*isClassMethod)[methodName] = isClass;
-			res[methodName] = returnType;
 		}
 	}
 	return res;
@@ -287,6 +354,45 @@ map<string, Type*> Implementation_body_node::getVariables(map<string, Expression
 				{
 					res[iterator->first] = iterator->second;
 				}
+			}
+		}
+	}
+	return res;
+}
+
+map<string, Type*> Implementation_body_node::getMethods(map<string, vector<string>*>* keywordsNames, map<string, vector<Type*>*>* keywordsTypes, map<string, vector<string>*>* parametersNames, map<string, vector<Type*>*>* parametersTypes, map<string, bool>* isClassMethod, map<string, Statement_node*> *bodyStartNode)
+{
+	map<string, Type*> res;
+	if (Declaration_list != NULL)
+	{
+		vector<Implementation_definition_list_node::implementation_definition>* definitions = Declaration_list->Definitions; //Список объявлений
+		for (auto it = definitions->cbegin(); it < definitions->cend(); it++)
+		{
+			Method_definition_node* definition = it->method_definition;
+			if (definition != NULL)
+			{
+				vector<string>* curKeywordsNames = new vector<string>;
+				vector<Type*>* curKeywordsTypes = new vector<Type*>;
+				vector<string>* curParametersNames = new vector<string>;
+				vector<Type*>* curParametersTypes = new vector<Type*>;
+				bool isClass;
+				Type* returnType = new Type(VOID_TYPE);
+				Statement_node* bodyStart;
+				string methodName = definition->getMethod(&returnType, curKeywordsNames, curKeywordsTypes, curParametersNames, curParametersTypes, &isClass, &bodyStart);
+				if (isClass)
+					methodName += string("Static");
+				if (res.count(methodName))
+				{
+					string msg = "Method '" + methodName + "' redifinition.\n";
+					throw std::exception(msg.c_str());
+				}
+				(*keywordsNames)[methodName] = curKeywordsNames;
+				(*keywordsTypes)[methodName] = curKeywordsTypes;
+				(*parametersNames)[methodName] = curParametersNames;
+				(*parametersTypes)[methodName] = curParametersTypes;
+				(*isClassMethod)[methodName] = isClass;
+				(*bodyStartNode)[methodName] = bodyStart;
+				res[methodName] = returnType;
 			}
 		}
 	}
@@ -387,6 +493,21 @@ string Method_declaration_node::getMethod(Type** returnType, vector<string>* key
 	string mathodName = string(MethodSelector->MethodName); // Имя метода
 	MethodSelector->getParams(keywordsNames, keywordsTypes, parametersNames, parametersTypes); // Параметры
 	return mathodName;
+}
+
+// ---------- Method_definition_node ----------
+string Method_definition_node::getMethod(Type** returnType, vector<string>* keywordsNames, vector<Type*>* keywordsTypes, vector<string>* parametersNames, vector<Type*>* parametersTypes, bool* isClassmethod, Statement_node** bodyStart)
+{
+	*returnType = MethodType->toDataType(); // Тип возвращаемого значения
+	// Тип метода
+	if (type == CLASS_METHOD_DECLARATION_TYPE)
+		*isClassmethod = true;
+	else if (type == INSTANCE_METHOD_DECLARATION_TYPE)
+		*isClassmethod = false;
+	string methodName = string(MethodSelector->MethodName); // Имя метода
+	MethodSelector->getParams(keywordsNames, keywordsTypes, parametersNames, parametersTypes); // Параметры
+	*bodyStart = MethodBody->First; // Начало тела метода
+	return methodName;
 }
 
 

@@ -18,6 +18,10 @@
     {
         return first + second;
     }
+    - (void) func2: (int) first :(int) second
+    {
+        c = first + second;
+    }
 @end
 
 @implementation MyClass2

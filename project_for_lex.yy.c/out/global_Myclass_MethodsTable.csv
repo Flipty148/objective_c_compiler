@@ -1,2 +1,3 @@
 Name;Descriptor;IsClassMethod;ReturnType;ParamsTypes;KeywordsTypes;BodyStartStatementId;LocalVariablesTableName
-11 (funcStatic);12 ((II)I);true;int;;int,int;empty;emptyTable
+13 (func2);14 ((II)V);false;void;;int,int;81;emptyTable
+11 (funcStatic);12 ((II)I);true;int;;int,int;67;emptyTable

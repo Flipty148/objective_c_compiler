@@ -245,4 +245,5 @@ public:
 
     string toString();
     string getDescriptor();
+    bool equal(Type* other);
 };

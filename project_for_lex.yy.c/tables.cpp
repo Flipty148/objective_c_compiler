@@ -614,6 +614,11 @@ string Type::getDescriptor()
 	return res;
 }
 
+bool Type::equal(Type* other)
+{
+	return DataType == other->DataType && ClassName == other->ClassName && ArrSize == other->ArrSize;
+}
+
 // -------------------- FunctionsTableElement --------------------
 
 FunctionsTableElement::FunctionsTableElement(int name, int descriptor, Statement_node* bodyStart, string nameStr, string descriptorStr)

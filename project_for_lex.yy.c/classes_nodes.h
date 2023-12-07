@@ -603,6 +603,7 @@ class Implementation_body_node
 
         map<string, Type*> getInstanceVariables(map<string, int>* indexes); // Функция возвращающая поля объекта
         map<string, Type*> getVariables(map<string, Expression_node*>* initializers); // Функция возвращающая поля объекта (не instance variables)
+        map<string, Type*> getMethods(map<string, vector<string>*>* keywordsNames, map<string, vector<Type*>*>* keywordsTypes, map<string, vector<string>*>* parametersNames, map<string, vector<Type*>*>* parametersTypes, map<string, bool>* isClassMethod, map<string, Statement_node*>* bodyStartNode); //Функция, которая возвращает список методов
 };
 
 // ---------- class_implementation ----------
@@ -770,6 +771,8 @@ class Method_definition_node
         static Method_definition_node* createMethodDefinitionNode(method_definition_type type, Type_node *methodType, Method_selector_node *selector, Declaration_list_node *declarationList, Statement_list_node *methodBody);
 
         string toDot(string labelConection="");
+
+        string getMethod(Type** returnType, vector<string>* keywordsNames, vector<Type*>* keywordsTypes, vector<string>* parametersNames, vector<Type*>* parametersTypes, bool* isClassmethod, Statement_node **BodyStart); // Функция, возвращающая метод для записи в таблицы
 };
 
 // ---------- method_selector ----------

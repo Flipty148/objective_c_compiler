@@ -61,6 +61,8 @@ class Type_node
         static Type_node* createTypeNodeFromClassName(type_type type, char *name);
 
         string toDot(string labelConection="");
+
+		Type* toDataType();
 };
 
 // -------------------- Константы --------------------
@@ -583,6 +585,7 @@ class Interface_body_node
 
         map<string, Type*> getInstanceVariables(); // Функция возвращающая поля объекта
 		map<string, Type*> getVariables(map<string, Expression_node*> *initializers); // Функция возвращающая поля объекта (не instance variables)
+		map<string, Type*> getMethods(map<string, vector<string>*>* keywordsNames, map<string, vector<Type*>*>* keywordsTypes, map<string, vector<string>*>* parametersNames, map<string, vector<Type*>*>* parametersTypes, map<string, bool>* isClassMethod); //Функция, которая возвращает список методов
 };
 
 // ---------- implementation_body ----------
@@ -718,6 +721,8 @@ class Method_declaration_node
         static Method_declaration_node* createMethodDeclarationNode(method_declaration_type type, Type_node *methodType, Method_selector_node *selector);
 
         string toDot(string labelConection="");
+
+		string getMethod(Type** returnType, vector<string>* keywordsNames, vector<Type*>* keywordsTypes, vector<string>* parametersNames, vector<Type*>* parametersTypes, bool* isClassmethod); // Функция, возвращающая метод для записи в таблицуы
 };
 
 
@@ -781,6 +786,8 @@ class Method_selector_node
         static Method_selector_node* createMethodSelectorNode(char *methodName, Keyword_declaration_node *keywordDeclaration, Keyword_selector_node *selector, Parameter_list_node *parameters);
 
         string toDot(string labelConection="");
+
+		void getParams(vector<string>* keywordsNames, vector<Type*>* keywordsTypes, vector<string>* parametersNames, vector<Type*>* parametersTypes);
 };
 
 // ---------- keyword_selector ----------

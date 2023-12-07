@@ -371,7 +371,10 @@ string MethodsTableElement::toCsvString(string methodName, char separator)
 
 	res += paramsTypesStr + separator; //Добавление типов параметров
 	res += keywordsTypesStr + separator; //Добавление типов ключевых слов
-	res += to_string(BodyStart->id) + separator; //Добавление ID узла начала тела метода
+	if (BodyStart != NULL)
+		res += to_string(BodyStart->id) + separator; //Добавление ID узла начала тела метода
+	else
+		res += string("empty") + separator;
 
 	if (LocalVariables->items.size() > 0)
 		res += methodName + "_LocalVariablesTable.csv"; //Добавление имени таблицы локальных переменных

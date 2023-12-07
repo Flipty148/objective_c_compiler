@@ -1,4 +1,5 @@
 #include "tables.h"
+#include <algorithm>
 // ------------------------------ Обход дерева -------------------------------
 
 // ---------- Function_and_class_list_node ----------
@@ -100,6 +101,30 @@ void Function_and_class_list_node::fillTables()
 					{
 						element->Fields->addField(element->ConstantTable, it->first, it->second->getDescriptor(), true, it->second, NULL);
 					}
+
+					// Добавление методов
+					map<string, vector<string>*> keywordsNames; //Словарь для имен keywords
+					map<string, vector<Type*>*> keywordsTypes; //Словарь для типов keywords
+					map<string, vector<string>*> parametersNames; //Словарь для имен параметров
+					map<string, vector<Type*>*> parametersTypes; //Словарь для типов параметров
+					map<string, bool> isClassMethod; //Словарь, содержащий принадлежность метода к классу
+					map<string, Type*> methods = curInterface->Body->getMethods(&keywordsNames, &keywordsTypes, &parametersNames, &parametersTypes, &isClassMethod); //Получение методов
+					for (auto it = methods.begin(); it != methods.end(); it++)
+					{
+						// Формирование дескриптора
+						string descriptor = "(";
+						for (int i = 0; i < keywordsTypes[it->first]->size(); i++) {
+							descriptor += keywordsTypes[it->first]->at(i)->getDescriptor();
+						}
+						descriptor += ")";
+						descriptor += it->second->getDescriptor();
+
+						bool isClass = isClassMethod[it->first];// Признак принадлежности к классу
+						vector<Type*>* curParametersTypes = parametersTypes[it->first]; // Типы параметров
+						vector<Type*>* curKeywordsTypes = keywordsTypes[it->first]; // Типы keywords
+						
+						element->Methods->addMethod(element->ConstantTable, it->first, descriptor, isClass, NULL, it->second, curParametersTypes, curKeywordsTypes); //Добавление метода
+					}
 				}
             }
         }
@@ -146,6 +171,40 @@ map<string, Type*> Interface_body_node::getVariables(map<string, Expression_node
 			 {
 				 res[iterator->first] = iterator->second;
 			 }
+		}
+	}
+	return res;
+}
+
+map<string, Type*> Interface_body_node::getMethods(map<string, vector<string>*>* keywordsNames, map<string, vector<Type*>*> *keywordsTypes, map<string, vector<string>*>* parametersNames, map<string, vector<Type*>*> *parametersTypes, map<string, bool>* isClassMethod)
+{
+	vector<Interface_declaration_list_node::interface_declaration>* declarations = Declaration_list->Declarations; //Список объявлений
+	map<string, Type*> res;
+	for (auto it = declarations->cbegin(); it < declarations->cend(); it++)
+	{
+		Method_declaration_node* declaration = it->method_declaration;
+		if (declaration != NULL)
+		{
+			vector<string>* curKeywordsNames = new vector<string>;
+			vector<Type*>* curKeywordsTypes = new vector<Type*>;
+			vector<string>* curParametersNames = new vector<string>;
+			vector<Type*>* curParametersTypes = new vector<Type*>;
+			bool isClass;
+			Type* returnType = new Type(VOID_TYPE);
+			string methodName = declaration->getMethod(&returnType, curKeywordsNames, curKeywordsTypes, curParametersNames, curParametersTypes, &isClass);
+			if (isClass)
+				methodName += string("Static");
+			if (res.count(methodName))
+			{
+				string msg = "Method '" + methodName + "' redeclaration.\n";
+				throw std::exception(msg.c_str());
+			}
+			(*keywordsNames)[methodName] = curKeywordsNames;
+			(*keywordsTypes)[methodName] = curKeywordsTypes;
+			(*parametersNames)[methodName] = curParametersNames;
+			(*parametersTypes)[methodName] = curParametersTypes;
+			(*isClassMethod)[methodName] = isClass;
+			res[methodName] = returnType;
 		}
 	}
 	return res;
@@ -314,4 +373,78 @@ map<string, Type*> Declaration_node::getDeclaration(map<string, Expression_node*
 		}
 	}
 	return res;
+}
+
+// ------------ Method_declaration_node ------------
+string Method_declaration_node::getMethod(Type** returnType, vector<string>* keywordsNames, vector<Type*> *keywordsTypes, vector<string>* parametersNames, vector<Type*> *parametersTypes, bool *isClassmethod)
+{
+	*returnType = MethodType->toDataType(); // Тип возвращаемого значения
+	// Тип метода
+	if (type == CLASS_METHOD_DECLARATION_TYPE)
+		*isClassmethod = true;
+	else if (type == INSTANCE_METHOD_DECLARATION_TYPE)
+		*isClassmethod = false;
+	string mathodName = string(MethodSelector->MethodName); // Имя метода
+	MethodSelector->getParams(keywordsNames, keywordsTypes, parametersNames, parametersTypes); // Параметры
+	return mathodName;
+}
+
+
+// ---------- Type_node ----------
+Type* Type_node::toDataType()
+{
+	if (type == CLASS_NAME_TYPE)
+	{
+		string className = ClassName;
+		Type* res = new Type(type, className);
+		return res;
+	}
+	else
+	{
+		Type* res = new Type(type);
+		return res;
+	}
+}
+
+// ---------- Method_selector_node ----------
+void Method_selector_node::getParams(vector<string>* keywordsNames, vector<Type*>* keywordsTypes, vector<string>* parametersNames, vector<Type*> *parametersTypes)
+{
+	if (KeywordDeclaration != NULL) { //Добавление первого параметра
+		string firstKeywordName = string(KeywordDeclaration->KeywordName); // 
+		Type* firstKeywordType = KeywordDeclaration->KeywordType->toDataType();
+		keywordsNames->push_back(firstKeywordName);
+		keywordsTypes->push_back(firstKeywordType);
+	}
+
+	if (KeywordSelector != NULL) { //Добавление остальных параметров
+		vector<Keyword_declaration_node*>* keywordsList = KeywordSelector->getElements(); //Список keword
+		for (auto it = keywordsList->cbegin(); it < keywordsList->cend(); it++)
+		{
+			Keyword_declaration_node* keyword = *it; //Ключевое слово
+			string name = string(keyword->KeywordName); //Имя
+			Type* type = keyword->KeywordType->toDataType(); //Тип
+			if (std::find(keywordsNames->begin(), keywordsNames->end(), name) != keywordsNames->end()) { //Переопределение параметра
+				string msg = "Parameter '" + name + "' redifinition";
+				throw new exception(msg.c_str());
+			}
+			keywordsNames->push_back(name); //Добавление имени
+			keywordsTypes->push_back(type); //Добавление типа
+		}
+	}
+
+	if (ParameterListNode != NULL) { //Добавление параметров
+		vector<Parameter_declaration_node*>* parametersList = ParameterListNode->getElements(); //Список параметров
+		for (auto it = parametersList->cbegin(); it < parametersList->cend(); it++)
+		{
+			Parameter_declaration_node* parameter = *it; //Параметр
+			string name = string(parameter->name); //Имя
+			Type* type = parameter->type->toDataType(); //Тип
+			if (std::find(parametersNames->begin(), parametersNames->end(), name) != parametersNames->end() || std::find(keywordsNames->begin(), keywordsNames->end(), name) != keywordsNames->end()) { //Переопределение параметра
+				string msg = "Parameter '" + name + "' redifinition";
+				throw new exception(msg.c_str());
+			}
+			parametersNames->push_back(name); //Добавление имени
+			parametersTypes->push_back(type); //Добавление типа
+		}
+	}
 }

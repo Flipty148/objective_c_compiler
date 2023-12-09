@@ -16,10 +16,12 @@
     int a[10];
     + (int) func: (int) first :(int) second
     {
+        int test;
         return first + second;
     }
     - (void) func2: (int) first :(int) second
     {
+        int test;
         c = first + second;
     }
 @end

@@ -186,7 +186,21 @@ void Function_and_class_list_node::fillTables()
 						vector<Type*>* curParametersTypes = parametersTypes[it->first]; // Типы параметров
 						vector<Type*>* curKeywordsTypes = keywordsTypes[it->first]; // Типы keywords
 
-						element->Methods->addMethod(element->ConstantTable, it->first, descriptor, isClass, NULL, it->second, curParametersTypes, curKeywordsTypes); //Добавление метода
+						MethodsTableElement *method = element->Methods->addMethod(element->ConstantTable, it->first, descriptor, isClass, NULL, it->second, curParametersTypes, curKeywordsTypes); //Добавление метода
+					
+
+						//Формирование таблицы локальных переменных
+						LocalVariablesTable* locals = method->LocalVariables; //Таблица локальных переменных данного метода
+						Type* type = new Type(CLASS_NAME_TYPE, element->getClassName()); // Тип для self переменной
+						locals->findOrAddLocalVariable("self", type); //Добавление self в таблицу локальных переменных
+						//Добавление keywords в таблицу локальных переменных
+						for (int i = 0; i < keywordsNames[it->first]->size(); i++) {
+							locals->findOrAddLocalVariable(keywordsNames[it->first]->at(i), keywordsTypes[it->first]->at(i));
+						}
+						//Добавление parameters в таблицу локальных переменных
+						for (int i = 0; i < parametersNames[it->first]->size(); i++) {
+							locals->findOrAddLocalVariable(parametersNames[it->first]->at(i), parametersTypes[it->first]->at(i));
+						}
 					}
 				}
             }

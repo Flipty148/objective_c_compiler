@@ -209,6 +209,11 @@ void ClassesTableElement::refTablesToCsvFile(string filepath, char separator)
 	ConstantTable->toCsvFile(className + "_ConstantsTable.csv", filepath, separator); //Записать таблицу констант в файл
 }
 
+string ClassesTableElement::getClassName()
+{
+	return ConstantTable->getConstantString(Name);
+}
+
 // -------------------- ClassesTable --------------------
 map<string, ClassesTableElement*> ClassesTable::items;
 
@@ -391,7 +396,7 @@ void MethodsTableElement::refTablesToCsvFile(string methodName, string filepath,
 
 // -------------------- MethodsTable --------------------
 
-void MethodsTable::addMethod(ConstantsTable *constantTable, string name, string descriptor, bool isClassMethod, Statement_node* bodyStart, Type *returnType, vector<Type*>* paramsTypes, vector<Type*>* keywordsTypes)
+MethodsTableElement* MethodsTable::addMethod(ConstantsTable *constantTable, string name, string descriptor, bool isClassMethod, Statement_node* bodyStart, Type *returnType, vector<Type*>* paramsTypes, vector<Type*>* keywordsTypes)
 {
 	if (items.count(name) != 0)
 	{
@@ -402,6 +407,8 @@ void MethodsTable::addMethod(ConstantsTable *constantTable, string name, string 
 	int DescriptorId = constantTable->findOrAddConstant(UTF8, descriptor);
 	MethodsTableElement *method = new MethodsTableElement(NameId, DescriptorId, isClassMethod, bodyStart, returnType, paramsTypes, keywordsTypes, name, descriptor);
 	items[name] = method;
+
+	return method;
 }
 
 void MethodsTable::toCsvFile(string filename, string filepath, char separator)

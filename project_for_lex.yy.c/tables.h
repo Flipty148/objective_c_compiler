@@ -103,6 +103,7 @@ public:
 
     string toCsvString(char separator = ';'); //Преобразование в строку формата CSV
     void refTablesToCsvFile(string filepath, char separator = ';'); //Запись вложенных таблиц в файлы
+    string getClassName(); // Получение имени класса
 };
 
 class ClassesTable
@@ -173,7 +174,7 @@ class MethodsTable
 public:
     map< string, MethodsTableElement* > items; //Таблица методов класса, в качестве ключа - Имя метода класса
 
-    void addMethod(ConstantsTable* constantTable, string name, string descriptor, bool isClassMethod, Statement_node* bodyStart, Type* returnType, vector<Type*>* paramsTypes, vector<Type*>* keywordsTypes);
+    MethodsTableElement* addMethod(ConstantsTable* constantTable, string name, string descriptor, bool isClassMethod, Statement_node* bodyStart, Type* returnType, vector<Type*>* paramsTypes, vector<Type*>* keywordsTypes);
 
     void toCsvFile(string filename, string filepath, char separator = ';'); //Преобразование в CSV-файл
 };
@@ -211,7 +212,7 @@ class LocalVariablesTableElement
 {
 public:
     int Id = NULL; // Номер локальной переменной
-    string Name = NULL; // Имя локальной переменной
+    string Name; // Имя локальной переменной
     Type* type; //Тип переменной
 
     LocalVariablesTableElement(int id, string name, Type* type);

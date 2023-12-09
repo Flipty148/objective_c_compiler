@@ -2,6 +2,8 @@
 #include <algorithm>
 // ------------------------------ Обход дерева -------------------------------
 
+void getTypesFromInitDeclaratorType(vector<Init_declarator_node*>* declarators, Type_node* typeNode, vector<string>* varsNames, vector<Type*>* varsTypes);
+
 // ---------- Function_and_class_list_node ----------
 
 void Function_and_class_list_node::fillTables()
@@ -88,6 +90,15 @@ void Function_and_class_list_node::fillTables()
 									throw std::exception(msg.c_str());
 								}
 								curMethod->BodyStart = startNodes[it->first]; //Добавление тела
+
+								//Получение и добавление локальных переменных внутри метода
+								vector<string> varsNames;
+								vector<Type*> varsTypes;
+								curMethod->BodyStart->findLocalVariables(&varsNames, &varsTypes);
+								for (int i = 0; i < varsNames.size(); i++)
+								{
+									curMethod->LocalVariables->findOrAddLocalVariable(varsNames[i], varsTypes[i]);
+								}
 							}
 							else
 							{ //Метода нет. Добавление.
@@ -96,7 +107,28 @@ void Function_and_class_list_node::fillTables()
 								vector<Type*>* curKeywordsTypes = keywordsTypes[it->first]; // Типы keywords
 								Statement_node* curStart = startNodes[it->first]; // Узел начала тела метода
 
-								element->Methods->addMethod(element->ConstantTable, it->first, descriptor, isClass, curStart, it->second, curParametersTypes, curKeywordsTypes); //Добавление метода
+								MethodsTableElement *method = element->Methods->addMethod(element->ConstantTable, it->first, descriptor, isClass, curStart, it->second, curParametersTypes, curKeywordsTypes); //Добавление метода
+								
+								//Формирование таблицы локальных переменных
+								LocalVariablesTable* locals = method->LocalVariables; //Таблица локальных переменных данного метода
+								Type* type = new Type(CLASS_NAME_TYPE, element->getClassName()); // Тип для self переменной
+								locals->findOrAddLocalVariable("self", type); //Добавление self в таблицу локальных переменных
+								//Добавление keywords в таблицу локальных переменных
+								for (int i = 0; i < keywordsNames[it->first]->size(); i++) {
+									locals->findOrAddLocalVariable(keywordsNames[it->first]->at(i), keywordsTypes[it->first]->at(i));
+								}
+								//Добавление parameters в таблицу локальных переменных
+								for (int i = 0; i < parametersNames[it->first]->size(); i++) {
+									locals->findOrAddLocalVariable(parametersNames[it->first]->at(i), parametersTypes[it->first]->at(i));
+								}
+								//Получение и добавление локальных переменных внутри метода
+								vector<string> varsNames;
+								vector<Type*> varsTypes;
+								method->BodyStart->findLocalVariables(&varsNames, &varsTypes);
+								for (int i = 0; i < varsNames.size(); i++)
+								{
+									locals->findOrAddLocalVariable(varsNames[i], varsTypes[i]);
+								}
 							}
 						}
 					}
@@ -130,7 +162,29 @@ void Function_and_class_list_node::fillTables()
 							vector<Type*>* curKeywordsTypes = keywordsTypes[it->first]; // Типы keywords
 							Statement_node* curStart = startNodes[it->first]; // Узел начала тела метода
 
-							element->Methods->addMethod(element->ConstantTable, it->first, descriptor, isClass, curStart, it->second, curParametersTypes, curKeywordsTypes); //Добавление метода
+							MethodsTableElement *method = element->Methods->addMethod(element->ConstantTable, it->first, descriptor, isClass, curStart, it->second, curParametersTypes, curKeywordsTypes); //Добавление метода
+							
+							
+							//Формирование таблицы локальных переменных
+							LocalVariablesTable* locals = method->LocalVariables; //Таблица локальных переменных данного метода
+							Type* type = new Type(CLASS_NAME_TYPE, element->getClassName()); // Тип для self переменной
+							locals->findOrAddLocalVariable("self", type); //Добавление self в таблицу локальных переменных
+							//Добавление keywords в таблицу локальных переменных
+							for (int i = 0; i < keywordsNames[it->first]->size(); i++) {
+								locals->findOrAddLocalVariable(keywordsNames[it->first]->at(i), keywordsTypes[it->first]->at(i));
+							}
+							//Добавление parameters в таблицу локальных переменных
+							for (int i = 0; i < parametersNames[it->first]->size(); i++) {
+								locals->findOrAddLocalVariable(parametersNames[it->first]->at(i), parametersTypes[it->first]->at(i));
+							}
+							//Получение и добавление локальных переменных внутри метода
+							vector<string> varsNames;
+							vector<Type*> varsTypes;
+							method->BodyStart->findLocalVariables(&varsNames, &varsTypes);
+							for (int i = 0; i < varsNames.size(); i++)
+							{
+								locals->findOrAddLocalVariable(varsNames[i], varsTypes[i]);
+							}
 						}
 					}
 				}
@@ -422,13 +476,13 @@ map<string, Type*> Declaration_node::getDeclaration(map<string, Expression_node*
 	for (auto it = declarators->begin(); it < declarators->end(); it++)
 	{
 		string name = string((*it)->Declarator); //Имя
-		type_type type = this->type->type; //Тип
+		type_type type = this->typeNode->type; //Тип
 		Expression_node* arrSize = (*it)->ArraySize; //Размер массива
 		Expression_node* initializer = (*it)->expression; // Инициализатор
 		Expression_list_node* initializerList = (*it)->InitializerList; // Инициализатор массива
 		if (type == CLASS_NAME_TYPE)
 		{
-			string className = this->type->ClassName;
+			string className = this->typeNode->ClassName;
 			if (arrSize != NULL || initializerList != NULL)
 			{ // Массив типа класса
 				int arraySize;
@@ -580,6 +634,113 @@ void Method_selector_node::getParams(vector<string>* keywordsNames, vector<Type*
 			}
 			parametersNames->push_back(name); //Добавление имени
 			parametersTypes->push_back(type); //Добавление типа
+		}
+	}
+}
+
+// ---------- Statement_node ----------
+void Statement_node::findLocalVariables(vector<string>* localVariablesNames, vector<Type*>* localVariablesTypes)
+{
+	vector<Init_declarator_node*>* declarators = NULL; //Деклараторы
+	Type_node* typeNode = NULL;
+	// Получение деклараторов
+	if (type == DECLARATION_STATEMENT_TYPE)
+	{
+		Declaration_node* declaration = (Declaration_node*)this;
+		declarators = declaration->init_declarator_list->getElements();
+		typeNode = declaration->typeNode;
+	}
+	if (type == FOR_STATEMENT_TYPE)
+	{
+		For_statement_node* for_stmt = (For_statement_node*)this;
+		declarators = for_stmt->InitList->getElements();
+		typeNode = for_stmt->NameType;
+	}
+	if (declarators != NULL && typeNode != NULL)
+		getTypesFromInitDeclaratorType(declarators, typeNode, localVariablesNames, localVariablesTypes); // Получение переменных
+
+
+
+	if (Next != NULL)
+	{
+		Next->findLocalVariables(localVariablesNames, localVariablesTypes);
+	}
+}
+
+void getTypesFromInitDeclaratorType(vector<Init_declarator_node*>* declarators, Type_node* typeNode, vector<string>* varsNames, vector<Type*>* varsTypes)
+{
+	for (auto it = declarators->begin(); it < declarators->end(); it++)
+	{
+		string name = string((*it)->Declarator); //Имя
+		type_type type = typeNode->type; //Тип
+		Expression_node* arrSize = (*it)->ArraySize; //Размер массива
+		Expression_node* initializer = (*it)->expression; // Инициализатор
+		Expression_list_node* initializerList = (*it)->InitializerList; // Инициализатор массива
+		if (type == CLASS_NAME_TYPE)
+		{
+			string className = typeNode->ClassName;
+			if (arrSize != NULL || initializerList != NULL)
+			{ // Массив типа класса
+				int arraySize;
+				if (arrSize != NULL)
+				{
+					arraySize = arrSize->constant.num->number.Int;
+				}
+				else
+				{
+					arraySize = initializerList->getElements()->size();
+				}
+				Type* curType = new Type(type, className, arraySize);
+				if (std::find(varsNames->begin(), varsNames->end(), name) != varsNames->end() && initializerList != NULL) {
+					string msg = "Variable '" + name + "' redifinition";
+					throw new exception(msg.c_str());
+				}
+				varsNames->push_back(name);
+				varsTypes->push_back(curType);
+				
+			}
+			else
+			{ //Тип класса
+				Type* curType = new Type(type, className);
+				if (std::find(varsNames->begin(), varsNames->end(), name) != varsNames->end() && initializer != NULL) {
+					string msg = "Variable '" + name + "' redifinition";
+					throw new exception(msg.c_str());
+				}
+				varsNames->push_back(name);
+				varsTypes->push_back(curType);
+			}
+		}
+		else
+		{
+			if (arrSize != NULL || initializerList != NULL)
+			{ // Массив примитивного типа
+				int arraySize;
+				if (arrSize != NULL)
+				{
+					arraySize = arrSize->constant.num->number.Int;
+				}
+				else
+				{
+					arraySize = initializerList->getElements()->size();
+				}
+				Type* curType = new Type(type, arraySize);
+				if (std::find(varsNames->begin(), varsNames->end(), name) != varsNames->end() && initializerList != NULL) {
+					string msg = "Variable '" + name + "' redifinition";
+					throw new exception(msg.c_str());
+				}
+				varsNames->push_back(name);
+				varsTypes->push_back(curType);
+			}
+			else
+			{ //Примитивный тип
+				Type* curType = new Type(type);
+				if (std::find(varsNames->begin(), varsNames->end(), name) != varsNames->end() && initializer != NULL) {
+					string msg = "Variable '" + name + "' redifinition";
+					throw new exception(msg.c_str());
+				}
+				varsNames->push_back(name);
+				varsTypes->push_back(curType);
+			}
 		}
 	}
 }

@@ -161,7 +161,8 @@ Declaration_node* Declaration_node::createDeclarationNode(Type_node *type, Init_
 {
     Declaration_node *res = new Declaration_node;
     res->id = maxId++;
-    res->type = type;
+    res->typeNode = type;
+	res->type = DECLARATION_STATEMENT_TYPE;
     res->init_declarator_list = initDeclarators;
     res->Next = NULL;
     return res;
@@ -1094,7 +1095,7 @@ string Declaration_node::toDot(string labelConection)
     res += ";\n";
     res += to_string(id) + "[label=\"declaration\"];\n";
     res += to_string(id);
-    res += type->toDot();
+    res += typeNode->toDot();
     if (init_declarator_list != NULL)
     {
         res += to_string(id);

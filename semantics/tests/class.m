@@ -17,11 +17,15 @@
     + (int) func: (int) first :(int) second
     {
         int test;
+        for (int i = 0; i < 10; i++)
+        {
+            a[i] = 0;
+        }
         return first + second;
     }
     - (void) func2: (int) first :(int) second
     {
-        int test;
+        int test[10];
         c = first + second;
     }
 @end

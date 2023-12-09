@@ -1,3 +1,3 @@
 Name;Descriptor;IsClassMethod;ReturnType;ParamsTypes;KeywordsTypes;BodyStartStatementId;LocalVariablesTableName
-13 (func2);14 ((II)V);false;void;;int,int;0;emptyTable
+13 (func2);14 ((II)V);false;void;;int,int;0;global_Myclass_MethodsTable_func2_LocalVariablesTable.csv
 11 (funcStatic);12 ((II)I);true;int;;int,int;0;global_Myclass_MethodsTable_funcStatic_LocalVariablesTable.csv

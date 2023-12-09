@@ -138,6 +138,8 @@ class Statement_node
         static Statement_node* createStatementNodeFromSimpleStatement(statement_type type, Expression_node *expression);
 
         virtual string toDot(string labelConection="");
+
+		void findLocalVariables(vector<string>* localVariablesNames, vector<Type*>* localVariablesTypes);
 };
 
 // ---------- declaration ----------
@@ -146,7 +148,7 @@ class Declaration_node : public Statement_node
 {
     public:
         int id;
-        Type_node *type;
+        Type_node *typeNode;
         Init_declarator_list_node *init_declarator_list;
         Declaration_node *Next;
 

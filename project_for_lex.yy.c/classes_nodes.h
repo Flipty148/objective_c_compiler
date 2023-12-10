@@ -23,7 +23,7 @@ class Class_implementation_node;
 class Interface_body_node;
 class Interface_declaration_list_node;
 class Implementation_definition_list_node;
-class Class_list_node;
+class Identifier_list_node;
 class Property_node;
 class Method_declaration_node;
 class Method_selector_node;
@@ -585,9 +585,10 @@ class Interface_body_node
 
         string toDot(string labelConection="");
 
-        map<string, Type*> getInstanceVariables(); // Функция возвращающая поля объекта
+        vector<string> getInstanceVariables(vector<Type*>* varTypes); // Функция возвращающая поля объекта
 		map<string, Type*> getVariables(map<string, Expression_node*> *initializers); // Функция возвращающая поля объекта (не instance variables)
 		map<string, Type*> getMethods(map<string, vector<string>*>* keywordsNames, map<string, vector<Type*>*>* keywordsTypes, map<string, vector<string>*>* parametersNames, map<string, vector<Type*>*>* parametersTypes, map<string, bool>* isClassMethod); //Функция, которая возвращает список методов
+		map<string, Type*> getProperties(map<string, bool>* isReadonly); //Функция, которая возвращает список свойств
 };
 
 // ---------- implementation_body ----------
@@ -603,7 +604,7 @@ class Implementation_body_node
 
         string toDot(string labelConection="");
 
-        map<string, Type*> getInstanceVariables(map<string, int>* indexes); // Функция возвращающая поля объекта
+        vector<string> getInstanceVariables(vector<Type*>* varTypes); // Функция возвращающая поля объекта
         map<string, Type*> getVariables(map<string, Expression_node*>* initializers); // Функция возвращающая поля объекта (не instance variables)
         map<string, Type*> getMethods(map<string, vector<string>*>* keywordsNames, map<string, vector<Type*>*>* keywordsTypes, map<string, vector<string>*>* parametersNames, map<string, vector<Type*>*>* parametersTypes, map<string, bool>* isClassMethod, map<string, Statement_node*>* bodyStartNode); //Функция, которая возвращает список методов
 };
@@ -629,22 +630,22 @@ class Class_declaration_list_node
 {
     public:
         int id;
-        Class_list_node *List;
+        Identifier_list_node *List;
         Class_declaration_list_node *Next;
 
-        static Class_declaration_list_node* createClassDeclarationListNode(Class_list_node *list);
+        static Class_declaration_list_node* createClassDeclarationListNode(Identifier_list_node *list);
 
         string toDot(string labelConection="");
 };
 
-class Class_list_node
+class Identifier_list_node
 {
     public:
         int id;
-        std::vector<char*> *Class_names;
+        std::vector<char*> *Identifier_names;
 
-    static Class_list_node* createClassListNode(char *className);
-    static Class_list_node* addToClassListNode(Class_list_node *list, char *className);
+    static Identifier_list_node* createIdentifierListNode(char *identifierName);
+    static Identifier_list_node* addToIdentifierListNode(Identifier_list_node *list, char *identifierName);
 
     string toDot(string labelConection="");
 };
@@ -835,10 +836,10 @@ class Property_node
         int id;
         Attribute_node *Attribute;
         Type_node *type;
-        char *Name;
+        Identifier_list_node *Names;
         Property_node *Next;
 
-        static Property_node* createPropertyNode(Attribute_node *attribute, Type_node *type, char *name);
+        static Property_node* createPropertyNode(Attribute_node *attribute, Type_node *type, Identifier_list_node *names);
 
         string toDot(string labelConection="");
 };

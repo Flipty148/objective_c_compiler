@@ -38,28 +38,40 @@ void Function_and_class_list_node::fillTables()
 							element->Fields->addField(element->ConstantTable, it->first, it->second->getDescriptor(), false, it->second, initializers[it->first]);
 					}
 
-					map<string, int>* indexes = new map<string, int>;
-					map<string, Type*> instanceVariables = curImplementation->Body->getInstanceVariables(indexes);
+					vector<Type*> varTypes;
+					vector<string> instanceVariables = curImplementation->Body->getInstanceVariables(&varTypes);
 
 					if (element->IsHaveInterface) { // У класса был интерфейс
 						// Проверить instance variables
 						if (instanceVariables.size() > 0) {
-							// Сверить instance variables
-							for (auto it = instanceVariables.begin(); it != instanceVariables.end(); it++)
+							map<string, FieldsTableElement*> instVar;
+							for (auto item : element->Fields->items)
 							{
-								if (!element->Fields->items.count(it->first)) {
-									string msg = "Instance variable '" + it->first + "' not found in interface '" + className + "'\n";
+								if (item.second->IsInstance)
+									instVar[item.first] = item.second;
+							}
+
+							if (instanceVariables.size() != instVar.size())
+							{
+								string msg = "Instance variables have different size in interface and implementation in class'" + className + "'\n";
+								throw std::exception(msg.c_str());
+							}
+							// Сверить instance variables
+							for (int i = 0; i < instanceVariables.size(); i++)
+							{
+								if (!instVar.count(instanceVariables[i])) {
+									string msg = "Instance variable '" + instanceVariables[i] + "' not found in interface '" + className + "'\n";
 									throw std::exception(msg.c_str());
 								}
 
-								if (element->Fields->items[it->first]->InstanceIndex != (*indexes)[it->first])
+								if (instVar[instanceVariables[i]]->InstanceIndex != i+1)
 								{
-									string msg = "Instance variable '" + it->first + "' in class '" + className + "' has different position from the position specified in the interface'\n";
+									string msg = "Instance variable '" + instanceVariables[i] + "' in class '" + className + "' has different position from the position specified in the interface'\n";
 									throw std::exception(msg.c_str());
 								}
-								if (it->second->getDescriptor() != element->Fields->items[it->first]->DescriptorStr)
+								if (varTypes[i]->getDescriptor() != instVar[instanceVariables[i]]->DescriptorStr)
 								{
-									string msg = "Instance variable '" + it->first + "' in class '" + className + "' has different type from the type specified in the interface'\n";
+									string msg = "Instance variable '" + instanceVariables[i] + "' in class '" + className + "' has different type from the type specified in the interface'\n";
 									throw std::exception(msg.c_str());
 								}
 							}
@@ -134,9 +146,9 @@ void Function_and_class_list_node::fillTables()
 					}
 					else { // У класса не было интерфейса
 						// Добавить instance variables
-						for (auto it = instanceVariables.begin(); it != instanceVariables.end(); it++)
+						for (int i = 0; i < instanceVariables.size(); i++)
 						{
-							element->Fields->addField(element->ConstantTable, it->first, it->second->getDescriptor(), true, it->second, NULL);
+							element->Fields->addField(element->ConstantTable, instanceVariables[i], varTypes[i]->getDescriptor(), true, varTypes[i], NULL);
 						}
 
 						// Добавление методов
@@ -213,10 +225,11 @@ void Function_and_class_list_node::fillTables()
 					}
 
 					// Добавление instance variables
-					map<string, Type*> instanceVariables = curInterface->Body->getInstanceVariables();
-					for (auto it = instanceVariables.begin(); it != instanceVariables.end(); it++)
+					vector<Type*> varTypes;
+					vector<string> instanceVariables = curInterface->Body->getInstanceVariables(&varTypes);
+					for (int i = 0; i < instanceVariables.size(); i++)
 					{
-						element->Fields->addField(element->ConstantTable, it->first, it->second->getDescriptor(), true, it->second, NULL);
+						element->Fields->addField(element->ConstantTable, instanceVariables[i], varTypes[i]->getDescriptor(), true, varTypes[i], NULL);
 					}
 
 					// Добавление методов
@@ -256,6 +269,14 @@ void Function_and_class_list_node::fillTables()
 							locals->findOrAddLocalVariable(parametersNames[it->first]->at(i), parametersTypes[it->first]->at(i));
 						}
 					}
+
+					// Добавление свойств
+					map<string, bool> isReadonly; //Значение аттрибута readonly для property
+					map<string, Type*> propertiesTypes = curInterface->Body->getProperties(&isReadonly);
+					for (auto it = propertiesTypes.cbegin(); it != propertiesTypes.cend(); it++)
+					{
+						element->Properties->addProperty(element->ConstantTable, it->first, it->second->getDescriptor(), isReadonly[it->first], it->second);
+					}
 				}
             }
         }
@@ -271,17 +292,23 @@ void Program_node::fillClassesTable()
 
 //---------- Interface_body_node ---------- 
 
-map<string, Type*> Interface_body_node::getInstanceVariables()
+vector<string> Interface_body_node::getInstanceVariables(vector<Type*>* varTypes)
 {
 	Instance_variables_declaration_node* first = Variables->First;
-	map<string, Type*> res;
+	vector<string> res;
 	while (first != NULL)
 	{
 		vector<Type*> *types = new vector<Type*>;
 		vector <string> names = first->getInstanceVariables(types);
 		for (int i = 0; i < names.size(); i++)
 		{
-			res[names[i]] = types->at(i);
+			if (std::find(res.begin(), res.end(), names[i]) != res.end())
+			{
+				string msg = "Variable '" + names[i] + "' redeclaration";
+				throw new std::exception(msg.c_str());
+			}
+			res.push_back(names[i]);
+			varTypes->push_back(types->at(i));
 		}
 		first = first->Next;
 	}
@@ -345,6 +372,34 @@ map<string, Type*> Interface_body_node::getMethods(map<string, vector<string>*>*
 	return res;
 }
 
+map<string, Type*> Interface_body_node::getProperties(map<string, bool>* isReadonly)
+{
+	map<string, Type*> res;
+	if (Declaration_list != NULL)
+	{
+		vector<Interface_declaration_list_node::interface_declaration>* declarations = Declaration_list->Declarations; // Список объявлений
+		for (auto it = declarations->cbegin(); it < declarations->cend(); it++)
+		{
+			Property_node* property = it -> property; //Свойство
+			if (property != NULL)
+			{
+				Type* type = property->type->toDataType(); //Тип
+				for (char* name : *property->Names->Identifier_names)
+				{//Для каждого имени
+					if (res.count(string(name)))
+					{ // Переопределение свойства
+						string msg = "Property '" + string(name) + "' redeclaration.";
+						throw new std::exception(msg.c_str());
+					}
+					res[string(name)] = type; //Добавить тип
+					(*isReadonly)[string(name)] = property->Attribute->type == READONLY_ATTRIBUTE_TYPE; //Добавить атрибут
+				}
+			}
+		}
+	}
+	return res;
+}
+
 //---------- Instance_variables_declaration_node ----------
 
 vector<string> Instance_variables_declaration_node::getInstanceVariables(vector<Type*>* types)
@@ -388,18 +443,23 @@ vector<string> Instance_variables_declaration_node::getInstanceVariables(vector<
 }
 
 // ---------- Implementation_body_node ----------
-map<string, Type*> Implementation_body_node::getInstanceVariables(map<string, int> *indexes)
+vector<string> Implementation_body_node::getInstanceVariables(vector<Type*> *varTypes)
 {
 	Instance_variables_declaration_node* first = Variables->First;
-	map<string, Type*> res;
+	vector<string> res;
 	while (first != NULL)
 	{
 		vector<Type*>* types = new vector<Type*>;
 		vector <string> names = first->getInstanceVariables(types);
 		for (int i = 0; i < names.size(); i++)
 		{
-			res[names[i]] = types->at(i);
-			(*indexes)[names[i]] = i + 1;
+			if (std::find(res.begin(), res.end(), names[i]) != res.end())
+			{
+				string msg = "Variable '" + names[i] + "' redeclaration";
+				throw new std::exception(msg.c_str());
+			}
+			res.push_back(names[i]);
+			varTypes->push_back(types->at(i));
 		}
 		first = first->Next;
 	}

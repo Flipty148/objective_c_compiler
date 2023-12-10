@@ -9,7 +9,9 @@ ID;Type;Value
 8;UTF8;b
 9;UTF8;I
 10;UTF8;c
-11;UTF8;funcStatic
-12;UTF8;(II)I
-13;UTF8;func2
-14;UTF8;(II)V
+11;UTF8;f
+12;UTF8;d
+13;UTF8;funcStatic
+14;UTF8;(II)I
+15;UTF8;func2
+16;UTF8;(II)V

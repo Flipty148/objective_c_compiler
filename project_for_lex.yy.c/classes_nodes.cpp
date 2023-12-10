@@ -694,32 +694,27 @@ Class_implementation_node* Class_implementation_node::createClassImplementationN
 
 // ---------- class_declaration_list, class_list ----------
 
-Class_list_node* Class_list_node::createClassListNode(char *className)
+Identifier_list_node* Identifier_list_node::createIdentifierListNode(char *identifierName)
 {
-    Class_list_node *res = new Class_list_node;
+    Identifier_list_node *res = new Identifier_list_node;
     res->id = maxId++;
-    res->Class_names = new vector<char*>;
-    res->Class_names->push_back(className);
-
-    string classStr = className;
-    ClassNames.insert(classStr);
+    res->Identifier_names = new vector<char*>;
+    res->Identifier_names->push_back(identifierName);
     return res;
 }
 
-Class_list_node* Class_list_node::addToClassListNode(Class_list_node *list, char *className)
+Identifier_list_node* Identifier_list_node::addToIdentifierListNode(Identifier_list_node *list, char *identifierName)
 {
-    list->Class_names->push_back(className);
-    string classStr = className;
-    ClassNames.insert(classStr);
+    list->Identifier_names->push_back(identifierName);
     return list;
 }
 
-Class_declaration_list_node* Class_declaration_list_node::createClassDeclarationListNode(Class_list_node *list)
+Class_declaration_list_node* Class_declaration_list_node::createClassDeclarationListNode(Identifier_list_node *list)
 {
     Class_declaration_list_node *res = new Class_declaration_list_node;
     res->id = maxId++;
     res->List = list;
-    for(char * className : *list->Class_names)
+    for(char * className : *list->Identifier_names)
     {
         string classStr = className;
         ClassNames.insert(classStr);
@@ -972,13 +967,13 @@ Keyword_declaration_node* Keyword_declaration_node::createKeywordDeclarationNode
 
 // ---------- property ----------
 
-Property_node* Property_node::createPropertyNode(Attribute_node *attribute, Type_node *type, char *name)
+Property_node* Property_node::createPropertyNode(Attribute_node *attribute, Type_node *type, Identifier_list_node *names)
 {
     Property_node *res = new Property_node;
     res->id = maxId++;
     res->Attribute = attribute;
     res->type = type;
-    res->Name = name;
+    res->Names = names;
     res->Next = NULL;
     return res;
 }
@@ -2063,17 +2058,17 @@ string Class_declaration_list_node::toDot(string labelConection)
 
 // ---------- Class_list_node ----------
 
-string Class_list_node::toDot(string labelConection)
+string Identifier_list_node::toDot(string labelConection)
 {
     string res = "->" + to_string(id);
     if (labelConection!= "")
         res += "[label=\"" + labelConection + "\"]";
     res += ";\n";
-    res += to_string(id) + "[label=\"class_list\"];\n";
+    res += to_string(id) + "[label=\"identifier_list\"];\n";
 
-    for (int i = 0; i < Class_names->size(); i++)
+    for (int i = 0; i < Identifier_names->size(); i++)
     {
-        res += to_string(id) + "." + to_string(i) + " [label=\"" + Class_names->at(i) + "\"];\n";
+        res += to_string(id) + "." + to_string(i) + " [label=\"" + Identifier_names->at(i) + "\"];\n";
         res += to_string(id) + "->" + to_string(id) + "." + to_string(i) + " [label=\"" + to_string(i) + "\"];\n";
     }
 
@@ -2365,8 +2360,8 @@ string Property_node::toDot(string labelConection)
     res += to_string(id);
     res += type->toDot("type");
 
-    res += to_string(id) + "->" + to_string(id) + ".1 [label=\"name\"];\n";
-    res += to_string(id) + ".1 [label=\"" + Name + "\"];\n";
+	res += to_string(id);
+	res += Names->toDot("names");
 
     return res;
 }

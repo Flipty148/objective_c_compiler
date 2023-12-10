@@ -10,5 +10,5 @@ ren %~n1_tab.c %~n1_tab.cpp
 
 copy %~n1_tab.cpp .\project_for_lex.yy.c
 copy %~n1_tab.h .\project_for_lex.yy.c
-copy classes_nodes.cpp .\project_for_lex.yy.c
-copy classes_nodes.h .\project_for_lex.yy.c
+:: copy classes_nodes.cpp .\project_for_lex.yy.c
+:: copy classes_nodes.h .\project_for_lex.yy.c

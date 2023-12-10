@@ -50,7 +50,7 @@
 	Property_node *Property;
 	Attribute_node *Attribute;
 	Program_node *Program;
-	Class_list_node *Class_list;
+	Identifier_list_node *Identifier_list;
 	Function_and_class_list_node *Function_and_class_list;
 	Function_node *Function;
 	Declarator_list_node *Declarator_list;
@@ -121,7 +121,7 @@
 %type <Implementation_body> implementation_body implementation_body_e
 %type <Class_implementation> class_implementation
 %type <Class_declaration_list> class_declaration_list 
-%type <Class_list> class_list
+%type <Identifier_list> identifier_list
 %type <Interface_declaration_list> interface_declaration_list interface_declaration_list_e
 %type <Method_declaration> method_declaration 
 %type <Implementation_definition_list> implementation_definition_list implementation_definition_list_e
@@ -386,12 +386,12 @@ class_implementation: IMPLEMENTATION IDENTIFIER implementation_body_e END						{
 					| IMPLEMENTATION CLASS_NAME ':' CLASS_NAME implementation_body_e END		{$$ = Class_implementation_node::createClassImplementationNode($2, $4, $5);}
 					;
 
-class_declaration_list: CLASS class_list ';'	{$$ = Class_declaration_list_node::createClassDeclarationListNode($2);}
+class_declaration_list: CLASS identifier_list ';'	{$$ = Class_declaration_list_node::createClassDeclarationListNode($2);}
 					  ;
 
-class_list: IDENTIFIER					{$$ = Class_list_node::createClassListNode($1);}
-		  | class_list ',' IDENTIFIER	{$$ = Class_list_node::addToClassListNode($1, $3);}
-		  ;
+identifier_list: IDENTIFIER						{$$ = Identifier_list_node::createIdentifierListNode($1);}
+		  	   | identifier_list ',' IDENTIFIER	{$$ = Identifier_list_node::addToIdentifierListNode($1, $3);}
+		  	   ;
 
 instance_variables_declaration_list_e: /*empty*/							{$$ = NULL;}
 								| instance_variables_declaration_list	{$$ = $1;}
@@ -472,8 +472,8 @@ method_type: '(' type ')'	{$$ = $2;}
 		   | '(' CLASS_NAME '*' ')' {$$ = Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $2);}
 		   ;
 
-property: PROPERTY attribute type IDENTIFIER ';'	{$$ = Property_node::createPropertyNode($2, $3, $4);}
-		| PROPERTY attribute CLASS_NAME '*' IDENTIFIER ';'	{$$ = Property_node::createPropertyNode($2, Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $3), $5);}
+property: PROPERTY attribute type identifier_list ';'	{$$ = Property_node::createPropertyNode($2, $3, $4);}
+		| PROPERTY attribute CLASS_NAME '*' identifier_list ';'	{$$ = Property_node::createPropertyNode($2, Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $3), $5);}
 		;
 
 attribute: /*empty*/			{$$ = Attribute_node::createAttributeNode(EMPTY_ATTRIBUTE_TYPE);}

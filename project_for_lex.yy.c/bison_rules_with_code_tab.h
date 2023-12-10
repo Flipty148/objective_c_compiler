@@ -42,7 +42,7 @@ typedef union {
 	Property_node *Property;
 	Attribute_node *Attribute;
 	Program_node *Program;
-	Class_list_node *Class_list;
+	Identifier_list_node *Identifier_list;
 	Function_and_class_list_node *Function_and_class_list;
 	Function_node *Function;
 	Declarator_list_node *Declarator_list;

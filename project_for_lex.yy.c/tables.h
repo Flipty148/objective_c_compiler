@@ -185,7 +185,7 @@ class PropertiesTableElement
 {
 public:
     int Name = NULL; // Ссылка на константу с именем свойства
-    int Descriptor = NULL; // Ссылка на константу с дескриптором типа константы
+    int Descriptor = NULL; // Ссылка на константу с дескриптором типа свойства
     bool IsReadonly = NULL; // Флаг, который показывает, что свойство доступно только для чтения
     Type* type; // Тип свойства
     string NameStr; // Имя свойства

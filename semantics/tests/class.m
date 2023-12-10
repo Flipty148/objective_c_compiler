@@ -1,16 +1,20 @@
 @interface Myclass:NSObject
 {
-    int a[10], c;
+    int a[10], f;
+    int d;
 }
     int b = 5;
     int a[10];
     int c[20];
     + (int) func: (int) first :(int) second;
+    @property (readonly) int f;
+    @property int d;
 @end
 
 @implementation Myclass:NSObject
 {
-    int a[10], c;
+    int a[10], f;
+    int d;
 }
     int b;
     int a[10];

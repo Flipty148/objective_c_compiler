@@ -7,7 +7,7 @@
     int a[10];
     int c[20];
     + (int) func: (int) first :(int) second;
-    @property (readonly) int f;
+    @property (readonly) int f,e;
     @property int d;
 @end
 

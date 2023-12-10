@@ -13,5 +13,6 @@ ID;Type;Value
 12;UTF8;d
 13;UTF8;funcStatic
 14;UTF8;(II)I
-15;UTF8;func2
-16;UTF8;(II)V
+15;UTF8;e
+16;UTF8;func2
+17;UTF8;(II)V

@@ -14,5 +14,5 @@ ID;Type;Value
 13;UTF8;funcStatic
 14;UTF8;(II)I
 15;UTF8;e
-16;UTF8;func2
+16;UTF8;func2Dynamic
 17;UTF8;(II)V

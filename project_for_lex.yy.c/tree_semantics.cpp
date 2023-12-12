@@ -16,7 +16,7 @@ void Function_and_class_list_node::fillTables()
             if (cur->type == IMPLEMENTATION_CLASS_BLOCK_TYPE)
             { // Реализация
                 Class_implementation_node* curImplementation = (Class_implementation_node*)cur;
-                string className = curImplementation->ClassName; // Имя сласса
+                string className = curImplementation->ClassName; // Имя класса
                 string *superclassName = curImplementation->SuperclassName == NULL ? NULL : new string(curImplementation->SuperclassName); // Имя суперкласса
 				ClassesTableElement *element = ClassesTable::addClass(className, superclassName, true); // Добавление класса в таблицу
 
@@ -280,6 +280,32 @@ void Function_and_class_list_node::fillTables()
 				}
             }
         }
+		else if (FunctionsAndClasses->at(i).function != NULL)
+		{
+			Function_node* cur = FunctionsAndClasses->at(i).function; //Узел функции
+			Type* returnType; //Возвращаемый тип
+			Statement_node* body; //Узел начала тела функции
+			string functionName = cur->getFunction(&returnType, &body); //Имя функции
+
+			// Формирование дескриптора
+			string descriptor = "()";
+			descriptor += returnType->getDescriptor();
+
+			FunctionsTableElement* element = FunctionsTable::addFunction(functionName, descriptor, body, NULL, NULL); // Добавление функции в таблицу
+
+			// Формирование таблицы локальных переменных
+			LocalVariablesTable* locals = element->LocalVariables; //Таблица локальных переменных данной функции
+			Type* type = new Type(CLASS_NAME_TYPE, "default/Program"); //Тип для this
+			locals->findOrAddLocalVariable("this", type); //Добавление self в таблицу локальных переменных
+			vector<string> varsNames;
+			vector<Type*> varsTypes;
+			element->BodyStart->findLocalVariables(&varsNames, &varsTypes);
+			for (int i = 0; i < varsNames.size(); i++)
+			{
+				locals->findOrAddLocalVariable(varsNames[i], varsTypes[i]);
+			}
+
+		}
     }
 }
 
@@ -807,4 +833,13 @@ void getTypesFromInitDeclaratorType(vector<Init_declarator_node*>* declarators, 
 			}
 		}
 	}
+}
+
+// ---------- Function_declaration ----------
+string Function_node::getFunction(Type** returnType, Statement_node** bodyStart)
+{
+	*returnType = ReturnType->toDataType(); //Тип возвращаемого значения
+	string functionName = string(Name); //Имя функции
+	*bodyStart = statement->First; // Начало тела функции
+	return functionName;
 }

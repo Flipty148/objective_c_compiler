@@ -628,23 +628,26 @@ bool Type::equal(Type* other)
 
 // -------------------- FunctionsTableElement --------------------
 
-FunctionsTableElement::FunctionsTableElement(int name, int descriptor, Statement_node* bodyStart, string nameStr, string descriptorStr)
+FunctionsTableElement::FunctionsTableElement(Statement_node* bodyStart, string nameStr, string descriptorStr, vector<Type*>* params, Type* returnType)
 {
-	Name = name;
-	Descriptor = descriptor;
 	BodyStart = bodyStart;
 	LocalVariables = new LocalVariablesTable();
 	NameStr = nameStr;
 	DescriptorStr = descriptorStr;
+	ParametersTypes = params;
+	ReturnType = returnType;
 }
 
 string FunctionsTableElement::toCsvString(string funcName, char separator)
 {
 	string res = "";
-	res += to_string(Name) + " (" + NameStr + ")" + separator; //Добавление имени
-	res += to_string(Descriptor) + " (" + DescriptorStr + ")" + separator; //Добавление дескриптора
+	res +=  NameStr + separator; //Добавление имени
+	res += DescriptorStr + separator; //Добавление дескриптора
 	res += to_string(BodyStart->id) + separator; //Добавление id узла начала тела функции
-	res += funcName + "_LocalVariablesTable.csv"; //имя таблицы с локальными переменными
+	if (LocalVariables->items.size() > 0)
+		res += funcName + "_LocalVariablesTable.csv"; //имя таблицы с локальными переменными
+	else
+		res += string("empty");
 	return res;
 }
 
@@ -655,28 +658,29 @@ void FunctionsTableElement::refTablesToCsvFile(string filename, string filepath,
 }
 
 // -------------------- FunctionsTable --------------------
+map<string, FunctionsTableElement*> FunctionsTable::items;
 
-void FunctionsTable::addFunction(ConstantsTable *constantTable, string name, string descriptor, Statement_node* bodyStart)
+
+FunctionsTableElement* FunctionsTable::addFunction(string name, string descriptor, Statement_node* bodyStart, vector<Type*>* params, Type* returnType)
 {
 	if (items.count(name) != 0)
 	{
 		string msg = "Function '" + name + "' already exists";
 		throw new exception(msg.c_str());
 	}
-	int NameId = constantTable->findOrAddConstant(UTF8, name);
-	int DescriptorId = constantTable->findOrAddConstant(UTF8, descriptor);
-	FunctionsTableElement *function = new FunctionsTableElement(NameId, DescriptorId, bodyStart, name, descriptor);
+	FunctionsTableElement *function = new FunctionsTableElement(bodyStart, name, descriptor, params, returnType);
 	items[name] = function;
+	return function;
 }
 
 void FunctionsTable::toCsvFile(string filename, string filepath, char separator)
 {
 	ofstream out(filepath + filename); //Создание и открытие потока на запись в файл
-	out << "Name" << separator << "Descriptor" << "BodyStartStatementId" << "LocalVariablesTableName" << endl; // Запись заголовков
+	out << "Name" << separator << "Descriptor" << separator << "BodyStartStatementId" << separator << "LocalVariablesTableName" << endl; // Запись заголовков
 	auto iter = items.cbegin();
 	while (iter != items.cend())
 	{
-		string funcName = filename.substr(0, filename.find(".")) + iter->first; // Имя функции
+		string funcName = filename.substr(0, filename.find(".")) + string("_") + iter->first + "_LocalVariables.csv"; // Имя функции
 		string str = iter->second->toCsvString(funcName, separator); // Формирование строки
 		out << str << endl; //Запись строки в файл
 		iter->second->refTablesToCsvFile(funcName, filepath, separator); // Запись вложенных таблиц функции

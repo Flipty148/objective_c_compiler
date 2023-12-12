@@ -42,3 +42,11 @@
 
 @implementation MyClass3
 @end
+
+int main()
+{
+    int a;
+    int b[10];
+    Myclass*obj = [Myclass new];
+    return 0;
+}

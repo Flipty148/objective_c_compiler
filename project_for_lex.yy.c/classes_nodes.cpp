@@ -92,7 +92,7 @@ Function_node* Function_node::createFunctionNode(Type_node *type, char *name, St
 {
     Function_node *res = new Function_node;
     res->id = maxId++;
-    res->Type = type;
+    res->ReturnType = type;
     res->Name = name;
     res->statement = statement;
     return res;
@@ -2440,7 +2440,7 @@ string Function_node::toDot(string labelConection)
     res += to_string(id) + "[label=\"function\"];\n";
 
     res += to_string(id);
-    res += Type->toDot("type");
+    res += ReturnType->toDot("type");
 
     res += to_string(id) + "->" + to_string(id) + ".1 [label=\"name\"];\n";
     res += to_string(id) + ".1 [label=\""; 

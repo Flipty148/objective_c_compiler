@@ -147,7 +147,6 @@ class Statement_node
 class Declaration_node : public Statement_node
 {
     public:
-        int id;
         Type_node *typeNode;
         Init_declarator_list_node *init_declarator_list;
         Declaration_node *Next;
@@ -452,7 +451,6 @@ enum if_type {
 class If_statement_node : public Statement_node
 {
     public:
-        int id;
         enum if_type IfType;
         Expression_node *Condition;
         Statement_node *TrueBranch;
@@ -470,7 +468,6 @@ class If_statement_node : public Statement_node
 class While_statement_node : public Statement_node
 {
     public:
-        int id;
         Expression_node *LoopCondition;
         Statement_node *LoopBody;
 
@@ -484,7 +481,6 @@ class While_statement_node : public Statement_node
 class Do_while_statement_node : public Statement_node
 {
     public:
-        int id;
         Expression_node *LoopCondition;
         Statement_node *LoopBody;
 
@@ -505,7 +501,6 @@ enum for_type {
 class For_statement_node : public Statement_node
 {
     public:
-        int id;
         enum for_type ForType;
         Expression_list_node *InitExpression;
         Expression_node *ConditionExpression;
@@ -527,7 +522,6 @@ class For_statement_node : public Statement_node
 class Statement_list_node : public Statement_node
 {
     public:
-        int id;
         Statement_node *First;
         Statement_node *Last;
 
@@ -909,7 +903,7 @@ class Function_node
 { //ЗАГЛУШКА
     public:
         int id;
-        Type_node *Type;
+        Type_node *ReturnType;
         char *Name;
         Statement_list_node *statement;
         Function_node *Next;
@@ -917,4 +911,6 @@ class Function_node
         static Function_node* createFunctionNode(Type_node *type, char *name, Statement_list_node *statement);
         
         string toDot(string labelConection="");
+
+		string getFunction(Type** returnType, Statement_node** bodyStart);// Функция, возвращающая функцию для записи в таблицуы
 };

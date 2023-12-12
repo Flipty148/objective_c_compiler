@@ -1,0 +1,5 @@
+Id;Name;Type
+1;a;int
+2;b;int[10]
+3;obj;Myclass
+0;this;default/Program

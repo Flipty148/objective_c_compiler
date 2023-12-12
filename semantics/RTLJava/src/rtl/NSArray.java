@@ -53,7 +53,7 @@ public class NSArray extends NSObject {
      * Возвращает массив с добавленным элементом. <br/>
      * - (NSArray *)arrayByAddingObject: (id)anObject
      * */
-    public NSArray arrayByAddingObject(NSObject object) {
+    public NSArray arrayByAddingObjectDynamic(NSObject object) {
         NSObject[] res = new NSObject[array.length+1];
         for (int i = 0; i < array.length; i++) {
             res[i] = array[i];
@@ -66,7 +66,7 @@ public class NSArray extends NSObject {
      * Возвращает новый массив конкатенацией другого массива. <br/>
      * - (NSArray *)arrayByAddingObjectsFromArray: (NSArray *)anotherArray
      * */
-    public NSArray arrayByAddingObjectsFromArray(NSArray anotherArray) {
+    public NSArray arrayByAddingObjectsFromArrayDynamic(NSArray anotherArray) {
         NSObject[] res = new NSObject[array.length+anotherArray.array.length];
         for (int i = 0; i < array.length; i++) {
             res[i] = array[i];
@@ -81,11 +81,11 @@ public class NSArray extends NSObject {
      * Возвращает строку, состоящую из элементов массива. <br/>
      * - (NSString *)componentsJoinedByString: (NSString *)separator
      * */
-    public NSString componentsJoinedByString(NSString separator) {
+    public NSString componentsJoinedByStringDynamic(NSString separator) {
         String res = "";
-        String sep = new String(separator.cString());
+        String sep = new String(separator.cStringDynamic());
         for (int i = 0; i < array.length; i++) {
-            res += array[i].description() + sep;
+            res += array[i].descriptionDynamic() + sep;
         }
         return NSString.stringWithCStringStatic(res.toCharArray());
     }
@@ -94,7 +94,7 @@ public class NSArray extends NSObject {
      * Проверяет содержится ли объект в массиве. <br/>
      * - (BOOL)containsObject: (id)anObject
      * */
-    public boolean containsObject(NSObject object) {
+    public boolean containsObjectDynamic(NSObject object) {
         for (NSObject o : array) {
             if (o == object) {
                 return true;
@@ -107,12 +107,12 @@ public class NSArray extends NSObject {
      * Возвращает количество элементов в массиве. <br/>
      * - (NSUInteger)count
      * */
-    public int count() {
+    public int countDynamic() {
         return array.length;
     }
 
 
-    public NSString description() {
+    public NSString descriptionDynamic() {
         return NSString.stringWithCStringStatic("nsarray implementation".toCharArray());
     }
 
@@ -122,7 +122,7 @@ public class NSArray extends NSObject {
      * Возвращает первый элемент массива. <br/>
      * - (id)firstObject
      * */
-    public NSObject firstObject() {
+    public NSObject firstObjectDynamic() {
         if (array.length == 0) {
             return null;
         }
@@ -133,9 +133,9 @@ public class NSArray extends NSObject {
      * Возвращает первый элемент массива, содержащийся в другом массиве. <br/>
      * - (id)firstObjectCommonWithArray: (NSArray *)otherArray
      * */
-    public NSObject firstObjectCommonWithArray(NSArray array) {
+    public NSObject firstObjectCommonWithArrayDynamic(NSArray array) {
         for (NSObject o : array.array) {
-            if (this.containsObject(o)) {
+            if (this.containsObjectDynamic(o)) {
                 return o;
             }
         }
@@ -146,7 +146,7 @@ public class NSArray extends NSObject {
      * Копирует объекты в buffer. <br/>
      * - (void)getObjects: (id [])buffer
      * */
-    public void getObjects(NSObject[] buffer) {
+    public void getObjectsDynamic(NSObject[] buffer) {
         System.arraycopy(array, 0, buffer, 0, array.length);
     }
 
@@ -154,7 +154,7 @@ public class NSArray extends NSObject {
      * Возвращает индекс объекта в массиве. <br/>
      * - (NSUInteger)indexOfObject: (id)anObject
      * */
-    public int indexOfObject(NSObject object) {
+    public int indexOfObjectDynamic(NSObject object) {
         for (int i = 0; i < array.length; i++) {
             if (array[i] == object) {
                 return i;
@@ -163,8 +163,8 @@ public class NSArray extends NSObject {
         return -1; //TODO В оригинале NSNotFound
     }
 
-    public NSArray init() {
-        super.init();
+    public NSArray initDynamic() {
+        super.initDynamic();
         return this;
     }
 
@@ -172,12 +172,12 @@ public class NSArray extends NSObject {
      * Проверяет равен ли массив другому. <br/>
      * - (BOOL)isEqualToArray: (NSArray *)otherArray
      * */
-    public boolean isEqualToArray(NSArray otherArray) {
+    public boolean isEqualToArrayDynamic(NSArray otherArray) {
         if (array.length != otherArray.array.length) {
             return false;
         }
         for (int i = 0; i < array.length; i++) {
-            if (!array[i].isEqual(otherArray.array[i])) {
+            if (!array[i].isEqualDynamic(otherArray.array[i])) {
                 return false;
             }
         }
@@ -188,7 +188,7 @@ public class NSArray extends NSObject {
      * Возвращает последний элемент массива. <br/>
      * - (id)lastObject
      * */
-    public NSObject lastObject() {
+    public NSObject lastObjectDynamic() {
         if (array.length == 0) {
             return null;
         }
@@ -200,7 +200,7 @@ public class NSArray extends NSObject {
      * - (id)objectAtIndex: (NSUInteger)index
      * //TODO Заменить на NSInteger
      * */
-    public NSObject objectAtIndex(int index) {
+    public NSObject objectAtIndexDynamic(int index) {
         return array[index];
     }
 }

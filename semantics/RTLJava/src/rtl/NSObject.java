@@ -14,7 +14,7 @@ public class NSObject {
      * Метод инициализации. <br/>
      * - (id)init
      * */
-    public <T extends NSObject> T init() {
+    public <T extends NSObject> T initDynamic() {
         return (T) this;
     }
 
@@ -23,15 +23,15 @@ public class NSObject {
      * В objective-c это new. <br/>
      * + (id)new
      * */
-    public static <T extends NSObject> T newObject() {
-        return T.allocStatic().init();
+    public static <T extends NSObject> T newObjectStatic() {
+        return T.allocStatic().initDynamic();
     }
 
     /**
      * Возвращает класс. <br/>
      * - (Class)class
      * */
-    public Class<? extends NSObject> getclass() {
+    public Class<? extends NSObject> getclassDynamic() {
         return this.getClass();
     }
 
@@ -59,8 +59,8 @@ public class NSObject {
      * @return Имя класса
      * //TODO заменить на NSString
      */
-    public String className() {
-        return getclass().getName();
+    public String classNameDynamic() {
+        return getclassStatic().getName();
     }
 
     /**
@@ -68,8 +68,8 @@ public class NSObject {
      * - (Class *)superclass
      * @return суперкласс
      */
-    public Class<?> superclass() {
-        return getclass().getSuperclass();
+    public Class<?> superclassDynamic() {
+        return getclassStatic().getSuperclass();
     }
 
     /**
@@ -77,7 +77,7 @@ public class NSObject {
      * - (NSString *)description
      * @return описание
      */
-    public NSString description() {
+    public NSString descriptionDynamic() {
         return NSString.stringWithCStringStatic("nsobject implementation".toCharArray());
     }
 
@@ -87,7 +87,7 @@ public class NSObject {
      * @param object Объект
      * @return Равен ли объект другому
      */
-    public boolean isEqual(NSObject object) {
+    public boolean isEqualDynamic(NSObject object) {
         return this == object;
     }
 }

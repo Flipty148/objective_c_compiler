@@ -355,6 +355,8 @@ map<string, Type*> Interface_body_node::getMethods(map<string, vector<string>*>*
 				string methodName = declaration->getMethod(&returnType, curKeywordsNames, curKeywordsTypes, curParametersNames, curParametersTypes, &isClass);
 				if (isClass)
 					methodName += string("Static");
+				else
+					methodName += string("Dynamic");
 				if (res.count(methodName))
 				{
 					string msg = "Method '" + methodName + "' redeclaration.\n";
@@ -509,6 +511,8 @@ map<string, Type*> Implementation_body_node::getMethods(map<string, vector<strin
 				string methodName = definition->getMethod(&returnType, curKeywordsNames, curKeywordsTypes, curParametersNames, curParametersTypes, &isClass, &bodyStart);
 				if (isClass)
 					methodName += string("Static");
+				else
+					methodName += string("Dynamic");
 				if (res.count(methodName))
 				{
 					string msg = "Method '" + methodName + "' redifinition.\n";

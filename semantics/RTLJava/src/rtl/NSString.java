@@ -41,7 +41,7 @@ public class NSString extends  NSObject {
      * Возвращает строку c, оканчивающуюся на 0-символ. <br/>
      * - (const char *)сString
      */
-    public char[] cString() {
+    public char[] cStringDynamic() {
         char[] res = new char[string.length()+1];
         for (int i = 0; i < string.length(); i++) {
             res[i] = string.charAt(i);
@@ -54,7 +54,7 @@ public class NSString extends  NSObject {
      * Возвращает строку ,где каждый символ после белого разделителя переводится в верхний регистр. <br/>
      * - (NSString *)capitalizedString
      * */
-    public NSString capitalizeString() {
+    public NSString capitalizeStringDynamic() {
         String res = "";
         for (int i = 0; i < string.length(); i++) {
             if (i == 0 || Character.isWhitespace(string.charAt(i - 1))) {
@@ -70,7 +70,7 @@ public class NSString extends  NSObject {
      * Возвращает символ по индексу. <br/>
      * - (unichar)characterAtIndex: (NSUInteger)index
      * */
-    public char characterAtIndex(int index) {
+    public char characterAtIndexDynamic(int index) {
         return string.charAt(index);
     }
 
@@ -78,7 +78,7 @@ public class NSString extends  NSObject {
      * Возвращает результат проверки того, что строка начинается с prefix. <br/>
      * - (BOOL)hasPrefix: (NSString *)aString
      * */
-    public boolean hasPrefix(NSString prefix) {
+    public boolean hasPrefixDynamic(NSString prefix) {
         return string.startsWith(prefix.string);
     }
 
@@ -86,12 +86,12 @@ public class NSString extends  NSObject {
      * Возвращает результат проверки того, что строка заканчивается на suffix. <br/>
      * - (BOOL)hasSuffix: (NSString *)aString
      * */
-    public boolean hasSuffix(NSString suffix) {
+    public boolean hasSuffixDynamic(NSString suffix) {
         return string.endsWith(suffix.string);
     }
 
     public NSString init() {
-        super.init();
+        super.initDynamic();
         return this;
     }
 
@@ -99,7 +99,7 @@ public class NSString extends  NSObject {
      * Возвращает целое число. <br/>
      * - (int)intValue
      * */
-    public int intValue() {
+    public int intValueDynamic() {
         return Integer.parseInt(string);
     }
 
@@ -107,7 +107,7 @@ public class NSString extends  NSObject {
      * Возвращает равенство строк. <br/>
      * - (BOOL)isEqual: (id)anObject
      * */
-    public boolean isEqual(NSObject other) {
+    public boolean isEqualDynamic(NSObject other) {
         if (!(other instanceof NSString)) return false;
         return string.equals(((NSString)other).string);
     }
@@ -122,7 +122,7 @@ public class NSString extends  NSObject {
      * Возвращает равенство строк. <br/>
      * - (BOOL)isEqualToString: (NSString *)aString
      * */
-    public boolean isEqualToString(NSString other) {
+    public boolean isEqualToStringDynamic(NSString other) {
         return string.equals(other.string);
     }
 
@@ -131,7 +131,7 @@ public class NSString extends  NSObject {
      * - (NSUInteger)length
      * //TODO Заменить на NSInteger
      * */
-    public int length() {
+    public int lengthDynamic() {
         return string.length();
     }
 
@@ -139,7 +139,7 @@ public class NSString extends  NSObject {
      * Возвращает строку в нижнем регистре. <br/>
      * - (NSString *)lowercaseString
      * */
-    public NSString lowercaseString() {
+    public NSString lowercaseStringDynamic() {
         return new NSString(string.toLowerCase());
     }
 
@@ -147,7 +147,7 @@ public class NSString extends  NSObject {
      * Возвращает строку в верхнем регистре. <br/>
      * - (NSString *)uppercaseString
      * */
-    public NSString uppercaseString() {
+    public NSString uppercaseStringDynamic() {
         return new NSString(string.toUpperCase());
     }
 
@@ -155,11 +155,11 @@ public class NSString extends  NSObject {
      * Возвращает новую строку с добавлением другой строки. <br/>
      * - (NSString *)stringByAppendingString: (NSString *)aString
      * */
-    public NSString stringByAppendingString(NSString other) {
+    public NSString stringByAppendingStringDynamic(NSString other) {
         return new NSString(string + other.string);
     }
 
-    public NSString description() {
+    public NSString descriptionDynamic() {
         return new NSString(string);
     }
 

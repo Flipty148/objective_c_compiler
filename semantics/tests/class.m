@@ -30,7 +30,7 @@
     - (void) func2: (int) first :(int) second
     {
         int test[10];
-        c = first + second;
+        d = first + second;
     }
 @end
 
@@ -40,7 +40,14 @@
 }
 @end
 
-@implementation MyClass3
+@implementation MyClass3 : MyClass2
+{
+    MyClass2 *obj;
+}
++ (void) funcMyClass3
+{
+    obj->a = 10;
+}
 @end
 
 int main()

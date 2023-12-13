@@ -199,6 +199,8 @@ void Function_and_class_list_node::fillTables()
 							}
 						}
 					}
+
+
 				}
             }
             else if (cur->type == INTERFACE_CLASS_BLOCK_TYPE)
@@ -307,6 +309,8 @@ void Function_and_class_list_node::fillTables()
 
 		}
     }
+
+	ClassesTable::fillFieldRefs(); // Найти и заполнить field refs для классов
 }
 
 //---------- Program_node ----------
@@ -835,6 +839,66 @@ void getTypesFromInitDeclaratorType(vector<Init_declarator_node*>* declarators, 
 	}
 }
 
+void Statement_node::fillFieldRefs(ConstantsTable *constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement)
+{
+	if (type == EMPTY_STATEMENT_TYPE) {
+
+	}
+	else if (type == SIMPLE_STATEMENT_TYPE) {
+		Expression->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+	}
+	else if (type == RETURN_STATEMENT_TYPE) {
+		Expression->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+	}
+	else if (type == IF_STATEMENT_TYPE) {
+		If_statement_node *cur = (If_statement_node*)this;
+		cur->Condition->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+		cur->TrueBranch->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+		if (cur->FalseBranch != NULL)
+			cur->FalseBranch->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+	}
+	else if (type == WHILE_STATEMENT_TYPE) {
+		While_statement_node *cur = (While_statement_node*)this;
+		cur->LoopCondition->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+		if (cur->LoopBody != NULL)
+			cur->LoopBody->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+	}
+	else if (type == DO_WHILE_STATEMENT_TYPE) {
+		Do_while_statement_node *cur = (Do_while_statement_node*)this;
+		cur->LoopCondition->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+		if (cur->LoopBody != NULL)
+			cur->LoopBody->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+	}
+	else if (type == FOR_STATEMENT_TYPE) {
+		For_statement_node *cur = (For_statement_node*)this;
+		if (cur->InitExpression != NULL)
+			cur->InitExpression->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+		if (cur->ConditionExpression != NULL)
+			cur->ConditionExpression->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+		if (cur->LoopExpression != NULL)
+			cur->LoopExpression->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+		if (cur->InitList != NULL)
+			cur->InitList->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+		if (cur->LoopBody != NULL)
+			cur->LoopBody->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+	}
+	else if (type == COMPOUND_STATEMENT_TYPE) {
+		Statement_list_node *cur = (Statement_list_node*)this;
+		if (cur->First != NULL) {
+			Statement_node *elem = cur->First;
+			while (elem != NULL) {
+				elem->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+				elem = elem->Next;
+			}
+		}
+	}
+	else if (type == DECLARATION_STATEMENT_TYPE) {
+		Declaration_node *cur = (Declaration_node*)this;
+		if (cur->init_declarator_list != NULL)
+			cur->init_declarator_list->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+	}
+}
+
 // ---------- Function_declaration ----------
 string Function_node::getFunction(Type** returnType, Statement_node** bodyStart)
 {
@@ -843,3 +907,176 @@ string Function_node::getFunction(Type** returnType, Statement_node** bodyStart)
 	*bodyStart = statement->First; // Начало тела функции
 	return functionName;
 }
+
+// ---------- Expression_node ----------
+void Expression_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable *localVariablesTable, ClassesTableElement *classTableElement)
+{
+	if (type == IDENTIFIER_EXPRESSION_TYPE) {
+		if (!localVariablesTable->isContains(name) && !classTableElement->isContainsField(name)) {
+			string msg = "Variable '" + string(name) + "' not declarated";
+			throw new exception(msg.c_str());
+		}
+		else if (!localVariablesTable->isContains(name) && classTableElement->isContainsField(name)) {
+			string descriptor; //Строка дескриптора
+			string className; //Имя класса
+			classTableElement->getFieldForRef(name, &descriptor, &className); //Получение дескриптора и имени класса
+			//Формирование fieldRef
+			constantTable->findOrAddFieldRefConstant(className, name, descriptor);
+		}
+	}
+	else if (type == SELF_EXPRESSION_TYPE) {
+
+	}
+	else if (type == SUPER_EXPRESSION_TYPE) {
+		string msg = "Can not call field from super object";
+		throw new std::exception(msg.c_str());
+	}
+	if (type == ARROW_EXPRESSION_TYPE) {
+		string objName;
+		// Получение имени объекта и проверка его корректности
+		if (Left->type == IDENTIFIER_EXPRESSION_TYPE)
+			objName = Left->name; //Имя объекта
+		else if (Left->type == SELF_EXPRESSION_TYPE)
+			objName = "self";
+		else if (Left->type == SUPER_EXPRESSION_TYPE) {
+			string msg = "Can not call field from super object";
+			throw new std::exception(msg.c_str());
+		}
+		else {
+			string msg = "Invalid expression type in function call.";
+			throw new std::exception(msg.c_str());
+		}
+
+
+		if (name == NULL) {
+			string msg = "Field call not to field";
+			throw new std::exception(msg.c_str());
+		}
+
+
+		string fieldName = name; //Имя поля
+		if (!localVariablesTable->isContains(objName) && !classTableElement->isContainsField(objName)) { //Не является локальной переменной или полем класса
+			string msg = "Variable '" + string(objName) + "' not declarated";
+			throw new exception(msg.c_str());
+		}
+		else if (!classTableElement->isContainsField(objName) && localVariablesTable->isContains(objName)) { //Является локальной переменной
+			LocalVariablesTableElement* local = localVariablesTable->items[objName]; //Локальная переменная
+			if (local->type->DataType != CLASS_NAME_TYPE) { // Не является экземпляром класса
+				string msg = "Variable '" + objName + "' is not instance of object.";
+				throw new std::exception(msg.c_str());
+			}
+			string className = local->type->ClassName; //Имя класса локальной переменной
+			ClassesTableElement* classElem = ClassesTable::items[className];
+			if (!classElem->isContainsField(fieldName) || classElem->Fields->items[fieldName]->IsInstance == false) { //Поле не содержится в классе объекта
+				string msg = "Class '" + className + "' don't contains field '" + fieldName;
+				throw new std::exception(msg.c_str());
+			}
+			if (classElem != classTableElement && classTableElement->getClassName() != "default/Program" && !classTableElement->isHaveOneOfSuperclass(className)) {
+				// Поле является protected и не выполнено условие для возможности использования protected
+				string msg = "Component '" + fieldName + "' only protected";
+				throw new std::exception(msg.c_str());
+			}
+
+
+			string descriptor; // дескриптор
+			string fieldClassName;  // Имя класса поля
+			classElem->getFieldForRef(fieldName, &descriptor, &fieldClassName); // получение данных для field ref
+			//Формирование fieldRef
+			constantTable->findOrAddFieldRefConstant(fieldClassName, fieldName, descriptor);
+		}
+	}
+	if (Left != NULL) {
+		Left->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+	}
+	if (Right != NULL) {
+		Right->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+	}
+	if (Receiver != NULL) {
+		Receiver->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+	}
+	if (Arguments != NULL) {
+		Arguments->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+	}
+	if (ArgumentsList != NULL) {
+		ArgumentsList->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+	}
+}
+
+// ---------- Receiver_node ----------
+void Receiver_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement)
+{
+	if (Type == SELF_RECEIVER_TYPE) {
+		LocalVariablesTableElement* self = localVariablesTable->items["self"];
+		string descriptor = self->type->getDescriptor(); //Строка дескриптора
+		string className = self->type->ClassName; //Имя класса
+		//Формирование fieldRef
+		constantTable->findOrAddFieldRefConstant(className, "self", descriptor);
+	}
+	else if (Type == OBJECT_NAME_RECEIVER_TYPE) {
+		if (classTableElement->isContainsField(name)) {
+			string descriptor; //Дескриптор
+			string className; //Имя класса
+			classTableElement->getFieldForRef(name, &descriptor, &className); //Получение данных поля для создания fieldRef
+			constantTable->findOrAddFieldRefConstant(className, name, descriptor); //Формирование fieldRef
+		}
+	}
+	else if (Type == MESSAGE_EXPRESSION_RECEIVER_TYPE) {
+		Receiver->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+		if  (Arguments != NULL)
+			Arguments->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+	}
+}
+
+// ---------- Message_selector_node ----------
+void Message_selector_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement)
+{
+	FirstArgument->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+	Arguments->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+	ExprArguments->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+}
+
+// ---------- Keyword_argument_list_node ----------
+void Keyword_argument_list_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement)
+{
+	Keyword_argument_node* arg = First;
+	while (arg != NULL)
+	{
+		arg->expression->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+		arg = arg->Next;
+	}
+}
+
+// ---------- Expression_list_node ----------
+
+void Expression_list_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement)
+{
+	Expression_node* cur = First;
+	while (cur != NULL)
+	{
+		cur->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+		cur = cur->Next;
+	}
+}
+
+// ---------- Init_declarator_list_node ----------
+void Init_declarator_list_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement)
+{
+	Init_declarator_node* declarator = First;
+	while (declarator != NULL)
+	{
+		declarator->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+		declarator = declarator->Next;
+	}
+}
+
+// ---------- Init_declarator_node ---------- 
+void Init_declarator_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement)
+{
+	if (expression != NULL)
+		expression->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+	if (ArraySize != NULL)
+		ArraySize->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+	if (InitializerList != NULL)
+		InitializerList->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+}
+

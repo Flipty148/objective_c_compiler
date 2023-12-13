@@ -6,6 +6,9 @@
 using namespace std;
 
 class Type;
+class ConstantsTable;
+class LocalVariablesTable;
+class ClassesTableElement;
 
 //---------- Прототипы классов ----------
 class Init_declarator_list_node;
@@ -140,6 +143,8 @@ class Statement_node
         virtual string toDot(string labelConection="");
 
 		void findLocalVariables(vector<string>* localVariablesNames, vector<Type*>* localVariablesTypes);
+
+        void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); //Функция поиска и заполнения fieldRefs
 };
 
 // ---------- declaration ----------
@@ -188,6 +193,8 @@ class Init_declarator_list_node
 
         string toDot(string labelConection="");
         vector<Init_declarator_node*>* getElements();
+
+		void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); //Функция поиска и заполнения fieldRefs
 };
 
 // ---------- init_declarator ----------
@@ -214,6 +221,8 @@ class Init_declarator_node
         static Init_declarator_node* createInitDeclaratorNodeFromArray(init_declarator_type type, char *declarator, Expression_node *arraySize, Expression_node *expression, Expression_list_node *initializerList);
         
         string toDot(string labelConection="");
+
+		void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); //Функция поиска и заполнения fieldRefs
 };
 
 // ---------- declarator ----------
@@ -338,6 +347,8 @@ class Expression_node
         static Expression_node* setPriority(Expression_node *expression, bool priority);
 
         string toDot(string labelConection="");
+
+        virtual void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); // Функция поиска и заполнения field ref
 };
 
 // ---------- expression_list ----------
@@ -354,6 +365,8 @@ class Expression_list_node : public Expression_node
 
         vector<Expression_node*>* getElements();
         string toDot(string labelConection="");
+
+        void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); // Функция поиска и заполнения field ref
 };
 
 // ---------- receiver ----------
@@ -380,6 +393,7 @@ class Receiver_node
 
         string toDot(string labelConection="");
 
+		void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); //Функция поиска и заполнения fieldRefs
 };
 
 // ---------- message_selector -----------
@@ -390,12 +404,14 @@ class Message_selector_node
         int id;
         char *MethodName;
         Keyword_argument_list_node *Arguments;
-        Expression_node *Expression;
+        Expression_node *FirstArgument;
         Expression_list_node *ExprArguments;
 
         static Message_selector_node* createMessageSelectorNode(char *methodName, Expression_node *expression, Keyword_argument_list_node *arguments, Expression_list_node *exprArguments);
 
         string toDot(string labelConection="");
+
+		void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); //Функция поиска и заполнения fieldRefs
 };
 
 // ---------- keyword_argument_list ----------
@@ -412,6 +428,8 @@ class Keyword_argument_list_node
 
         vector<Keyword_argument_node*>* getElements();
         string toDot(string labelConection="");
+
+		void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); // Функция поиска и заполнения field ref
 };
 
 // ---------- keyword_argument ----------

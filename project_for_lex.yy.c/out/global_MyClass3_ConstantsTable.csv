@@ -1,4 +1,12 @@
 ID;Type;Value
 1;UTF8;Code
 2;UTF8;global/MyClass3
-3;Class;2
+3;UTF8;global/MyClass2
+4;Class;2
+5;Class;3
+6;UTF8;obj
+7;UTF8;LMyClass2;
+8;UTF8;funcMyClass3Static
+9;UTF8;()V
+10;NameAndType;6, 7
+11;FieldRef;10, 4

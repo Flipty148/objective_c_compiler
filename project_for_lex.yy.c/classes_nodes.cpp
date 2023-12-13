@@ -467,7 +467,7 @@ Message_selector_node* Message_selector_node::createMessageSelectorNode(char *me
     res->id = maxId++;
     res->MethodName = methodName;
     res->Arguments = arguments;
-    res->Expression = expression;
+    res->FirstArgument = expression;
     res->ExprArguments = exprArguments;
     return res;
 }
@@ -1652,10 +1652,10 @@ string Message_selector_node::toDot(string labelConection)
         res += to_string(id);
         res += Arguments->toDot("arguments");
     }
-    if (Expression != NULL)
+    if (FirstArgument != NULL)
     {
         res += to_string(id);
-        res += Expression->toDot("expression");
+        res += FirstArgument->toDot("first_argument");
     }
     if (ExprArguments!= NULL)
     {

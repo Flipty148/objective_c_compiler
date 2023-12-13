@@ -145,6 +145,18 @@ void ConstantsTable::toCsvFile(string filename, string filepath, char separator)
 	out.close(); // Закрытие потока
 }
 
+int ConstantsTable::findOrAddFieldRefConstant(string className, string fieldName, string descriptor)
+{
+	int classNameConst = this->findOrAddConstant(UTF8, className);
+	int classConst = this->findOrAddConstant(Class, NULL, classNameConst);
+	int nameConst = this->findOrAddConstant(UTF8, fieldName);
+	int descriptorConst = this->findOrAddConstant(UTF8, descriptor);
+	int nameAndTypeConst = this->findOrAddConstant(NameAndType, NULL, nameConst, descriptorConst);
+	int fieldRefConst = this->findOrAddConstant(FieldRef, NULL, nameAndTypeConst, classConst);
+
+	return fieldRefConst;
+}
+
 // -------------------- ClassesTableElement --------------------
 
 ClassesTableElement::ClassesTableElement(string name, string *superclassName, bool isImplementation)
@@ -214,6 +226,56 @@ string ClassesTableElement::getClassName()
 	return ConstantTable->getConstantString(Name);
 }
 
+string ClassesTableElement::getSuperClassName()
+{
+	return ConstantTable->getConstantString(SuperclassName);
+}
+
+void ClassesTableElement::fillFieldRefs()
+{
+	for (auto iter = Methods->items.cbegin(); iter != Methods->items.cend(); ++iter)
+	{
+		iter->second->fillFieldRefs(ConstantTable, this);
+	}
+}
+
+bool ClassesTableElement::isContainsField(string fieldName)
+{
+	if (Fields->items.count(fieldName) != 0)
+		return true;
+	else {
+		if (SuperclassName != NULL)
+			return ClassesTable::items[getSuperClassName()]->isContainsField(fieldName); //TODO: check types
+	}
+	return false;
+}
+
+void ClassesTableElement::getFieldForRef(string name, string* descriptor, string* className)
+{
+	if (isContainsField(name)){ // Содержит поле
+		if (Fields->items.count(name) != 0) { //Поле содержится в текущем классе
+			*descriptor = Fields->items[name]->DescriptorStr;
+			*className = getClassName();
+		}
+		else { //Поле содержится в одном из родительских классов
+			if (SuperclassName != NULL)
+				ClassesTable::items[getSuperClassName()]->getFieldForRef(name, descriptor, className);
+		}
+	}
+}
+
+bool ClassesTableElement::isHaveOneOfSuperclass(string name)
+{
+	if (SuperclassName == NULL) { //Родительский класс отсутствует
+		return false;
+	}
+	else {
+		if (getSuperClassName() == name) //Имя родительского класса совпадает с искомым
+			return true;
+		else return ClassesTable::items[getSuperClassName()]->isHaveOneOfSuperclass(name); //Проверить является искомый класс родительским для родительского
+	}
+}
+
 // -------------------- ClassesTable --------------------
 map<string, ClassesTableElement*> ClassesTable::items;
 
@@ -266,6 +328,16 @@ void ClassesTable::toCsvFile(string filepath, char separator)
 		++iter;
 	}
 	out.close(); // Закрытие потока
+}
+
+void ClassesTable::fillFieldRefs()
+{
+	auto iter = items.cbegin();
+	while (iter != items.cend())
+	{
+		iter->second->fillFieldRefs();
+		++iter;
+	}
 }
 
 // ------------------- FieldsTableElement --------------------
@@ -386,6 +458,16 @@ string MethodsTableElement::toCsvString(string methodName, char separator)
 	else
 		res += string("emptyTable"); 
 	return res;
+}
+
+void MethodsTableElement::fillFieldRefs(ConstantsTable *constantTable, ClassesTableElement* classTableElement)
+{
+	Statement_node *cur = BodyStart;
+	while (cur != NULL)
+	{
+		cur->fillFieldRefs(constantTable, LocalVariables, classTableElement); // Заполнить таблицу
+		cur = cur->Next;
+	}
 }
 
 void MethodsTableElement::refTablesToCsvFile(string methodName, string filepath, char separator)
@@ -523,6 +605,11 @@ void LocalVariablesTable::toCsvFile(string filename, string fileoath, char separ
 		++iter;
 	}
 	out.close(); // Закрытие потока
+}
+
+bool LocalVariablesTable::isContains(string name)
+{
+	return items.count(name) != 0;
 }
 
 // -------------------- Type --------------------

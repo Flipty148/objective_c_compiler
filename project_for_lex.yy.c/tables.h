@@ -51,6 +51,8 @@ public:
     ConstantsTable();
 
     void toCsvFile(string filename, string filepath, char separator = ';'); //Преобразование в CSV-файл
+
+    int findOrAddFieldRefConstant(string className, string fieldName, string descriptor); // Поиск или формирование константы fieldRef
 private:
     int findConstant(constantType type, string* utf8string, int number = NULL, int firstRef = NULL, int secondRef = NULL);
 };
@@ -104,6 +106,12 @@ public:
     string toCsvString(char separator = ';'); //Преобразование в строку формата CSV
     void refTablesToCsvFile(string filepath, char separator = ';'); //Запись вложенных таблиц в файлы
     string getClassName(); // Получение имени класса
+	string getSuperClassName(); // Получение имени родительского класса
+    void fillFieldRefs(); // Заполнение fieldRef для текущего класса
+    bool isContainsField(string fieldName); // Проверка наличия поля
+    void getFieldForRef(string name, string* descriptor, string* className); //Получение информации о поле
+	bool isHaveOneOfSuperclass(string name); // Является ли указанный класс одним из потомков указанного класса
+
 };
 
 class ClassesTable
@@ -114,6 +122,8 @@ public:
     static ClassesTableElement* addClass(string name, string *superclassName, bool isImplementation);
 
     static void toCsvFile(string filepath, char separator = ';'); //Преобразование в CSV-файл
+
+	static void fillFieldRefs(); //Функция поиска и заполнения fieldRef в классах
 };
 
 // ---------- Таблица полей класса ----------
@@ -167,6 +177,7 @@ public:
 
     string toCsvString(string methodName, char separator = ';'); //Преобразование в строку формата CSV
     void refTablesToCsvFile(string methodName, string filepath, char separator = ';');
+    void fillFieldRefs(ConstantsTable *constantTable, ClassesTableElement* classTableElement); // Заполнение fieldRef для текущего метода
 };
 
 class MethodsTable
@@ -229,6 +240,8 @@ public:
     int findOrAddLocalVariable(string name, Type* type);
 
     void toCsvFile(string filename, string fileoath, char separator = ';'); //Преобразование в CSV-файл
+
+    bool isContains(string name);
 };
 
 // ---------- Типы ----------

@@ -315,6 +315,15 @@ ClassesTableElement* ClassesTable::addClass(string name, string* superclassName,
 	return items[fullName];
 }
 
+void ClassesTable::initRTL()
+{
+	// Создание класса Program
+	ClassesTableElement* program = new ClassesTableElement("default/Program", NULL, false);
+	items["default/Program"] = program;
+
+	//TODO: СДелать создание остальных классов RTL и заполнение всех классов RTL
+}
+
 void ClassesTable::toCsvFile(string filepath, char separator)
 {
 	ofstream out(filepath + "ClassesTable.csv"); //Создание и открытие потока на запись в файл
@@ -744,6 +753,16 @@ void FunctionsTableElement::refTablesToCsvFile(string filename, string filepath,
 		LocalVariables->toCsvFile(filename, filepath, separator);
 }
 
+void FunctionsTableElement::fillFieldRefs(ConstantsTable* constantTable, ClassesTableElement* classTableElement)
+{
+	Statement_node* cur = BodyStart;
+	while (cur != NULL)
+	{
+		cur->fillFieldRefs(constantTable, LocalVariables, classTableElement); // Заполнить таблицу
+		cur = cur->Next;
+	}
+}
+
 // -------------------- FunctionsTable --------------------
 map<string, FunctionsTableElement*> FunctionsTable::items;
 
@@ -774,4 +793,22 @@ void FunctionsTable::toCsvFile(string filename, string filepath, char separator)
 		++iter;
 	}
 	out.close(); // Закрытие потока
+}
+
+void FunctionsTable::fillFieldRefs()
+{
+	ClassesTableElement* classTableElement = ClassesTable::items["default/Program"];
+	bool isDontContainsMain = true;
+	auto iter = items.cbegin();
+	while (iter != items.cend())
+	{
+		isDontContainsMain = isDontContainsMain && iter->first == "main";
+		iter->second->fillFieldRefs(classTableElement->ConstantTable, classTableElement);
+		++iter;
+	}
+
+	if (!isDontContainsMain) { //Функция main не найдена
+		string msg = "Function 'main' not found";
+		throw new exception(msg.c_str());
+	}
 }

@@ -54,6 +54,7 @@ int main()
 {
     int a;
     int b[10];
-    Myclass*obj = [Myclass new];
+    Myclass* obj = [Myclass new];
+    obj->a;
     return 0;
 }

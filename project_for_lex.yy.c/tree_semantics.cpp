@@ -8,6 +8,8 @@ void getTypesFromInitDeclaratorType(vector<Init_declarator_node*>* declarators, 
 
 void Function_and_class_list_node::fillTables()
 {
+	ClassesTable::initRTL(); //Инициализировать RTL
+
     for (int i = 0; i < FunctionsAndClasses->size(); i++)
     { //Для каждого элемента в списке
         if (FunctionsAndClasses->at(i).class_block != NULL)
@@ -306,11 +308,11 @@ void Function_and_class_list_node::fillTables()
 			{
 				locals->findOrAddLocalVariable(varsNames[i], varsTypes[i]);
 			}
-
 		}
     }
 
 	ClassesTable::fillFieldRefs(); // Найти и заполнить field refs для классов
+	FunctionsTable::fillFieldRefs(); //Найти и заполнить fields refs в функции
 }
 
 //---------- Program_node ----------
@@ -445,7 +447,7 @@ vector<string> Instance_variables_declaration_node::getInstanceVariables(vector<
         Expression_node* arrSize = (*it)->Expression; //Размер массива
         if (type == CLASS_NAME_TYPE)
         {
-			string className = string(this->type->ClassName); //Имя класса
+			string className = "global/" + string(this->type->ClassName); //Имя класса
 			if (arrSize != NULL)
 			{ // тип класса и массив
 				Type* curType = new Type(type, className, arrSize->constant.num->number.Int);
@@ -576,7 +578,7 @@ map<string, Type*> Declaration_node::getDeclaration(map<string, Expression_node*
 		Expression_list_node* initializerList = (*it)->InitializerList; // Инициализатор массива
 		if (type == CLASS_NAME_TYPE)
 		{
-			string className = this->typeNode->ClassName;
+			string className = "global/" + string(this->typeNode->ClassName);
 			if (arrSize != NULL || initializerList != NULL)
 			{ // Массив типа класса
 				int arraySize;
@@ -678,7 +680,7 @@ Type* Type_node::toDataType()
 {
 	if (type == CLASS_NAME_TYPE)
 	{
-		string className = ClassName;
+		string className = "global/" + string(ClassName);
 		Type* res = new Type(type, className);
 		return res;
 	}
@@ -772,7 +774,7 @@ void getTypesFromInitDeclaratorType(vector<Init_declarator_node*>* declarators, 
 		Expression_list_node* initializerList = (*it)->InitializerList; // Инициализатор массива
 		if (type == CLASS_NAME_TYPE)
 		{
-			string className = typeNode->ClassName;
+			string className = "global/" + string(typeNode->ClassName);
 			if (arrSize != NULL || initializerList != NULL)
 			{ // Массив типа класса
 				int arraySize;
@@ -1030,9 +1032,11 @@ void Receiver_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariablesT
 // ---------- Message_selector_node ----------
 void Message_selector_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement)
 {
-	FirstArgument->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
-	Arguments->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
-	ExprArguments->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+	if (FirstArgument != NULL) {
+		FirstArgument->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+		Arguments->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+		ExprArguments->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+	}
 }
 
 // ---------- Keyword_argument_list_node ----------

@@ -73,6 +73,8 @@ public:
 
     string toCsvString(string funcName, char separator = ';'); //Преобразование в строку формата CSV
     void refTablesToCsvFile(string filename, string filepath, char separator = ';');
+
+    void fillFieldRefs(ConstantsTable* constantTable, ClassesTableElement* classTableElement); // Заполнение fieldRef для текущей функции
 };
 
 class FunctionsTable
@@ -83,6 +85,8 @@ public:
     static FunctionsTableElement* addFunction(string name, string descriptor, Statement_node* bodyStart, vector<Type*>* params, Type* returnType);
 
     static void toCsvFile(string filename, string filepath, char separator = ';'); //Преобразование в CSV-файл
+
+    static void fillFieldRefs(); //Функция поиска и заполнения fieldRef в функциях, побочным эфектом контролирует наличие функции main
 };
 
 // ---------- Таблица классов ----------
@@ -120,6 +124,8 @@ public:
     static map<string, ClassesTableElement*> items; // Таблица классов, в качестве ключа - Имя класса
 
     static ClassesTableElement* addClass(string name, string *superclassName, bool isImplementation);
+
+	static void initRTL();
 
     static void toCsvFile(string filepath, char separator = ';'); //Преобразование в CSV-файл
 

@@ -1,0 +1,10 @@
+ID;Type;Value
+1;UTF8;Code
+2;UTF8;default/Program
+3;Class;2
+4;UTF8;global/Myclass
+5;Class;4
+6;UTF8;a
+7;UTF8;[I
+8;NameAndType;6, 7
+9;FieldRef;8, 5

@@ -5,7 +5,7 @@ ID;Type;Value
 4;Class;2
 5;Class;3
 6;UTF8;obj
-7;UTF8;LMyClass2;
+7;UTF8;Lglobal/MyClass2;
 8;UTF8;funcMyClass3Static
 9;UTF8;()V
 10;NameAndType;6, 7

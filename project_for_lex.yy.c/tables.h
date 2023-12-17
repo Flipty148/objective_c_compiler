@@ -53,6 +53,8 @@ public:
     void toCsvFile(string filename, string filepath, char separator = ';'); //Преобразование в CSV-файл
 
     int findOrAddFieldRefConstant(string className, string fieldName, string descriptor); // Поиск или формирование константы fieldRef
+
+	int findOrAddMethodRefConstant(string className, string methodName, string descriptor); // Поиск или формирование константы methodRef
 private:
     int findConstant(constantType type, string* utf8string, int number = NULL, int firstRef = NULL, int secondRef = NULL);
 };
@@ -75,6 +77,7 @@ public:
     void refTablesToCsvFile(string filename, string filepath, char separator = ';');
 
     void fillFieldRefs(ConstantsTable* constantTable, ClassesTableElement* classTableElement); // Заполнение fieldRef для текущей функции
+	void fillMethodRefs(ConstantsTable* constantTable, ClassesTableElement* classTableElement); // Заполнение methodRef для текущей функции
 };
 
 class FunctionsTable
@@ -87,6 +90,7 @@ public:
     static void toCsvFile(string filename, string filepath, char separator = ';'); //Преобразование в CSV-файл
 
     static void fillFieldRefs(); //Функция поиска и заполнения fieldRef в функциях, побочным эфектом контролирует наличие функции main
+	static void fillMethodRefs(); //Функция поиска и заполнения methodRef в функциях
 };
 
 // ---------- Таблица классов ----------
@@ -112,10 +116,13 @@ public:
     string getClassName(); // Получение имени класса
 	string getSuperClassName(); // Получение имени родительского класса
     void fillFieldRefs(); // Заполнение fieldRef для текущего класса
+	void fillMethodRefs(); // Заполнение methodRef для текущего класса
+
     bool isContainsField(string fieldName); // Проверка наличия поля
     void getFieldForRef(string name, string* descriptor, string* className); //Получение информации о поле
 	bool isHaveOneOfSuperclass(string name); // Является ли указанный класс одним из потомков указанного класса
-
+	bool isContainsMethod(string methodName); // Проверка наличия метода
+	void getMethodForRef(string name, string* descriptor, string* className); //Получение информации о методе
 };
 
 class ClassesTable
@@ -130,6 +137,9 @@ public:
     static void toCsvFile(string filepath, char separator = ';'); //Преобразование в CSV-файл
 
 	static void fillFieldRefs(); //Функция поиска и заполнения fieldRef в классах
+	static void fillMethodRefs(); //Функция поиска и заполнения methodRef в классах
+
+	static string getFullClassName(string name); //Получение полного имени класса по короткому
 };
 
 // ---------- Таблица полей класса ----------
@@ -184,6 +194,7 @@ public:
     string toCsvString(string methodName, char separator = ';'); //Преобразование в строку формата CSV
     void refTablesToCsvFile(string methodName, string filepath, char separator = ';');
     void fillFieldRefs(ConstantsTable *constantTable, ClassesTableElement* classTableElement); // Заполнение fieldRef для текущего метода
+	void fillMethodRefs(ConstantsTable* constantTable, ClassesTableElement* classTableElement); // Заполнение methodRef для текущего метода
 };
 
 class MethodsTable

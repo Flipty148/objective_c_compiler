@@ -98,20 +98,22 @@ void Function_and_class_list_node::fillTables()
 							descriptor += it->second->getDescriptor();
 							if (element->Methods->items.count(it->first))
 							{ //Метод есть. Проверка.
-								MethodsTableElement *curMethod = element->Methods->items[it->first];
+								MethodsTableElement* curMethod = element->Methods->items[it->first];
 								if (descriptor != curMethod->DescriptorStr) {
 									string msg = "Method '" + it->first + "' in class '" + className + "' has different type from the type specified in the interface\n";
 									throw std::exception(msg.c_str());
 								}
-								curMethod->BodyStart = startNodes[it->first]; //Добавление тела
+								if (curMethod->BodyStart != NULL) {
+									curMethod->BodyStart = startNodes[it->first]; //Добавление тела
 
-								//Получение и добавление локальных переменных внутри метода
-								vector<string> varsNames;
-								vector<Type*> varsTypes;
-								curMethod->BodyStart->findLocalVariables(&varsNames, &varsTypes);
-								for (int i = 0; i < varsNames.size(); i++)
-								{
-									curMethod->LocalVariables->findOrAddLocalVariable(varsNames[i], varsTypes[i]);
+									//Получение и добавление локальных переменных внутри метода
+									vector<string> varsNames;
+									vector<Type*> varsTypes;
+									curMethod->BodyStart->findLocalVariables(&varsNames, &varsTypes);
+									for (int i = 0; i < varsNames.size(); i++)
+									{
+										curMethod->LocalVariables->findOrAddLocalVariable(varsNames[i], varsTypes[i]);
+									}
 								}
 							}
 							else
@@ -313,6 +315,9 @@ void Function_and_class_list_node::fillTables()
 
 	ClassesTable::fillFieldRefs(); // Найти и заполнить field refs для классов
 	FunctionsTable::fillFieldRefs(); //Найти и заполнить fields refs в функции
+
+	ClassesTable::fillMethodRefs(); //Найти и заполнить method refs для классов
+	FunctionsTable::fillMethodRefs(); //Найти и заполнить method refs в функции
 }
 
 //---------- Program_node ----------
@@ -670,7 +675,10 @@ string Method_definition_node::getMethod(Type** returnType, vector<string>* keyw
 		*isClassmethod = false;
 	string methodName = string(MethodSelector->MethodName); // Имя метода
 	MethodSelector->getParams(keywordsNames, keywordsTypes, parametersNames, parametersTypes); // Параметры
-	*bodyStart = MethodBody->First; // Начало тела метода
+	if (MethodBody != NULL)
+		*bodyStart = MethodBody->First; // Начало тела метода
+	else
+		*bodyStart = NULL;
 	return methodName;
 }
 
@@ -901,6 +909,66 @@ void Statement_node::fillFieldRefs(ConstantsTable *constantTable, LocalVariables
 	}
 }
 
+void Statement_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod)
+{
+	if (type == EMPTY_STATEMENT_TYPE) {
+
+	}
+	else if (type == SIMPLE_STATEMENT_TYPE) {
+		Expression->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+	}
+	else if (type == RETURN_STATEMENT_TYPE) {
+		Expression->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+	}
+	else if (type == IF_STATEMENT_TYPE) {
+		If_statement_node* cur = (If_statement_node*)this;
+		cur->Condition->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+		cur->TrueBranch->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+		if (cur->FalseBranch != NULL)
+			cur->FalseBranch->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+	}
+	else if (type == WHILE_STATEMENT_TYPE) {
+		While_statement_node* cur = (While_statement_node*)this;
+		cur->LoopCondition->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+		if (cur->LoopBody != NULL)
+			cur->LoopBody->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+	}
+	else if (type == DO_WHILE_STATEMENT_TYPE) {
+		Do_while_statement_node* cur = (Do_while_statement_node*)this;
+		cur->LoopCondition->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+		if (cur->LoopBody != NULL)
+			cur->LoopBody->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+	}
+	else if (type == FOR_STATEMENT_TYPE) {
+		For_statement_node* cur = (For_statement_node*)this;
+		if (cur->InitExpression != NULL)
+			cur->InitExpression->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+		if (cur->ConditionExpression != NULL)
+			cur->ConditionExpression->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+		if (cur->LoopExpression != NULL)
+			cur->LoopExpression->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+		if (cur->InitList != NULL)
+			cur->InitList->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+		if (cur->LoopBody != NULL)
+			cur->LoopBody->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+	}
+	else if (type == COMPOUND_STATEMENT_TYPE) {
+		Statement_list_node* cur = (Statement_list_node*)this;
+		if (cur->First != NULL) {
+			Statement_node* elem = cur->First;
+			while (elem != NULL) {
+				elem->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+				elem = elem->Next;
+			}
+		}
+	}
+	else if (type == DECLARATION_STATEMENT_TYPE) {
+		Declaration_node* cur = (Declaration_node*)this;
+		if (cur->init_declarator_list != NULL)
+			cur->init_declarator_list->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+	}
+}
+
 // ---------- Function_declaration ----------
 string Function_node::getFunction(Type** returnType, Statement_node** bodyStart)
 {
@@ -961,7 +1029,32 @@ void Expression_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariable
 			string msg = "Variable '" + string(objName) + "' not declarated";
 			throw new exception(msg.c_str());
 		}
-		else if (!classTableElement->isContainsField(objName) && localVariablesTable->isContains(objName)) { //Является локальной переменной
+		else if (classTableElement->isContainsField(objName) && !localVariablesTable->isContains(objName)) {
+			FieldsTableElement* field = classTableElement->Fields->items[objName]; //Локальная переменная
+			if (field->type->DataType != CLASS_NAME_TYPE) { // Не является экземпляром класса
+				string msg = "Variable '" + objName + "' is not instance of object.";
+				throw new std::exception(msg.c_str());
+			}
+			string className = field->type->ClassName; //Имя класса локальной переменной
+			ClassesTableElement* classElem = ClassesTable::items[className];
+			if (!classElem->isContainsField(fieldName) || classElem->Fields->items[fieldName]->IsInstance == false) { //Поле не содержится в классе объекта
+				string msg = "Class '" + className + "' don't contains field '" + fieldName;
+				throw new std::exception(msg.c_str());
+			}
+			if (classElem != classTableElement && classTableElement->getClassName() != "default/Program" && !classTableElement->isHaveOneOfSuperclass(className)) {
+				// Поле является protected и не выполнено условие для возможности использования protected
+				string msg = "Component '" + fieldName + "' only protected";
+				throw new std::exception(msg.c_str());
+			}
+
+
+			string descriptor; // дескриптор
+			string fieldClassName;  // Имя класса поля
+			classElem->getFieldForRef(fieldName, &descriptor, &fieldClassName); // получение данных для field ref
+			//Формирование fieldRef
+			constantTable->findOrAddFieldRefConstant(fieldClassName, fieldName, descriptor);
+		}
+		else { //Является локальной переменной
 			LocalVariablesTableElement* local = localVariablesTable->items[objName]; //Локальная переменная
 			if (local->type->DataType != CLASS_NAME_TYPE) { // Не является экземпляром класса
 				string msg = "Variable '" + objName + "' is not instance of object.";
@@ -986,6 +1079,7 @@ void Expression_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariable
 			//Формирование fieldRef
 			constantTable->findOrAddFieldRefConstant(fieldClassName, fieldName, descriptor);
 		}
+		
 	}
 	if (Left != NULL) {
 		Left->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
@@ -1004,17 +1098,178 @@ void Expression_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariable
 	}
 }
 
+void Expression_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod)
+{
+	if (type == MESSAGE_EXPRESSION_EXPRESSION_TYPE) { //Вызов метода
+		string receiverName;
+		bool isObject;
+		bool isReceiver = false;
+		if (Receiver->type == MESSAGE_EXPRESSION_RECEIVER_TYPE) {// Если ресивер имеет тип message_selector, то вызывать на дочерних элементах
+			Type *returnType;
+			Receiver->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod, &returnType);
+			if (returnType->DataType != CLASS_NAME_TYPE) {
+				string msg = "Receiver is not an object";
+				throw new std::exception(msg.c_str());
+			}
+			isObject = true;
+			isReceiver = true;
+			receiverName = returnType->ClassName;
+		}
+		else {
+			isObject = Receiver->getName(&receiverName); // получить имя объекта/класса и его тип
+			//преобразования для self и super
+			if (receiverName == "self") {
+				if (!isInInstanceMethod)
+					receiverName = classTableElement->getClassName();
+				isObject = isInInstanceMethod;
+			}
+			if (receiverName == "super") {
+				if (!isInInstanceMethod)
+					receiverName = classTableElement->getSuperClassName();
+				isObject = isInInstanceMethod;
+			}
+		}
+
+
+		// От message_selector получать имя метода.
+		string methodName = Arguments->MethodName; // Имя метода
+		string methodNameWithType; //Имя метода с dynamic или static
+		
+		//TODO: Добавить преобразование имен узлов дерева
+		if (isObject)
+			methodNameWithType = methodName + "Dynamic";
+		else
+			methodNameWithType = methodName + "Static";
+
+
+		// Проверить наличие метода в классе
+		if (isReceiver) {
+			bool isContainsMethod = ClassesTable::items[receiverName]->isContainsMethod(methodNameWithType);
+			if (!isContainsMethod) {
+				string msg = "Class '" + receiverName + "' don't contains method '-" + methodName + "'";
+				throw new std::exception(msg.c_str());
+			}
+		}
+		else {
+			if (isObject) {
+				if (!localVariablesTable->isContains(receiverName) && !classTableElement->isContainsField(receiverName) && receiverName != "super") {
+					string msg = "Using undeclarated variable '" + receiverName + "'";
+					throw new std::exception(msg.c_str());
+				}
+				else if (!localVariablesTable->isContains(receiverName) && classTableElement->isContainsField(receiverName) && receiverName != "super") { //Является полем класса
+					FieldsTableElement* field = classTableElement->Fields->items[receiverName];
+					if (field->type->DataType != CLASS_NAME_TYPE) {
+						string msg = "Variable '" + receiverName + "' is not an object";
+						throw new std::exception(msg.c_str());
+					}
+					string className = field->type->ClassName;
+					bool isContainsMethod = ClassesTable::items[className]->isContainsMethod(methodNameWithType);
+					if (!isContainsMethod) {
+						string msg = "Class '" + className + "' don't contains method '-" + methodName + "'";
+						throw new std::exception(msg.c_str());
+					}
+				}
+				else if (receiverName != "super") { //Является локальной переменной
+					LocalVariablesTableElement* local = localVariablesTable->items[receiverName];
+					if (local->type->DataType != CLASS_NAME_TYPE) {
+						string msg = "Variable '" + receiverName + "' is not an object";
+						throw new std::exception(msg.c_str());
+					}
+					string className = local->type->ClassName;
+					bool isContainsMethod = ClassesTable::items[className]->isContainsMethod(methodNameWithType);
+					if (!isContainsMethod) {
+						string msg = "Class '" + receiverName + "' don't contains method '-" + methodName + "'";
+						throw new std::exception(msg.c_str());
+					}
+				}
+				else { //Super
+					string className = classTableElement->getSuperClassName();
+					bool isContainsMethod = ClassesTable::items[className]->isContainsMethod(methodNameWithType);
+					if (!isContainsMethod) {
+						string msg = "Class '" + className + "' don't contains method '-" + methodName + "'";
+						throw new std::exception(msg.c_str());
+					}
+				}
+			}
+			else {
+				string fullClassName = ClassesTable::getFullClassName(receiverName); //Получить полное имя класса //TODO: Возможно, нужно будет убрать, если при преобразовании дерева будут заменяться сразу все имена классов
+				bool isContainsMethod = ClassesTable::items[fullClassName]->isContainsMethod(methodNameWithType); //Проверить наличие метода
+				if (!isContainsMethod) {
+					string msg = "Class '" + receiverName + "' don't contains method '+" + methodName + "'";
+					throw new std::exception(msg.c_str());
+				}
+			}
+		}
+
+		// Добавить methodRef
+		if (isReceiver) {
+			ClassesTableElement* element = ClassesTable::items[receiverName];
+			// Получить информацию для создания константы типа method ref
+			string descriptor;
+			string className;
+			element->getMethodForRef(methodNameWithType, &descriptor, &className);
+			// Добавить константу method ref
+			constantTable->findOrAddMethodRefConstant(className, methodName, descriptor);
+		}
+		else {
+			if (isObject) {
+				string className;
+				if (receiverName == "super") {//Super
+					className = classTableElement->getClassName();
+				}
+				else if (!localVariablesTable->isContains(receiverName) && classTableElement->isContainsField(receiverName)) { //Является полем класса
+					FieldsTableElement* field = classTableElement->Fields->items[receiverName];
+					className = field->type->ClassName;
+				}
+				else { //Является локальной переменной
+					LocalVariablesTableElement* local = localVariablesTable->items[receiverName];
+					className = local->type->ClassName;
+				}
+				ClassesTableElement* element = ClassesTable::items[className];
+				// Получить информацию для создания константы типа method ref
+				string descriptor;
+				element->getMethodForRef(methodNameWithType, &descriptor, &className);
+				// Добавить константу method ref
+				constantTable->findOrAddMethodRefConstant(className, methodName, descriptor);
+			}
+			else {
+				string fullClassName = ClassesTable::getFullClassName(receiverName); //Получить полное имя класса //TODO: Возможно, нужно будет убрать, если при преобразовании дерева будут заменяться сразу все имена классов
+				ClassesTableElement* element = ClassesTable::items[fullClassName];
+				// Получить информацию для создания константы типа method ref
+				string descriptor;
+				string className;
+				element->getMethodForRef(methodNameWithType, &descriptor, &className);
+				// Добавить константу method ref
+				constantTable->findOrAddMethodRefConstant(className, methodName, descriptor);
+			}
+		}
+
+		// Выполнит поиску на дочерних элементах message selector
+		Arguments->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+	}
+	// Вызвать на дочерних элементах
+	if (Left != NULL) {
+		Left->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+	}
+	if (Right != NULL) {
+		Right->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+	}
+	if (ArgumentsList != NULL) {
+		ArgumentsList->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+	}
+}
+
 // ---------- Receiver_node ----------
 void Receiver_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement)
 {
-	if (Type == SELF_RECEIVER_TYPE) {
+	if (type == SELF_RECEIVER_TYPE) {
 		LocalVariablesTableElement* self = localVariablesTable->items["self"];
 		string descriptor = self->type->getDescriptor(); //Строка дескриптора
 		string className = self->type->ClassName; //Имя класса
 		//Формирование fieldRef
 		constantTable->findOrAddFieldRefConstant(className, "self", descriptor);
 	}
-	else if (Type == OBJECT_NAME_RECEIVER_TYPE) {
+	else if (type == OBJECT_NAME_RECEIVER_TYPE) {
 		if (classTableElement->isContainsField(name)) {
 			string descriptor; //Дескриптор
 			string className; //Имя класса
@@ -1022,10 +1277,189 @@ void Receiver_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariablesT
 			constantTable->findOrAddFieldRefConstant(className, name, descriptor); //Формирование fieldRef
 		}
 	}
-	else if (Type == MESSAGE_EXPRESSION_RECEIVER_TYPE) {
+	else if (type == MESSAGE_EXPRESSION_RECEIVER_TYPE) {
 		Receiver->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
 		if  (Arguments != NULL)
 			Arguments->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+	}
+}
+
+bool Receiver_node::getName(string* Name)
+{
+	if (type == SUPER_RECEIVER_TYPE) {
+		*Name = "super";
+		return true;
+	}
+	else if (type == SELF_RECEIVER_TYPE) {
+		*Name = "self";
+		return true;
+	}
+	else if (type == OBJECT_NAME_RECEIVER_TYPE) {
+		*Name = name;
+		return true;
+	}
+	else if (type == CLASS_NAME_RECEIVER_TYPE) {
+		*Name = name;
+		return false;
+	}
+	else if (type == MESSAGE_EXPRESSION_RECEIVER_TYPE) {
+		return true;
+	}
+}
+
+void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod, Type **returnType)
+{
+	if (type == MESSAGE_EXPRESSION_RECEIVER_TYPE) {
+		string receiverName;
+		bool isObject;
+		bool isReceiver = false;
+		if (Receiver->type == MESSAGE_EXPRESSION_RECEIVER_TYPE) {// Если ресивер имеет тип message_selector, то вызывать на дочерних элементах
+			Type* returnType;
+			Receiver->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod, &returnType);
+			if (returnType->DataType != CLASS_NAME_TYPE) {
+				string msg = "Receiver is not an object";
+				throw new std::exception(msg.c_str());
+			}
+			isObject = true;
+			isReceiver = true;
+			receiverName = returnType->ClassName;
+		}
+		else {
+			isObject = Receiver->getName(&receiverName); // получить имя объекта/класса и его тип
+			//преобразования для self и super
+			if (receiverName == "self") {
+				if (!isInInstanceMethod)
+					receiverName = classTableElement->getClassName();
+				isObject = isInInstanceMethod;
+			}
+			if (receiverName == "super") {
+				if (!isInInstanceMethod)
+					receiverName = classTableElement->getSuperClassName();
+				isObject = isInInstanceMethod;
+			}
+		}
+
+
+		// От message_selector получать имя метода.
+		string methodName = Arguments->MethodName; // Имя метода
+		string methodNameWithType; //Имя метода с dynamic или static
+
+		//TODO: Добавить преобразование имен узлов дерева
+		if (isObject)
+			methodNameWithType = methodName + "Dynamic";
+		else
+			methodNameWithType = methodName + "Static";
+
+
+		// Проверить наличие метода в классе
+		if (isReceiver) {
+			bool isContainsMethod = ClassesTable::items[receiverName]->isContainsMethod(methodNameWithType);
+			if (!isContainsMethod) {
+				string msg = "Class '" + receiverName + "' don't contains method '-" + methodName + "'";
+				throw new std::exception(msg.c_str());
+			}
+		}
+		else {
+			if (isObject) {
+				if (!localVariablesTable->isContains(receiverName) && !classTableElement->isContainsField(receiverName) && receiverName != "super") {
+					string msg = "Using undeclarated variable '" + receiverName + "'";
+					throw new std::exception(msg.c_str());
+				}
+				else if (!localVariablesTable->isContains(receiverName) && !classTableElement->isContainsField(receiverName) && receiverName != "super") { //Является полем класса
+					FieldsTableElement* field = classTableElement->Fields->items[receiverName];
+					if (field->type->DataType != CLASS_NAME_TYPE) {
+						string msg = "Variable '" + receiverName + "' is not an object";
+						throw new std::exception(msg.c_str());
+					}
+					string className = field->type->ClassName;
+					bool isContainsMethod = ClassesTable::items[className]->isContainsMethod(methodNameWithType);
+					if (!isContainsMethod) {
+						string msg = "Class '" + receiverName + "' don't contains method '-" + methodName + "'";
+						throw new std::exception(msg.c_str());
+					}
+				}
+				else if (receiverName != "super") { //Является локальной переменной
+					LocalVariablesTableElement* local = localVariablesTable->items[receiverName];
+					if (local->type->DataType != CLASS_NAME_TYPE) {
+						string msg = "Variable '" + receiverName + "' is not an object";
+						throw new std::exception(msg.c_str());
+					}
+					string className = local->type->ClassName;
+					bool isContainsMethod = ClassesTable::items[className]->isContainsMethod(methodNameWithType);
+					if (!isContainsMethod) {
+						string msg = "Class '" + receiverName + "' don't contains method '-" + methodName + "'";
+						throw new std::exception(msg.c_str());
+					}
+				}
+				else { //Super
+					string className = classTableElement->getSuperClassName();
+					bool isContainsMethod = ClassesTable::items[className]->isContainsMethod(methodNameWithType);
+					if (!isContainsMethod) {
+						string msg = "Class '" + className + "' don't contains method '-" + methodName + "'";
+						throw new std::exception(msg.c_str());
+					}
+				}
+			}
+			else {
+				string fullClassName = ClassesTable::getFullClassName(receiverName); //Получить полное имя класса //TODO: Возможно, нужно будет убрать, если при преобразовании дерева будут заменяться сразу все имена классов
+				bool isContainsMethod = ClassesTable::items[fullClassName]->isContainsMethod(methodNameWithType); //Проверить наличие метода
+				if (!isContainsMethod) {
+					string msg = "Class '" + receiverName + "' don't contains method '+" + methodName + "'";
+					throw new std::exception(msg.c_str());
+				}
+			}
+		}
+
+		// Добавить methodRef
+		if (isReceiver) {
+			ClassesTableElement* element = ClassesTable::items[receiverName];
+			// Получить информацию для создания константы типа method ref
+			string descriptor;
+			string className;
+			element->getMethodForRef(methodNameWithType, &descriptor, &className);
+			// Добавить константу method ref
+			constantTable->findOrAddMethodRefConstant(className, methodName, descriptor);
+			*returnType = ClassesTable::items[className]->Methods->items[methodNameWithType]->ReturnType;
+		}
+		else {
+			if (isObject) {
+				string className;
+				if (receiverName == "super") {//Super
+					className = classTableElement->getClassName();
+				}
+				else if (!localVariablesTable->isContains(receiverName) && classTableElement->isContainsField(receiverName)) { //Является полем класса
+					FieldsTableElement* field = classTableElement->Fields->items[receiverName];
+					className = field->type->ClassName;
+				}
+				else { //Является локальной переменной
+					LocalVariablesTableElement* local = localVariablesTable->items[receiverName];
+					className = local->type->ClassName;
+				}
+				ClassesTableElement* element = ClassesTable::items[className];
+				// Получить информацию для создания константы типа method ref
+				string descriptor;
+				element->getMethodForRef(methodNameWithType, &descriptor, &className);
+				// Добавить константу method ref
+				constantTable->findOrAddMethodRefConstant(className, methodName, descriptor);
+
+				*returnType = ClassesTable::items[className]->Methods->items[methodNameWithType]->ReturnType;
+			}
+			else {
+				string fullClassName = ClassesTable::getFullClassName(receiverName); //Получить полное имя класса //TODO: Возможно, нужно будет убрать, если при преобразовании дерева будут заменяться сразу все имена классов
+				ClassesTableElement* element = ClassesTable::items[fullClassName];
+				// Получить информацию для создания константы типа method ref
+				string descriptor;
+				string className;
+				element->getMethodForRef(methodNameWithType, &descriptor, &className);
+				// Добавить константу method ref
+				constantTable->findOrAddMethodRefConstant(className, methodName, descriptor);
+
+				*returnType = ClassesTable::items[className]->Methods->items[methodNameWithType]->ReturnType;
+			}
+		}
+
+		// Выполнит поиску на дочерних элементах message selector
+		Arguments->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
 	}
 }
 
@@ -1034,9 +1468,22 @@ void Message_selector_node::fillFieldRefs(ConstantsTable* constantTable, LocalVa
 {
 	if (FirstArgument != NULL) {
 		FirstArgument->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
-		Arguments->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
-		ExprArguments->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
 	}
+	if (Arguments != NULL)
+		Arguments->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+	if (ExprArguments != NULL)
+		ExprArguments->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+
+}
+
+void Message_selector_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod)
+{
+	if (FirstArgument != NULL)
+		FirstArgument->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+	if (Arguments != NULL)
+		Arguments->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+	if (ExprArguments != NULL)
+		ExprArguments->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
 }
 
 // ---------- Keyword_argument_list_node ----------
@@ -1046,6 +1493,16 @@ void Keyword_argument_list_node::fillFieldRefs(ConstantsTable* constantTable, Lo
 	while (arg != NULL)
 	{
 		arg->expression->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+		arg = arg->Next;
+	}
+}
+
+void Keyword_argument_list_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInstanceMethod)
+{
+	Keyword_argument_node* arg = First;
+	while (arg != NULL)
+	{
+		arg->expression->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInstanceMethod);
 		arg = arg->Next;
 	}
 }
@@ -1062,6 +1519,16 @@ void Expression_list_node::fillFieldRefs(ConstantsTable* constantTable, LocalVar
 	}
 }
 
+void Expression_list_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod)
+{
+	Expression_node* cur = First;
+	while (cur != NULL)
+	{
+		cur->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+		cur = cur->Next;
+	}
+}
+
 // ---------- Init_declarator_list_node ----------
 void Init_declarator_list_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement)
 {
@@ -1069,6 +1536,16 @@ void Init_declarator_list_node::fillFieldRefs(ConstantsTable* constantTable, Loc
 	while (declarator != NULL)
 	{
 		declarator->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+		declarator = declarator->Next;
+	}
+}
+
+void Init_declarator_list_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod)
+{
+	Init_declarator_node* declarator = First;
+	while (declarator != NULL)
+	{
+		declarator->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
 		declarator = declarator->Next;
 	}
 }
@@ -1082,5 +1559,16 @@ void Init_declarator_node::fillFieldRefs(ConstantsTable* constantTable, LocalVar
 		ArraySize->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
 	if (InitializerList != NULL)
 		InitializerList->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+}
+
+void Init_declarator_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod)
+{
+	if (expression != NULL)
+		expression->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+	if (ArraySize != NULL)
+		ArraySize->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+	if (InitializerList != NULL)
+		InitializerList->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+
 }
 

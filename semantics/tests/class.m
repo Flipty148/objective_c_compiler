@@ -1,3 +1,4 @@
+@class Myclass;
 @interface Myclass:NSObject
 {
     int a[10], f;
@@ -7,6 +8,7 @@
     int a[10];
     int c[20];
     + (int) func: (int) first :(int) second;
+    + (Myclass*) new;
     @property (readonly) int f,e;
     @property int d;
 @end
@@ -32,6 +34,10 @@
         int test[10];
         d = first + second;
     }
+    + (Myclass*) new
+    {
+
+    }
 @end
 
 @implementation MyClass2
@@ -43,10 +49,15 @@
 @implementation MyClass3 : MyClass2
 {
     MyClass2 *obj;
+    Myclass *obj1;
 }
 + (void) funcMyClass3
 {
     obj->a = 10;
+}
+- (void) func
+{
+    [obj1 func2: 1 :2];
 }
 @end
 
@@ -55,6 +66,7 @@ int main()
     int a;
     int b[10];
     Myclass* obj = [Myclass new];
+    [Myclass func: 2 :3];
     obj->a;
     return 0;
 }

@@ -13,10 +13,10 @@ ID;Type;Value
 12;UTF8;d
 13;UTF8;funcStatic
 14;UTF8;(II)I
-15;UTF8;e
-16;UTF8;func2Dynamic
-17;UTF8;(II)V
-18;NameAndType;12, 9
-19;FieldRef;18, 4
-20;NameAndType;6, 7
+15;UTF8;newStatic
+16;UTF8;()Lglobal/Myclass;
+17;UTF8;e
+18;UTF8;func2Dynamic
+19;UTF8;(II)V
+20;NameAndType;12, 9
 21;FieldRef;20, 4

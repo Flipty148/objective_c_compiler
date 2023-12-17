@@ -444,7 +444,7 @@ Receiver_node* Receiver_node::createReceiverNode(receiver_type type, char *name)
 {
     Receiver_node *res = new Receiver_node;
     res->id = maxId++;
-    res->Type = type;
+    res->type = type;
     res->name = name;
     return res;
 }
@@ -453,7 +453,7 @@ Receiver_node* Receiver_node::createReceiverNodeFromMessageExpression(Receiver_n
 {
     Receiver_node *res = new Receiver_node;
     res->id = maxId++;
-    res->Type = MESSAGE_EXPRESSION_RECEIVER_TYPE;
+    res->type = MESSAGE_EXPRESSION_RECEIVER_TYPE;
     res->Receiver = receiver;
     res->Arguments = arguments;
     return res;
@@ -1608,23 +1608,23 @@ string Receiver_node::toDot(string labelConection)
     if (labelConection!= "")
         res += "[label=\"" + labelConection + "\"]";
     res += ";\n";
-    if (Type == SUPER_RECEIVER_TYPE)
+    if (type == SUPER_RECEIVER_TYPE)
         res += to_string(id) + "[label=\"receiver: super\"];\n";
-    else if (Type == SELF_RECEIVER_TYPE)
+    else if (type == SELF_RECEIVER_TYPE)
         res += to_string(id) + "[label=\"receiver: self\"];\n";
-    else if (Type == OBJECT_NAME_RECEIVER_TYPE)
+    else if (type == OBJECT_NAME_RECEIVER_TYPE)
     {
         res += to_string(id) + "[label=\"receiver: object_name\"];\n";
         res += to_string(id) + ".1 [label=\"" + name + "\"];\n";
         res += to_string(id) + "->" + to_string(id) + ".1 [label=\"name\"];\n";
     }
-    else if (Type == CLASS_NAME_RECEIVER_TYPE)
+    else if (type == CLASS_NAME_RECEIVER_TYPE)
     {
         res += to_string(id) + "[label=\"receiver: class_name\"];\n";
         res += to_string(id) + ".1 [label=\"" + name + "\"];\n";
         res += to_string(id) + "->" + to_string(id) + ".1 [label=\"name\"];\n";
     }
-    else if (Type == MESSAGE_EXPRESSION_RECEIVER_TYPE)
+    else if (type == MESSAGE_EXPRESSION_RECEIVER_TYPE)
     {
         res += to_string(id) + "[label=\"receiver: message_expression\"];\n";
         res += to_string(id);

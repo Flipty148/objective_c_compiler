@@ -145,6 +145,7 @@ class Statement_node
 		void findLocalVariables(vector<string>* localVariablesNames, vector<Type*>* localVariablesTypes);
 
         void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); //Функция поиска и заполнения fieldRefs
+		void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod); //Функция поиска и заполнения methodRefs
 };
 
 // ---------- declaration ----------
@@ -195,6 +196,7 @@ class Init_declarator_list_node
         vector<Init_declarator_node*>* getElements();
 
 		void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); //Функция поиска и заполнения fieldRefs
+		void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod); //Функция поиска и заполнения methodRefs
 };
 
 // ---------- init_declarator ----------
@@ -223,6 +225,7 @@ class Init_declarator_node
         string toDot(string labelConection="");
 
 		void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); //Функция поиска и заполнения fieldRefs
+		void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod); //Функция поиска и заполнения methodRefs
 };
 
 // ---------- declarator ----------
@@ -349,6 +352,7 @@ class Expression_node
         string toDot(string labelConection="");
 
         virtual void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); // Функция поиска и заполнения field ref
+		virtual void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod); // Функция поиска и заполнения method ref
 };
 
 // ---------- expression_list ----------
@@ -367,6 +371,7 @@ class Expression_list_node : public Expression_node
         string toDot(string labelConection="");
 
         void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); // Функция поиска и заполнения field ref
+		void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod); // Функция поиска и заполнения method ref
 };
 
 // ---------- receiver ----------
@@ -384,7 +389,7 @@ class Receiver_node
     public:
         int id;
         char *name;
-        receiver_type Type;
+        receiver_type type;
         Receiver_node *Receiver;
         Message_selector_node *Arguments;
 
@@ -394,6 +399,13 @@ class Receiver_node
         string toDot(string labelConection="");
 
 		void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); //Функция поиска и заполнения fieldRefs
+
+		/**
+        * @return true if name is object name and false if name is class name
+        */
+		bool getName(string* Name);
+
+		void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod, Type **returnType); //Функция поиска и заполнения methodRefs
 };
 
 // ---------- message_selector -----------
@@ -412,6 +424,7 @@ class Message_selector_node
         string toDot(string labelConection="");
 
 		void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); //Функция поиска и заполнения fieldRefs
+		void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod); //Функция поиска и заполнения methodRefs
 };
 
 // ---------- keyword_argument_list ----------
@@ -430,6 +443,7 @@ class Keyword_argument_list_node
         string toDot(string labelConection="");
 
 		void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); // Функция поиска и заполнения field ref
+		void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInstanceMethod); // Функция поиска и заполнения method ref
 };
 
 // ---------- keyword_argument ----------

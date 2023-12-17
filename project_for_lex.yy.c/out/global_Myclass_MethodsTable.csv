@@ -1,3 +1,4 @@
 Name;Descriptor;IsClassMethod;ReturnType;ParamsTypes;KeywordsTypes;BodyStartStatementId;LocalVariablesTableName
-16 (func2Dynamic);17 ((II)V);false;void;;int,int;121;global_Myclass_MethodsTable_func2Dynamic_LocalVariablesTable.csv
-13 (funcStatic);14 ((II)I);true;int;;int,int;83;global_Myclass_MethodsTable_funcStatic_LocalVariablesTable.csv
+18 (func2Dynamic);19 ((II)V);false;void;;int,int;126;global_Myclass_MethodsTable_func2Dynamic_LocalVariablesTable.csv
+13 (funcStatic);14 ((II)I);true;int;;int,int;empty;global_Myclass_MethodsTable_funcStatic_LocalVariablesTable.csv
+15 (newStatic);16 (()Lglobal/Myclass;);true;global/Myclass;;;empty;global_Myclass_MethodsTable_newStatic_LocalVariablesTable.csv

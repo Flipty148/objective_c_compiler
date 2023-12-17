@@ -8,3 +8,11 @@ ID;Type;Value
 7;UTF8;[I
 8;NameAndType;6, 7
 9;FieldRef;8, 5
+10;UTF8;new
+11;UTF8;()Lglobal/Myclass;
+12;NameAndType;10, 11
+13;MethodRef;12, 5
+14;UTF8;func
+15;UTF8;(II)I
+16;NameAndType;14, 15
+17;MethodRef;16, 5

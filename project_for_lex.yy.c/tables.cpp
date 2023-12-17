@@ -157,6 +157,18 @@ int ConstantsTable::findOrAddFieldRefConstant(string className, string fieldName
 	return fieldRefConst;
 }
 
+int ConstantsTable::findOrAddMethodRefConstant(string className, string methodName, string descriptor)
+{
+	int classNameConst = this->findOrAddConstant(UTF8, className);
+	int classConst = this->findOrAddConstant(Class, NULL, classNameConst);
+	int nameConst = this->findOrAddConstant(UTF8, methodName);
+	int descriptorConst = this->findOrAddConstant(UTF8, descriptor);
+	int nameAndTypeConst = this->findOrAddConstant(NameAndType, NULL, nameConst, descriptorConst);
+	int methodRefConst = this->findOrAddConstant(MethodRef, NULL, nameAndTypeConst, classConst);
+	
+	return methodRefConst;
+}
+
 // -------------------- ClassesTableElement --------------------
 
 ClassesTableElement::ClassesTableElement(string name, string *superclassName, bool isImplementation)
@@ -239,6 +251,14 @@ void ClassesTableElement::fillFieldRefs()
 	}
 }
 
+void ClassesTableElement::fillMethodRefs()
+{
+	for (auto iter = Methods->items.cbegin(); iter != Methods->items.cend(); ++iter)
+	{
+		iter->second->fillMethodRefs(ConstantTable, this);
+	}
+}
+
 bool ClassesTableElement::isContainsField(string fieldName)
 {
 	if (Fields->items.count(fieldName) != 0)
@@ -273,6 +293,31 @@ bool ClassesTableElement::isHaveOneOfSuperclass(string name)
 		if (getSuperClassName() == name) //Имя родительского класса совпадает с искомым
 			return true;
 		else return ClassesTable::items[getSuperClassName()]->isHaveOneOfSuperclass(name); //Проверить является искомый класс родительским для родительского
+	}
+}
+
+bool ClassesTableElement::isContainsMethod(string methodName)
+{
+	if (Methods->items.count(methodName) != 0)
+		return true;
+	else {
+		if (SuperclassName != NULL)
+			return ClassesTable::items[getSuperClassName()]->isContainsMethod(methodName);
+	}
+	return false;
+}
+
+void ClassesTableElement::getMethodForRef(string name, string* descriptor, string* className)
+{
+	if (isContainsMethod(name)) { // Содержит метод
+		if (Methods->items.count(name) != 0) { //Метод содержится в текущем классе
+			*descriptor = Methods->items[name]->DescriptorStr;
+			*className = getClassName();
+		}
+		else { //Метод содержится в одном из родительских классов
+			if (SuperclassName != NULL)
+				ClassesTable::items[getSuperClassName()]->getMethodForRef(name, descriptor, className);
+		}
 	}
 }
 
@@ -347,6 +392,31 @@ void ClassesTable::fillFieldRefs()
 		iter->second->fillFieldRefs();
 		++iter;
 	}
+}
+
+void ClassesTable::fillMethodRefs()
+{
+	auto iter = items.cbegin();
+	while (iter != items.cend())
+	{
+		iter->second->fillMethodRefs();
+		++iter;
+	}
+}
+
+string ClassesTable::getFullClassName(string name)
+{
+	// TODO: если имя класса из RTL, то вернуть имя RTL ("default/")
+	if (name.find("global/") != string::npos)
+		return name;
+	if (name.find("default/") != string::npos)
+		return name;
+	string fullName = "global/" + name;
+	if (items.count(fullName) == 0) {
+		string msg = "Class '" + name + "' not found";
+		throw std::exception(msg.c_str());
+	}
+	return fullName;
 }
 
 // ------------------- FieldsTableElement --------------------
@@ -475,6 +545,16 @@ void MethodsTableElement::fillFieldRefs(ConstantsTable *constantTable, ClassesTa
 	while (cur != NULL)
 	{
 		cur->fillFieldRefs(constantTable, LocalVariables, classTableElement); // Заполнить таблицу
+		cur = cur->Next;
+	}
+}
+
+void MethodsTableElement::fillMethodRefs(ConstantsTable* constantTable, ClassesTableElement* classTableElement)
+{
+	Statement_node* cur = BodyStart;
+	while (cur != NULL)
+	{
+		cur->fillMethodRefs(constantTable, LocalVariables, classTableElement, !IsClassMethod); // Заполнить таблицу
 		cur = cur->Next;
 	}
 }
@@ -763,6 +843,16 @@ void FunctionsTableElement::fillFieldRefs(ConstantsTable* constantTable, Classes
 	}
 }
 
+void FunctionsTableElement::fillMethodRefs(ConstantsTable* constantTable, ClassesTableElement* classTableElement)
+{
+	Statement_node* cur = BodyStart;
+	while (cur != NULL)
+	{
+		cur->fillMethodRefs(constantTable, LocalVariables, classTableElement, false); // Заполнить таблицу
+		cur = cur->Next;
+	}
+}
+
 // -------------------- FunctionsTable --------------------
 map<string, FunctionsTableElement*> FunctionsTable::items;
 
@@ -810,5 +900,16 @@ void FunctionsTable::fillFieldRefs()
 	if (!isDontContainsMain) { //Функция main не найдена
 		string msg = "Function 'main' not found";
 		throw new exception(msg.c_str());
+	}
+}
+
+void FunctionsTable::fillMethodRefs()
+{
+	ClassesTableElement* classTableElement = ClassesTable::items["default/Program"];
+	auto iter = items.cbegin();
+	while (iter != items.cend())
+	{
+		iter->second->fillMethodRefs(classTableElement->ConstantTable, classTableElement);
+		++iter;
 	}
 }

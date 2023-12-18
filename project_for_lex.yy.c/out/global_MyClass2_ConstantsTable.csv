@@ -6,3 +6,5 @@ ID,Type,Value
 5,UTF8,I
 6,UTF8,d
 7,UTF8,[I
+8,UTF8,name
+9,UTF8,Lrtl/NSString;

@@ -1,4 +1,4 @@
-@class Myclass;
+@class Myclass, NSString;
 @interface Myclass:NSObject
 {
     int a[10], f;
@@ -43,6 +43,7 @@
 @implementation MyClass2
 {
     int a,d[15];
+    NSString *name;
 }
 @end
 

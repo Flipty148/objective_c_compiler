@@ -326,13 +326,16 @@ map<string, ClassesTableElement*> ClassesTable::items;
 
 ClassesTableElement* ClassesTable::addClass(string name, string* superclassName, bool isImplementation)
 {
-	//TODO: check superclass name is RTL
 	//TODO: Добавить проверку на наличие реализации метода при наличии интерфейса
 	//TODO: Проверка на соответствие необходимых элементов в реализации и интерфейсе
 	string fullName = "global/" + name;
 	string* fullSuperclassName = NULL;
-	if (superclassName != NULL)
-		fullSuperclassName = new string("global/" +  * superclassName);
+	if (superclassName != NULL) {
+		if (*superclassName == "NSObject" || *superclassName == "NSString" || *superclassName == "NSArray")
+			fullSuperclassName = new string("rtl/" + *superclassName);
+		else
+			fullSuperclassName = new string("global/" + *superclassName);
+	}
 	ClassesTableElement *element = new ClassesTableElement("global/" + name, fullSuperclassName, isImplementation); // Новый добавляемый элемент
 
 
@@ -840,12 +843,15 @@ void ClassesTable::fillMethodRefs()
 
 string ClassesTable::getFullClassName(string name)
 {
-	// TODO: если имя класса из RTL, то вернуть имя RTL ("rtl/")
 	if (name.find("global/") != string::npos)
 		return name;
 	if (name.find("rtl/") != string::npos)
 		return name;
-	string fullName = "global/" + name;
+	string fullName;
+	if (name == "NSString" || name == "NSArray" || name == "NSObject")
+		fullName = "rtl/" + name;
+	else
+		fullName = "global/" + name;
 	if (items.count(fullName) == 0) {
 		string msg = "Class '" + name + "' not found";
 		throw std::exception(msg.c_str());

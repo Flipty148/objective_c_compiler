@@ -452,7 +452,7 @@ vector<string> Instance_variables_declaration_node::getInstanceVariables(vector<
         Expression_node* arrSize = (*it)->Expression; //Размер массива
         if (type == CLASS_NAME_TYPE)
         {
-			string className = "global/" + string(this->type->ClassName); //Имя класса
+			string className = ClassesTable::getFullClassName(string(this->type->ClassName)); //Имя класса
 			if (arrSize != NULL)
 			{ // тип класса и массив
 				Type* curType = new Type(type, className, arrSize->constant.num->number.Int);
@@ -583,7 +583,7 @@ map<string, Type*> Declaration_node::getDeclaration(map<string, Expression_node*
 		Expression_list_node* initializerList = (*it)->InitializerList; // Инициализатор массива
 		if (type == CLASS_NAME_TYPE)
 		{
-			string className = "global/" + string(this->typeNode->ClassName);
+			string className = ClassesTable::getFullClassName(string(this->typeNode->ClassName));
 			if (arrSize != NULL || initializerList != NULL)
 			{ // Массив типа класса
 				int arraySize;
@@ -688,7 +688,7 @@ Type* Type_node::toDataType()
 {
 	if (type == CLASS_NAME_TYPE)
 	{
-		string className = "global/" + string(ClassName);
+		string className = ClassesTable::getFullClassName(string(ClassName));
 		Type* res = new Type(type, className);
 		return res;
 	}
@@ -782,7 +782,7 @@ void getTypesFromInitDeclaratorType(vector<Init_declarator_node*>* declarators, 
 		Expression_list_node* initializerList = (*it)->InitializerList; // Инициализатор массива
 		if (type == CLASS_NAME_TYPE)
 		{
-			string className = "global/" + string(typeNode->ClassName);
+			string className = ClassesTable::getFullClassName(string(typeNode->ClassName));
 			if (arrSize != NULL || initializerList != NULL)
 			{ // Массив типа класса
 				int arraySize;

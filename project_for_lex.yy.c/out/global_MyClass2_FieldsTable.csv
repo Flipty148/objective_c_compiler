@@ -1,3 +1,4 @@
 Name,Descriptor,IsInstance,Type,InitValueIdNode
 4 (a),5 (I),true,int,empty
 6 (d),7 ([I),true,int[15],empty
+8 (name),9 (Lrtl/NSString;),true,rtl/NSString,empty

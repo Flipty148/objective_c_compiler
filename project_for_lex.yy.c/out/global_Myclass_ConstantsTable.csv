@@ -1,7 +1,7 @@
 ID,Type,Value
 1,UTF8,Code
 2,UTF8,global/Myclass
-3,UTF8,global/NSObject
+3,UTF8,rtl/NSObject
 4,Class,2
 5,Class,3
 6,UTF8,a

@@ -365,10 +365,7 @@ void ClassesTable::initRTL()
 	initClassProgram();
 	initClassNSObject();
 	initClassNSString();
-
-	// Создание 
-
-	//TODO: СДелать создание остальных классов RTL и заполнение всех классов RTL
+	initClassNSArray();
 }
 
 void ClassesTable::initClassProgram()
@@ -541,7 +538,9 @@ void ClassesTable::initClassNSObject()
 
 void ClassesTable::initClassNSString()
 {
-	ClassesTableElement* nsstring = new ClassesTableElement("rtl/NSString", NULL, true);
+	//Создание класса NSString
+	string superclassName = "rtl/NSObject";
+	ClassesTableElement* nsstring = new ClassesTableElement("rtl/NSString", &superclassName, true);
 	ConstantsTable* constantTable = nsstring->ConstantTable;
 
 	//Добавление метода string
@@ -663,6 +662,146 @@ void ClassesTable::initClassNSString()
 	//Добавление класса NSString в таблицу классов
 	items["rtl/NSString"] = nsstring;
 }
+
+void ClassesTable::initClassNSArray()
+{
+	//Создание класса NSArray
+	string superclassName = "rtl/NSObject";
+	ClassesTableElement* nsarray = new ClassesTableElement("rtl/NSArray", &superclassName, true);
+	ConstantsTable* constantTable = nsarray->ConstantTable;
+
+	//Добавление метода array
+	Type* arrayReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSArray");
+	vector<Type*>* arrayKeywordsType = new vector<Type*>;
+	vector<Type*>* arrayParamsType = new vector<Type*>;
+	nsarray->Methods->addMethod(constantTable, "arrayStatic", "()Lrtl/NSArray;", true, NULL, arrayReturnType, arrayParamsType, arrayKeywordsType);
+
+	//Добавление метода arrayWithArray
+	Type* arrayWithArrayReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSArray");
+	vector<Type*>* arrayWithArrayKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "rtl/NSArray") };
+	vector<Type*>* arrayWithArrayParamsType = new vector<Type*>;
+	nsarray->Methods->addMethod(constantTable, "arrayWithArrayStatic", "(Lrtl/NSArray;)Lrtl/NSArray;", true, NULL, arrayWithArrayReturnType, arrayWithArrayParamsType, arrayWithArrayKeywordsType);
+
+	//Добавление метода arrayWithObjects
+	Type* arrayWithObjectsReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSArray");
+	vector<Type*>* arrayWithObjectsKeywordsType = new vector<Type*>;
+	vector<Type*>* arrayWithObjectsParamsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "rtl/NSObject", 1024) };
+	nsarray->Methods->addMethod(constantTable, "arrayWithObjectsStatic", "([Lrtl/NSObject;)Lrtl/NSArray;", true, NULL, arrayWithObjectsReturnType, arrayWithObjectsParamsType, arrayWithObjectsKeywordsType);
+
+	//Добавление метода arrayWithObject
+	Type* arrayWithObjectReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSArray");
+	vector<Type*>* arrayWithObjectKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "rtl/NSObject") };
+	vector<Type*>* arrayWithObjectParamsType = new vector<Type*>;
+	nsarray->Methods->addMethod(constantTable, "arrayWithObjectStatic", "(Lrtl/NSObject;)Lrtl/NSArray;", true, NULL, arrayWithObjectReturnType, arrayWithObjectParamsType, arrayWithObjectKeywordsType);
+
+	//Добавление метода arrayByAddingObject
+	Type* arrayByAddingObjectReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSArray");
+	vector<Type*>* arrayByAddingObjectKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "rtl/NSObject") };
+	vector<Type*>* arrayByAddingObjectParamsType = new vector<Type*>;
+	nsarray->Methods->addMethod(constantTable, "arrayByAddingObjectDynamic", "(Lrtl/NSObject;)Lrtl/NSArray;", false, NULL, arrayByAddingObjectReturnType, arrayByAddingObjectParamsType, arrayByAddingObjectKeywordsType);
+
+	//Добавление метода arrayByAddingObjectsFromArray
+	Type* arrayByAddingObjectsFromArrayReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSArray");
+	vector<Type*>* arrayByAddingObjectsFromArrayKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE,"rtl/NSArray") };
+	vector<Type*>* arrayByAddingObjectsFromArrayParamsType = new vector<Type*>;
+	nsarray->Methods->addMethod(constantTable, "arrayByAddingObjectsFromArrayDynamic", "(Lrtl/NSArray;)Lrtl/NSArray;", false, NULL, arrayByAddingObjectsFromArrayReturnType, arrayByAddingObjectsFromArrayParamsType, arrayByAddingObjectsFromArrayParamsType);
+
+	//Добавление метода componentsJoinedByString
+	Type* componentsJoinedByStringReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSString");
+	vector<Type*>* componentsJoinedByStringKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "rtl/NSString") };
+	vector<Type*>* componentsJoinedByStringParamsType = new vector<Type*>;
+	nsarray->Methods->addMethod(constantTable, "componentsJoinedByStringDynamic", "(Lrtl/NSString;)Lrtl/NSString;", false, NULL, componentsJoinedByStringReturnType, componentsJoinedByStringParamsType, componentsJoinedByStringKeywordsType);
+
+	//Добавление метода containsObject
+	Type* containsObjectReturnType = new Type(INT_TYPE);
+	vector<Type*>* containsObjectKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "rtl/NSObject") };
+	vector<Type*>* containsObjectParamsType = new vector<Type*>;
+	nsarray->Methods->addMethod(constantTable, "containsObjectDynamic", "(Lrtl/NSObject;)I", false, NULL, containsObjectReturnType, containsObjectParamsType, containsObjectKeywordsType);
+
+	//Добавление метода count
+	Type* countReturnType = new Type(INT_TYPE);
+	vector<Type*>* countKeywordsType = new vector<Type*>;
+	vector<Type*>* countParamsType = new vector<Type*>;
+	nsarray->Methods->addMethod(constantTable, "countDynamic", "()I", false, NULL, countReturnType, countParamsType, countKeywordsType);
+
+	//Добавление метода description
+	Type* descriptionReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSString");
+	vector<Type*>* descriptionKeywordsType = new vector<Type*>;
+	vector<Type*>* descriptionParamsType = new vector<Type*>;
+	nsarray->Methods->addMethod(constantTable, "descriptionDynamic", "()Lrtl/NSString;", false, NULL, descriptionReturnType, descriptionParamsType, descriptionKeywordsType);
+
+	//Добавление метода firstObject
+	Type* firstObjectReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSObject");
+	vector<Type*>* firstObjectKeywordsType = new vector<Type*>;
+	vector<Type*>* firstObjectParamsType = new vector<Type*>;
+	nsarray->Methods->addMethod(constantTable, "firstObjectDynamic", "()Lrtl/NSObject;", false, NULL, firstObjectReturnType, firstObjectParamsType, firstObjectKeywordsType);
+
+	//Добавление метода firstObjectCommonWithArray
+	Type* firstObjectCommonWithArrayReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSObject");
+	vector<Type*>* firstObjectCommonWithArrayKeywordsType = new vector<Type*>{new Type(CLASS_NAME_TYPE, "rtl/NSArray")};
+	vector<Type*>* firstObjectCommonWithArrayParamsType = new vector<Type*>;
+	nsarray->Methods->addMethod(constantTable, "firstObjectCommonWithArrayDynamic", "(Lrtl/NSArray;)Lrtl/NSObject;", false, NULL, firstObjectCommonWithArrayReturnType, firstObjectCommonWithArrayParamsType, firstObjectCommonWithArrayKeywordsType);
+
+	//Добавление метода getObjects
+	Type* getObjectsReturnType = new Type(VOID_TYPE);
+	vector<Type*>* getObjectsKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "rtl/NSObject", 1024) };
+	vector<Type*>* getObjectsParamsType = new vector<Type*>;
+	nsarray->Methods->addMethod(constantTable, "getObjectsDynamic", "([Lrtl/NSObject;)V", false, NULL, getObjectsReturnType, getObjectsParamsType, getObjectsKeywordsType);
+
+	//Добавление метода indexOfObject
+	Type* indexOfObjectReturnType = new Type(INT_TYPE);
+	vector<Type*>* indexOfObjectKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "rtl/NSObject") };
+	vector<Type*>* indexOfObjectParamsType = new vector<Type*>;
+	nsarray->Methods->addMethod(constantTable, "indexOfObjectDynamic", "(Lrtl/NSObject;)I", false, NULL, indexOfObjectReturnType, indexOfObjectParamsType, indexOfObjectKeywordsType);
+
+	//Добавление метода init
+	Type* initReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSArray");
+	vector<Type*>* initKeywordsType = new vector<Type*>;
+	vector<Type*>* initParamsType = new vector<Type*>;
+	nsarray->Methods->addMethod(constantTable, "initDynamic", "()Lrtl/NSArray;", false, NULL, initReturnType, initParamsType, initKeywordsType);
+
+	//Добавление метода isEqualToArray
+	Type* isEqualToArrayReturnType = new Type(INT_TYPE);
+	vector<Type*>* isEqualToArrayKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "rtl/NSArray") };
+	vector<Type*>* isEqualToArrayParamsType = new vector<Type*>;
+	nsarray->Methods->addMethod(constantTable, "isEqualToArrayDynamic", "(Lrtl/NSArray;)I", false, NULL, isEqualToArrayReturnType, isEqualToArrayParamsType, isEqualToArrayKeywordsType);
+
+	//Добавление метода lastObject
+	Type* lastObjectReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSObject");
+	vector<Type*>* lastObjectKeywordsType = new vector<Type*>;
+	vector<Type*>* lastObjectParamsType = new vector<Type*>;
+	nsarray->Methods->addMethod(constantTable, "lastObjectDynamic", "()Lrtl/NSObject;", false, NULL, lastObjectReturnType, lastObjectParamsType, lastObjectKeywordsType);
+
+	//Добавление метода objectAtIndex
+	Type* objectAtIndexReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSObject");
+	vector<Type*>* objectAtIndexKeywordsType = new vector<Type*>{ new Type(INT_TYPE) };
+	vector<Type*>* objectAtIndexParamsType = new vector<Type*>;
+	nsarray->Methods->addMethod(constantTable, "objectAtIndexDynamic", "(I)Lrtl/NSObject;", false, NULL, objectAtIndexReturnType, objectAtIndexParamsType, objectAtIndexKeywordsType);
+
+	//Добавление FieldRef
+	constantTable->findOrAddFieldRefConstant("rtl/NSArray", "array", "[Lrtl/NSObject");
+
+	//Добавление MethodRef
+	constantTable->findOrAddMethodRefConstant("rtl/NSObject", "<init>", "()V");
+	constantTable->findOrAddMethodRefConstant("rtl/NSArray", "<init>", "()V");
+	constantTable->findOrAddMethodRefConstant("rtl/NSArray", "<init>", "(Lrtl/NSArray;)V");
+	constantTable->findOrAddMethodRefConstant("rtl/NSArray", "<init>", "([Lrtl/NSObject;)V");
+	constantTable->findOrAddMethodRefConstant("rtl/NSString", "cStringDynamic", "()[C");
+	constantTable->findOrAddMethodRefConstant("java/lang/String", "<init>", "([C)V");
+	constantTable->findOrAddMethodRefConstant("rtl/NSObject", "descriptionDynamic", "()Lrtl/NSString;");
+	constantTable->findOrAddMethodRefConstant("java/lang/String", "toCharArray", "()[C");
+	constantTable->findOrAddMethodRefConstant("rtl/NSString", "stringWithCStringStatic", "([C)Lrtl/NSString;");
+	constantTable->findOrAddMethodRefConstant("rtl/NSArray", "containsObjectDynamic", "(Lrtl/NSObject;)I");
+	constantTable->findOrAddMethodRefConstant("java/lang/System", "arraycopy", "(Ljava/lang/Object;ILjava/lang/Object;II)V");
+	constantTable->findOrAddMethodRefConstant("rtl/NSObject", "initDynamic", "()Lrtl/NSObject;");
+	constantTable->findOrAddMethodRefConstant("rtl/NSObject", "isEqualDynamic", "(Lrtl/NSObject;)I");
+	constantTable->findOrAddMethodRefConstant("rtl/NSArray", "initDynamic", "()Lrtl/NSArray;");
+
+	//Добавление класса NSArray в таблицу классов
+	items["rtl/NSArray"] = nsarray;
+}
+
+
 
 void ClassesTable::toCsvFile(string filepath, char separator)
 {

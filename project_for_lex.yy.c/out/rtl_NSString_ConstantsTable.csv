@@ -1,53 +1,53 @@
 ID,Type,Value
 1,UTF8,Code
 2,UTF8,rtl/NSString
-3,Class,2
-4,UTF8,stringStatic
-5,UTF8,()Lrtl/NSString;
-6,UTF8,stringWithCStringStatic
-7,UTF8,([C)Lrtl/NSString;
-8,UTF8,stringWithStringStatic
-9,UTF8,(Lrtl/NSString;)Lrtl/NSString;
-10,UTF8,cStringDynamic
-11,UTF8,()[C;
-12,UTF8,capitalizeStringDynamic
-13,UTF8,characterAtIndexDynamic
-14,UTF8,(I)C;
-15,UTF8,hasPrefixDynamic
-16,UTF8,(Lrtl/NSString;)I
-17,UTF8,hasSuffixDynamic
-18,UTF8,intValueDynamic
-19,UTF8,()I
-20,UTF8,isEqualDynamic
-21,UTF8,(Lrtl/NSObject;)I
-22,UTF8,isEqualToStringDynamic
-23,UTF8,lengthDynamic
-24,UTF8,lowercaseStringDynamic
-25,UTF8,uppercaseStringDynamic
-26,UTF8,stringByAppendingStringDynamic
-27,UTF8,descriptionDynamic
-28,UTF8,string
-29,UTF8,java/lang/String
-30,NameAndType,28, 29
-31,FieldRef,30, 3
-32,UTF8,rtl/NSObject
-33,Class,32
+3,UTF8,rtl/NSObject
+4,Class,2
+5,Class,3
+6,UTF8,stringStatic
+7,UTF8,()Lrtl/NSString;
+8,UTF8,stringWithCStringStatic
+9,UTF8,([C)Lrtl/NSString;
+10,UTF8,stringWithStringStatic
+11,UTF8,(Lrtl/NSString;)Lrtl/NSString;
+12,UTF8,cStringDynamic
+13,UTF8,()[C;
+14,UTF8,capitalizeStringDynamic
+15,UTF8,characterAtIndexDynamic
+16,UTF8,(I)C;
+17,UTF8,hasPrefixDynamic
+18,UTF8,(Lrtl/NSString;)I
+19,UTF8,hasSuffixDynamic
+20,UTF8,intValueDynamic
+21,UTF8,()I
+22,UTF8,isEqualDynamic
+23,UTF8,(Lrtl/NSObject;)I
+24,UTF8,isEqualToStringDynamic
+25,UTF8,lengthDynamic
+26,UTF8,lowercaseStringDynamic
+27,UTF8,uppercaseStringDynamic
+28,UTF8,stringByAppendingStringDynamic
+29,UTF8,descriptionDynamic
+30,UTF8,string
+31,UTF8,java/lang/String
+32,NameAndType,30, 31
+33,FieldRef,32, 4
 34,UTF8,<init>
 35,UTF8,()V
 36,NameAndType,34, 35
-37,MethodRef,36, 33
+37,MethodRef,36, 5
 38,UTF8,(Ljava/lang/String;)V
 39,NameAndType,34, 38
-40,MethodRef,39, 3
-41,Class,29
+40,MethodRef,39, 4
+41,Class,31
 42,UTF8,([C)V
 43,NameAndType,34, 42
 44,MethodRef,43, 41
 45,UTF8,(Lrtl/NSString;)V
 46,NameAndType,34, 45
-47,MethodRef,46, 3
+47,MethodRef,46, 4
 48,UTF8,length
-49,NameAndType,48, 19
+49,NameAndType,48, 21
 50,MethodRef,49, 41
 51,UTF8,charAt
 52,UTF8,(I)C
@@ -73,7 +73,7 @@ ID,Type,Value
 72,UTF8,initDynamic
 73,UTF8,()Lrtl/NSObject
 74,NameAndType,72, 73
-75,MethodRef,74, 33
+75,MethodRef,74, 5
 76,UTF8,java/lang/Integer
 77,Class,76
 78,UTF8,parseInt

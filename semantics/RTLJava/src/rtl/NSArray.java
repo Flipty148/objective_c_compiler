@@ -94,13 +94,13 @@ public class NSArray extends NSObject {
      * Проверяет содержится ли объект в массиве. <br/>
      * - (BOOL)containsObject: (id)anObject
      * */
-    public boolean containsObjectDynamic(NSObject object) {
+    public int containsObjectDynamic(NSObject object) {
         for (NSObject o : array) {
             if (o == object) {
-                return true;
+                return 1;
             }
         }
-        return false;
+        return 0;
     }
 
     /**
@@ -135,7 +135,7 @@ public class NSArray extends NSObject {
      * */
     public NSObject firstObjectCommonWithArrayDynamic(NSArray array) {
         for (NSObject o : array.array) {
-            if (this.containsObjectDynamic(o)) {
+            if (this.containsObjectDynamic(o) == 1) {
                 return o;
             }
         }
@@ -172,16 +172,16 @@ public class NSArray extends NSObject {
      * Проверяет равен ли массив другому. <br/>
      * - (BOOL)isEqualToArray: (NSArray *)otherArray
      * */
-    public boolean isEqualToArrayDynamic(NSArray otherArray) {
+    public int isEqualToArrayDynamic(NSArray otherArray) {
         if (array.length != otherArray.array.length) {
-            return false;
+            return 0;
         }
         for (int i = 0; i < array.length; i++) {
             if (array[i].isEqualDynamic(otherArray.array[i]) == 0) {
-                return false;
+                return 0;
             }
         }
-        return true;
+        return 1;
     }
 
     /**

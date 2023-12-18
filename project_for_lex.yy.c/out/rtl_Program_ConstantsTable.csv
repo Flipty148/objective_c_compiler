@@ -1,0 +1,83 @@
+ID,Type,Value
+1,UTF8,Code
+2,UTF8,rtl/Program
+3,Class,2
+4,UTF8,printInt
+5,UTF8,(I)V
+6,UTF8,printChar
+7,UTF8,(C)V
+8,UTF8,printString
+9,UTF8,(Ljava/lang/String;)V
+10,UTF8,printCharArray
+11,UTF8,([C)V
+12,UTF8,printObject
+13,UTF8,(Ljava/lang/Object;)V
+14,UTF8,read
+15,UTF8,()Ljava/lang/String;
+16,UTF8,readInt
+17,UTF8,()I
+18,UTF8,readChar
+19,UTF8,()C
+20,UTF8,java/lang/System
+21,Class,20
+22,UTF8,out
+23,UTF8,Ljava/io/PrintStream;
+24,NameAndType,22, 23
+25,FieldRef,24, 21
+26,UTF8,java/lang/Object
+27,Class,26
+28,UTF8,<init>
+29,UTF8,()V
+30,NameAndType,28, 29
+31,MethodRef,30, 27
+32,UTF8,java/io/PrintStream
+33,Class,32
+34,UTF8,print
+35,NameAndType,34, 5
+36,MethodRef,35, 33
+37,NameAndType,34, 7
+38,MethodRef,37, 33
+39,NameAndType,34, 9
+40,MethodRef,39, 33
+41,NameAndType,34, 11
+42,MethodRef,41, 33
+43,UTF8,Ljava/lang/Object;
+44,NameAndType,34, 43
+45,MethodRef,44, 33
+46,UTF8,console
+47,UTF8,Ljava/io/Console;
+48,NameAndType,46, 47
+49,MethodRef,48, 21
+50,UTF8,java/io/Console
+51,Class,50
+52,UTF8,readLine
+53,NameAndType,52, 15
+54,MethodRef,53, 51
+55,NameAndType,14, 15
+56,MethodRef,55, 3
+57,UTF8,java/lang/Integer
+58,Class,57
+59,UTF8,parseInt
+60,UTF8,(Ljava/lang/String;)I
+61,NameAndType,59, 60
+62,MethodRef,61, 58
+63,UTF8,java/lang/String
+64,Class,63
+65,UTF8,charAt
+66,UTF8,(I)C
+67,NameAndType,65, 66
+68,MethodRef,67, 64
+69,UTF8,global/Myclass
+70,Class,69
+71,UTF8,a
+72,UTF8,[I
+73,NameAndType,71, 72
+74,FieldRef,73, 70
+75,UTF8,new
+76,UTF8,()Lglobal/Myclass;
+77,NameAndType,75, 76
+78,MethodRef,77, 70
+79,UTF8,func
+80,UTF8,(II)I
+81,NameAndType,79, 80
+82,MethodRef,81, 70

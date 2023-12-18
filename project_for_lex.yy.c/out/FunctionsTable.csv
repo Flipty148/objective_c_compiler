@@ -1,2 +1,2 @@
-Name;Descriptor;BodyStartStatementId;LocalVariablesTableName
-main;()I;191;FunctionsTable_main_LocalVariables.csv_LocalVariablesTable.csv
+Name,Descriptor,BodyStartStatementId,LocalVariablesTableName
+main,()I,191,FunctionsTable_main_LocalVariables.csv_LocalVariablesTable.csv

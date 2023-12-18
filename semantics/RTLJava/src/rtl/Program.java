@@ -3,25 +3,25 @@ package rtl;
 public class Program {
 
     //---------- Print Methods ----------
-    public static void print(int i) {
+    public static void printInt(int i) {
         System.out.print(i);
     }
 
-    public static void print(char c) {
+    public static void printChar(char c) {
         System.out.print(c);
     }
 
-    public static void print(String s) {
+    public static void printString(String s) {
+        System.out.print(s);
+    } //TODO Возможно стоит заменить на NSString
+
+    public static void printCharArray(char[] s) {
         System.out.print(s);
     }
 
-    public static void print(char[] s) {
-        System.out.print(s);
-    }
-
-    public static void print(Object o) {
+    public static void printObject(Object o) {
         System.out.print(o);
-    }
+    } //TODO Возможно стоит заменить на NSObject
 
     //---------- Read Methods ----------
     /**

@@ -301,7 +301,7 @@ void Function_and_class_list_node::fillTables()
 
 			// Формирование таблицы локальных переменных
 			LocalVariablesTable* locals = element->LocalVariables; //Таблица локальных переменных данной функции
-			Type* type = new Type(CLASS_NAME_TYPE, "default/Program"); //Тип для this
+			Type* type = new Type(CLASS_NAME_TYPE, "rtl/Program"); //Тип для this
 			locals->findOrAddLocalVariable("this", type); //Добавление self в таблицу локальных переменных
 			vector<string> varsNames;
 			vector<Type*> varsTypes;
@@ -1041,7 +1041,7 @@ void Expression_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariable
 				string msg = "Class '" + className + "' don't contains field '" + fieldName;
 				throw new std::exception(msg.c_str());
 			}
-			if (classElem != classTableElement && classTableElement->getClassName() != "default/Program" && !classTableElement->isHaveOneOfSuperclass(className)) {
+			if (classElem != classTableElement && classTableElement->getClassName() != "rtl/Program" && !classTableElement->isHaveOneOfSuperclass(className)) {
 				// Поле является protected и не выполнено условие для возможности использования protected
 				string msg = "Component '" + fieldName + "' only protected";
 				throw new std::exception(msg.c_str());
@@ -1066,7 +1066,7 @@ void Expression_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariable
 				string msg = "Class '" + className + "' don't contains field '" + fieldName;
 				throw new std::exception(msg.c_str());
 			}
-			if (classElem != classTableElement && classTableElement->getClassName() != "default/Program" && !classTableElement->isHaveOneOfSuperclass(className)) {
+			if (classElem != classTableElement && classTableElement->getClassName() != "rtl/Program" && !classTableElement->isHaveOneOfSuperclass(className)) {
 				// Поле является protected и не выполнено условие для возможности использования protected
 				string msg = "Component '" + fieldName + "' only protected";
 				throw new std::exception(msg.c_str());

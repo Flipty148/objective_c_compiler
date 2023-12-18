@@ -1,0 +1,9 @@
+Name,Descriptor,IsClassMethod,ReturnType,ParamsTypes,KeywordsTypes,BodyStartStatementId,LocalVariablesTableName
+6 (printChar),7 ((C)V),true,void,,char,empty,emptyTable
+10 (printCharArray),11 (([C)V),true,void,,char[1024],empty,emptyTable
+4 (printInt),5 ((I)V),true,void,,int,empty,emptyTable
+12 (printObject),13 ((Ljava/lang/Object;)V),true,void,,java/lang/Object,empty,emptyTable
+8 (printString),9 ((Ljava/lang/String;)V),true,void,,java/lang/String,empty,emptyTable
+14 (read),15 (()Ljava/lang/String;),true,java/lang/String,,,empty,emptyTable
+18 (readChar),19 (()C),true,char,,,empty,emptyTable
+16 (readInt),17 (()I),true,int,,,empty,emptyTable

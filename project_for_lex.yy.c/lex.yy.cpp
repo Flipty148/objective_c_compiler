@@ -2327,6 +2327,6 @@ int main(int argc, char* argv[])
 	filesystem::path p = filesystem::path("./out/");
 	filesystem::remove_all(p);
 	filesystem::create_directory(p);
-    ClassesTable::toCsvFile("./out/");
+	ClassesTable::toCsvFile("./out/");
 	FunctionsTable::toCsvFile("FunctionsTable.csv", "./out/");
 }

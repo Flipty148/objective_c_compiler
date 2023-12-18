@@ -1,2 +1,2 @@
-Id;Name;Type
-0;self;global/Myclass
+Id,Name,Type
+0,self,global/Myclass

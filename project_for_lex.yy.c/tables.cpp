@@ -362,11 +362,88 @@ ClassesTableElement* ClassesTable::addClass(string name, string* superclassName,
 
 void ClassesTable::initRTL()
 {
-	// Создание класса Program
-	ClassesTableElement* program = new ClassesTableElement("default/Program", NULL, false);
-	items["default/Program"] = program;
+	initClassProgram();
+
+	
+
+	// Создание 
 
 	//TODO: СДелать создание остальных классов RTL и заполнение всех классов RTL
+}
+
+void ClassesTable::initClassProgram()
+{
+	// Создание класса Program
+	ClassesTableElement* program = new ClassesTableElement("rtl/Program", NULL, false);
+
+	// Добавление метода printInt
+	ConstantsTable* сonstantTable = program->ConstantTable;
+	Type *printIntReturnType = new Type(VOID_TYPE);
+	vector<Type*> *printIntKeywordsType = new vector<Type*>{ new Type(INT_TYPE) };
+	vector<Type*> *printIntParamsType = new vector<Type*>;
+	program->Methods->addMethod(сonstantTable, "printInt", "(I)V", true, NULL, printIntReturnType, printIntParamsType, printIntKeywordsType);
+
+	//Добавление метода printChar
+	Type* printCharReturnType = new Type(VOID_TYPE);
+	vector<Type*> *printCharKeywordsType = new vector<Type*>{ new Type(CHAR_TYPE) };
+	vector<Type*> *printCharParamsType = new vector<Type*>;
+	program->Methods->addMethod(сonstantTable, "printChar", "(C)V", true, NULL, printCharReturnType, printCharParamsType, printCharKeywordsType);
+
+	//Добавление метода printString
+	Type* printStringReturnType = new Type(VOID_TYPE);
+	vector<Type*> *printStringKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "java/lang/String")};
+	vector<Type*> *printStringParamsType = new vector<Type*>;
+	program->Methods->addMethod(сonstantTable, "printString", "(Ljava/lang/String;)V", true, NULL, printStringReturnType, printStringParamsType, printStringKeywordsType);
+
+	//Добавление метода printCharArray
+	Type* printCharArrayReturnType = new Type(VOID_TYPE);
+	vector<Type*> *printCharArrayKeywordsType = new vector<Type*>{ new Type(CHAR_TYPE, 1024) };
+	vector<Type*> *printCharArrayParamsType = new vector<Type*>;
+	program->Methods->addMethod(сonstantTable, "printCharArray", "([C)V", true, NULL, printCharArrayReturnType, printCharArrayParamsType, printCharArrayKeywordsType);
+
+	//Добавление метода printObject
+	Type* printObjectReturnType = new Type(VOID_TYPE);
+	vector<Type*> *printObjectKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "java/lang/Object") };
+	vector<Type*> *printObjectParamsType = new vector<Type*>;
+	program->Methods->addMethod(сonstantTable, "printObject", "(Ljava/lang/Object;)V", true, NULL, printObjectReturnType, printObjectParamsType, printObjectKeywordsType);
+
+	//Добавление метода read
+	Type* readReturnType = new Type(CLASS_NAME_TYPE, "java/lang/String");
+	vector<Type*> *readKeywordsType = new vector<Type*>;
+	vector<Type*> *readParamsType = new vector<Type*>;
+	program->Methods->addMethod(сonstantTable, "read", "()Ljava/lang/String;", true, NULL, readReturnType, readParamsType, readKeywordsType);
+
+	//Добавление метода readInt
+	Type* readIntReturnType = new Type(INT_TYPE);
+	vector<Type*> *readIntKeywordsType = new vector<Type*>;
+	vector<Type*> *readIntParamsType = new vector<Type*>;
+	program->Methods->addMethod(сonstantTable, "readInt", "()I", true, NULL, readIntReturnType, readIntParamsType, readIntKeywordsType);
+
+	//Добавление метода readChar
+	Type* readCharReturnType = new Type(CHAR_TYPE);
+	vector<Type*> *readCharKeywordsType = new vector<Type*>;
+	vector<Type*> *readCharParamsType = new vector<Type*>;
+	program->Methods->addMethod(сonstantTable, "readChar", "()C", true, NULL, readCharReturnType, readCharParamsType, readCharKeywordsType);
+
+
+	//Добавление FieldRef
+	сonstantTable->findOrAddFieldRefConstant("java/lang/System", "out", "Ljava/io/PrintStream;");
+
+	//Добавление MethodRef
+	сonstantTable->findOrAddMethodRefConstant("java/lang/Object", "<init>", "()V");
+	сonstantTable->findOrAddMethodRefConstant("java/io/PrintStream", "print", "(I)V");
+	сonstantTable->findOrAddMethodRefConstant("java/io/PrintStream", "print", "(C)V");
+	сonstantTable->findOrAddMethodRefConstant("java/io/PrintStream", "print", "(Ljava/lang/String;)V");
+	сonstantTable->findOrAddMethodRefConstant("java/io/PrintStream", "print", "([C)V");
+	сonstantTable->findOrAddMethodRefConstant("java/io/PrintStream", "print", "Ljava/lang/Object;");
+	сonstantTable->findOrAddMethodRefConstant("java/lang/System", "console", "Ljava/io/Console;");
+	сonstantTable->findOrAddMethodRefConstant("java/io/Console", "readLine", "()Ljava/lang/String;");
+	сonstantTable->findOrAddMethodRefConstant("rtl/Program", "read", "()Ljava/lang/String;");
+	сonstantTable->findOrAddMethodRefConstant("java/lang/Integer", "parseInt", "(Ljava/lang/String;)I");
+	сonstantTable->findOrAddMethodRefConstant("java/lang/String", "charAt", "(I)C");
+
+	//Добавление класса Program в таблицу классов
+	items["rtl/Program"] = program;
 }
 
 void ClassesTable::toCsvFile(string filepath, char separator)
@@ -406,10 +483,10 @@ void ClassesTable::fillMethodRefs()
 
 string ClassesTable::getFullClassName(string name)
 {
-	// TODO: если имя класса из RTL, то вернуть имя RTL ("default/")
+	// TODO: если имя класса из RTL, то вернуть имя RTL ("rtl/")
 	if (name.find("global/") != string::npos)
 		return name;
-	if (name.find("default/") != string::npos)
+	if (name.find("rtl/") != string::npos)
 		return name;
 	string fullName = "global/" + name;
 	if (items.count(fullName) == 0) {
@@ -777,7 +854,7 @@ string Type::getDescriptor()
 		res += string("I");
 		break;
 	case CHAR_TYPE:
-		res += string("I");
+		res += string("C");
 		break;
 	case FLOAT_TYPE:
 		res += string("F");
@@ -887,7 +964,7 @@ void FunctionsTable::toCsvFile(string filename, string filepath, char separator)
 
 void FunctionsTable::fillFieldRefs()
 {
-	ClassesTableElement* classTableElement = ClassesTable::items["default/Program"];
+	ClassesTableElement* classTableElement = ClassesTable::items["rtl/Program"];
 	bool isDontContainsMain = true;
 	auto iter = items.cbegin();
 	while (iter != items.cend())
@@ -905,7 +982,7 @@ void FunctionsTable::fillFieldRefs()
 
 void FunctionsTable::fillMethodRefs()
 {
-	ClassesTableElement* classTableElement = ClassesTable::items["default/Program"];
+	ClassesTableElement* classTableElement = ClassesTable::items["rtl/Program"];
 	auto iter = items.cbegin();
 	while (iter != items.cend())
 	{

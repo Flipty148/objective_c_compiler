@@ -78,8 +78,8 @@ public class NSString extends  NSObject {
      * Возвращает результат проверки того, что строка начинается с prefix. <br/>
      * - (BOOL)hasPrefix: (NSString *)aString
      * */
-    public boolean hasPrefixDynamic(NSString prefix) {
-        return string.startsWith(prefix.string);
+    public int hasPrefixDynamic(NSString prefix) {
+        return string.startsWith(prefix.string) ? 1 : 0;
     }
 
     /**
@@ -122,8 +122,8 @@ public class NSString extends  NSObject {
      * Возвращает равенство строк. <br/>
      * - (BOOL)isEqualToString: (NSString *)aString
      * */
-    public boolean isEqualToStringDynamic(NSString other) {
-        return string.equals(other.string);
+    public int isEqualToStringDynamic(NSString other) {
+        return string.equals(other.string) ? 1 : 0;
     }
 
     /**

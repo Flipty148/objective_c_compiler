@@ -364,7 +364,7 @@ void ClassesTable::initRTL()
 {
 	initClassProgram();
 	initClassNSObject();
-	
+	initClassNSString();
 
 	// Создание 
 
@@ -537,6 +537,131 @@ void ClassesTable::initClassNSObject()
 
 	//Добавление класса NSObject в таблицу классов
 	items["rtl/NSObject"] = nsobject;
+}
+
+void ClassesTable::initClassNSString()
+{
+	ClassesTableElement* nsstring = new ClassesTableElement("rtl/NSString", NULL, true);
+	ConstantsTable* constantTable = nsstring->ConstantTable;
+
+	//Добавление метода string
+	Type* stringReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSString");
+	vector<Type*>* stringKeywordsType = new vector<Type*>;
+	vector<Type*>* stringParamsType = new vector<Type*>;
+	nsstring->Methods->addMethod(constantTable, "stringStatic", "()Lrtl/NSString;", true, NULL, stringReturnType, stringParamsType, stringKeywordsType);
+
+	//Добавление метода stringWithCString
+	Type* stringWithCStringReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSString");
+	vector<Type*>* stringWithCStringKeywordsType = new vector<Type*>{ new Type(CHAR_TYPE, 1024) };
+	vector<Type*>* stringWithCStringParamsType = new vector<Type*>;
+	nsstring->Methods->addMethod(constantTable, "stringWithCStringStatic", "([C)Lrtl/NSString;", true, NULL, stringWithCStringReturnType, stringWithCStringParamsType, stringWithCStringKeywordsType);
+
+	//Добавление метода stringWithString
+	Type* stringWithStringReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSString");
+	vector<Type*>* stringWithStringKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "rtl/NSString")};
+	vector<Type*>* stringWithStringParamsType = new vector<Type*>;
+	nsstring->Methods->addMethod(constantTable, "stringWithStringStatic", "(Lrtl/NSString;)Lrtl/NSString;", true, NULL, stringWithStringReturnType, stringWithStringParamsType, stringWithStringKeywordsType);
+
+	//Добавление метода cString
+	Type* cStringReturnType = new Type(CHAR_TYPE, 1024);
+	vector<Type*>* cStringKeywordsType = new vector<Type*>;
+	vector<Type*>* cStringParamsType = new vector<Type*>;
+	nsstring->Methods->addMethod(constantTable, "cStringDynamic", "()[C;", false, NULL, cStringReturnType, cStringParamsType, cStringKeywordsType);
+
+	//Добавление метода capitalizeString
+	Type* capitalizeStringReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSString");
+	vector<Type*>* capitalizeStringKewordsType = new vector<Type*>;
+	vector<Type*>* capitalizeStringParamsType = new vector<Type*>;
+	nsstring->Methods->addMethod(constantTable, "capitalizeStringDynamic", "()Lrtl/NSString;", false, NULL, capitalizeStringReturnType, capitalizeStringParamsType, capitalizeStringKewordsType);
+
+	//Добавление метода characterAtIndex
+	Type* characterAtIndexReturnType = new Type(CHAR_TYPE);
+	vector<Type*>* characterAtIndexKeywordsType = new vector<Type*>{ new Type(INT_TYPE) };
+	vector<Type*>* characterAtIndexParamsType = new vector<Type*>;
+	nsstring->Methods->addMethod(constantTable, "characterAtIndexDynamic", "(I)C;", false, NULL, characterAtIndexReturnType, characterAtIndexParamsType, characterAtIndexKeywordsType);
+	
+	//Добавление метода hasPrefix
+	Type* hasPrefixReturnType = new Type(INT_TYPE);
+	vector<Type*>* hasPrefixKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "rtl/NSString") };
+	vector<Type*>* hasPrefixParamsType = new vector<Type*>;
+	nsstring->Methods->addMethod(constantTable, "hasPrefixDynamic", "(Lrtl/NSString;)I", false, NULL, hasPrefixReturnType, hasPrefixParamsType, hasPrefixKeywordsType);
+
+	//Добавление метода hasSuffix
+	Type* hasSuffixReturnType = new Type(INT_TYPE);
+	vector<Type*>* hasSuffixKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "rtl/NSString") };
+	vector<Type*>* hasSuffixParamsType = new vector<Type*>;
+	nsstring->Methods->addMethod(constantTable, "hasSuffixDynamic", "(Lrtl/NSString;)I", false, NULL, hasSuffixReturnType, hasSuffixParamsType, hasSuffixKeywordsType);
+
+	//Добавление метода intValue
+	Type* intValueReturnType = new Type(INT_TYPE);
+	vector<Type*>* intValueKeywordsType = new vector<Type*>;
+	vector<Type*>* intValueParamsType = new vector<Type*>;
+	nsstring->Methods->addMethod(constantTable, "intValueDynamic", "()I", false, NULL, intValueReturnType, intValueParamsType, intValueKeywordsType);
+
+	//Добавление метода isEqual
+	Type* isEqualReturnType = new Type(INT_TYPE);
+	vector<Type*>* isEqualKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "rtl/NSObject") };
+	vector<Type*>* isEqualParamsType = new vector<Type*>;
+	nsstring->Methods->addMethod(constantTable, "isEqualDynamic", "(Lrtl/NSObject;)I", false, NULL, isEqualReturnType, isEqualParamsType, isEqualKeywordsType);
+
+	//Добавление метода isEqualToString
+	Type* isEqualToStringReturnType = new Type(INT_TYPE);
+	vector<Type*>* isEqualToStringKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "rtl/NSString") };
+	vector<Type*>* isEqualToStringParamsType = new vector<Type*>;
+	nsstring->Methods->addMethod(constantTable, "isEqualToStringDynamic", "(Lrtl/NSString;)I", false, NULL, isEqualToStringReturnType, isEqualToStringParamsType, isEqualToStringKeywordsType);
+
+	//Добавление метода length
+	Type* lengthReturnType = new Type(INT_TYPE);
+	vector<Type*>* lengthKeywordsType = new vector<Type*>;
+	vector<Type*>* lengthParamsType = new vector<Type*>;
+	nsstring->Methods->addMethod(constantTable, "lengthDynamic", "()I", false, NULL, lengthReturnType, lengthParamsType, lengthKeywordsType);
+
+	//Добавление метода lowercaseString
+	Type* lowercaseStringReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSString");
+	vector<Type*>* lowercaseStringKeywordsType = new vector<Type*>;
+	vector<Type*>* lowercaseStringParamsType = new vector<Type*>;
+	nsstring->Methods->addMethod(constantTable, "lowercaseStringDynamic", "()Lrtl/NSString;", false, NULL, lowercaseStringReturnType, lowercaseStringParamsType, lowercaseStringKeywordsType);
+
+	//Добавление метода uppercaseString
+	Type* uppercaseStringReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSString");
+	vector<Type*>* uppercaseStringKeywordsType = new vector<Type*>;
+	vector<Type*>* uppercaseStringParamsType = new vector<Type*>;
+	nsstring->Methods->addMethod(constantTable, "uppercaseStringDynamic", "()Lrtl/NSString;", false, NULL, uppercaseStringReturnType, uppercaseStringParamsType, uppercaseStringKeywordsType);
+
+	//Добавление метода stringByAppendingString
+	Type* stringByAppendingStringReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSString");
+	vector<Type*>* stringByAppendingStringKeywordsType = new vector<Type*>{new Type(CLASS_NAME_TYPE, "rtl/NSString")};
+	vector<Type*>* stringByAppendingStringParamsType = new vector<Type*>;
+	nsstring->Methods->addMethod(constantTable, "stringByAppendingStringDynamic", "(Lrtl/NSString;)Lrtl/NSString;", false, NULL, stringByAppendingStringReturnType, stringByAppendingStringParamsType, stringByAppendingStringKeywordsType);
+
+	//Добавление метода description
+	Type* descriptionReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSString");
+	vector<Type*>* descriptionKeywordsType = new vector<Type*>;
+	vector<Type*>* descriptionParamsType = new vector<Type*>;
+	nsstring->Methods->addMethod(constantTable, "descriptionDynamic", "()Lrtl/NSString;", false, NULL, descriptionReturnType, descriptionParamsType, descriptionKeywordsType);
+
+	//Добавление FieldRef
+	constantTable->findOrAddFieldRefConstant("rtl/NSString", "string", "java/lang/String");
+
+	//Добавление MethodRef
+	constantTable->findOrAddMethodRefConstant("rtl/NSObject", "<init>", "()V");
+	constantTable->findOrAddMethodRefConstant("rtl/NSString", "<init>", "(Ljava/lang/String;)V");
+	constantTable->findOrAddMethodRefConstant("java/lang/String", "<init>", "([C)V");
+	constantTable->findOrAddMethodRefConstant("rtl/NSString", "<init>", "(Lrtl/NSString;)V");
+	constantTable->findOrAddMethodRefConstant("java/lang/String", "length", "()I");
+	constantTable->findOrAddMethodRefConstant("java/lang/String", "charAt", "(I)C");
+	constantTable->findOrAddMethodRefConstant("java/lang/Character", "isWhitespace", "(C)Z");
+	constantTable->findOrAddMethodRefConstant("java/lang/Character", "toUpperCase", "(C)C");
+	constantTable->findOrAddMethodRefConstant("java/lang/String", "startWith", "(Ljava/lang/String;)Z");
+	constantTable->findOrAddMethodRefConstant("java/lang/String", "endsWith", "(Ljava/lang/String;)Z");
+	constantTable->findOrAddMethodRefConstant("rtl/NSObject", "initDynamic", "()Lrtl/NSObject");
+	constantTable->findOrAddMethodRefConstant("java/lang/Integer", "parseInt", "(Ljava/lang/String;)I");
+	constantTable->findOrAddMethodRefConstant("java/lang/String", "equals", "(Ljava/lang/Object;)Z");
+	constantTable->findOrAddMethodRefConstant("java/lang/String", "toLowerCase", "()Ljava/lang/String;");
+	constantTable->findOrAddMethodRefConstant("java/lang/String", "toUpperCase", "()Ljava/lang/String;");
+	
+	//Добавление класса NSString в таблицу классов
+	items["rtl/NSString"] = nsstring;
 }
 
 void ClassesTable::toCsvFile(string filepath, char separator)

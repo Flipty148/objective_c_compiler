@@ -1,0 +1,92 @@
+ID,Type,Value
+1,UTF8,Code
+2,UTF8,rtl/NSString
+3,Class,2
+4,UTF8,stringStatic
+5,UTF8,()Lrtl/NSString;
+6,UTF8,stringWithCStringStatic
+7,UTF8,([C)Lrtl/NSString;
+8,UTF8,stringWithStringStatic
+9,UTF8,(Lrtl/NSString;)Lrtl/NSString;
+10,UTF8,cStringDynamic
+11,UTF8,()[C;
+12,UTF8,capitalizeStringDynamic
+13,UTF8,characterAtIndexDynamic
+14,UTF8,(I)C;
+15,UTF8,hasPrefixDynamic
+16,UTF8,(Lrtl/NSString;)I
+17,UTF8,hasSuffixDynamic
+18,UTF8,intValueDynamic
+19,UTF8,()I
+20,UTF8,isEqualDynamic
+21,UTF8,(Lrtl/NSObject;)I
+22,UTF8,isEqualToStringDynamic
+23,UTF8,lengthDynamic
+24,UTF8,lowercaseStringDynamic
+25,UTF8,uppercaseStringDynamic
+26,UTF8,stringByAppendingStringDynamic
+27,UTF8,descriptionDynamic
+28,UTF8,string
+29,UTF8,java/lang/String
+30,NameAndType,28, 29
+31,FieldRef,30, 3
+32,UTF8,rtl/NSObject
+33,Class,32
+34,UTF8,<init>
+35,UTF8,()V
+36,NameAndType,34, 35
+37,MethodRef,36, 33
+38,UTF8,(Ljava/lang/String;)V
+39,NameAndType,34, 38
+40,MethodRef,39, 3
+41,Class,29
+42,UTF8,([C)V
+43,NameAndType,34, 42
+44,MethodRef,43, 41
+45,UTF8,(Lrtl/NSString;)V
+46,NameAndType,34, 45
+47,MethodRef,46, 3
+48,UTF8,length
+49,NameAndType,48, 19
+50,MethodRef,49, 41
+51,UTF8,charAt
+52,UTF8,(I)C
+53,NameAndType,51, 52
+54,MethodRef,53, 41
+55,UTF8,java/lang/Character
+56,Class,55
+57,UTF8,isWhitespace
+58,UTF8,(C)Z
+59,NameAndType,57, 58
+60,MethodRef,59, 56
+61,UTF8,toUpperCase
+62,UTF8,(C)C
+63,NameAndType,61, 62
+64,MethodRef,63, 56
+65,UTF8,startWith
+66,UTF8,(Ljava/lang/String;)Z
+67,NameAndType,65, 66
+68,MethodRef,67, 41
+69,UTF8,endsWith
+70,NameAndType,69, 66
+71,MethodRef,70, 41
+72,UTF8,initDynamic
+73,UTF8,()Lrtl/NSObject
+74,NameAndType,72, 73
+75,MethodRef,74, 33
+76,UTF8,java/lang/Integer
+77,Class,76
+78,UTF8,parseInt
+79,UTF8,(Ljava/lang/String;)I
+80,NameAndType,78, 79
+81,MethodRef,80, 77
+82,UTF8,equals
+83,UTF8,(Ljava/lang/Object;)Z
+84,NameAndType,82, 83
+85,MethodRef,84, 41
+86,UTF8,toLowerCase
+87,UTF8,()Ljava/lang/String;
+88,NameAndType,86, 87
+89,MethodRef,88, 41
+90,NameAndType,61, 87
+91,MethodRef,90, 41

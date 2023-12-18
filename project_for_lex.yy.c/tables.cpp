@@ -363,7 +363,7 @@ ClassesTableElement* ClassesTable::addClass(string name, string* superclassName,
 void ClassesTable::initRTL()
 {
 	initClassProgram();
-
+	initClassNSObject();
 	
 
 	// Создание 
@@ -374,7 +374,7 @@ void ClassesTable::initRTL()
 void ClassesTable::initClassProgram()
 {
 	// Создание класса Program
-	ClassesTableElement* program = new ClassesTableElement("rtl/Program", NULL, false);
+	ClassesTableElement* program = new ClassesTableElement("rtl/Program", NULL, true);
 
 	// Добавление метода printInt
 	ConstantsTable* сonstantTable = program->ConstantTable;
@@ -444,6 +444,99 @@ void ClassesTable::initClassProgram()
 
 	//Добавление класса Program в таблицу классов
 	items["rtl/Program"] = program;
+}
+
+void ClassesTable::initClassNSObject()
+{
+	//Создание класса NSObject
+	ClassesTableElement* nsobject = new ClassesTableElement("rtl/NSObject", NULL, true);
+	ConstantsTable* constantTable = nsobject->ConstantTable;
+	
+	//Добавление конструктора <init>
+	Type* constructorReturnType = new Type(VOID_TYPE);
+	vector<Type*>* constructorKeywordsType = new vector<Type*>;
+	vector<Type*>* constructorParamsType = new vector<Type*>;
+	nsobject->Methods->addMethod(constantTable, "<init>", "()V", false, NULL, constructorReturnType, constructorParamsType, constructorKeywordsType);
+
+	//Добавление метода alloc
+	Type* allocReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSObject");
+	vector<Type*>* allocKeywordsType = new vector<Type*>;
+	vector<Type*>* allocParamsType = new vector<Type*>;
+	nsobject->Methods->addMethod(constantTable, "allocStatic", "()Lrtl/NSObject;", true, NULL, allocReturnType, allocParamsType, allocKeywordsType);
+	
+	//Добавление метода init
+	Type* initReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSObject");
+	vector<Type*>* initKeywordsType = new vector<Type*>;
+	vector<Type*>* initParamsType = new vector<Type*>;
+	nsobject->Methods->addMethod(constantTable, "initDynamic", "()Lrtl/NSObject;", false, NULL, initReturnType, initParamsType, initKeywordsType);
+	
+	//Добавление метода new
+	Type* newReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSObject");
+	vector<Type*>* newKeywordsType = new vector<Type*>;
+	vector<Type*>* newParamsType = new vector<Type*>;
+	nsobject->Methods->addMethod(constantTable, "newStatic", "()Lrtl/NSObject;", true, NULL, newReturnType, newParamsType, newKeywordsType);
+
+	//Добавление  метода getClassDynamic
+	Type* getClassDynamicReturnType = new Type(CLASS_NAME_TYPE, "java/lang/Class");
+	vector<Type*>* getClassDynamicKeywordsType = new vector<Type*>;
+	vector<Type*>* getClassDynamicParamsType = new vector<Type*>;
+	nsobject->Methods->addMethod(constantTable, "getClassDynamic", "()Ljava/lang/Class;", false, NULL, getClassDynamicReturnType, getClassDynamicParamsType, getClassDynamicKeywordsType);
+
+	//Добавление метода getClassStatic
+	Type* getClassStaticReturnType = new Type(CLASS_NAME_TYPE, "java/lang/Class");
+	vector<Type*>* getClassStaticKeywordsType = new vector<Type*>;
+	vector<Type*>* getClassStaticParamsType = new vector<Type*>;
+	nsobject->Methods->addMethod(constantTable, "getClassStatic", "()Ljava/lang/Class;", true, NULL, getClassStaticReturnType, getClassStaticParamsType, getClassStaticKeywordsType);
+
+	//Добавление метода isSubclassOfClass
+	Type* isSubclassOfClassReturnType = new Type(INT_TYPE);
+	vector<Type*>* isSubclassOfClassKeywordsType = new vector<Type*>{new Type(CLASS_NAME_TYPE, "java/lang/Class")};
+	vector<Type*>* isSubclassOfClassParamsType = new vector<Type*>;
+	nsobject->Methods->addMethod(constantTable, "isSubclassOfClassStatic", "(Ljava/lang/Class;)I", true, NULL, isSubclassOfClassReturnType, isSubclassOfClassParamsType, isSubclassOfClassKeywordsType);
+
+	//Добавление метода className
+	Type* classNameReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSString");
+	vector<Type*>* classNameKeywordsType = new vector<Type*>;
+	vector<Type*>* classNameParamsType = new vector<Type*>;
+	nsobject->Methods->addMethod(constantTable, "classNameDynamic", "()Lrtl/NSString;", false, NULL, classNameReturnType, classNameParamsType, classNameKeywordsType);
+
+	//Добавление метода superclass
+	Type* superclassReturnType = new Type(CLASS_NAME_TYPE, "java/lang/Class");
+	vector<Type*>* superclassKeywordsType = new vector<Type*>;
+	vector<Type*>* superclassParamsType = new vector<Type*>;
+	nsobject->Methods->addMethod(constantTable, "superclassDynamic", "()Ljava/lang/Class;", false, NULL, superclassReturnType, superclassParamsType, superclassKeywordsType);
+
+	//Добавление метода description
+	Type* descriptionReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSString");
+	vector<Type*>* descriptionKeywordsType = new vector<Type*>;
+	vector<Type*>* descriptionParamsType = new vector<Type*>;
+	nsobject->Methods->addMethod(constantTable, "descriptionDynamic", "()Lrtl/NSString;", false, NULL, descriptionReturnType, descriptionParamsType, descriptionKeywordsType);
+
+	//Добавление метода isEqual
+	Type* isEqualReturnType = new Type(INT_TYPE);
+	vector<Type*>* isEqualKeywordsType = new vector<Type*>{new Type(CLASS_NAME_TYPE, "rtl/NSObject")};
+	vector<Type*>* isEqualParamsType = new vector<Type*>;
+	nsobject->Methods->addMethod(constantTable, "isEqualDynamic", "(Lrtl/NSObject;)I", false, NULL, isEqualReturnType, isEqualParamsType, isEqualKeywordsType);
+
+	//Добавление MethodRef
+	constantTable->findOrAddMethodRefConstant("java/lang/Object", "<init>", "()V");
+	constantTable->findOrAddMethodRefConstant("rtl/NSObject", "<init>", "()V");
+	constantTable->findOrAddMethodRefConstant("rtl/NSObject", "allocStatic", "()Lrtl/NSObject;");
+	constantTable->findOrAddMethodRefConstant("rtl/NSObject", "initDynamic", "()Lrtl/NSObject;");
+	constantTable->findOrAddMethodRefConstant("java/lang/Object", "getClass", "()Ljava/lang/Class;");
+	constantTable->findOrAddMethodRefConstant("rtl/NSObject", "getClassStatic", "()Ljava/lang/Class;");
+	constantTable->findOrAddMethodRefConstant("java/lang/Class", "isAssignableFrom", "(Ljava/lang/Class;)Z");
+	constantTable->findOrAddMethodRefConstant("java/lang/Class", "getName", "()Ljava/lang/String;");
+	constantTable->findOrAddMethodRefConstant("java/lang/String", "toCharArray", "()[C");
+	constantTable->findOrAddMethodRefConstant("rtl/NSString", "stringWithCStringStatic", "([C)Lrtl/NSString;");
+	constantTable->findOrAddMethodRefConstant("java/lang/Class", "getSuperclass", "()Ljava/lang/Class;");
+
+	//Добавление константы string
+	int strNum = constantTable->findOrAddConstant(UTF8, "nsobject implementation");
+	constantTable->findOrAddConstant(String, NULL, strNum);
+
+	//Добавление класса NSObject в таблицу классов
+	items["rtl/NSObject"] = nsobject;
 }
 
 void ClassesTable::toCsvFile(string filepath, char separator)

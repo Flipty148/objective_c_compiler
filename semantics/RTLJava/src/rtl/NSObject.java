@@ -23,7 +23,7 @@ public class NSObject {
      * В objective-c это new. <br/>
      * + (id)new
      * */
-    public static <T extends NSObject> T newObjectStatic() {
+    public static <T extends NSObject> T newStatic() {
         return T.allocStatic().initDynamic();
     }
 
@@ -49,18 +49,17 @@ public class NSObject {
      * @param aClass Класс
      * @return Является ли класс самим классом или его подклассом
      */
-    public static  boolean isSubclassOfClassStatic(Class<? extends NSObject> aClass) {
-        return getclassStatic().isAssignableFrom(aClass);
+    public static  int isSubclassOfClassStatic(Class<? extends NSObject> aClass) {
+        return getclassStatic().isAssignableFrom(aClass) ? 1 : 0;
     }
 
     /**
      * Возвращает имя класса. <br/>
      * - (NSString *)className
      * @return Имя класса
-     * //TODO заменить на NSString
      */
-    public String classNameDynamic() {
-        return getclassStatic().getName();
+    public NSString classNameDynamic() {
+        return NSString.stringWithCStringStatic(getclassStatic().getName().toCharArray());
     }
 
     /**
@@ -87,8 +86,8 @@ public class NSObject {
      * @param object Объект
      * @return Равен ли объект другому
      */
-    public boolean isEqualDynamic(NSObject object) {
-        return this == object;
+    public int isEqualDynamic(NSObject object) {
+        return this == object ? 1 : 0;
     }
 }
 

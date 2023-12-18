@@ -107,9 +107,9 @@ public class NSString extends  NSObject {
      * Возвращает равенство строк. <br/>
      * - (BOOL)isEqual: (id)anObject
      * */
-    public boolean isEqualDynamic(NSObject other) {
-        if (!(other instanceof NSString)) return false;
-        return string.equals(((NSString)other).string);
+    public int isEqualDynamic(NSObject other) {
+        if (!(other instanceof NSString)) return 0;
+        return string.equals(((NSString)other).string) ? 1 : 0;
     }
 
     @Override

@@ -1,0 +1,12 @@
+Name,Descriptor,IsClassMethod,ReturnType,ParamsTypes,KeywordsTypes,BodyStartStatementId,LocalVariablesTableName
+4 (<init>),5 (()V),false,void,,,empty,emptyTable
+6 (allocStatic),7 (()Lrtl/NSObject;),true,rtl/NSObject,,,empty,emptyTable
+15 (classNameDynamic),16 (()Lrtl/NSString;),false,rtl/NSString,,,empty,emptyTable
+18 (descriptionDynamic),16 (()Lrtl/NSString;),false,rtl/NSString,,,empty,emptyTable
+10 (getClassDynamic),11 (()Ljava/lang/Class;),false,java/lang/Class,,,empty,emptyTable
+12 (getClassStatic),11 (()Ljava/lang/Class;),true,java/lang/Class,,,empty,emptyTable
+8 (initDynamic),7 (()Lrtl/NSObject;),false,rtl/NSObject,,,empty,emptyTable
+19 (isEqualDynamic),20 ((Lrtl/NSObject;)I),false,int,,rtl/NSObject,empty,emptyTable
+13 (isSubclassOfClassStatic),14 ((Ljava/lang/Class;)I),true,int,,java/lang/Class,empty,emptyTable
+9 (newStatic),7 (()Lrtl/NSObject;),true,rtl/NSObject,,,empty,emptyTable
+17 (superclassDynamic),11 (()Ljava/lang/Class;),false,java/lang/Class,,,empty,emptyTable

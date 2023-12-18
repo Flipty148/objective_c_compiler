@@ -143,6 +143,7 @@ public:
 
 private:
 	static void initClassProgram();
+    static void initClassNSObject();
 };
 
 // ---------- Таблица полей класса ----------

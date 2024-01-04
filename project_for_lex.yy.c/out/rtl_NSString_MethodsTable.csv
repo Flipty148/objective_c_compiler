@@ -1,17 +1,17 @@
-Name,Descriptor,IsClassMethod,ReturnType,ParamsTypes,KeywordsTypes,BodyStartStatementId,LocalVariablesTableName
-12 (cStringDynamic),13 (()[C;),false,char[1024],,,empty,emptyTable
-14 (capitalizeStringDynamic),7 (()Lrtl/NSString;),false,rtl/NSString,,,empty,emptyTable
-15 (characterAtIndexDynamic),16 ((I)C;),false,char,,int,empty,emptyTable
-29 (descriptionDynamic),7 (()Lrtl/NSString;),false,rtl/NSString,,,empty,emptyTable
-17 (hasPrefixDynamic),18 ((Lrtl/NSString;)I),false,int,,rtl/NSString,empty,emptyTable
-19 (hasSuffixDynamic),18 ((Lrtl/NSString;)I),false,int,,rtl/NSString,empty,emptyTable
-20 (intValueDynamic),21 (()I),false,int,,,empty,emptyTable
-22 (isEqualDynamic),23 ((Lrtl/NSObject;)I),false,int,,rtl/NSObject,empty,emptyTable
-24 (isEqualToStringDynamic),18 ((Lrtl/NSString;)I),false,int,,rtl/NSString,empty,emptyTable
-25 (lengthDynamic),21 (()I),false,int,,,empty,emptyTable
-26 (lowercaseStringDynamic),7 (()Lrtl/NSString;),false,rtl/NSString,,,empty,emptyTable
-28 (stringByAppendingStringDynamic),11 ((Lrtl/NSString;)Lrtl/NSString;),false,rtl/NSString,,rtl/NSString,empty,emptyTable
-6 (stringStatic),7 (()Lrtl/NSString;),true,rtl/NSString,,,empty,emptyTable
-8 (stringWithCStringStatic),9 (([C)Lrtl/NSString;),true,rtl/NSString,,char[1024],empty,emptyTable
-10 (stringWithStringStatic),11 ((Lrtl/NSString;)Lrtl/NSString;),true,rtl/NSString,,rtl/NSString,empty,emptyTable
-27 (uppercaseStringDynamic),7 (()Lrtl/NSString;),false,rtl/NSString,,,empty,emptyTable
+Name|Descriptor|IsClassMethod|ReturnType|ParamsTypes|KeywordsTypes|BodyStartStatementId|LocalVariablesTableName
+12 (cStringDynamic)|13 (()[C;)|false|char[1024]|||empty|emptyTable
+14 (capitalizeStringDynamic)|7 (()Lrtl/NSString;)|false|rtl/NSString|||empty|emptyTable
+15 (characterAtIndexDynamic)|16 ((I)C;)|false|char||int|empty|emptyTable
+29 (descriptionDynamic)|7 (()Lrtl/NSString;)|false|rtl/NSString|||empty|emptyTable
+17 (hasPrefixDynamic)|18 ((Lrtl/NSString;)I)|false|int||rtl/NSString|empty|emptyTable
+19 (hasSuffixDynamic)|18 ((Lrtl/NSString;)I)|false|int||rtl/NSString|empty|emptyTable
+20 (intValueDynamic)|21 (()I)|false|int|||empty|emptyTable
+22 (isEqualDynamic)|23 ((Lrtl/NSObject;)I)|false|int||rtl/NSObject|empty|emptyTable
+24 (isEqualToStringDynamic)|18 ((Lrtl/NSString;)I)|false|int||rtl/NSString|empty|emptyTable
+25 (lengthDynamic)|21 (()I)|false|int|||empty|emptyTable
+26 (lowercaseStringDynamic)|7 (()Lrtl/NSString;)|false|rtl/NSString|||empty|emptyTable
+28 (stringByAppendingStringDynamic)|11 ((Lrtl/NSString;)Lrtl/NSString;)|false|rtl/NSString||rtl/NSString|empty|emptyTable
+6 (stringStatic)|7 (()Lrtl/NSString;)|true|rtl/NSString|||empty|emptyTable
+8 (stringWithCStringStatic)|9 (([C)Lrtl/NSString;)|true|rtl/NSString||char[1024]|empty|emptyTable
+10 (stringWithStringStatic)|11 ((Lrtl/NSString;)Lrtl/NSString;)|true|rtl/NSString||rtl/NSString|empty|emptyTable
+27 (uppercaseStringDynamic)|7 (()Lrtl/NSString;)|false|rtl/NSString|||empty|emptyTable

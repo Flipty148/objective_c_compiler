@@ -1,4 +1,7 @@
-Id,Name,Type
-1,first,int
-2,second,int
-0,self,global/Myclass
+Id|Name|Type
+1|first|int
+5|i|int
+2|second|int
+0|self|global/Myclass
+4|test|int
+3|y|int

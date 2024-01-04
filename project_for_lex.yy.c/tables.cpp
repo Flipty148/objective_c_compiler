@@ -259,6 +259,19 @@ void ClassesTableElement::fillMethodRefs()
 	}
 }
 
+void ClassesTableElement::fillLiterals()
+{
+	for (auto iter = Methods->items.cbegin(); iter != Methods->items.cend(); ++iter)
+	{
+		iter->second->fillLiterals(ConstantTable);
+	}
+
+	for (auto iter = Fields->items.cbegin(); iter != Fields->items.cend(); ++iter)
+	{
+		iter->second->fillLiterals(ConstantTable);
+	}
+}
+
 bool ClassesTableElement::isContainsField(string fieldName)
 {
 	if (Fields->items.count(fieldName) != 0)
@@ -841,6 +854,16 @@ void ClassesTable::fillMethodRefs()
 	}
 }
 
+void ClassesTable::fillLiterals()
+{
+	auto iter = items.cbegin();
+	while (iter != items.cend())
+	{
+		iter->second->fillLiterals();
+		++iter;
+	}
+}
+
 string ClassesTable::getFullClassName(string name)
 {
 	if (name.find("global/") != string::npos)
@@ -885,6 +908,12 @@ string FieldsTableElement::toCsvString(char separator)
 	else
 		res += to_string(InitialValue->id); //Добавление id узла инициализации
 	return res;
+}
+
+void FieldsTableElement::fillLiterals(ConstantsTable* constantTable)
+{
+	if (InitialValue != NULL)
+		InitialValue->fillLiterals(constantTable);
 }
 
 // -------------------- FieldsTable --------------------
@@ -995,6 +1024,16 @@ void MethodsTableElement::fillMethodRefs(ConstantsTable* constantTable, ClassesT
 	while (cur != NULL)
 	{
 		cur->fillMethodRefs(constantTable, LocalVariables, classTableElement, !IsClassMethod); // Заполнить таблицу
+		cur = cur->Next;
+	}
+}
+
+void MethodsTableElement::fillLiterals(ConstantsTable* constantTable)
+{
+	Statement_node* cur = BodyStart;
+	while (cur != NULL)
+	{
+		cur->fillLiterals(constantTable); // Заполнить таблицу
 		cur = cur->Next;
 	}
 }
@@ -1293,6 +1332,16 @@ void FunctionsTableElement::fillMethodRefs(ConstantsTable* constantTable, Classe
 	}
 }
 
+void FunctionsTableElement::fillLiterals(ConstantsTable* constantTable)
+{
+	Statement_node* cur = BodyStart;
+	while (cur != NULL)
+	{
+		cur->fillLiterals(constantTable); // Заполнить таблицу
+		cur = cur->Next;
+	}
+}
+
 // -------------------- FunctionsTable --------------------
 map<string, FunctionsTableElement*> FunctionsTable::items;
 
@@ -1350,6 +1399,17 @@ void FunctionsTable::fillMethodRefs()
 	while (iter != items.cend())
 	{
 		iter->second->fillMethodRefs(classTableElement->ConstantTable, classTableElement);
+		++iter;
+	}
+}
+
+void FunctionsTable::fillLiterals()
+{
+	ClassesTableElement* classTableElement = ClassesTable::items["rtl/Program"];
+	auto iter = items.cbegin();
+	while (iter != items.cend())
+	{
+		iter->second->fillLiterals(classTableElement->ConstantTable);
 		++iter;
 	}
 }

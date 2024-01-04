@@ -1,5 +1,6 @@
-Id,Name,Type
-1,a,int
-2,b,int[10]
-3,obj,global/Myclass
-0,this,rtl/Program
+Id|Name|Type
+1|a|int
+2|b|int[10]
+4|obj|global/Myclass
+3|st|rtl/NSString
+0|this|rtl/Program

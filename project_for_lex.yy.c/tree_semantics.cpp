@@ -103,9 +103,9 @@ void Function_and_class_list_node::fillTables()
 									string msg = "Method '" + it->first + "' in class '" + className + "' has different type from the type specified in the interface\n";
 									throw std::exception(msg.c_str());
 								}
-								if (curMethod->BodyStart != NULL) {
-									curMethod->BodyStart = startNodes[it->first]; //Добавление тела
 
+								curMethod->BodyStart = startNodes[it->first]; //Добавление тела
+								if (curMethod->BodyStart != NULL) {
 									//Получение и добавление локальных переменных внутри метода
 									vector<string> varsNames;
 									vector<Type*> varsTypes;
@@ -318,6 +318,9 @@ void Function_and_class_list_node::fillTables()
 
 	ClassesTable::fillMethodRefs(); //Найти и заполнить method refs для классов
 	FunctionsTable::fillMethodRefs(); //Найти и заполнить method refs в функции
+
+	ClassesTable::fillLiterals(); // Найти и заполнить string и integer константы
+	FunctionsTable::fillLiterals(); // Найти и заполнить string и integer константы
 }
 
 //---------- Program_node ----------
@@ -455,7 +458,7 @@ vector<string> Instance_variables_declaration_node::getInstanceVariables(vector<
 			string className = ClassesTable::getFullClassName(string(this->type->ClassName)); //Имя класса
 			if (arrSize != NULL)
 			{ // тип класса и массив
-				Type* curType = new Type(type, className, arrSize->constant.num->number.Int);
+				Type* curType = new Type(type, className, arrSize->num->Int);
 				types->push_back(curType);
 			}
 			else
@@ -468,7 +471,7 @@ vector<string> Instance_variables_declaration_node::getInstanceVariables(vector<
         {
             if (arrSize != NULL)
 			{ // Примитивный тип и массив
-				Type* curType = new Type(type, arrSize->constant.num->number.Int);
+				Type* curType = new Type(type, arrSize->num->Int);
 				types->push_back(curType);
             }
             else
@@ -589,7 +592,7 @@ map<string, Type*> Declaration_node::getDeclaration(map<string, Expression_node*
 				int arraySize;
 				if (arrSize != NULL)
 				{
-					arraySize = arrSize->constant.num->number.Int;
+					arraySize = arrSize->num->Int;
 				}
 				else
 				{
@@ -621,7 +624,7 @@ map<string, Type*> Declaration_node::getDeclaration(map<string, Expression_node*
 				int arraySize;
 				if (arrSize != NULL)
 				{
-					arraySize = arrSize->constant.num->number.Int;
+					arraySize = arrSize->num->Int;
 				}
 				else
 				{
@@ -788,7 +791,7 @@ void getTypesFromInitDeclaratorType(vector<Init_declarator_node*>* declarators, 
 				int arraySize;
 				if (arrSize != NULL)
 				{
-					arraySize = arrSize->constant.num->number.Int;
+					arraySize = arrSize->num->Int;
 				}
 				else
 				{
@@ -821,7 +824,7 @@ void getTypesFromInitDeclaratorType(vector<Init_declarator_node*>* declarators, 
 				int arraySize;
 				if (arrSize != NULL)
 				{
-					arraySize = arrSize->constant.num->number.Int;
+					arraySize = arrSize->num->Int;
 				}
 				else
 				{
@@ -966,6 +969,69 @@ void Statement_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariable
 		Declaration_node* cur = (Declaration_node*)this;
 		if (cur->init_declarator_list != NULL)
 			cur->init_declarator_list->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+	}
+}
+
+void Statement_node::fillLiterals(ConstantsTable* constantTable)
+{
+	if (type == EMPTY_STATEMENT_TYPE) {
+
+	}
+	else if (type == SIMPLE_STATEMENT_TYPE) {
+		Expression->fillLiterals(constantTable);
+	}
+	else if (type == RETURN_STATEMENT_TYPE) {
+		Expression->fillLiterals(constantTable);
+	}
+	else if (type == IF_STATEMENT_TYPE) {
+		If_statement_node* cur = (If_statement_node*)this;
+		cur->Condition->fillLiterals(constantTable);
+		cur->TrueBranch->fillLiterals(constantTable);
+		if (cur->FalseBranch != NULL) {
+			cur->FalseBranch->fillLiterals(constantTable);
+		}
+	}
+	else if (type == WHILE_STATEMENT_TYPE) {
+		While_statement_node* cur = (While_statement_node*)this;
+		cur->LoopCondition->fillLiterals(constantTable);
+		if (cur->LoopBody != NULL) {
+			cur->LoopBody->fillLiterals(constantTable);
+		}
+	}
+	else if (type == DO_WHILE_STATEMENT_TYPE) {
+		Do_while_statement_node* cur = (Do_while_statement_node*)this;
+		cur->LoopCondition->fillLiterals(constantTable);
+		if (cur->LoopBody != NULL) {
+			cur->LoopBody->fillLiterals(constantTable);
+		}
+	}
+	else if (type == FOR_STATEMENT_TYPE) {
+		For_statement_node* cur = (For_statement_node*)this;
+		if (cur->InitExpression != NULL)
+			cur->InitExpression->fillLiterals(constantTable);
+		if (cur->ConditionExpression != NULL)
+			cur->ConditionExpression->fillLiterals(constantTable);
+		if (cur->LoopExpression != NULL)
+			cur->LoopExpression->fillLiterals(constantTable);
+		if (cur->InitList != NULL)
+			cur->InitList->fillLiterals(constantTable);
+		if (cur->LoopBody != NULL)
+			cur->LoopBody->fillLiterals(constantTable);
+	}
+	else if (type == COMPOUND_STATEMENT_TYPE) {
+		Statement_list_node* cur = (Statement_list_node*)this;
+		if (cur->First != NULL) {
+			Statement_node* elem = cur->First;
+			while (elem != NULL) {
+				elem->fillLiterals(constantTable);
+				elem = elem->Next;
+			}
+		}
+	}
+	else if (type == DECLARATION_STATEMENT_TYPE) {
+		Declaration_node* cur = (Declaration_node*)this;
+		if (cur->init_declarator_list != NULL)
+			cur->init_declarator_list->fillLiterals(constantTable);
 	}
 }
 
@@ -1259,6 +1325,28 @@ void Expression_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariabl
 	}
 }
 
+void Expression_node::fillLiterals(ConstantsTable* constantTable)
+{
+	if (type == LITERAL_EXPRESSION_TYPE) {
+		literal->fillLiterals(constantTable);
+	}
+	else if (type == NUMERIIC_CONSTANT_EXPRESSION_TYPE) {
+		num->fillLiterals(constantTable);
+	}
+
+	if (Left != NULL)
+		Left->fillLiterals(constantTable);
+	if (Right != NULL)
+		Right->fillLiterals(constantTable);
+	if (Receiver != NULL)
+		Receiver->fillLiterals(constantTable);
+	if (Arguments != NULL)
+		Arguments->fillLiterals(constantTable);
+	if (ArgumentsList != NULL)
+		ArgumentsList->fillLiterals(constantTable);
+
+}
+
 // ---------- Receiver_node ----------
 void Receiver_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement)
 {
@@ -1463,6 +1551,14 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 	}
 }
 
+void Receiver_node::fillLiterals(ConstantsTable* constantTable)
+{
+	if (Receiver != NULL)
+		Receiver->fillLiterals(constantTable);
+	if (Arguments != NULL)
+		Arguments->fillLiterals(constantTable);
+}
+
 // ---------- Message_selector_node ----------
 void Message_selector_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement)
 {
@@ -1486,6 +1582,16 @@ void Message_selector_node::fillMethodRefs(ConstantsTable* constantTable, LocalV
 		ExprArguments->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
 }
 
+void Message_selector_node::fillLiterals(ConstantsTable* constantTable)
+{
+	if (FirstArgument != NULL)
+		FirstArgument->fillLiterals(constantTable);
+	if (Arguments != NULL)
+		Arguments->fillLiterals(constantTable);
+	if (ExprArguments != NULL)
+		ExprArguments->fillLiterals(constantTable);
+}
+
 // ---------- Keyword_argument_list_node ----------
 void Keyword_argument_list_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement)
 {
@@ -1503,6 +1609,16 @@ void Keyword_argument_list_node::fillMethodRefs(ConstantsTable* constantTable, L
 	while (arg != NULL)
 	{
 		arg->expression->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInstanceMethod);
+		arg = arg->Next;
+	}
+}
+
+void Keyword_argument_list_node::fillLiterals(ConstantsTable* constantTable)
+{
+	Keyword_argument_node* arg = First;
+	while (arg != NULL)
+	{
+		arg->expression->fillLiterals(constantTable);
 		arg = arg->Next;
 	}
 }
@@ -1529,6 +1645,16 @@ void Expression_list_node::fillMethodRefs(ConstantsTable* constantTable, LocalVa
 	}
 }
 
+void Expression_list_node::fillLiterals(ConstantsTable* constantTable)
+{
+	Expression_node* cur = First;
+	while (cur != NULL)
+	{
+		cur->fillLiterals(constantTable);
+		cur = cur->Next;
+	}
+}
+
 // ---------- Init_declarator_list_node ----------
 void Init_declarator_list_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement)
 {
@@ -1546,6 +1672,16 @@ void Init_declarator_list_node::fillMethodRefs(ConstantsTable* constantTable, Lo
 	while (declarator != NULL)
 	{
 		declarator->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+		declarator = declarator->Next;
+	}
+}
+
+void Init_declarator_list_node::fillLiterals(ConstantsTable* constantTable)
+{
+	Init_declarator_node* declarator = First;
+	while (declarator != NULL)
+	{
+		declarator->fillLiterals(constantTable);
 		declarator = declarator->Next;
 	}
 }
@@ -1570,5 +1706,34 @@ void Init_declarator_node::fillMethodRefs(ConstantsTable* constantTable, LocalVa
 	if (InitializerList != NULL)
 		InitializerList->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
 
+}
+
+void Init_declarator_node::fillLiterals(ConstantsTable* constantTable)
+{
+	if (expression != NULL)
+		expression->fillLiterals(constantTable);
+	if (ArraySize != NULL)
+		ArraySize->fillLiterals(constantTable);
+	if (InitializerList != NULL)
+		InitializerList->fillLiterals(constantTable);
+}
+
+
+
+// ---------- Numeric_constant ----------
+void Numeric_constant_node::fillLiterals(ConstantsTable* constantTable)
+{
+	if (Int > 32767 || Int < -32768) {
+		constantTable->findOrAddConstant(Integer, Int);
+	}
+}
+
+// ---------- literal ----------
+void Literal_node::fillLiterals(ConstantsTable* constantTable)
+{
+	if (type == STRING_CONSTANT_TYPE || type == NSSTRING_CONSTANT_TYPE) {
+		int utfIndex = constantTable->findOrAddConstant(UTF8, value);
+		constantTable->findOrAddConstant(String, 0, utfIndex);
+	}
 }
 

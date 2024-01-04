@@ -1,22 +1,29 @@
-ID,Type,Value
-1,UTF8,Code
-2,UTF8,global/Myclass
-3,UTF8,rtl/NSObject
-4,Class,2
-5,Class,3
-6,UTF8,a
-7,UTF8,[I
-8,UTF8,b
-9,UTF8,I
-10,UTF8,c
-11,UTF8,f
-12,UTF8,d
-13,UTF8,funcStatic
-14,UTF8,(II)I
-15,UTF8,newStatic
-16,UTF8,()Lglobal/Myclass;
-17,UTF8,e
-18,UTF8,func2Dynamic
-19,UTF8,(II)V
-20,NameAndType,12, 9
-21,FieldRef,20, 4
+ID|Type|Value
+1|UTF8|Code
+2|UTF8|global/Myclass
+3|UTF8|rtl/NSObject
+4|Class|2
+5|Class|3
+6|UTF8|a
+7|UTF8|[I
+8|UTF8|b
+9|UTF8|I
+10|UTF8|c
+11|UTF8|str
+12|UTF8|Lrtl/NSString;
+13|UTF8|f
+14|UTF8|d
+15|UTF8|funcStatic
+16|UTF8|(II)I
+17|UTF8|newStatic
+18|UTF8|()Lglobal/Myclass;
+19|UTF8|e
+20|UTF8|func2Dynamic
+21|UTF8|(II)V
+22|NameAndType|14, 9
+23|FieldRef|22, 4
+24|NameAndType|6, 7
+25|FieldRef|24, 4
+26|Integer|44560
+27|UTF8|abc
+28|String|27

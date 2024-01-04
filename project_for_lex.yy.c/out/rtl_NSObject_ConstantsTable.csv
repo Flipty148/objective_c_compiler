@@ -1,62 +1,62 @@
-ID,Type,Value
-1,UTF8,Code
-2,UTF8,rtl/NSObject
-3,Class,2
-4,UTF8,<init>
-5,UTF8,()V
-6,UTF8,allocStatic
-7,UTF8,()Lrtl/NSObject;
-8,UTF8,initDynamic
-9,UTF8,newStatic
-10,UTF8,getClassDynamic
-11,UTF8,()Ljava/lang/Class;
-12,UTF8,getClassStatic
-13,UTF8,isSubclassOfClassStatic
-14,UTF8,(Ljava/lang/Class;)I
-15,UTF8,classNameDynamic
-16,UTF8,()Lrtl/NSString;
-17,UTF8,superclassDynamic
-18,UTF8,descriptionDynamic
-19,UTF8,isEqualDynamic
-20,UTF8,(Lrtl/NSObject;)I
-21,UTF8,java/lang/Object
-22,Class,21
-23,NameAndType,4, 5
-24,MethodRef,23, 22
-25,MethodRef,23, 3
-26,NameAndType,6, 7
-27,MethodRef,26, 3
-28,NameAndType,8, 7
-29,MethodRef,28, 3
-30,UTF8,getClass
-31,NameAndType,30, 11
-32,MethodRef,31, 22
-33,NameAndType,12, 11
-34,MethodRef,33, 3
-35,UTF8,java/lang/Class
-36,Class,35
-37,UTF8,isAssignableFrom
-38,UTF8,(Ljava/lang/Class;)Z
-39,NameAndType,37, 38
-40,MethodRef,39, 36
-41,UTF8,getName
-42,UTF8,()Ljava/lang/String;
-43,NameAndType,41, 42
-44,MethodRef,43, 36
-45,UTF8,java/lang/String
-46,Class,45
-47,UTF8,toCharArray
-48,UTF8,()[C
-49,NameAndType,47, 48
-50,MethodRef,49, 46
-51,UTF8,rtl/NSString
-52,Class,51
-53,UTF8,stringWithCStringStatic
-54,UTF8,([C)Lrtl/NSString;
-55,NameAndType,53, 54
-56,MethodRef,55, 52
-57,UTF8,getSuperclass
-58,NameAndType,57, 11
-59,MethodRef,58, 36
-60,UTF8,nsobject implementation
-61,String,60
+ID|Type|Value
+1|UTF8|Code
+2|UTF8|rtl/NSObject
+3|Class|2
+4|UTF8|<init>
+5|UTF8|()V
+6|UTF8|allocStatic
+7|UTF8|()Lrtl/NSObject;
+8|UTF8|initDynamic
+9|UTF8|newStatic
+10|UTF8|getClassDynamic
+11|UTF8|()Ljava/lang/Class;
+12|UTF8|getClassStatic
+13|UTF8|isSubclassOfClassStatic
+14|UTF8|(Ljava/lang/Class;)I
+15|UTF8|classNameDynamic
+16|UTF8|()Lrtl/NSString;
+17|UTF8|superclassDynamic
+18|UTF8|descriptionDynamic
+19|UTF8|isEqualDynamic
+20|UTF8|(Lrtl/NSObject;)I
+21|UTF8|java/lang/Object
+22|Class|21
+23|NameAndType|4, 5
+24|MethodRef|23, 22
+25|MethodRef|23, 3
+26|NameAndType|6, 7
+27|MethodRef|26, 3
+28|NameAndType|8, 7
+29|MethodRef|28, 3
+30|UTF8|getClass
+31|NameAndType|30, 11
+32|MethodRef|31, 22
+33|NameAndType|12, 11
+34|MethodRef|33, 3
+35|UTF8|java/lang/Class
+36|Class|35
+37|UTF8|isAssignableFrom
+38|UTF8|(Ljava/lang/Class;)Z
+39|NameAndType|37, 38
+40|MethodRef|39, 36
+41|UTF8|getName
+42|UTF8|()Ljava/lang/String;
+43|NameAndType|41, 42
+44|MethodRef|43, 36
+45|UTF8|java/lang/String
+46|Class|45
+47|UTF8|toCharArray
+48|UTF8|()[C
+49|NameAndType|47, 48
+50|MethodRef|49, 46
+51|UTF8|rtl/NSString
+52|Class|51
+53|UTF8|stringWithCStringStatic
+54|UTF8|([C)Lrtl/NSString;
+55|NameAndType|53, 54
+56|MethodRef|55, 52
+57|UTF8|getSuperclass
+58|NameAndType|57, 11
+59|MethodRef|58, 36
+60|UTF8|nsobject implementation
+61|String|60

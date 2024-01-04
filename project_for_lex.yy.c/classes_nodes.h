@@ -82,16 +82,15 @@ class Numeric_constant_node
     public:
         int id;
         enum numeric_constant_type type;
-        union number
-        {
-            int Int;
-            float Float;
-        } number;
+        int Int;
+        float Float;
 
         static Numeric_constant_node* createNumericConstantNodeFromInteger(int number);
         static Numeric_constant_node* createNumericConstantNodeFromFloat(float number);
 
         string toDot();
+
+		void fillLiterals(ConstantsTable* constantTable);
 };
 
 // ---------- literal ----------
@@ -112,6 +111,8 @@ class Literal_node
         static Literal_node* createLiteralNode(literal_type type, char *value);
 
         string toDot();
+
+		void fillLiterals(ConstantsTable* constantTable);
 };
 
 // -------------------- Объявления --------------------
@@ -146,6 +147,7 @@ class Statement_node
 
         void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); //Функция поиска и заполнения fieldRefs
 		void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod); //Функция поиска и заполнения methodRefs
+		void fillLiterals(ConstantsTable* constantTable); //Поиск и заполнение литералов
 };
 
 // ---------- declaration ----------
@@ -197,6 +199,7 @@ class Init_declarator_list_node
 
 		void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); //Функция поиска и заполнения fieldRefs
 		void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod); //Функция поиска и заполнения methodRefs
+		void fillLiterals(ConstantsTable* constantTable); //Поиск и заполнение литералов
 };
 
 // ---------- init_declarator ----------
@@ -226,6 +229,7 @@ class Init_declarator_node
 
 		void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); //Функция поиска и заполнения fieldRefs
 		void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod); //Функция поиска и заполнения methodRefs
+		void fillLiterals(ConstantsTable* constantTable);
 };
 
 // ---------- declarator ----------
@@ -324,11 +328,8 @@ class Expression_node
         int id;
         enum expression_type type;
         char *name;
-        union constant
-        {
-            Numeric_constant_node *num;
-            Literal_node *literal;
-        } constant;
+        Numeric_constant_node *num;
+        Literal_node *literal;
         Expression_node *Left;
         Expression_node *Right;
         Receiver_node *Receiver;
@@ -353,6 +354,7 @@ class Expression_node
 
         virtual void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); // Функция поиска и заполнения field ref
 		virtual void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod); // Функция поиска и заполнения method ref
+		virtual void fillLiterals(ConstantsTable* constantTable); // Поиск и заполнение литералов
 };
 
 // ---------- expression_list ----------
@@ -372,6 +374,7 @@ class Expression_list_node : public Expression_node
 
         void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); // Функция поиска и заполнения field ref
 		void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod); // Функция поиска и заполнения method ref
+		void fillLiterals(ConstantsTable* constantTable); // Поиск и заполнение литералов
 };
 
 // ---------- receiver ----------
@@ -390,8 +393,8 @@ class Receiver_node
         int id;
         char *name;
         receiver_type type;
-        Receiver_node *Receiver;
-        Message_selector_node *Arguments;
+        Receiver_node *Receiver = NULL;
+        Message_selector_node *Arguments = NULL;
 
         static Receiver_node* createReceiverNode(receiver_type type, char *name);
         static Receiver_node* createReceiverNodeFromMessageExpression(Receiver_node *receiver, Message_selector_node *arguments);
@@ -406,6 +409,8 @@ class Receiver_node
 		bool getName(string* Name);
 
 		void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod, Type **returnType); //Функция поиска и заполнения methodRefs
+
+		void fillLiterals(ConstantsTable* constantTable); //Поиск и заполнение литералов
 };
 
 // ---------- message_selector -----------
@@ -425,6 +430,7 @@ class Message_selector_node
 
 		void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); //Функция поиска и заполнения fieldRefs
 		void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod); //Функция поиска и заполнения methodRefs
+		void fillLiterals(ConstantsTable* constantTable); //Поиск и заполнение литералов
 };
 
 // ---------- keyword_argument_list ----------
@@ -444,6 +450,7 @@ class Keyword_argument_list_node
 
 		void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); // Функция поиска и заполнения field ref
 		void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInstanceMethod); // Функция поиска и заполнения method ref
+		void fillLiterals(ConstantsTable* constantTable); //Поиск и заполнение литералов
 };
 
 // ---------- keyword_argument ----------

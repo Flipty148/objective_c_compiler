@@ -1,27 +1,27 @@
-ID,Type,Value
-1,UTF8,Code
-2,UTF8,global/MyClass3
-3,UTF8,global/MyClass2
-4,Class,2
-5,Class,3
-6,UTF8,obj
-7,UTF8,Lglobal/MyClass2;
-8,UTF8,obj1
-9,UTF8,Lglobal/Myclass;
-10,UTF8,funcDynamic
-11,UTF8,()V
-12,UTF8,funcMyClass3Static
-13,NameAndType,8, 9
-14,FieldRef,13, 4
-15,UTF8,a
-16,UTF8,I
-17,NameAndType,15, 16
-18,FieldRef,17, 5
-19,NameAndType,6, 7
-20,FieldRef,19, 4
-21,UTF8,global/Myclass
-22,Class,21
-23,UTF8,func2
-24,UTF8,(II)V
-25,NameAndType,23, 24
-26,MethodRef,25, 22
+ID|Type|Value
+1|UTF8|Code
+2|UTF8|global/MyClass3
+3|UTF8|global/MyClass2
+4|Class|2
+5|Class|3
+6|UTF8|obj
+7|UTF8|Lglobal/MyClass2;
+8|UTF8|obj1
+9|UTF8|Lglobal/Myclass;
+10|UTF8|funcDynamic
+11|UTF8|()V
+12|UTF8|funcMyClass3Static
+13|NameAndType|8, 9
+14|FieldRef|13, 4
+15|UTF8|a
+16|UTF8|I
+17|NameAndType|15, 16
+18|FieldRef|17, 5
+19|NameAndType|6, 7
+20|FieldRef|19, 4
+21|UTF8|global/Myclass
+22|Class|21
+23|UTF8|func2
+24|UTF8|(II)V
+25|NameAndType|23, 24
+26|MethodRef|25, 22

@@ -129,7 +129,7 @@ Numeric_constant_node* Numeric_constant_node::createNumericConstantNodeFromInteg
     Numeric_constant_node *res = new Numeric_constant_node;
     res->id = maxId++;
     res->type = INTEGER_CONSTANT_TYPE;
-    res->number.Int = number;
+    res->Int = number;
     return res;
 }
 
@@ -138,7 +138,7 @@ Numeric_constant_node* Numeric_constant_node::createNumericConstantNodeFromFloat
     Numeric_constant_node *res = new Numeric_constant_node;
     res->id = maxId++;
     res->type = FLOAT_CONSTANT_TYPE;
-    res->number.Float = number;
+    res->Float = number;
     return res;
 }
 
@@ -312,7 +312,7 @@ Expression_node* Expression_node::createExpressionNodeFromLiteral(Literal_node *
     res->id = maxId++;
     res->type = LITERAL_EXPRESSION_TYPE;
     res->name = NULL;
-    res->constant.literal = value;
+    res->literal = value;
     res->Left = NULL;
     res->Right = NULL;
     res->Next = NULL;
@@ -325,7 +325,7 @@ Expression_node* Expression_node::createExpressionNodeFromNumericConstant(Numeri
     res->id = maxId++;
     res->type = NUMERIIC_CONSTANT_EXPRESSION_TYPE;
     res->name = NULL;
-    res->constant.num = value;
+    res->num = value;
     res->Left = NULL;
     res->Right = NULL;
     res->Next = NULL;
@@ -1039,11 +1039,11 @@ string Numeric_constant_node::toDot()
     string res = "->" + to_string(id) + ";\n";
     if (type == INTEGER_CONSTANT_TYPE)
     {
-        res += to_string(id) + "[label=\"" + to_string(number.Int) + "\"];\n";
+        res += to_string(id) + "[label=\"" + to_string(Int) + "\"];\n";
     }
     else if (type == FLOAT_CONSTANT_TYPE)
     {
-        res += to_string(id) + "[label=\"" + to_string(number.Float) + "\"];\n";
+        res += to_string(id) + "[label=\"" + to_string(Float) + "\"];\n";
     }
     
     return res;
@@ -1319,12 +1319,12 @@ string Expression_node::toDot(string labelConection)
     else if (type == LITERAL_EXPRESSION_TYPE)
     {
         res += to_string(id);
-        res += constant.literal->toDot();
+        res += literal->toDot();
     }
     else if (type == NUMERIIC_CONSTANT_EXPRESSION_TYPE)
     {
         res += to_string(id);
-        res += constant.num->toDot();
+        res += num->toDot();
     }
     else if (type == SELF_EXPRESSION_TYPE)
     {

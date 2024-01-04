@@ -5,6 +5,7 @@
     int d;
 }
     int b = 5;
+    NSString *str = @"abc";
     int a[10];
     int c[20];
     + (int) func: (int) first :(int) second;
@@ -19,9 +20,11 @@
     int d;
 }
     int b;
+    NSString *str;
     int a[10];
     + (int) func: (int) first :(int) second
     {
+        int y = 44560;
         int test;
         for (int i = 0; i < 10; i++)
         {
@@ -66,6 +69,8 @@ int main()
 {
     int a;
     int b[10];
+    NSString *st = @"NS";
+    if ("abc" != "abc") return 0;
     Myclass* obj = [Myclass new];
     [Myclass func: 2 :3];
     obj->a;

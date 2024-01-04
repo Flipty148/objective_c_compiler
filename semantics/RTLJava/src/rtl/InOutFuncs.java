@@ -1,6 +1,6 @@
 package rtl;
 
-public class Program {
+public class InOutFuncs {
 
     //---------- Print Methods ----------
     public static void printInt(int i) {

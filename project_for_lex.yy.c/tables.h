@@ -146,7 +146,8 @@ public:
 	static string getFullClassName(string name); //Получение полного имени класса по короткому
 
 private:
-	static void initClassProgram();
+    static void initClassProgram();
+	static void initClassInOutFuncs();
     static void initClassNSObject();
 	static void initClassNSString();
     static void initClassNSArray();

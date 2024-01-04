@@ -379,6 +379,7 @@ ClassesTableElement* ClassesTable::addClass(string name, string* superclassName,
 void ClassesTable::initRTL()
 {
 	initClassProgram();
+	initClassInOutFuncs();
 	initClassNSObject();
 	initClassNSString();
 	initClassNSArray();
@@ -387,56 +388,65 @@ void ClassesTable::initRTL()
 void ClassesTable::initClassProgram()
 {
 	// Создание класса Program
-	ClassesTableElement* program = new ClassesTableElement("rtl/Program", NULL, true);
+	ClassesTableElement* Program = new ClassesTableElement("rtl/Program", NULL, true);
+
+	//Добавление класса InOutFuncs в таблицу классов
+	items["rtl/Program"] = Program;
+}
+
+void ClassesTable::initClassInOutFuncs()
+{
+	// Создание класса InOutFuncs
+	ClassesTableElement* InOutFuncs = new ClassesTableElement("rtl/InOutFuncs", NULL, true);
 
 	// Добавление метода printInt
-	ConstantsTable* сonstantTable = program->ConstantTable;
+	ConstantsTable* сonstantTable = InOutFuncs->ConstantTable;
 	Type *printIntReturnType = new Type(VOID_TYPE);
 	vector<Type*> *printIntKeywordsType = new vector<Type*>{ new Type(INT_TYPE) };
 	vector<Type*> *printIntParamsType = new vector<Type*>;
-	program->Methods->addMethod(сonstantTable, "printInt", "(I)V", true, NULL, printIntReturnType, printIntParamsType, printIntKeywordsType);
+	InOutFuncs->Methods->addMethod(сonstantTable, "printInt", "(I)V", true, NULL, printIntReturnType, printIntParamsType, printIntKeywordsType);
 
 	//Добавление метода printChar
 	Type* printCharReturnType = new Type(VOID_TYPE);
 	vector<Type*> *printCharKeywordsType = new vector<Type*>{ new Type(CHAR_TYPE) };
 	vector<Type*> *printCharParamsType = new vector<Type*>;
-	program->Methods->addMethod(сonstantTable, "printChar", "(C)V", true, NULL, printCharReturnType, printCharParamsType, printCharKeywordsType);
+	InOutFuncs->Methods->addMethod(сonstantTable, "printChar", "(C)V", true, NULL, printCharReturnType, printCharParamsType, printCharKeywordsType);
 
 	//Добавление метода printString
 	Type* printStringReturnType = new Type(VOID_TYPE);
 	vector<Type*> *printStringKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "java/lang/String")};
 	vector<Type*> *printStringParamsType = new vector<Type*>;
-	program->Methods->addMethod(сonstantTable, "printString", "(Ljava/lang/String;)V", true, NULL, printStringReturnType, printStringParamsType, printStringKeywordsType);
+	InOutFuncs->Methods->addMethod(сonstantTable, "printString", "(Ljava/lang/String;)V", true, NULL, printStringReturnType, printStringParamsType, printStringKeywordsType);
 
 	//Добавление метода printCharArray
 	Type* printCharArrayReturnType = new Type(VOID_TYPE);
 	vector<Type*> *printCharArrayKeywordsType = new vector<Type*>{ new Type(CHAR_TYPE, 1024) };
 	vector<Type*> *printCharArrayParamsType = new vector<Type*>;
-	program->Methods->addMethod(сonstantTable, "printCharArray", "([C)V", true, NULL, printCharArrayReturnType, printCharArrayParamsType, printCharArrayKeywordsType);
+	InOutFuncs->Methods->addMethod(сonstantTable, "printCharArray", "([C)V", true, NULL, printCharArrayReturnType, printCharArrayParamsType, printCharArrayKeywordsType);
 
 	//Добавление метода printObject
 	Type* printObjectReturnType = new Type(VOID_TYPE);
 	vector<Type*> *printObjectKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "java/lang/Object") };
 	vector<Type*> *printObjectParamsType = new vector<Type*>;
-	program->Methods->addMethod(сonstantTable, "printObject", "(Ljava/lang/Object;)V", true, NULL, printObjectReturnType, printObjectParamsType, printObjectKeywordsType);
+	InOutFuncs->Methods->addMethod(сonstantTable, "printObject", "(Ljava/lang/Object;)V", true, NULL, printObjectReturnType, printObjectParamsType, printObjectKeywordsType);
 
 	//Добавление метода read
 	Type* readReturnType = new Type(CLASS_NAME_TYPE, "java/lang/String");
 	vector<Type*> *readKeywordsType = new vector<Type*>;
 	vector<Type*> *readParamsType = new vector<Type*>;
-	program->Methods->addMethod(сonstantTable, "read", "()Ljava/lang/String;", true, NULL, readReturnType, readParamsType, readKeywordsType);
+	InOutFuncs->Methods->addMethod(сonstantTable, "read", "()Ljava/lang/String;", true, NULL, readReturnType, readParamsType, readKeywordsType);
 
 	//Добавление метода readInt
 	Type* readIntReturnType = new Type(INT_TYPE);
 	vector<Type*> *readIntKeywordsType = new vector<Type*>;
 	vector<Type*> *readIntParamsType = new vector<Type*>;
-	program->Methods->addMethod(сonstantTable, "readInt", "()I", true, NULL, readIntReturnType, readIntParamsType, readIntKeywordsType);
+	InOutFuncs->Methods->addMethod(сonstantTable, "readInt", "()I", true, NULL, readIntReturnType, readIntParamsType, readIntKeywordsType);
 
 	//Добавление метода readChar
 	Type* readCharReturnType = new Type(CHAR_TYPE);
 	vector<Type*> *readCharKeywordsType = new vector<Type*>;
 	vector<Type*> *readCharParamsType = new vector<Type*>;
-	program->Methods->addMethod(сonstantTable, "readChar", "()C", true, NULL, readCharReturnType, readCharParamsType, readCharKeywordsType);
+	InOutFuncs->Methods->addMethod(сonstantTable, "readChar", "()C", true, NULL, readCharReturnType, readCharParamsType, readCharKeywordsType);
 
 
 	//Добавление FieldRef
@@ -451,12 +461,12 @@ void ClassesTable::initClassProgram()
 	сonstantTable->findOrAddMethodRefConstant("java/io/PrintStream", "print", "Ljava/lang/Object;");
 	сonstantTable->findOrAddMethodRefConstant("java/lang/System", "console", "Ljava/io/Console;");
 	сonstantTable->findOrAddMethodRefConstant("java/io/Console", "readLine", "()Ljava/lang/String;");
-	сonstantTable->findOrAddMethodRefConstant("rtl/Program", "read", "()Ljava/lang/String;");
+	сonstantTable->findOrAddMethodRefConstant("rtl/InOutFuncs", "read", "()Ljava/lang/String;");
 	сonstantTable->findOrAddMethodRefConstant("java/lang/Integer", "parseInt", "(Ljava/lang/String;)I");
 	сonstantTable->findOrAddMethodRefConstant("java/lang/String", "charAt", "(I)C");
 
-	//Добавление класса Program в таблицу классов
-	items["rtl/Program"] = program;
+	//Добавление класса InOutFuncs в таблицу классов
+	items["rtl/InOutFuncs"] = InOutFuncs;
 }
 
 void ClassesTable::initClassNSObject()
@@ -871,7 +881,7 @@ string ClassesTable::getFullClassName(string name)
 	if (name.find("rtl/") != string::npos)
 		return name;
 	string fullName;
-	if (name == "NSString" || name == "NSArray" || name == "NSObject")
+	if (name == "NSString" || name == "NSArray" || name == "NSObject" || name == "InOutFuncs")
 		fullName = "rtl/" + name;
 	else
 		fullName = "global/" + name;

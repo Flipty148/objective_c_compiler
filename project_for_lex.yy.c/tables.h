@@ -79,6 +79,8 @@ public:
     void fillFieldRefs(ConstantsTable* constantTable, ClassesTableElement* classTableElement); // Заполнение fieldRef для текущей функции
 	void fillMethodRefs(ConstantsTable* constantTable, ClassesTableElement* classTableElement); // Заполнение methodRef для текущей функции
 	void fillLiterals(ConstantsTable* constantTable); // Заполнение литералов
+
+	void convertToClassProgramMethods(ClassesTableElement* classTableElement);
 };
 
 class FunctionsTable
@@ -93,6 +95,8 @@ public:
     static void fillFieldRefs(); //Функция поиска и заполнения fieldRef в функциях, побочным эфектом контролирует наличие функции main
 	static void fillMethodRefs(); //Функция поиска и заполнения methodRef в функциях
 	static void fillLiterals(); //Функция поиска и заполнения литералов
+
+	static void convertToClassProgramMethods(); //Преобразование функций в методы класса Program и проверка наличия функции main
 };
 
 // ---------- Таблица классов ----------

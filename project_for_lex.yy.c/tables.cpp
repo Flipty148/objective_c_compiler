@@ -1352,6 +1352,12 @@ void FunctionsTableElement::fillLiterals(ConstantsTable* constantTable)
 	}
 }
 
+void FunctionsTableElement::convertToClassProgramMethods(ClassesTableElement* classTableElement)
+{
+	MethodsTableElement* method = classTableElement->Methods->addMethod(classTableElement->ConstantTable, NameStr, DescriptorStr, true, BodyStart, ReturnType, new vector<Type*>, ParametersTypes);
+	method->LocalVariables = LocalVariables;
+}
+
 // -------------------- FunctionsTable --------------------
 map<string, FunctionsTableElement*> FunctionsTable::items;
 
@@ -1420,6 +1426,23 @@ void FunctionsTable::fillLiterals()
 	while (iter != items.cend())
 	{
 		iter->second->fillLiterals(classTableElement->ConstantTable);
+		++iter;
+	}
+}
+
+void FunctionsTable::convertToClassProgramMethods()
+{
+	if (items.count("main") == 0) //Функция main не найдена
+	{
+		string msg = "Function 'main' not found";
+		throw new exception(msg.c_str());
+	}
+
+	ClassesTableElement* classTableElement = ClassesTable::items["rtl/Program"];
+	auto iter = items.cbegin();
+	while (iter != items.cend())
+	{
+		iter->second->convertToClassProgramMethods(classTableElement);
 		++iter;
 	}
 }

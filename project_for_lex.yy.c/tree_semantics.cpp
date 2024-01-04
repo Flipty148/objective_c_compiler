@@ -297,12 +297,13 @@ void Function_and_class_list_node::fillTables()
 			string descriptor = "()";
 			descriptor += returnType->getDescriptor();
 
-			FunctionsTableElement* element = FunctionsTable::addFunction(functionName, descriptor, body, NULL, NULL); // Добавление функции в таблицу
+			vector<Type*> *params = new vector<Type*>;
+			FunctionsTableElement* element = FunctionsTable::addFunction(functionName, descriptor, body, params, returnType); // Добавление функции в таблицу
 
 			// Формирование таблицы локальных переменных
 			LocalVariablesTable* locals = element->LocalVariables; //Таблица локальных переменных данной функции
 			Type* type = new Type(CLASS_NAME_TYPE, "rtl/Program"); //Тип для this
-			locals->findOrAddLocalVariable("this", type); //Добавление self в таблицу локальных переменных
+			locals->findOrAddLocalVariable("self", type); //Добавление self в таблицу локальных переменных
 			vector<string> varsNames;
 			vector<Type*> varsTypes;
 			element->BodyStart->findLocalVariables(&varsNames, &varsTypes);
@@ -321,6 +322,9 @@ void Function_and_class_list_node::fillTables()
 
 	ClassesTable::fillLiterals(); // Найти и заполнить string и integer константы
 	FunctionsTable::fillLiterals(); // Найти и заполнить string и integer константы
+
+
+	FunctionsTable::convertToClassProgramMethods(); // Преобразовать функции в статические методы класса Program
 }
 
 //---------- Program_node ----------

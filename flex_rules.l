@@ -40,76 +40,73 @@ UNDERLINE_LETTER [A-Za-z_]
 
 
 
-"int" {printf("Found keyword INT: %s\n", yytext);   return INT;}
-"char" {printf("Found keyword CHAR: %s\n", yytext);     return CHAR;}
-"if" {printf("Found keyword IF: %s\n", yytext);     return IF;}
-"else" {printf("Found keyword ELSE: %s\n", yytext);     return ELSE;}
-"while" {printf("Found keyword WHILE: %s\n", yytext);   return WHILE;}
-"do" {printf("Found keyword DO: %s\n", yytext);     return DO;}
-"for" {printf("Found keyword FOR: %s\n", yytext);   return FOR;}
-"in" {printf("Found keyword IN: %s\n", yytext);     return IN;}
-"@interface" {printf("Found keyword INTERFACE: %s\n", yytext);      return INTERFACE;}
-"@end" {printf("Found keyword END: %s\n", yytext);      return END;}
-"@implementation" {printf("Found keyword IMPLEMENTATION: %s\n", yytext);    return IMPLEMENTATION;}
+"int" {return INT;}
+"char" {return CHAR;}
+"if" {return IF;}
+"else" {return ELSE;}
+"while" {return WHILE;}
+"do" {return DO;}
+"for" {return FOR;}
+"in" {return IN;}
+"@interface" {return INTERFACE;}
+"@end" {return END;}
+"@implementation" {return IMPLEMENTATION;}
 "@property" {printf("ERROR! Unsupported property: %s\n", yytext);}
 "@synthesize" {printf("ERROR! Unsupported property: %s\n", yytext);}
 "float" {printf("ERROR! Unsupported type float: %s\n", yytext);}
 "readonly" {printf("ERROR! Unsupported property: %s\n", yytext);}
 "readwrite" {printf("ERROR! Unsupported property: %s\n", yytext);}
-"enum" {printf("Found keyword ENUM: %s\n", yytext);     return ENUM;}
-"unsigned" {printf("Found keyword UNSIGNED: %s\n", yytext);}
-"u" {printf("Found suffix U: %s\n", yytext);}
-"return" {printf("Found keyword RETURN: %s\n", yytext);     return RETURN;}
-"self" {printf("Found keyword SELF: %s\n", yytext);     return SELF;}
-"super" {printf("Found keyword SUPER: %s\n", yytext);   return SUPER;}
-"id" {printf("Found keyword ID: %s\n", yytext);     return ID;}
-"@class" {printf("Found keyword CLASS: %s\n", yytext);  return CLASS;}
-"void" {printf("Found keyword VOID: %s\n", yytext);     return VOID;}
+"enum" {return ENUM;}
+"return" {return RETURN;}
+"self" {return SELF;}
+"super" {return SUPER;}
+"id" {return ID;}
+"@class" {return CLASS;}
+"void" {return VOID;}
 
 
 
-"+" {printf("Found arithmetic operation +: %s\n", yytext);  return (unsigned char)'+';}
-"-" {printf("Found arithmetic operation -: %s\n", yytext);  return (unsigned char)'-';}
-"*" {printf("Found arithmetic operation *: %s\n", yytext);  return (unsigned char)'*';}
-"/" {printf("Found arithmetic operation /: %s\n", yytext);  return (unsigned char)'/';}
+"+" {return (unsigned char)'+';}
+"-" {return (unsigned char)'-';}
+"*" {return (unsigned char)'*';}
+"/" {return (unsigned char)'/';}
 "++" {printf("ERROR! Unsupported operation '++': %s\n", yytext);}
 "--" {printf("ERROR! Unsupported operation '--': %s\n", yytext);}
 
-"==" {printf("Found comparison operation ==: %s\n", yytext);    return EQUAL;}
-"!=" {printf("Found comparison operation !=: %s\n", yytext);    return NOT_EQUAL;}
-">" {printf("Found comparison operation >: %s\n", yytext);      return (unsigned char)'>';}
-"<" {printf("Found comparison operation <: %s\n", yytext);      return (unsigned char)'<';}
-">=" {printf("Found comparison operation >=: %s\n", yytext);    return GREATER_EQUAL;}
-"<=" {printf("Found comparison operation <=: %s\n", yytext);    return LESS_EQUAL;}
+"==" {return EQUAL;}
+"!=" {return NOT_EQUAL;}
+">" {return (unsigned char)'>';}
+"<" {return (unsigned char)'<';}
+">=" {return GREATER_EQUAL;}
+"<=" {return LESS_EQUAL;}
 
 
-"=" {printf("Found assignment operation =: %s\n", yytext);      return (unsigned char)'=';}
+"=" {return (unsigned char)'=';}
 "+=" {printf("ERROR! Unsupported operation '+=': %s\n", yytext);}
 "-=" {printf("ERROR! Unsupported operation '-=': %s\n", yytext);}
 "*=" {printf("ERROR! Unsupported operation '*=': %s\n", yytext);}
 "/=" {printf("ERROR! Unsupported operation '/=': %s\n", yytext);}
 
-"." {printf("Found member access operator '.' %s\n", yytext);   return (unsigned char)'.';}
-"->" {printf("Found member access operator '->' %s\n", yytext);     return ARROW;}
+"." {return (unsigned char)'.';}
+"->" {return ARROW;}
 
 
-"(" {printf("Found bracket (: %s\n", yytext);   return (unsigned char)'(';}
-")" {printf("Found bracket ): %s\n", yytext);   return (unsigned char)')';}
-"{" {printf("Found bracket {: %s\n", yytext);   return (unsigned char)'{';}
-"}" {printf("Found bracket }: %s\n", yytext);   return (unsigned char)'}';}
-"[" {printf("Found bracket [: %s\n", yytext);   return (unsigned char)'[';}
-"]" {printf("Found bracket ]: %s\n", yytext);   return (unsigned char)']';}
+"(" {return (unsigned char)'(';}
+")" {return (unsigned char)')';}
+"{" {return (unsigned char)'{';}
+"}" {return (unsigned char)'}';}
+"[" {return (unsigned char)'[';}
+"]" {return (unsigned char)']';}
 
 
-";" {printf("Found delimiter ;: %s\n", yytext);     return (unsigned char)';';}
-":" {printf("Found delimiter :: %s\n", yytext);     return (unsigned char)':';}
-"," {printf("Found delimiter ,: %s\n", yytext);     return (unsigned char)',';}
+";" {return (unsigned char)';';}
+":" {return (unsigned char)':';}
+"," {return (unsigned char)',';}
 
-0|[1-9]{DIGIT}* {printf("Found integer: %d\n", atoi(yytext));   yylval.Integer_constant=atoi(yytext); return INTEGER_CONSTANT;}
+0|[1-9]{DIGIT}* {yylval.Integer_constant=atoi(yytext); return INTEGER_CONSTANT;}
 (0x|0X)[0-9a-fA-F]+ {
     char* a;
     long number = strtol(yytext+2, &a,16);
-    printf("Found hexadecimal number: %d\n", number);
     yylval.Integer_constant=number;
     return INTEGER_CONSTANT;
     }
@@ -119,7 +116,6 @@ UNDERLINE_LETTER [A-Za-z_]
 0[0-7]+ {
     char *a;
     long number = strtol(yytext+2, &a,8);
-    printf("Found octal number: %d\n", number);
     yylval.Integer_constant=number;
     return INTEGER_CONSTANT;
     }
@@ -155,7 +151,7 @@ UNDERLINE_LETTER [A-Za-z_]
     str += c;}
 <STRING_SC,CHAR_SC,NSSTRING_SC>\n {printf("ERROR! Multiline string\n"); lineCount++;}
 <STRING_SC,CHAR_SC,NSSTRING_SC><<EOF>> {printf("ERROR! haven't found closing quotes.\n"); BEGIN(INITIAL);}
-<STRING_SC,NSSTRING_SC>\" {std::cout << "Found String literal: " << str.c_str() << std::endl;
+<STRING_SC,NSSTRING_SC>\" {
 
       if (YY_START == STRING_SC)
       {
@@ -180,7 +176,6 @@ UNDERLINE_LETTER [A-Za-z_]
     }
     else
     {
-        std::cout << "Found char: " + str << std::endl;BEGIN(INITIAL);
         yylval.Char_constant = new char[str.length()];
         strcpy(yylval.Char_constant, str.c_str());
         BEGIN(INITIAL);
@@ -211,7 +206,7 @@ UNDERLINE_LETTER [A-Za-z_]
     printf("ERROR! Unsupported type float: %s\n", yytext);
 }
 
-{UNDERLINE_LETTER}({UNDERLINE_LETTER}|{DIGIT})* {printf("Found identifier: %s\n", yytext);
+{UNDERLINE_LETTER}({UNDERLINE_LETTER}|{DIGIT})* {
     str = "";
     str += yytext;
     yylval.Identifier = new char[str.length()];
@@ -224,7 +219,7 @@ UNDERLINE_LETTER [A-Za-z_]
 {DIGIT}({UNDERLINE_LETTER}|{DIGIT})* {printf("ERROR! Incorrect identifier: %s\n", yytext);}
 
 
-"//"([^\n]|\\\n)* {printf("Found line comment: %s\n", yytext);
+"//"([^\n]|\\\n)* {
     strcpy(tmp, yytext);
     lineCount += countChar(tmp, '\n');
 }
@@ -235,7 +230,7 @@ UNDERLINE_LETTER [A-Za-z_]
 <MULTILINE_COMMENT>[^*\n]+\n {lineCount++; strcat(tmp, yytext);}
 <MULTILINE_COMMENT>"*"+[^*/\n] {strcat(tmp, yytext);}
 <MULTILINE_COMMENT>"*"+\n {lineCount++; strcat(tmp, yytext);}
-<MULTILINE_COMMENT>"*"+"/" {printf("Found multiline comment: %s\n", tmp);BEGIN(INITIAL);}
+<MULTILINE_COMMENT>"*"+"/" {BEGIN(INITIAL);}
 
 <MULTILINE_COMMENT><<EOF>> {printf("ERROR! Multiline comment \"%s\" isn't closed in row: %d\n", tmp, lineCount); BEGIN(INITIAL);}
 
@@ -300,18 +295,26 @@ int main(int argc, char* argv[])
     else
             yyin = stdin;
 
+    printf("Start parsing\n");
     yyparse();
+    printf("Successful parsing\n");
 
+    printf("Start generating dot file before semantic analysis\n");
     string res = root->toDot();
     ofstream out("dot.dot");
     out << res;
     out.close();
+    printf("Successful generating dot file before semantic analysis\n");
     
+    printf("Start semantic analysis\n");
     root->fillClassesTable();
+    printf("Successful semantic analysis\n");
 
+    printf("Start printing tables after semantic analysis\n");
     filesystem::path p = filesystem::path("./out/");
     filesystem::remove_all(p);
     filesystem::create_directory(p);
     ClassesTable::toCsvFile("./out/");
     FunctionsTable::toCsvFile("FunctionsTable.csv", "./out/");
+    printf("Successful printing tables after semantic analysis\n");
 }

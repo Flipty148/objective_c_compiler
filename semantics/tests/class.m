@@ -24,7 +24,7 @@
     {
         int y = 44560;
         int test;
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 10; i = i + 1)
         {
             a[i] = 0;
         }

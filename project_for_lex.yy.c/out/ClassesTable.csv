@@ -1,7 +1,7 @@
 Name|SuperclassName|IsImplementation|ThisClass|Superclass|FieldsTableName|MethodsTableName|PropertiesTableName|ConstantsTableName
 2(global/MyClass2)|empty|true|3|0|global/MyClass2_FieldsTable.csv|emptyTable|emptyTable|global/MyClass2_ConstantsTable.csv
 2(global/MyClass3)|3(global/MyClass2)|true|4|5|global/MyClass3_FieldsTable.csv|global/MyClass3_MethodsTable.csv|emptyTable|global/MyClass3_ConstantsTable.csv
-2(global/Myclass)|3(rtl/NSObject)|true|4|5|global/Myclass_FieldsTable.csv|global/Myclass_MethodsTable.csv|global/Myclass_PropertiesTable.csv|global/Myclass_ConstantsTable.csv
+2(global/Myclass)|3(rtl/NSObject)|true|4|5|global/Myclass_FieldsTable.csv|global/Myclass_MethodsTable.csv|emptyTable|global/Myclass_ConstantsTable.csv
 2(rtl/InOutFuncs)|empty|true|3|0|emptyTable|rtl/InOutFuncs_MethodsTable.csv|emptyTable|rtl/InOutFuncs_ConstantsTable.csv
 2(rtl/NSArray)|3(rtl/NSObject)|true|4|5|emptyTable|rtl/NSArray_MethodsTable.csv|emptyTable|rtl/NSArray_ConstantsTable.csv
 2(rtl/NSObject)|empty|true|3|0|emptyTable|rtl/NSObject_MethodsTable.csv|emptyTable|rtl/NSObject_ConstantsTable.csv

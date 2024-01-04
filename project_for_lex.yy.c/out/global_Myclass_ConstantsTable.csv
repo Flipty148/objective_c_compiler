@@ -17,13 +17,12 @@ ID|Type|Value
 16|UTF8|(II)I
 17|UTF8|newStatic
 18|UTF8|()Lglobal/Myclass;
-19|UTF8|e
-20|UTF8|func2Dynamic
-21|UTF8|(II)V
-22|NameAndType|14, 9
-23|FieldRef|22, 4
-24|NameAndType|6, 7
-25|FieldRef|24, 4
-26|Integer|44560
-27|UTF8|abc
-28|String|27
+19|UTF8|func2Dynamic
+20|UTF8|(II)V
+21|NameAndType|14, 9
+22|FieldRef|21, 4
+23|NameAndType|6, 7
+24|FieldRef|23, 4
+25|Integer|44560
+26|UTF8|abc
+27|String|26

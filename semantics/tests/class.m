@@ -10,8 +10,6 @@
     int c[20];
     + (int) func: (int) first :(int) second;
     + (Myclass*) new;
-    @property (readonly) int f,e;
-    @property int d;
 @end
 
 @implementation Myclass:NSObject

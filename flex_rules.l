@@ -51,16 +51,14 @@ UNDERLINE_LETTER [A-Za-z_]
 "@interface" {printf("Found keyword INTERFACE: %s\n", yytext);      return INTERFACE;}
 "@end" {printf("Found keyword END: %s\n", yytext);      return END;}
 "@implementation" {printf("Found keyword IMPLEMENTATION: %s\n", yytext);    return IMPLEMENTATION;}
-"@property" {printf("Found keyword PROPERTY: %s\n", yytext);    return PROPERTY;}
-"@synthesize" {printf("Found keyword SYNTHESIZE: %s\n", yytext);    return SYNTHESIZE;}
-"float" {printf("Found keyword FLOAT: %s\n", yytext);       return FLOAT;}
-"readonly" {printf("Found keyword READONLY: %s\n", yytext);     return READONLY;}
-"readwrite" {printf("Found keyword READWRITE: %s\n", yytext);   return READWRITE;}
+"@property" {printf("ERROR! Unsupported property: %s\n", yytext);}
+"@synthesize" {printf("ERROR! Unsupported property: %s\n", yytext);}
+"float" {printf("ERROR! Unsupported type float: %s\n", yytext);}
+"readonly" {printf("ERROR! Unsupported property: %s\n", yytext);}
+"readwrite" {printf("ERROR! Unsupported property: %s\n", yytext);}
 "enum" {printf("Found keyword ENUM: %s\n", yytext);     return ENUM;}
 "unsigned" {printf("Found keyword UNSIGNED: %s\n", yytext);}
 "u" {printf("Found suffix U: %s\n", yytext);}
-"long" {printf("Found keyword LONG: %s\n", yytext);}
-"l" {printf("Found suffix L: %s\n", yytext);}
 "return" {printf("Found keyword RETURN: %s\n", yytext);     return RETURN;}
 "self" {printf("Found keyword SELF: %s\n", yytext);     return SELF;}
 "super" {printf("Found keyword SUPER: %s\n", yytext);   return SUPER;}
@@ -194,19 +192,23 @@ UNDERLINE_LETTER [A-Za-z_]
 
 
 ({DIGIT}+\.{DIGIT}*|\.{DIGIT}+)(f|F)? {
-    strcpy(tmp, yytext);
-    removeFloatSuffix(tmp);
-    printf("Found float constant: %f\n", (float)atof(tmp));
-    yylval.Float_constant = (float)atof(tmp);
-    return FLOAT_CONSTANT;
+    // strcpy(tmp, yytext);
+    // removeFloatSuffix(tmp);
+    // printf("Found float constant: %f\n", (float)atof(tmp));
+    // yylval.Float_constant = (float)atof(tmp);
+    // return FLOAT_CONSTANT;
+
+    printf("ERROR! Unsupported type float: %s\n", yytext);
 }
 
 ({DIGIT}+\.?{DIGIT}*|\.{DIGIT}+)(e|E)[+-]?{DIGIT}+[fF]? {
-    strcpy(tmp, yytext);
-    removeFloatSuffix(tmp);
-    printf("Found float constant: %f\n", (float)atof(tmp));
-    yylval.Float_constant = (float)atof(tmp);
-    return FLOAT_CONSTANT;
+    // strcpy(tmp, yytext);
+    // removeFloatSuffix(tmp);
+    // printf("Found float constant: %f\n", (float)atof(tmp));
+    // yylval.Float_constant = (float)atof(tmp);
+    // return FLOAT_CONSTANT;
+
+    printf("ERROR! Unsupported type float: %s\n", yytext);
 }
 
 {UNDERLINE_LETTER}({UNDERLINE_LETTER}|{DIGIT})* {printf("Found identifier: %s\n", yytext);

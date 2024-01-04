@@ -51,11 +51,11 @@ UNDERLINE_LETTER [A-Za-z_]
 "@interface" {return INTERFACE;}
 "@end" {return END;}
 "@implementation" {return IMPLEMENTATION;}
-"@property" {printf("ERROR! Unsupported property: %s\n", yytext);}
-"@synthesize" {printf("ERROR! Unsupported property: %s\n", yytext);}
-"float" {printf("ERROR! Unsupported type float: %s\n", yytext);}
-"readonly" {printf("ERROR! Unsupported property: %s\n", yytext);}
-"readwrite" {printf("ERROR! Unsupported property: %s\n", yytext);}
+"@property" {printf("ERROR! Unsupported property: %s\n", yytext); return -1;}
+"@synthesize" {printf("ERROR! Unsupported property: %s\n", yytext); return -1;}
+"float" {printf("ERROR! Unsupported type float: %s\n", yytext); return -1;}
+"readonly" {printf("ERROR! Unsupported property: %s\n", yytext); return -1;}
+"readwrite" {printf("ERROR! Unsupported property: %s\n", yytext); return -1;}
 "enum" {return ENUM;}
 "return" {return RETURN;}
 "self" {return SELF;}
@@ -70,8 +70,8 @@ UNDERLINE_LETTER [A-Za-z_]
 "-" {return (unsigned char)'-';}
 "*" {return (unsigned char)'*';}
 "/" {return (unsigned char)'/';}
-"++" {printf("ERROR! Unsupported operation '++': %s\n", yytext);}
-"--" {printf("ERROR! Unsupported operation '--': %s\n", yytext);}
+"++" {printf("ERROR! Unsupported operation '++': %s\n", yytext); return -1;}
+"--" {printf("ERROR! Unsupported operation '--': %s\n", yytext); return -1;}
 
 "==" {return EQUAL;}
 "!=" {return NOT_EQUAL;}
@@ -82,10 +82,10 @@ UNDERLINE_LETTER [A-Za-z_]
 
 
 "=" {return (unsigned char)'=';}
-"+=" {printf("ERROR! Unsupported operation '+=': %s\n", yytext);}
-"-=" {printf("ERROR! Unsupported operation '-=': %s\n", yytext);}
-"*=" {printf("ERROR! Unsupported operation '*=': %s\n", yytext);}
-"/=" {printf("ERROR! Unsupported operation '/=': %s\n", yytext);}
+"+=" {printf("ERROR! Unsupported operation '+=': %s\n", yytext); return -1;}
+"-=" {printf("ERROR! Unsupported operation '-=': %s\n", yytext); return -1;}
+"*=" {printf("ERROR! Unsupported operation '*=': %s\n", yytext); return -1;}
+"/=" {printf("ERROR! Unsupported operation '/=': %s\n", yytext); return -1;}
 
 "." {return (unsigned char)'.';}
 "->" {return ARROW;}
@@ -112,6 +112,7 @@ UNDERLINE_LETTER [A-Za-z_]
     }
 (0x|0X)[0-9a-zA-Z]+ {
     printf("ERROR! Incorrect hex number: %s in row: %d\n", yytext, lineCount);
+    return -1;
 }
 0[0-7]+ {
     char *a;
@@ -121,6 +122,7 @@ UNDERLINE_LETTER [A-Za-z_]
     }
 0[0-9]+ {
     printf("ERROR! Incorrect octal number: %s in row: %d\n", yytext, lineCount);
+    return -1;
 }
 
 \' {str = ""; BEGIN(CHAR_SC);}
@@ -144,13 +146,13 @@ UNDERLINE_LETTER [A-Za-z_]
     char *a;
     char c =strtol(yytext+2, &a, 16);
     str += c;}
-<STRING_SC,CHAR_SC,NSSTRING_SC>\\x[^0-9a-fA-F]? {printf("ERROR! Incorrect hex digit in string.\n");}
+<STRING_SC,CHAR_SC,NSSTRING_SC>\\x[^0-9a-fA-F]? {printf("ERROR! Incorrect hex digit in string.\n"); return -1;}
 <STRING_SC,CHAR_SC,NSSTRING_SC>\\[0-7]{1,3} {
     char *a;
     char c =strtol(yytext+1, &a, 8);
     str += c;}
-<STRING_SC,CHAR_SC,NSSTRING_SC>\n {printf("ERROR! Multiline string\n"); lineCount++;}
-<STRING_SC,CHAR_SC,NSSTRING_SC><<EOF>> {printf("ERROR! haven't found closing quotes.\n"); BEGIN(INITIAL);}
+<STRING_SC,CHAR_SC,NSSTRING_SC>\n {printf("ERROR! Multiline string\n"); lineCount++; return -1;}
+<STRING_SC,CHAR_SC,NSSTRING_SC><<EOF>> {printf("ERROR! haven't found closing quotes.\n"); BEGIN(INITIAL); return -1;}
 <STRING_SC,NSSTRING_SC>\" {
 
       if (YY_START == STRING_SC)
@@ -172,7 +174,7 @@ UNDERLINE_LETTER [A-Za-z_]
 <CHAR_SC>\' {
     if(str.size() != 1)
     {
-        printf("ERROR! char length != 1 in row: %d. Char length: %d\n", lineCount, str.size());BEGIN(INITIAL);
+        printf("ERROR! char length != 1 in row: %d. Char length: %d\n", lineCount, str.size());BEGIN(INITIAL); return -1;
     }
     else
     {
@@ -193,7 +195,7 @@ UNDERLINE_LETTER [A-Za-z_]
     // yylval.Float_constant = (float)atof(tmp);
     // return FLOAT_CONSTANT;
 
-    printf("ERROR! Unsupported type float: %s\n", yytext);
+    printf("ERROR! Unsupported type float: %s\n", yytext); return -1;
 }
 
 ({DIGIT}+\.?{DIGIT}*|\.{DIGIT}+)(e|E)[+-]?{DIGIT}+[fF]? {
@@ -203,7 +205,7 @@ UNDERLINE_LETTER [A-Za-z_]
     // yylval.Float_constant = (float)atof(tmp);
     // return FLOAT_CONSTANT;
 
-    printf("ERROR! Unsupported type float: %s\n", yytext);
+    printf("ERROR! Unsupported type float: %s\n", yytext); return -1;
 }
 
 {UNDERLINE_LETTER}({UNDERLINE_LETTER}|{DIGIT})* {
@@ -216,7 +218,7 @@ UNDERLINE_LETTER [A-Za-z_]
     else
         return IDENTIFIER;
 }
-{DIGIT}({UNDERLINE_LETTER}|{DIGIT})* {printf("ERROR! Incorrect identifier: %s\n", yytext);}
+{DIGIT}({UNDERLINE_LETTER}|{DIGIT})* {printf("ERROR! Incorrect identifier: %s\n", yytext); return -1;}
 
 
 "//"([^\n]|\\\n)* {
@@ -232,14 +234,14 @@ UNDERLINE_LETTER [A-Za-z_]
 <MULTILINE_COMMENT>"*"+\n {lineCount++; strcat(tmp, yytext);}
 <MULTILINE_COMMENT>"*"+"/" {BEGIN(INITIAL);}
 
-<MULTILINE_COMMENT><<EOF>> {printf("ERROR! Multiline comment \"%s\" isn't closed in row: %d\n", tmp, lineCount); BEGIN(INITIAL);}
+<MULTILINE_COMMENT><<EOF>> {printf("ERROR! Multiline comment \"%s\" isn't closed in row: %d\n", tmp, lineCount); BEGIN(INITIAL); return -1;}
 
 " "+ {printf("");}
 
 <*>\\\n {lineCount++;}
 <*>\n {lineCount++;}
 
-<*>. {printf("unrecognized element: %s\n", yytext);}
+<*>. {printf("unrecognized element: %s\n", yytext); return -1;}
 
 %%
 

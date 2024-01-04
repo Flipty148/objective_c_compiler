@@ -868,27 +868,27 @@ YY_RULE_SETUP
 case 12:
 YY_RULE_SETUP
 #line 54 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("ERROR! Unsupported property: %s\n", yytext);}
+{printf("ERROR! Unsupported property: %s\n", yytext); return -1;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 55 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("ERROR! Unsupported property: %s\n", yytext);}
+{printf("ERROR! Unsupported property: %s\n", yytext); return -1;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 56 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("ERROR! Unsupported type float: %s\n", yytext);}
+{printf("ERROR! Unsupported type float: %s\n", yytext); return -1;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 57 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("ERROR! Unsupported property: %s\n", yytext);}
+{printf("ERROR! Unsupported property: %s\n", yytext); return -1;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 58 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("ERROR! Unsupported property: %s\n", yytext);}
+{printf("ERROR! Unsupported property: %s\n", yytext); return -1;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
@@ -948,12 +948,12 @@ YY_RULE_SETUP
 case 28:
 YY_RULE_SETUP
 #line 73 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("ERROR! Unsupported operation '++': %s\n", yytext);}
+{printf("ERROR! Unsupported operation '++': %s\n", yytext); return -1;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
 #line 74 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("ERROR! Unsupported operation '--': %s\n", yytext);}
+{printf("ERROR! Unsupported operation '--': %s\n", yytext); return -1;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
@@ -993,22 +993,22 @@ YY_RULE_SETUP
 case 37:
 YY_RULE_SETUP
 #line 85 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("ERROR! Unsupported operation '+=': %s\n", yytext);}
+{printf("ERROR! Unsupported operation '+=': %s\n", yytext); return -1;}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
 #line 86 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("ERROR! Unsupported operation '-=': %s\n", yytext);}
+{printf("ERROR! Unsupported operation '-=': %s\n", yytext); return -1;}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
 #line 87 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("ERROR! Unsupported operation '*=': %s\n", yytext);}
+{printf("ERROR! Unsupported operation '*=': %s\n", yytext); return -1;}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
 #line 88 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("ERROR! Unsupported operation '/=': %s\n", yytext);}
+{printf("ERROR! Unsupported operation '/=': %s\n", yytext); return -1;}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
@@ -1085,11 +1085,12 @@ YY_RULE_SETUP
 #line 113 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {
     printf("ERROR! Incorrect hex number: %s in row: %d\n", yytext, lineCount);
+    return -1;
 }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 116 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 117 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {
     char *a;
     long number = strtol(yytext+2, &a,8);
@@ -1099,99 +1100,100 @@ YY_RULE_SETUP
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 122 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 123 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {
     printf("ERROR! Incorrect octal number: %s in row: %d\n", yytext, lineCount);
+    return -1;
 }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 126 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 128 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {str = ""; BEGIN(CHAR_SC);}
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 127 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 129 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {str = ""; BEGIN(STRING_SC);}
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 128 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 130 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {str = ""; BEGIN(NSSTRING_SC);}
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 129 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 131 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {str += yytext;}
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 130 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 132 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {str += yytext;}
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 131 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 133 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {str += "\b";}
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 132 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 134 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {str += "\f";}
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 133 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 135 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {str += "\n";}
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 134 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 136 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {str += "\r";}
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 135 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 137 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {str += "\t";}
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 136 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 138 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {str += "\v";}
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 137 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 139 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {str += "\'";}
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 138 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 140 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {str += "\"";}
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 139 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 141 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {str += "\\";}
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 140 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 142 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {str += '\0';}
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 141 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 143 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {str += '\0';}
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 142 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 144 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {str += '\0';}
 	YY_BREAK
 case 74:
 YY_RULE_SETUP
-#line 143 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 145 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {
     char *a;
     char c =strtol(yytext+2, &a, 16);
@@ -1199,12 +1201,12 @@ YY_RULE_SETUP
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 147 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("ERROR! Incorrect hex digit in string.\n");}
+#line 149 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("ERROR! Incorrect hex digit in string.\n"); return -1;}
 	YY_BREAK
 case 76:
 YY_RULE_SETUP
-#line 148 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 150 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {
     char *a;
     char c =strtol(yytext+1, &a, 8);
@@ -1212,18 +1214,18 @@ YY_RULE_SETUP
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 152 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("ERROR! Multiline string\n"); lineCount++;}
+#line 154 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("ERROR! Multiline string\n"); lineCount++; return -1;}
 	YY_BREAK
 case YY_STATE_EOF(STRING_SC):
 case YY_STATE_EOF(CHAR_SC):
 case YY_STATE_EOF(NSSTRING_SC):
-#line 153 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("ERROR! haven't found closing quotes.\n"); BEGIN(INITIAL);}
+#line 155 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("ERROR! haven't found closing quotes.\n"); BEGIN(INITIAL); return -1;}
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 154 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 156 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {
 
       if (YY_START == STRING_SC)
@@ -1245,11 +1247,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
-#line 172 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 174 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {
     if(str.size() != 1)
     {
-        printf("ERROR! char length != 1 in row: %d. Char length: %d\n", lineCount, str.size());BEGIN(INITIAL);
+        printf("ERROR! char length != 1 in row: %d. Char length: %d\n", lineCount, str.size());BEGIN(INITIAL); return -1;
     }
     else
     {
@@ -1263,7 +1265,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 189 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 191 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {
     // strcpy(tmp, yytext);
     // removeFloatSuffix(tmp);
@@ -1271,12 +1273,12 @@ YY_RULE_SETUP
     // yylval.Float_constant = (float)atof(tmp);
     // return FLOAT_CONSTANT;
 
-    printf("ERROR! Unsupported type float: %s\n", yytext);
+    printf("ERROR! Unsupported type float: %s\n", yytext); return -1;
 }
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
-#line 199 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 201 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {
     // strcpy(tmp, yytext);
     // removeFloatSuffix(tmp);
@@ -1284,12 +1286,12 @@ YY_RULE_SETUP
     // yylval.Float_constant = (float)atof(tmp);
     // return FLOAT_CONSTANT;
 
-    printf("ERROR! Unsupported type float: %s\n", yytext);
+    printf("ERROR! Unsupported type float: %s\n", yytext); return -1;
 }
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
-#line 209 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 211 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {
     str = "";
     str += yytext;
@@ -1303,12 +1305,12 @@ YY_RULE_SETUP
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
-#line 219 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("ERROR! Incorrect identifier: %s\n", yytext);}
+#line 221 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("ERROR! Incorrect identifier: %s\n", yytext); return -1;}
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
-#line 222 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 224 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {
     strcpy(tmp, yytext);
     lineCount += countChar(tmp, '\n');
@@ -1316,64 +1318,64 @@ YY_RULE_SETUP
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
-#line 228 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 230 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {tmp[0] = '\0'; BEGIN(MULTILINE_COMMENT);}
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 229 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 231 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {strcat(tmp, yytext);}
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 230 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 232 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {lineCount++; strcat(tmp, yytext);}
 	YY_BREAK
 case 88:
 YY_RULE_SETUP
-#line 231 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 233 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {strcat(tmp, yytext);}
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
-#line 232 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 234 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {lineCount++; strcat(tmp, yytext);}
 	YY_BREAK
 case 90:
 YY_RULE_SETUP
-#line 233 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 235 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {BEGIN(INITIAL);}
 	YY_BREAK
 case YY_STATE_EOF(MULTILINE_COMMENT):
-#line 235 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("ERROR! Multiline comment \"%s\" isn't closed in row: %d\n", tmp, lineCount); BEGIN(INITIAL);}
+#line 237 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("ERROR! Multiline comment \"%s\" isn't closed in row: %d\n", tmp, lineCount); BEGIN(INITIAL); return -1;}
 	YY_BREAK
 case 91:
 YY_RULE_SETUP
-#line 237 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 239 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {printf("");}
 	YY_BREAK
 case 92:
 YY_RULE_SETUP
-#line 239 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 241 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {lineCount++;}
 	YY_BREAK
 case 93:
 YY_RULE_SETUP
-#line 240 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 242 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 {lineCount++;}
 	YY_BREAK
 case 94:
 YY_RULE_SETUP
-#line 242 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{printf("unrecognized element: %s\n", yytext);}
+#line 244 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+{printf("unrecognized element: %s\n", yytext); return -1;}
 	YY_BREAK
 case 95:
 YY_RULE_SETUP
-#line 244 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 246 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 ECHO;
 	YY_BREAK
-#line 1378 "lex.yy.c"
+#line 1380 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2233,7 +2235,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 244 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 246 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 
 
 //Проверка на содержание символа в строке

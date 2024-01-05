@@ -285,11 +285,13 @@ class Type
 public:
     type_type DataType; // Тип данных
     string ClassName; //Имя класса
-    int ArrSize = -1; // Размер массива
+    Expression_node *ArrSize = NULL; // Размер массива
 
-    Type(type_type dataType, string className, int arrSize);
+    Type(type_type dataType, string className, Expression_node* arrSize);
     Type(type_type dataType, string className);
     Type(type_type dataType);
+    Type(type_type dataType, Expression_node* arrSize);
+    Type(type_type dataType, string className, int arrSize);
     Type(type_type dataType, int arrSize);
 
     string toString();

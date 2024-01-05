@@ -32,7 +32,7 @@ void Function_and_class_list_node::fillTables()
 							string msg = "Variable '" + it->first + "' redifinition in class '" + className + "'\n";
 							throw std::exception(msg.c_str());
 						}
-						if (element->Fields->items.count(it->first) && (element->Fields->items[it->first]->DescriptorStr != it->second->getDescriptor() || element->Fields->items[it->first]->type->ArrSize != it->second->ArrSize)) {
+						if (element->Fields->items.count(it->first) && (element->Fields->items[it->first]->DescriptorStr != it->second->getDescriptor() || !element->Fields->items[it->first]->type->equal(it->second))) {
 							string msg = "Variable '" + it->first + "' in class '" + className + "' has conflict types.\n";
 							throw std::exception(msg.c_str());
 						}
@@ -462,7 +462,7 @@ vector<string> Instance_variables_declaration_node::getInstanceVariables(vector<
 			string className = ClassesTable::getFullClassName(string(this->type->ClassName)); //Имя класса
 			if (arrSize != NULL)
 			{ // тип класса и массив
-				Type* curType = new Type(type, className, arrSize->num->Int);
+				Type* curType = new Type(type, className, arrSize);
 				types->push_back(curType);
 			}
 			else
@@ -475,7 +475,7 @@ vector<string> Instance_variables_declaration_node::getInstanceVariables(vector<
         {
             if (arrSize != NULL)
 			{ // Примитивный тип и массив
-				Type* curType = new Type(type, arrSize->num->Int);
+				Type* curType = new Type(type, arrSize);
 				types->push_back(curType);
             }
             else
@@ -594,15 +594,17 @@ map<string, Type*> Declaration_node::getDeclaration(map<string, Expression_node*
 			if (arrSize != NULL || initializerList != NULL)
 			{ // Массив типа класса
 				int arraySize;
+				Type* curType;
 				if (arrSize != NULL)
 				{
-					arraySize = arrSize->num->Int;
+					curType = new Type(type, className, arrSize);
 				}
 				else
 				{
 					arraySize = initializerList->getElements()->size();
+					curType = new Type(type, className, arraySize);
 				}
-				Type* curType = new Type(type, className, arraySize);
+				
 				res[name] = curType;
 				if (initializators->count(name) && (*initializators)[name] != NULL && initializerList != NULL) {
 					string msg = "Variable '" + name + "' redifinition";
@@ -626,15 +628,17 @@ map<string, Type*> Declaration_node::getDeclaration(map<string, Expression_node*
 			if (arrSize != NULL || initializerList != NULL)
 			{ // Массив примитивного типа
 				int arraySize;
+				Type* curType;
 				if (arrSize != NULL)
 				{
-					arraySize = arrSize->num->Int;
+					curType = new Type(type, arrSize);
 				}
 				else
 				{
 					arraySize = initializerList->getElements()->size();
+					curType = new Type(type, arraySize);
 				}
-				Type* curType = new Type(type, arraySize);
+				
 				res[name] = curType;
 				if (initializators->count(name) && (*initializators)[name] != NULL && initializerList != NULL) {
 					string msg = "Variable '" + name + "' redifinition";
@@ -793,15 +797,17 @@ void getTypesFromInitDeclaratorType(vector<Init_declarator_node*>* declarators, 
 			if (arrSize != NULL || initializerList != NULL)
 			{ // Массив типа класса
 				int arraySize;
+				Type* curType;
 				if (arrSize != NULL)
 				{
-					arraySize = arrSize->num->Int;
+					curType = new Type(type, className, arrSize);
 				}
 				else
 				{
 					arraySize = initializerList->getElements()->size();
+					curType = new Type(type, className, arraySize);
 				}
-				Type* curType = new Type(type, className, arraySize);
+				
 				if (std::find(varsNames->begin(), varsNames->end(), name) != varsNames->end() && initializerList != NULL) {
 					string msg = "Variable '" + name + "' redifinition";
 					throw new exception(msg.c_str());
@@ -825,16 +831,18 @@ void getTypesFromInitDeclaratorType(vector<Init_declarator_node*>* declarators, 
 		{
 			if (arrSize != NULL || initializerList != NULL)
 			{ // Массив примитивного типа
+				Type* curType;
 				int arraySize;
 				if (arrSize != NULL)
 				{
-					arraySize = arrSize->num->Int;
+					curType = new Type(type, arrSize);
 				}
 				else
 				{
 					arraySize = initializerList->getElements()->size();
+					curType = new Type(type, arraySize);
 				}
-				Type* curType = new Type(type, arraySize);
+				
 				if (std::find(varsNames->begin(), varsNames->end(), name) != varsNames->end() && initializerList != NULL) {
 					string msg = "Variable '" + name + "' redifinition";
 					throw new exception(msg.c_str());

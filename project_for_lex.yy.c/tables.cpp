@@ -1192,7 +1192,7 @@ bool LocalVariablesTable::isContains(string name)
 
 // -------------------- Type --------------------
 
-Type::Type(type_type dataType, string className, int arrSize)
+Type::Type(type_type dataType, string className, Expression_node* arrSize)
 {
 	DataType = dataType;
 	ClassName = className;
@@ -1210,10 +1210,27 @@ Type::Type(type_type dataType)
 	DataType = dataType;
 }
 
-Type::Type(type_type dataType, int arrSize)
+Type::Type(type_type dataType, Expression_node* arrSize)
 {
 	DataType = dataType;
 	ArrSize = arrSize;
+}
+
+Type::Type(type_type dataType, string className, int arrSize)
+{
+	DataType = dataType;
+	ClassName = className;
+
+	Numeric_constant_node* Num = Numeric_constant_node::createNumericConstantNodeFromInteger(arrSize);
+	ArrSize = Expression_node::createExpressionNodeFromNumericConstant(Num);
+}
+
+Type::Type(type_type dataType, int arrSize)
+{
+	DataType = dataType;
+	
+	Numeric_constant_node* Num = Numeric_constant_node::createNumericConstantNodeFromInteger(arrSize);
+	ArrSize = Expression_node::createExpressionNodeFromNumericConstant(Num);
 }
 
 string Type::toString()
@@ -1246,9 +1263,15 @@ string Type::toString()
 	}
 
 	// Формирование строки с учетом массива
-	if (ArrSize != -1)
+	if (ArrSize != NULL)
 	{
-		res += '[' + to_string(ArrSize) + ']';
+		if (ArrSize->type == NUMERIIC_CONSTANT_EXPRESSION_TYPE)
+		{
+			res += '[' + to_string(ArrSize->num->Int) + ']';
+		}
+		else {
+			res += string("[ expr(") + to_string(ArrSize->id) + ") ]";
+		}
 	}
 	return res;
 }
@@ -1256,7 +1279,7 @@ string Type::toString()
 string Type::getDescriptor()
 {
 	string res = "";
-	if (ArrSize != -1)
+	if (ArrSize != NULL)
 	{
 		res += '[';
 	}
@@ -1288,7 +1311,8 @@ string Type::getDescriptor()
 
 bool Type::equal(Type* other)
 {
-	return DataType == other->DataType && ClassName == other->ClassName && ArrSize == other->ArrSize;
+	bool isBouthArray = (ArrSize != NULL && other->ArrSize != NULL) || (ArrSize == NULL && other->ArrSize == NULL); // Показывает, что оба типа являются массивами
+	return DataType == other->DataType && ClassName == other->ClassName && isBouthArray;
 }
 
 // -------------------- FunctionsTableElement --------------------

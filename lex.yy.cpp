@@ -2296,7 +2296,7 @@ int main(int argc, char* argv[])
 
     printf("Start generating dot file before semantic analysis\n");
     string res = root->toDot();
-    ofstream out("dot.dot");
+    ofstream out("dot_before.dot");
     out << res;
     out.close();
     printf("Successful generating dot file before semantic analysis\n");
@@ -2312,4 +2312,11 @@ int main(int argc, char* argv[])
     ClassesTable::toCsvFile("./out/");
     FunctionsTable::toCsvFile("FunctionsTable.csv", "./out/");
     printf("Successful printing tables after semantic analysis\n");
+
+    printf("Start generating dot file after semantic analysis\n");
+    res = root->toDot();
+    out.open("dot_after.dot");
+    out << res;
+    out.close();
+    printf("Successful generating dot file after semantic analysis\n");
 }

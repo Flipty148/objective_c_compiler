@@ -397,10 +397,6 @@ map<string, Type*> Interface_body_node::getMethods(map<string, vector<string>*>*
 				bool isClass;
 				Type* returnType = new Type(VOID_TYPE);
 				string methodName = declaration->getMethod(&returnType, curKeywordsNames, curKeywordsTypes, curParametersNames, curParametersTypes, &isClass);
-				if (isClass)
-					methodName += string("Static");
-				else
-					methodName += string("Dynamic");
 				if (res.count(methodName))
 				{
 					string msg = "Method '" + methodName + "' redeclaration.\n";
@@ -554,10 +550,6 @@ map<string, Type*> Implementation_body_node::getMethods(map<string, vector<strin
 				Type* returnType = new Type(VOID_TYPE);
 				Statement_node* bodyStart;
 				string methodName = definition->getMethod(&returnType, curKeywordsNames, curKeywordsTypes, curParametersNames, curParametersTypes, &isClass, &bodyStart);
-				if (isClass)
-					methodName += string("Static");
-				else
-					methodName += string("Dynamic");
 				if (res.count(methodName))
 				{
 					string msg = "Method '" + methodName + "' redifinition.\n";
@@ -667,31 +659,42 @@ map<string, Type*> Declaration_node::getDeclaration(map<string, Expression_node*
 string Method_declaration_node::getMethod(Type** returnType, vector<string>* keywordsNames, vector<Type*> *keywordsTypes, vector<string>* parametersNames, vector<Type*> *parametersTypes, bool *isClassmethod)
 {
 	*returnType = MethodType->toDataType(); // Тип возвращаемого значения
+	string methodName = string(MethodSelector->MethodName); // Имя метода
 	// Тип метода
-	if (type == CLASS_METHOD_DECLARATION_TYPE)
+	if (type == CLASS_METHOD_DECLARATION_TYPE) {
 		*isClassmethod = true;
-	else if (type == INSTANCE_METHOD_DECLARATION_TYPE)
+		methodName += "Static";
+	}
+	else if (type == INSTANCE_METHOD_DECLARATION_TYPE) {
 		*isClassmethod = false;
-	string mathodName = string(MethodSelector->MethodName); // Имя метода
+		methodName += "Dynamic";
+	}
 	MethodSelector->getParams(keywordsNames, keywordsTypes, parametersNames, parametersTypes); // Параметры
-	return mathodName;
+	strcpy(MethodSelector->MethodName, methodName.c_str()); //Преобразование имени метода в узле дерева
+	return methodName;
 }
 
 // ---------- Method_definition_node ----------
 string Method_definition_node::getMethod(Type** returnType, vector<string>* keywordsNames, vector<Type*>* keywordsTypes, vector<string>* parametersNames, vector<Type*>* parametersTypes, bool* isClassmethod, Statement_node** bodyStart)
 {
 	*returnType = MethodType->toDataType(); // Тип возвращаемого значения
-	// Тип метода
-	if (type == CLASS_METHOD_DECLARATION_TYPE)
-		*isClassmethod = true;
-	else if (type == INSTANCE_METHOD_DECLARATION_TYPE)
-		*isClassmethod = false;
 	string methodName = string(MethodSelector->MethodName); // Имя метода
+	// Тип метода
+	if (type == CLASS_METHOD_DECLARATION_TYPE) {
+		*isClassmethod = true;
+		methodName += "Static";
+	}
+	else if (type == INSTANCE_METHOD_DECLARATION_TYPE) {
+		*isClassmethod = false;
+		methodName += "Dynamic";
+	}
 	MethodSelector->getParams(keywordsNames, keywordsTypes, parametersNames, parametersTypes); // Параметры
 	if (MethodBody != NULL)
 		*bodyStart = MethodBody->First; // Начало тела метода
 	else
 		*bodyStart = NULL;
+
+	strcpy(MethodSelector->MethodName, methodName.c_str()); //Преобразование имени метода вузле дерева
 	return methodName;
 }
 
@@ -1217,12 +1220,12 @@ void Expression_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariabl
 		string methodName = Arguments->MethodName; // Имя метода
 		string methodNameWithType; //Имя метода с dynamic или static
 		
-		//TODO: Добавить преобразование имен узлов дерева
 		if (isObject)
 			methodNameWithType = methodName + "Dynamic";
 		else
 			methodNameWithType = methodName + "Static";
 
+		strcpy(Arguments->MethodName, methodNameWithType.c_str()); // Преобразование имени метода в узле дерева
 
 		// Проверить наличие метода в классе
 		if (isReceiver) {
@@ -1450,11 +1453,12 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 		string methodName = Arguments->MethodName; // Имя метода
 		string methodNameWithType; //Имя метода с dynamic или static
 
-		//TODO: Добавить преобразование имен узлов дерева
 		if (isObject)
 			methodNameWithType = methodName + "Dynamic";
 		else
 			methodNameWithType = methodName + "Static";
+
+		strcpy(Arguments->MethodName, methodNameWithType.c_str()); // Преобразование имени метода в узле дерева
 
 
 		// Проверить наличие метода в классе

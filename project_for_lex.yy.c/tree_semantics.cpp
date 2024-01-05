@@ -20,7 +20,7 @@ void Function_and_class_list_node::fillTables()
                 Class_implementation_node* curImplementation = (Class_implementation_node*)cur;
                 string className = curImplementation->ClassName; // »м€ класса
                 string *superclassName = curImplementation->SuperclassName == NULL ? NULL : new string(curImplementation->SuperclassName); // »м€ суперкласса
-				ClassesTableElement *element = ClassesTable::addClass(className, superclassName, true); // ƒобавление класса в таблицу
+				ClassesTableElement *element = ClassesTable::addClass(className, superclassName, true, curImplementation); // ƒобавление класса в таблицу
 
 				if (curImplementation->Body != NULL)
 				{
@@ -212,7 +212,7 @@ void Function_and_class_list_node::fillTables()
                 Class_interface_node* curInterface = (Class_interface_node*)cur;
                 string className = curInterface->ClassName; // »м€ класса
                 string superclassName = curInterface->SuperclassName; // »м€ суперкласса
-                ClassesTableElement* element = ClassesTable::addClass(className, &superclassName, false); // ƒобавление класса в таблицу
+                ClassesTableElement* element = ClassesTable::addClass(className, &superclassName, false, curInterface); // ƒобавление класса в таблицу
 
 				if (curInterface->Body != NULL) {
 					// ƒобавление переменных
@@ -460,6 +460,7 @@ vector<string> Instance_variables_declaration_node::getInstanceVariables(vector<
         if (type == CLASS_NAME_TYPE)
         {
 			string className = ClassesTable::getFullClassName(string(this->type->ClassName)); //»м€ класса
+			strcpy(this->type->ClassName, className.c_str()); //ѕреобразование имени класса в узле
 			if (arrSize != NULL)
 			{ // тип класса и массив
 				Type* curType = new Type(type, className, arrSize);
@@ -591,6 +592,7 @@ map<string, Type*> Declaration_node::getDeclaration(map<string, Expression_node*
 		if (type == CLASS_NAME_TYPE)
 		{
 			string className = ClassesTable::getFullClassName(string(this->typeNode->ClassName));
+			strcpy(this->typeNode->ClassName, className.c_str()); //ѕреобразование имени класса в узле дерева
 			if (arrSize != NULL || initializerList != NULL)
 			{ // ћассив типа класса
 				int arraySize;
@@ -700,6 +702,7 @@ Type* Type_node::toDataType()
 	if (type == CLASS_NAME_TYPE)
 	{
 		string className = ClassesTable::getFullClassName(string(ClassName));
+		strcpy(ClassName, className.c_str()); //ѕреобразование имени класа в узле дерева
 		Type* res = new Type(type, className);
 		return res;
 	}
@@ -794,6 +797,7 @@ void getTypesFromInitDeclaratorType(vector<Init_declarator_node*>* declarators, 
 		if (type == CLASS_NAME_TYPE)
 		{
 			string className = ClassesTable::getFullClassName(string(typeNode->ClassName));
+			strcpy(typeNode->ClassName, className.c_str()); //ѕреобразование имени класса в узле дерева
 			if (arrSize != NULL || initializerList != NULL)
 			{ // ћассив типа класса
 				int arraySize;
@@ -1271,6 +1275,7 @@ void Expression_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariabl
 			}
 			else {
 				string fullClassName = ClassesTable::getFullClassName(receiverName); //ѕолучить полное им€ класса //TODO: ¬озможно, нужно будет убрать, если при преобразовании дерева будут замен€тьс€ сразу все имена классов
+				strcpy(Receiver->name, fullClassName.c_str());
 				bool isContainsMethod = ClassesTable::items[fullClassName]->isContainsMethod(methodNameWithType); //ѕроверить наличие метода
 				if (!isContainsMethod) {
 					string msg = "Class '" + receiverName + "' don't contains method '+" + methodName + "'";
@@ -1312,6 +1317,7 @@ void Expression_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariabl
 			}
 			else {
 				string fullClassName = ClassesTable::getFullClassName(receiverName); //ѕолучить полное им€ класса //TODO: ¬озможно, нужно будет убрать, если при преобразовании дерева будут замен€тьс€ сразу все имена классов
+				strcpy(Receiver->name, fullClassName.c_str()); // ѕреобразование имени класса в узле дерева
 				ClassesTableElement* element = ClassesTable::items[fullClassName];
 				// ѕолучить информацию дл€ создани€ константы типа method ref
 				string descriptor;
@@ -1502,6 +1508,7 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 			}
 			else {
 				string fullClassName = ClassesTable::getFullClassName(receiverName); //ѕолучить полное им€ класса //TODO: ¬озможно, нужно будет убрать, если при преобразовании дерева будут замен€тьс€ сразу все имена классов
+				strcpy(Receiver->name, fullClassName.c_str()); //ѕреобразование имени класса в узле дерева
 				bool isContainsMethod = ClassesTable::items[fullClassName]->isContainsMethod(methodNameWithType); //ѕроверить наличие метода
 				if (!isContainsMethod) {
 					string msg = "Class '" + receiverName + "' don't contains method '+" + methodName + "'";
@@ -1546,6 +1553,7 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 			}
 			else {
 				string fullClassName = ClassesTable::getFullClassName(receiverName); //ѕолучить полное им€ класса //TODO: ¬озможно, нужно будет убрать, если при преобразовании дерева будут замен€тьс€ сразу все имена классов
+				strcpy(Receiver->name, fullClassName.c_str()); // ѕреобразование имени класса в узле дерева
 				ClassesTableElement* element = ClassesTable::items[fullClassName];
 				// ѕолучить информацию дл€ создани€ константы типа method ref
 				string descriptor;

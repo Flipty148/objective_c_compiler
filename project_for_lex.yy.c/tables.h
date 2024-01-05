@@ -137,7 +137,7 @@ class ClassesTable
 public:
     static map<string, ClassesTableElement*> items; // Таблица классов, в качестве ключа - Имя класса
 
-    static ClassesTableElement* addClass(string name, string *superclassName, bool isImplementation);
+    static ClassesTableElement* addClass(string name, string *superclassName, bool isImplementation, Class_block_node *classBlock);
 
 	static void initRTL();
 

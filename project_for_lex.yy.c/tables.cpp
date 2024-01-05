@@ -337,7 +337,7 @@ void ClassesTableElement::getMethodForRef(string name, string* descriptor, strin
 // -------------------- ClassesTable --------------------
 map<string, ClassesTableElement*> ClassesTable::items;
 
-ClassesTableElement* ClassesTable::addClass(string name, string* superclassName, bool isImplementation)
+ClassesTableElement* ClassesTable::addClass(string name, string* superclassName, bool isImplementation, Class_block_node* classBlock)
 {
 	//TODO: Добавить проверку на наличие реализации метода при наличии интерфейса
 	//TODO: Проверка на соответствие необходимых элементов в реализации и интерфейсе
@@ -371,6 +371,25 @@ ClassesTableElement* ClassesTable::addClass(string name, string* superclassName,
 	}
 	else {
 		items[fullName] = element; // Добавление (обновление элемента в таблице классов)
+	}
+
+	//Преобразование имени в узле дерева
+	if (isImplementation) {
+		Class_implementation_node* implementation = (Class_implementation_node*)classBlock;
+		strcpy(implementation->ClassName, fullName.c_str());
+		if (fullSuperclassName != NULL)
+			strcpy(implementation->SuperclassName, fullSuperclassName->c_str());
+		else
+			implementation->SuperclassName = NULL;
+		
+	}
+	else {
+		Class_interface_node* interface = (Class_interface_node*)classBlock;
+		strcpy(interface->ClassName, fullName.c_str());
+		if (fullSuperclassName != NULL)
+			strcpy(interface->SuperclassName, fullSuperclassName->c_str());
+		else
+			interface->SuperclassName = NULL;
 	}
 
 	return items[fullName];

@@ -84,6 +84,7 @@ public:
 
 
 	void semanticTransform();
+    void addDefaultReturn(Statement_node* lastStatement);
 };
 
 class FunctionsTable
@@ -226,6 +227,7 @@ public:
 
 
     void semanticTransform();
+    void addDefaultReturn(Statement_node *lastStatement);
 };
 
 class MethodsTable
@@ -310,4 +312,6 @@ public:
     string toString();
     string getDescriptor();
     bool equal(Type* other);
+
+    int getDefaultValue();
 };

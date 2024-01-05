@@ -1091,7 +1091,13 @@ void MethodsTableElement::semanticTransform()
 	while (cur != NULL)
 	{
 		cur->semanticTransform();
-		cur = cur->Next;
+		if (cur->Next == NULL) {
+			addDefaultReturn(cur);
+			cur = NULL;
+		}
+		else {
+			cur = cur->Next;
+		}
 	}
 }
 
@@ -1261,6 +1267,13 @@ Type::Type(type_type dataType, Expression_node* arrSize)
 {
 	DataType = dataType;
 	ArrSize = arrSize;
+}
+
+int Type::getDefaultValue()
+{
+	if (DataType == CLASS_NAME_TYPE)
+		return NULL;
+	return 0;
 }
 
 Type::Type(type_type dataType, string className, int arrSize)
@@ -1435,7 +1448,13 @@ void FunctionsTableElement::semanticTransform()
 	while (cur != NULL)
 	{
 		cur->semanticTransform();
-		cur = cur->Next;
+		if (cur->Next == NULL) {
+			addDefaultReturn(cur);
+			cur = NULL;
+		}
+		else {
+			cur = cur->Next;
+		}
 	}
 }
 

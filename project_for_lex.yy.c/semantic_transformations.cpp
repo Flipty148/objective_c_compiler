@@ -1,4 +1,4 @@
-#include "classes_nodes.h"
+#include "tables.h"
 
 void Statement_node::semanticTransform()
 {
@@ -6,7 +6,8 @@ void Statement_node::semanticTransform()
 		Expression->assignmentTransform();
 	}
 	else if (type == RETURN_STATEMENT_TYPE) {
-		Expression->assignmentTransform();
+		if (Expression != NULL)
+			Expression->assignmentTransform();
 	}
 	else if (type == IF_STATEMENT_TYPE) {
 		If_statement_node* cur = (If_statement_node*)this;
@@ -135,4 +136,36 @@ void Expression_list_node::assignmentTransform()
 		cur->assignmentTransform();
 		cur = cur->Next;
 	}
+}
+
+
+// -------------------- ADD DEFAULT RETURN --------------------
+void MethodsTableElement::addDefaultReturn(Statement_node* lastStatement)
+{
+	Statement_node* defaultReturn;
+	if (ReturnType->DataType == VOID_TYPE)
+		defaultReturn = Statement_node::createStatementNodeFromSimpleStatement(RETURN_STATEMENT_TYPE, NULL); //Создать пустой return
+	else {
+		int defaultValue = ReturnType->getDefaultValue(); //Получить значение по умолчанию
+		Numeric_constant_node *num = Numeric_constant_node::createNumericConstantNodeFromInteger(defaultValue); //Сформировать константу
+		Expression_node* expr = Expression_node::createExpressionNodeFromNumericConstant(num); //Сформировать expression
+		defaultReturn = Statement_node::createStatementNodeFromSimpleStatement(RETURN_STATEMENT_TYPE, expr); //Сформировать statement с return
+	}
+	
+	lastStatement->Next = defaultReturn;
+}
+
+void FunctionsTableElement::addDefaultReturn(Statement_node* lastStatement)
+{
+	Statement_node* defaultReturn;
+	if (ReturnType->DataType == VOID_TYPE)
+		defaultReturn = Statement_node::createStatementNodeFromSimpleStatement(RETURN_STATEMENT_TYPE, NULL); //Создать пустой return
+	else {
+		int defaultValue = ReturnType->getDefaultValue(); //Получить значение по умолчанию
+		Numeric_constant_node* num = Numeric_constant_node::createNumericConstantNodeFromInteger(defaultValue); //Сформировать константу
+		Expression_node* expr = Expression_node::createExpressionNodeFromNumericConstant(num); //Сформировать expression
+		defaultReturn = Statement_node::createStatementNodeFromSimpleStatement(RETURN_STATEMENT_TYPE, expr); //Сформировать statement с return
+	}
+
+	lastStatement->Next = defaultReturn;
 }

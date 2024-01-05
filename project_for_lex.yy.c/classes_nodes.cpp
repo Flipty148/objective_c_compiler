@@ -1564,6 +1564,34 @@ string Expression_node::toDot(string labelConection)
         res += to_string(id);
         res += Right->toDot("right");
     }
+    else if (type == ARRAY_ASSIGNMENT_EXPRESSION_TYPE)
+    {
+		res += to_string(id);
+		if (isPriority)
+			res += "[label=\"([]=)\"];\n";
+		else
+			res += "[label=\"[]=\"];\n";
+		res += to_string(id);
+		res += Left->toDot("left");
+		res += to_string(id);
+		res += Right->toDot("right");
+        res += to_string(id);
+		res += Child->toDot("child");
+    }
+    else if (type == MEMBER_ACCESS_ASSIGNMENT_EXPRESSION_TYPE)
+    {
+        res += to_string(id);
+		if (isPriority)
+			res += "[label=\"(->=)\"];\n";
+		else
+			res += "[label=\"->=\"];\n";
+		res += to_string(id);
+		res += Left->toDot("left");
+		res += to_string(id);
+		res += Right->toDot("right");
+        res += to_string(id) + ".1 [label=\"" + name + "\"];\n";
+        res += to_string(id) + "->" + to_string(id) + ".1 [label=\"childName\"];\n";
+    }
 
     return res;
 }

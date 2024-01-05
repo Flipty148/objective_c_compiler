@@ -334,6 +334,14 @@ void ClassesTableElement::getMethodForRef(string name, string* descriptor, strin
 	}
 }
 
+void ClassesTableElement::semanticTransform()
+{
+	for (auto iter = Methods->items.cbegin(); iter != Methods->items.cend(); ++iter)
+	{
+		iter->second->semanticTransform();
+	}
+}
+
 // -------------------- ClassesTable --------------------
 map<string, ClassesTableElement*> ClassesTable::items;
 
@@ -911,6 +919,16 @@ string ClassesTable::getFullClassName(string name)
 	return fullName;
 }
 
+void ClassesTable::semanticTransform()
+{
+	auto iter = items.cbegin();
+	while (iter != items.cend())
+	{
+		iter->second->semanticTransform();
+		++iter;
+	}
+}
+
 // ------------------- FieldsTableElement --------------------
 
 FieldsTableElement::FieldsTableElement(int name, int descriptor, bool isInstance, int instanceIndex, Type *type, string nameStr, string descriptorStr, Expression_node* initialValue)
@@ -1063,6 +1081,16 @@ void MethodsTableElement::fillLiterals(ConstantsTable* constantTable)
 	while (cur != NULL)
 	{
 		cur->fillLiterals(constantTable); // Заполнить таблицу
+		cur = cur->Next;
+	}
+}
+
+void MethodsTableElement::semanticTransform()
+{
+	Statement_node* cur = BodyStart;
+	while (cur != NULL)
+	{
+		cur->semanticTransform();
 		cur = cur->Next;
 	}
 }
@@ -1401,6 +1429,16 @@ void FunctionsTableElement::convertToClassProgramMethods(ClassesTableElement* cl
 	method->LocalVariables = LocalVariables;
 }
 
+void FunctionsTableElement::semanticTransform()
+{
+	Statement_node* cur = BodyStart;
+	while (cur != NULL)
+	{
+		cur->semanticTransform();
+		cur = cur->Next;
+	}
+}
+
 // -------------------- FunctionsTable --------------------
 map<string, FunctionsTableElement*> FunctionsTable::items;
 
@@ -1486,6 +1524,16 @@ void FunctionsTable::convertToClassProgramMethods()
 	while (iter != items.cend())
 	{
 		iter->second->convertToClassProgramMethods(classTableElement);
+		++iter;
+	}
+}
+
+void FunctionsTable::semanticTransform()
+{
+	auto iter = items.cbegin();
+	while (iter != items.cend())
+	{
+		iter->second->semanticTransform();
 		++iter;
 	}
 }

@@ -148,6 +148,9 @@ class Statement_node
         void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); //Функция поиска и заполнения fieldRefs
 		void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod); //Функция поиска и заполнения methodRefs
 		void fillLiterals(ConstantsTable* constantTable); //Поиск и заполнение литералов
+
+
+        void semanticTransform();
 };
 
 // ---------- declaration ----------
@@ -200,6 +203,9 @@ class Init_declarator_list_node
 		void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); //Функция поиска и заполнения fieldRefs
 		void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod); //Функция поиска и заполнения methodRefs
 		void fillLiterals(ConstantsTable* constantTable); //Поиск и заполнение литералов
+
+        
+        void semanticTransform();
 };
 
 // ---------- init_declarator ----------
@@ -230,6 +236,10 @@ class Init_declarator_node
 		void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); //Функция поиска и заполнения fieldRefs
 		void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod); //Функция поиска и заполнения methodRefs
 		void fillLiterals(ConstantsTable* constantTable);
+
+
+		void semanticTransform();
+
 };
 
 // ---------- declarator ----------
@@ -319,7 +329,11 @@ enum expression_type
     ASSIGNMENT_EXPRESSION_TYPE,
     DOT_EXPRESSION_TYPE,
     ARROW_EXPRESSION_TYPE,
-    ARRAY_ELEMENT_ACCESS_EXPRESSION_TYPE
+    ARRAY_ELEMENT_ACCESS_EXPRESSION_TYPE,
+
+
+	ARRAY_ASSIGNMENT_EXPRESSION_TYPE,
+    MEMBER_ACCESS_ASSIGNMENT_EXPRESSION_TYPE
 };
 
 class Expression_node
@@ -332,6 +346,9 @@ class Expression_node
         Literal_node *literal;
         Expression_node *Left;
         Expression_node *Right;
+
+		Expression_node* Child = NULL; // Дочерний элемент для преобразований, связанных с =
+
         Receiver_node *Receiver;
         Message_selector_node *Arguments;
         Expression_node *Next;
@@ -355,6 +372,12 @@ class Expression_node
         virtual void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); // Функция поиска и заполнения field ref
 		virtual void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod); // Функция поиска и заполнения method ref
 		virtual void fillLiterals(ConstantsTable* constantTable); // Поиск и заполнение литералов
+
+		virtual void assignmentTransform(); // Преобразование присваивания в дереве
+
+private:
+	void arrayAssignmentTransform(); // Преобразование присваивания и массива в дереве
+	void memberAccessAssignmentTransform(); // Преобразование присваивания и оператора точки и стрелочки в дереве
 };
 
 // ---------- expression_list ----------
@@ -375,6 +398,8 @@ class Expression_list_node : public Expression_node
         void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); // Функция поиска и заполнения field ref
 		void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod); // Функция поиска и заполнения method ref
 		void fillLiterals(ConstantsTable* constantTable); // Поиск и заполнение литералов
+
+		void assignmentTransform(); // Преобразование присваивания в дереве
 };
 
 // ---------- receiver ----------

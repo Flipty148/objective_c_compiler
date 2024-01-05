@@ -81,6 +81,9 @@ public:
 	void fillLiterals(ConstantsTable* constantTable); // Заполнение литералов
 
 	void convertToClassProgramMethods(ClassesTableElement* classTableElement);
+
+
+	void semanticTransform();
 };
 
 class FunctionsTable
@@ -97,6 +100,8 @@ public:
 	static void fillLiterals(); //Функция поиска и заполнения литералов
 
 	static void convertToClassProgramMethods(); //Преобразование функций в методы класса Program и проверка наличия функции main
+
+	static void semanticTransform(); // Преобразования дерева
 };
 
 // ---------- Таблица классов ----------
@@ -130,6 +135,9 @@ public:
 	bool isHaveOneOfSuperclass(string name); // Является ли указанный класс одним из потомков указанного класса
 	bool isContainsMethod(string methodName); // Проверка наличия метода
 	void getMethodForRef(string name, string* descriptor, string* className); //Получение информации о методе
+
+
+	void semanticTransform();
 };
 
 class ClassesTable
@@ -148,6 +156,8 @@ public:
     static void fillLiterals(); //Функция поиска и заполнения строковых констант и integer констант более 2 байт
 
 	static string getFullClassName(string name); //Получение полного имени класса по короткому
+
+    static void semanticTransform(); // Преобразования дерева
 
 private:
     static void initClassProgram();
@@ -213,6 +223,9 @@ public:
     void fillFieldRefs(ConstantsTable *constantTable, ClassesTableElement* classTableElement); // Заполнение fieldRef для текущего метода
 	void fillMethodRefs(ConstantsTable* constantTable, ClassesTableElement* classTableElement); // Заполнение methodRef для текущего метода
 	void fillLiterals(ConstantsTable* constantTable);
+
+
+    void semanticTransform();
 };
 
 class MethodsTable

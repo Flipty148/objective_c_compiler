@@ -132,6 +132,7 @@
     <ClCompile Include="bison_rules_with_code_tab.cpp" />
     <ClCompile Include="classes_nodes.cpp" />
     <ClCompile Include="lex.yy.cpp" />
+    <ClCompile Include="semantic_transformations.cpp" />
     <ClCompile Include="tables.cpp" />
     <ClCompile Include="tree_semantics.cpp" />
   </ItemGroup>

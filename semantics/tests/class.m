@@ -67,6 +67,8 @@ int main()
 {
     int a;
     int b[10];
+    int t = 't';
+    char c[] = "abc";
     NSString *st = @"NS";
     if ("abc" != "abc") return 0;
     Myclass* obj = [Myclass new];

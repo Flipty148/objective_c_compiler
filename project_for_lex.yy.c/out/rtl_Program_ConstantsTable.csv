@@ -16,9 +16,9 @@ ID|Type|Value
 15|UTF8|(II)I
 16|NameAndType|14, 15
 17|MethodRef|16, 5
-18|UTF8|NS
+18|UTF8|abc
 19|String|18
-20|UTF8|abc
+20|UTF8|NS
 21|String|20
 22|UTF8|main
 23|UTF8|()I

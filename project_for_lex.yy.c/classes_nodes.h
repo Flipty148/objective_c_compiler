@@ -150,7 +150,7 @@ class Statement_node
 		void fillLiterals(ConstantsTable* constantTable); //Поиск и заполнение литералов
 
 
-        void semanticTransform();
+        void semanticTransform(LocalVariablesTable* locals);
 };
 
 // ---------- declaration ----------
@@ -205,7 +205,7 @@ class Init_declarator_list_node
 		void fillLiterals(ConstantsTable* constantTable); //Поиск и заполнение литералов
 
         
-        void semanticTransform();
+        void semanticTransform(LocalVariablesTable* locals, Type *dataType);
 };
 
 // ---------- init_declarator ----------
@@ -238,7 +238,7 @@ class Init_declarator_node
 		void fillLiterals(ConstantsTable* constantTable);
 
 
-		void semanticTransform();
+		void semanticTransform(LocalVariablesTable* locals, Type* dataType);
 
 };
 
@@ -333,7 +333,12 @@ enum expression_type
 
 
 	ARRAY_ASSIGNMENT_EXPRESSION_TYPE,
-    MEMBER_ACCESS_ASSIGNMENT_EXPRESSION_TYPE
+    MEMBER_ACCESS_ASSIGNMENT_EXPRESSION_TYPE,
+
+
+    CHAR_CAST,
+    INT_CAST,
+    CLASS_CAST
 };
 
 class Expression_node
@@ -355,6 +360,8 @@ class Expression_node
         Expression_list_node *ArgumentsList;
         bool isPriority = false;
 
+		Type* DataType = NULL;
+
         static Expression_node* createExpressionNodeFromIdentifier(char *name);
         static Expression_node* createExpressionNodeFromLiteral(Literal_node *value);
         static Expression_node* createExpressionNodeFromNumericConstant(Numeric_constant_node *value);
@@ -374,7 +381,7 @@ class Expression_node
 		virtual void fillLiterals(ConstantsTable* constantTable); // Поиск и заполнение литералов
 
 		virtual void assignmentTransform(); // Преобразование присваивания в дереве
-
+		virtual void setDataTypesAndCasts(LocalVariablesTable *locals); // Преобразование и установка DataType в дереве
 private:
 	void arrayAssignmentTransform(); // Преобразование присваивания и массива в дереве
 	void memberAccessAssignmentTransform(); // Преобразование присваивания и оператора точки и стрелочки в дереве
@@ -400,6 +407,7 @@ class Expression_list_node : public Expression_node
 		void fillLiterals(ConstantsTable* constantTable); // Поиск и заполнение литералов
 
 		void assignmentTransform(); // Преобразование присваивания в дереве
+		void setDataTypesAndCasts(LocalVariablesTable* locals); // Преобразование и установка DataType в дереве
 };
 
 // ---------- receiver ----------
@@ -421,6 +429,8 @@ class Receiver_node
         Receiver_node *Receiver = NULL;
         Message_selector_node *Arguments = NULL;
 
+		Type* DataType = NULL;
+
         static Receiver_node* createReceiverNode(receiver_type type, char *name);
         static Receiver_node* createReceiverNodeFromMessageExpression(Receiver_node *receiver, Message_selector_node *arguments);
 
@@ -436,6 +446,8 @@ class Receiver_node
 		void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod, Type **returnType); //Функция поиска и заполнения methodRefs
 
 		void fillLiterals(ConstantsTable* constantTable); //Поиск и заполнение литералов
+
+		void setDataType(LocalVariablesTable* locals); //Установка DataType
 };
 
 // ---------- message_selector -----------
@@ -456,6 +468,8 @@ class Message_selector_node
 		void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); //Функция поиска и заполнения fieldRefs
 		void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod); //Функция поиска и заполнения methodRefs
 		void fillLiterals(ConstantsTable* constantTable); //Поиск и заполнение литералов
+
+		void setDataTypes(LocalVariablesTable* locals); //Установка DataType
 };
 
 // ---------- keyword_argument_list ----------
@@ -476,6 +490,8 @@ class Keyword_argument_list_node
 		void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); // Функция поиска и заполнения field ref
 		void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInstanceMethod); // Функция поиска и заполнения method ref
 		void fillLiterals(ConstantsTable* constantTable); //Поиск и заполнение литералов
+
+		void setDataTypes(LocalVariablesTable* locals); //Установка DataType
 };
 
 // ---------- keyword_argument ----------

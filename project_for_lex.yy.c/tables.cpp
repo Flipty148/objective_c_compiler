@@ -283,18 +283,20 @@ bool ClassesTableElement::isContainsField(string fieldName)
 	return false;
 }
 
-void ClassesTableElement::getFieldForRef(string name, string* descriptor, string* className)
+FieldsTableElement* ClassesTableElement::getFieldForRef(string name, string* descriptor, string* className)
 {
 	if (isContainsField(name)){ // Содержит поле
 		if (Fields->items.count(name) != 0) { //Поле содержится в текущем классе
 			*descriptor = Fields->items[name]->DescriptorStr;
 			*className = getClassName();
+			return Fields->items[name];
 		}
 		else { //Поле содержится в одном из родительских классов
 			if (SuperclassName != NULL)
-				ClassesTable::items[getSuperClassName()]->getFieldForRef(name, descriptor, className);
+				return ClassesTable::items[getSuperClassName()]->getFieldForRef(name, descriptor, className);
 		}
 	}
+	return NULL;
 }
 
 bool ClassesTableElement::isHaveOneOfSuperclass(string name)
@@ -320,18 +322,20 @@ bool ClassesTableElement::isContainsMethod(string methodName)
 	return false;
 }
 
-void ClassesTableElement::getMethodForRef(string name, string* descriptor, string* className)
+MethodsTableElement* ClassesTableElement::getMethodForRef(string name, string* descriptor, string* className)
 {
 	if (isContainsMethod(name)) { // Содержит метод
 		if (Methods->items.count(name) != 0) { //Метод содержится в текущем классе
 			*descriptor = Methods->items[name]->DescriptorStr;
 			*className = getClassName();
+			return Methods->items[name];
 		}
 		else { //Метод содержится в одном из родительских классов
 			if (SuperclassName != NULL)
-				ClassesTable::items[getSuperClassName()]->getMethodForRef(name, descriptor, className);
+				return ClassesTable::items[getSuperClassName()]->getMethodForRef(name, descriptor, className);
 		}
 	}
+	return NULL;
 }
 
 void ClassesTableElement::semanticTransform()
@@ -1090,7 +1094,7 @@ void MethodsTableElement::semanticTransform()
 	Statement_node* cur = BodyStart;
 	while (cur != NULL)
 	{
-		cur->semanticTransform();
+		cur->semanticTransform(LocalVariables);
 		if (cur->Next == NULL) {
 			addDefaultReturn(cur);
 			cur = NULL;
@@ -1276,6 +1280,56 @@ int Type::getDefaultValue()
 	return 0;
 }
 
+bool Type::isCastableTo(Type* other)
+{
+	if (ArrSize != NULL)
+		return false;
+	if (this->DataType == other->DataType) {
+		if (this->DataType == CLASS_NAME_TYPE)
+			return this->ClassName == other->ClassName;
+		else
+			return true;
+	}
+
+	if (this->DataType == INT_TYPE && other->DataType == CHAR_TYPE)
+		return true;
+	if (this->DataType == CHAR_TYPE && other->DataType == INT_TYPE)
+		return true;
+
+	if (this->DataType == CLASS_NAME_TYPE && other->DataType == ID_TYPE)
+		return true;
+	if (this->DataType == ID_TYPE && other->DataType == CLASS_NAME_TYPE)
+		return true;
+
+	if (this->DataType == CLASS_NAME_TYPE && other->DataType == CLASS_NAME_TYPE) {
+		ClassesTableElement* thisClass = ClassesTable::items[this->ClassName];
+		ClassesTableElement* otherClass = ClassesTable::items[other->ClassName];
+		if (thisClass->isHaveOneOfSuperclass(other->ClassName))
+			return true;
+		if (otherClass->isHaveOneOfSuperclass(this->ClassName))
+			return true;
+	}
+	
+	return false;
+}
+
+bool Type::isPrimitive()
+{
+	return DataType == INT_TYPE || DataType == CHAR_TYPE || DataType == VOID_TYPE;
+}
+
+Type* Type::getSuperType()
+{
+	if (DataType != CLASS_NAME_TYPE)
+		throw new std::exception("Type is not a class");
+
+	ClassesTableElement* thisClass = ClassesTable::items[ClassName];
+	string superClassName = thisClass->getSuperClassName();
+	if (superClassName == "")
+		return NULL;
+	return new Type(CLASS_NAME_TYPE, superClassName);
+}
+
 Type::Type(type_type dataType, string className, int arrSize)
 {
 	DataType = dataType;
@@ -1447,7 +1501,7 @@ void FunctionsTableElement::semanticTransform()
 	Statement_node* cur = BodyStart;
 	while (cur != NULL)
 	{
-		cur->semanticTransform();
+		cur->semanticTransform(LocalVariables);
 		if (cur->Next == NULL) {
 			addDefaultReturn(cur);
 			cur = NULL;

@@ -1592,6 +1592,36 @@ string Expression_node::toDot(string labelConection)
         res += to_string(id) + ".1 [label=\"" + name + "\"];\n";
         res += to_string(id) + "->" + to_string(id) + ".1 [label=\"childName\"];\n";
     }
+	else if (type == INT_CAST)
+	{
+		res += to_string(id);
+		if (isPriority)
+			res += "[label=\"(int_cast)\"];\n";
+		else
+			res += "[label=\"int_cast\"];\n";
+		res += to_string(id);
+		res += Right->toDot("castable");
+	}
+    else if (type == CHAR_CAST)
+    {
+        res += to_string(id);
+        if (isPriority)
+            res += "[label=\"(char_cast)\"];\n";
+        else
+            res += "[label=\"char_cast\"];\n";
+        res += to_string(id);
+        res += Right->toDot("castable");
+    }
+    else if (type == CLASS_CAST)
+    {
+        res += to_string(id);
+        if (isPriority)
+            res += "[label=\"(class_cast)\"];\n";
+        else
+            res += "[label=\"class_cast\"];\n";
+        res += to_string(id);
+        res += Right->toDot("castable");
+    }
 
     return res;
 }

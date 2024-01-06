@@ -1,6 +1,8 @@
 Id|Name|Type
 1|a|int
 2|b|int[10]
-4|obj|global/Myclass
+4|c|char
+6|obj|global/Myclass
 0|self|rtl/Program
-3|st|rtl/NSString
+5|st|rtl/NSString
+3|t|int

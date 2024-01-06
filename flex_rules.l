@@ -87,7 +87,7 @@ UNDERLINE_LETTER [A-Za-z_]
 "*=" {printf("ERROR! Unsupported operation '*=': %s\n", yytext); return -1;}
 "/=" {printf("ERROR! Unsupported operation '/=': %s\n", yytext); return -1;}
 
-"." {return (unsigned char)'.';}
+"." {printf("ERROR! Unsupported property access operation: %s\n", yytext); return -1;}
 "->" {return ARROW;}
 
 

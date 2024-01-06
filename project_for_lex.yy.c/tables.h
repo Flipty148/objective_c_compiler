@@ -5,6 +5,8 @@ using namespace std;
 
 class LocalVariablesTable;
 class FieldsTable;
+class FieldsTableElement;
+class MethodsTableElement;
 class MethodsTable;
 class PropertiesTable;
 class Type;
@@ -132,10 +134,10 @@ public:
     void fillLiterals(); // Заполнение строковых констант и integer констант более 2 байт для текущего класса
 
     bool isContainsField(string fieldName); // Проверка наличия поля
-    void getFieldForRef(string name, string* descriptor, string* className); //Получение информации о поле
+    FieldsTableElement* getFieldForRef(string name, string* descriptor, string* className); //Получение информации о поле
 	bool isHaveOneOfSuperclass(string name); // Является ли указанный класс одним из потомков указанного класса
 	bool isContainsMethod(string methodName); // Проверка наличия метода
-	void getMethodForRef(string name, string* descriptor, string* className); //Получение информации о методе
+	MethodsTableElement* getMethodForRef(string name, string* descriptor, string* className); //Получение информации о методе
 
 
 	void semanticTransform();
@@ -314,4 +316,7 @@ public:
     bool equal(Type* other);
 
     int getDefaultValue();
+	bool isCastableTo(Type* other); // Метод, который проверяет можно ли привести текущий тип к other
+	bool isPrimitive(); // Метод, который проверяет является ли текущий тип примитивным
+	Type* getSuperType(); // Метод, который возвращает родительский тип
 };

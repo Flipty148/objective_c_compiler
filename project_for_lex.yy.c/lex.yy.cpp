@@ -1013,7 +1013,7 @@ YY_RULE_SETUP
 case 41:
 YY_RULE_SETUP
 #line 90 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
-{return (unsigned char)'.';}
+{printf("ERROR! Unsupported property access operation: %s\n", yytext); return -1;}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP

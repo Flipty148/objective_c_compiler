@@ -59,7 +59,7 @@
 }
 - (void) func
 {
-    [obj1 func2: 1 :2];
+    [obj1 func2: 't' :'a'];
 }
 @end
 

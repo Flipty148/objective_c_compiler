@@ -469,7 +469,7 @@ class Message_selector_node
 		void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod); //Функция поиска и заполнения methodRefs
 		void fillLiterals(ConstantsTable* constantTable); //Поиск и заполнение литералов
 
-		void setDataTypes(LocalVariablesTable* locals); //Установка DataType
+		void setDataTypes(LocalVariablesTable* locals, string receiverClassName); //Установка DataType
 };
 
 // ---------- keyword_argument_list ----------

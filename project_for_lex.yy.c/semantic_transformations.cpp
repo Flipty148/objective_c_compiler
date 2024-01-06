@@ -1,4 +1,5 @@
 #include "tables.h"
+#include <string>
 extern long maxId;
 
 void Statement_node::semanticTransform(LocalVariablesTable* locals)
@@ -300,7 +301,7 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 			string className;
 			MethodsTableElement* method = ClassesTable::items[receiverType->ClassName]->getMethodForRef(Arguments->MethodName, &descriptor, &className);
 			DataType = method->ReturnType;
-			Arguments->setDataTypes(locals); //Установить DataType для параметров
+			Arguments->setDataTypes(locals, receiverType->ClassName); //Установить DataType для параметров
 		}
 	}
 		break;
@@ -566,6 +567,7 @@ void Receiver_node::setDataType(LocalVariablesTable* locals)
 			string className;
 			MethodsTableElement* method = ClassesTable::items[receiverType->ClassName]->getMethodForRef(Arguments->MethodName, &descriptor, &className);
 			DataType = method->ReturnType;
+			Arguments->setDataTypes(locals, receiverType->ClassName); //Установить DataType для параметров
 		}
 	}
 		break;
@@ -574,14 +576,139 @@ void Receiver_node::setDataType(LocalVariablesTable* locals)
 	}
 }
 
-void Message_selector_node::setDataTypes(LocalVariablesTable* locals)
+void Message_selector_node::setDataTypes(LocalVariablesTable* locals, string receiverClassName)
 {
 	if (FirstArgument != NULL)
 		FirstArgument->setDataTypesAndCasts(locals);
-	if (ExprArguments != NULL)
-		FirstArgument->setDataTypesAndCasts(locals);
 	if (Arguments != NULL)
 		Arguments->setDataTypes(locals);
+	if (ExprArguments != NULL)
+		ExprArguments->setDataTypesAndCasts(locals);
+
+	// Проверка типов и добавление при необходимости cast
+
+	// Получить метод
+	ClassesTableElement* classElem = ClassesTable::items[receiverClassName];
+	MethodsTableElement* method;
+	if (classElem->isContainsMethod(MethodName)) {
+		string descr;
+		string n;
+		method = classElem->getMethodForRef(MethodName, &descr, &n);
+	}
+	else {
+		string msg = string("Class '") + receiverClassName + "' doesn't contains method '" + MethodName + "'";
+		throw new std::exception(msg.c_str());
+	}
+
+	//Проверка количества параметров
+	int kwCount = 0;
+	if (FirstArgument != NULL)
+		kwCount++;
+	if (Arguments != NULL)
+		kwCount += Arguments->getElements()->size();
+	int paramCount = 0;
+	if (ExprArguments != NULL)
+		ExprArguments->getElements()->size();
+
+	if (kwCount != method->KeywordsTypes->size()) {
+		string msg = string("Method '") + string(MethodName) + "' get '" + to_string(kwCount) + "' keyword arguments, but expected '" + to_string(method->KeywordsTypes->size()) + "'";
+		throw new std::exception(msg.c_str());
+	}
+	if (paramCount != method->ParamsTypes->size()) {
+		string msg = string("Method '") + string(MethodName) + "' get '" + to_string(paramCount) + "' parameters arguments, but expected '" + to_string(method->ParamsTypes->size()) + "'";
+		throw new std::exception(msg.c_str());
+	}
+
+
+	//Проверка типов и добавление cast
+	if (FirstArgument != NULL) {
+		Type* kwType = method->KeywordsTypes->at(0);
+		if (kwType->equal(FirstArgument->DataType) || FirstArgument->DataType->isCastableTo(kwType)) {
+			if (!kwType->equal(FirstArgument->DataType)) {
+				Expression_node* cast = new Expression_node();
+				cast->id = maxId++;
+				if (kwType->DataType == INT_TYPE) {
+					cast->type = INT_CAST;
+				}
+				else if (kwType->DataType == CHAR_TYPE) {
+					cast->type = CHAR_CAST;
+				}
+				else if (kwType->DataType == CLASS_NAME_TYPE) {
+					cast->type = CLASS_CAST;
+				}
+				cast->DataType = kwType;
+				cast->Right = FirstArgument;
+				FirstArgument = cast;
+			}
+		}
+		else {
+			string msg = string("Type '") + FirstArgument->DataType->toString() + "' doesn't castable to type '" + method->KeywordsTypes->at(0)->toString() + "' in method '" + string(MethodName);
+			throw new std::exception(msg.c_str());
+		}
+	}
+
+	if (Arguments != NULL) {
+		vector<Keyword_argument_node*> *kwArgs = Arguments->getElements();
+		for (int i = 1; i <= kwArgs->size(); i++) {
+			Type* kwType = method->KeywordsTypes->at(i);
+			Type* argType = kwArgs->at(i - 1)->expression->DataType;
+
+			if (kwType->equal(argType) || argType->isCastableTo(kwType)) {
+				if (!kwType->equal(argType)) {
+					Expression_node* cast = new Expression_node();
+					cast->id = maxId++;
+					if (kwType->DataType == INT_TYPE) {
+						cast->type = INT_CAST;
+					}
+					else if (kwType->DataType == CHAR_TYPE) {
+						cast->type = CHAR_CAST;
+					}
+					else if (kwType->DataType == CLASS_NAME_TYPE) {
+						cast->type = CLASS_CAST;
+					}
+					cast->DataType = kwType;
+					cast->Right = kwArgs->at(i-1)->expression;
+					kwArgs->at(i - 1)->expression = cast;
+				}
+			}
+			else {
+				string msg = string("Type '") + kwArgs->at(i - 1)->expression->DataType->toString() + "' doesn't castable to type '" + method->KeywordsTypes->at(i)->toString() + "' in method '" + string(MethodName);
+				throw new std::exception(msg.c_str());
+			}
+		}
+	}
+
+	if (ExprArguments != NULL) {
+		vector<Expression_node*>* args = ExprArguments->getElements();
+		for (int i = 0; i < args->size(); i++) {
+			Type* paramType = method->ParamsTypes->at(i);
+			Type* argType = args->at(i)->DataType;
+
+			if (paramType->equal(argType) || argType->isCastableTo(paramType)) {
+				if (!paramType->equal(argType)) {
+					Expression_node* cast = new Expression_node();
+					cast->id = maxId++;
+					if (paramType->DataType == INT_TYPE) {
+						cast->type = INT_CAST;
+					}
+					else if (paramType->DataType == CHAR_TYPE) {
+						cast->type = CHAR_CAST;
+					}
+					else if (paramType->DataType == CLASS_NAME_TYPE) {
+						cast->type = CLASS_CAST;
+					}
+					cast->DataType = paramType;
+					cast->Right = args->at(i);
+					args->at(i) = cast;
+				}
+			}
+			else {
+				string msg = string("Type '") + args->at(i)->DataType->toString() + "' doesn't castable to type '" + method->ParamsTypes->at(i)->toString() + "' in method '" + string(MethodName);
+				throw new std::exception(msg.c_str());
+			}
+		}
+	}
+
 }
 
 void Keyword_argument_list_node::setDataTypes(LocalVariablesTable* locals)

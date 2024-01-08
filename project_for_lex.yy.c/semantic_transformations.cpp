@@ -7,17 +7,20 @@ void Statement_node::semanticTransform(LocalVariablesTable* locals)
 	if (type == SIMPLE_STATEMENT_TYPE) {
 		Expression->assignmentTransform();
 		Expression->setDataTypesAndCasts(locals);
+		Expression->setAttributes(locals);
 	}
 	else if (type == RETURN_STATEMENT_TYPE) {
 		if (Expression != NULL) {
 			Expression->assignmentTransform();
 			Expression->setDataTypesAndCasts(locals);
+			Expression->setAttributes(locals);
 		}
 	}
 	else if (type == IF_STATEMENT_TYPE) {
 		If_statement_node* cur = (If_statement_node*)this;
 		cur->Condition->assignmentTransform();
 		cur->Condition->setDataTypesAndCasts(locals);
+		cur->Condition->setAttributes(locals);
 		cur->TrueBranch->semanticTransform(locals);
 		if (cur->FalseBranch != NULL) {
 			cur->FalseBranch->semanticTransform(locals);
@@ -27,6 +30,7 @@ void Statement_node::semanticTransform(LocalVariablesTable* locals)
 		While_statement_node* cur = (While_statement_node*)this;
 		cur->LoopCondition->assignmentTransform();
 		cur->LoopCondition->setDataTypesAndCasts(locals);
+		cur->LoopCondition->setAttributes(locals);
 		if (cur->LoopBody != NULL)
 			cur->LoopBody->semanticTransform(locals);
 	}
@@ -35,14 +39,17 @@ void Statement_node::semanticTransform(LocalVariablesTable* locals)
 		if (cur->InitExpression != NULL) {
 			cur->InitExpression->assignmentTransform();
 			cur->InitExpression->setDataTypesAndCasts(locals);
+			cur->InitExpression->setAttributes(locals);
 		}
 		if (cur->ConditionExpression != NULL) {
 			cur->ConditionExpression->assignmentTransform();
 			cur->ConditionExpression->setDataTypesAndCasts(locals);
+			cur->ConditionExpression->setAttributes(locals);
 		}
 		if (cur->LoopExpression != NULL) {
 			cur->LoopExpression->assignmentTransform();
 			cur->LoopExpression->setDataTypesAndCasts(locals);
+			cur->LoopExpression->setAttributes(locals);
 		}
 		if (cur->InitList != NULL)
 			cur->InitList->semanticTransform(locals, cur->NameType->toDataType());
@@ -53,6 +60,7 @@ void Statement_node::semanticTransform(LocalVariablesTable* locals)
 		Do_while_statement_node* cur = (Do_while_statement_node*)this;
 		cur->LoopCondition->assignmentTransform();
 		cur->LoopCondition->setDataTypesAndCasts(locals);
+		cur->LoopCondition->setAttributes(locals);
 		if (cur->LoopBody != NULL)
 			cur->LoopBody->semanticTransform(locals);
 	}
@@ -88,6 +96,7 @@ void Init_declarator_node::semanticTransform(LocalVariablesTable* locals, Type *
 	if (expression != NULL) {
 		expression->assignmentTransform();
 		expression->setDataTypesAndCasts(locals);
+		expression->setAttributes(locals);
 		if (!expression->DataType->equal(dataType) && !(type == ARRAY_WITH_INITIALIZING_DECLARATOR_TYPE && expression->DataType->DataType == dataType->DataType && expression->DataType->ClassName == dataType->ClassName)) {
 			if (expression->DataType->isCastableTo(dataType)) {
 				Expression_node* cast = new Expression_node();
@@ -114,10 +123,12 @@ void Init_declarator_node::semanticTransform(LocalVariablesTable* locals, Type *
 	if (InitializerList != NULL) {
 		InitializerList->assignmentTransform();
 		InitializerList->setDataTypesAndCasts(locals);
+		InitializerList->setAttributes(locals);
 	}
 	if (ArraySize != NULL) {
 		ArraySize->assignmentTransform();
 		ArraySize->setDataTypesAndCasts(locals);
+		ArraySize->setAttributes(locals);
 	}
 }
 
@@ -721,12 +732,150 @@ void Keyword_argument_list_node::setDataTypes(LocalVariablesTable* locals)
 	}
 }
 
+
 void Expression_list_node::setDataTypesAndCasts(LocalVariablesTable* locals)
 {
 	Expression_node* cur = First;
 	while (cur != NULL)
 	{
 		cur->setDataTypesAndCasts(locals);
+		cur = cur->Next;
+	}
+}
+
+// -------------------- SET ATTRIBUTES --------------------
+
+void Expression_node::setAttributes(LocalVariablesTable* locals)
+{
+	// Вызов на дочерних элементах
+	if (Left != NULL)
+		Left->setAttributes(locals);
+	if (Right != NULL)
+		Right->setAttributes(locals);
+	if (Child != NULL)
+		Child->setAttributes(locals);
+	string className;
+	ClassesTableElement* classElem;
+
+	switch (type) {
+	case IDENTIFIER_EXPRESSION_TYPE:
+	{
+		if (locals->isContains(name)) { //Локальная переменная
+			LocalVariable = locals->items[name];
+		}
+		else { //Поле
+				ClassesTableElement* selfClass = ClassesTable::items[locals->items["self"]->type->ClassName];
+				string descr;
+				string className;
+				Field = selfClass->getFieldForRef(name, &descr, &className);
+		}
+	}
+	break;
+	case SELF_EXPRESSION_TYPE:
+	{
+		LocalVariable = locals->items["self"];
+	}
+	break;
+	case MESSAGE_EXPRESSION_EXPRESSION_TYPE:
+	{
+		Receiver->setAttributes(locals);
+		Type* receiverType = Receiver->DataType;
+		string descriptor;
+		string className;
+		Method = ClassesTable::items[receiverType->ClassName]->getMethodForRef(Arguments->MethodName, &descriptor, &className);
+		Arguments->setAttributes(locals); //Установить атрибуты для параметров
+	}
+	break;
+	case ARROW_EXPRESSION_TYPE:
+	{
+		className = Left->DataType->ClassName;
+		ClassesTableElement* classElem = ClassesTable::items[className];
+		string descr;
+		string n;
+		Field = classElem->getFieldForRef(name, &descr, &n);
+	}
+	break;
+	case MEMBER_ACCESS_ASSIGNMENT_EXPRESSION_TYPE:
+	{
+		className = Left->DataType->ClassName;
+		ClassesTableElement* classElem = ClassesTable::items[className];
+		string descr;
+		string n;
+		Field = classElem->getFieldForRef(name, &descr, &n);
+	}
+	break;
+	default:
+		break;
+	}
+}
+
+void Expression_list_node::setAttributes(LocalVariablesTable* locals)
+{
+	Expression_node* cur = First;
+	while (cur != NULL)
+	{
+		cur->setAttributes(locals);
+		cur = cur->Next;
+	}
+}
+
+
+void Receiver_node::setAttributes(LocalVariablesTable* locals)
+{
+	switch (type)
+	{
+	case SELF_RECEIVER_TYPE:
+	{
+		LocalVariable = locals->items["self"];
+	}
+	break;
+	case OBJECT_NAME_RECEIVER_TYPE:
+	{
+		if (locals->isContains(name)) { //Локальная переменная
+			LocalVariable = locals->items[name];
+		}
+		else { //Поле
+			ClassesTableElement* selfClass = ClassesTable::items[locals->items["self"]->type->ClassName];
+			string descr;
+			string className;
+			Field = selfClass->getFieldForRef(name, &descr, &className);
+		}
+	}
+	break;
+	case MESSAGE_EXPRESSION_RECEIVER_TYPE:
+	{
+		Receiver->setAttributes(locals);
+		Type* receiverType = Receiver->DataType;
+		
+		string descriptor;
+		string className;
+		Method = ClassesTable::items[receiverType->ClassName]->getMethodForRef(Arguments->MethodName, &descriptor, &className);
+		Arguments->setAttributes(locals); //Установить атрибуты для параметров
+	}
+	break;
+	default:
+		break;
+	}
+}
+
+
+void Message_selector_node::setAttributes(LocalVariablesTable* locals)
+{
+	if (FirstArgument != NULL)
+		FirstArgument->setAttributes(locals);
+	if (Arguments != NULL)
+		Arguments->setAttributes(locals);
+	if (ExprArguments != NULL)
+		ExprArguments->setAttributes(locals);
+
+}
+
+void Keyword_argument_list_node::setAttributes(LocalVariablesTable* locals)
+{
+	Keyword_argument_node* cur = First;
+	while (cur != NULL)
+	{
+		cur->expression->setAttributes(locals);
 		cur = cur->Next;
 	}
 }

@@ -9,6 +9,9 @@ class Type;
 class ConstantsTable;
 class LocalVariablesTable;
 class ClassesTableElement;
+class LocalVariablesTableElement;
+class FieldsTableElement;
+class MethodsTableElement;
 
 //---------- Прототипы классов ----------
 class Init_declarator_list_node;
@@ -360,6 +363,10 @@ class Expression_node
         Expression_list_node *ArgumentsList;
         bool isPriority = false;
 
+		LocalVariablesTableElement* LocalVariable = NULL; //Ссылка на локальную переменную
+		FieldsTableElement* Field = NULL; //Ссылка на поле
+		MethodsTableElement* Method = NULL; //Ссылка на метод
+
 		Type* DataType = NULL;
 
         static Expression_node* createExpressionNodeFromIdentifier(char *name);
@@ -382,6 +389,7 @@ class Expression_node
 
 		virtual void assignmentTransform(); // Преобразование присваивания в дереве
 		virtual void setDataTypesAndCasts(LocalVariablesTable *locals); // Преобразование и установка DataType в дереве
+		virtual void setAttributes(LocalVariablesTable *locals); // Установка атрибутов (ссылок на локальные переменные, поля, методы)
 private:
 	void arrayAssignmentTransform(); // Преобразование присваивания и массива в дереве
 	void memberAccessAssignmentTransform(); // Преобразование присваивания и оператора точки и стрелочки в дереве
@@ -408,6 +416,7 @@ class Expression_list_node : public Expression_node
 
 		void assignmentTransform(); // Преобразование присваивания в дереве
 		void setDataTypesAndCasts(LocalVariablesTable* locals); // Преобразование и установка DataType в дереве
+		void setAttributes(LocalVariablesTable* locals); // Установка атрибутов (ссылок на локальные переменные, поля, методы)
 };
 
 // ---------- receiver ----------
@@ -430,6 +439,9 @@ class Receiver_node
         Message_selector_node *Arguments = NULL;
 
 		Type* DataType = NULL;
+		LocalVariablesTableElement* LocalVariable = NULL; //Ссылка на локальную переменную
+		FieldsTableElement* Field = NULL; //Ссылка на поле
+		MethodsTableElement* Method = NULL; //Ссылка на метод
 
         static Receiver_node* createReceiverNode(receiver_type type, char *name);
         static Receiver_node* createReceiverNodeFromMessageExpression(Receiver_node *receiver, Message_selector_node *arguments);
@@ -448,6 +460,8 @@ class Receiver_node
 		void fillLiterals(ConstantsTable* constantTable); //Поиск и заполнение литералов
 
 		void setDataType(LocalVariablesTable* locals); //Установка DataType
+
+		void setAttributes(LocalVariablesTable* locals); //Установка атрибутов (ссылок на локальные переменные, поля, методы)
 };
 
 // ---------- message_selector -----------
@@ -470,6 +484,7 @@ class Message_selector_node
 		void fillLiterals(ConstantsTable* constantTable); //Поиск и заполнение литералов
 
 		void setDataTypes(LocalVariablesTable* locals, string receiverClassName); //Установка DataType
+		void setAttributes(LocalVariablesTable* locals);
 };
 
 // ---------- keyword_argument_list ----------
@@ -492,6 +507,7 @@ class Keyword_argument_list_node
 		void fillLiterals(ConstantsTable* constantTable); //Поиск и заполнение литералов
 
 		void setDataTypes(LocalVariablesTable* locals); //Установка DataType
+		void setAttributes(LocalVariablesTable* locals); //Установка атрибутов
 };
 
 // ---------- keyword_argument ----------

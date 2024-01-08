@@ -29,12 +29,12 @@ UNDERLINE_LETTER [A-Za-z_]
     void removeSymbol(char *string, char symbol);
     void removeFloatSuffix(char *string);
     int countChar(const char *str, char character);
+    int lineCount = 1;
 %}
 
 %%
 %{
     char tmp[10000];
-    int lineCount = 1;
     std::string str = "";
 %}
 

@@ -570,7 +570,8 @@ char *yytext;
     void removeSymbol(char *string, char symbol);
     void removeFloatSuffix(char *string);
     int countChar(const char *str, char character);
-#line 575 "lex.yy.c"
+    int lineCount = 1;
+#line 576 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -717,11 +718,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 34 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
+#line 35 "D:\\C projects\\Compiler\\objective_c_compiler\\flex_rules.l"
 
 
     char tmp[10000];
-    int lineCount = 1;
     std::string str = "";
 
 

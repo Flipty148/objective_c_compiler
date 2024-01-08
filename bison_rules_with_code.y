@@ -2,6 +2,7 @@
 	#include "classes_nodes.h"
 	void yyerror(char const *s);
 	extern int yylex(void);
+	extern int lineCount;
 	Program_node *root;
 %}
 
@@ -486,5 +487,5 @@ attribute: /*empty*/			{$$ = Attribute_node::createAttributeNode(EMPTY_ATTRIBUTE
 
 void yyerror(char const *s)
 {
-	printf("%s",s);
+	printf("%s in line %d",s, lineCount);
 }

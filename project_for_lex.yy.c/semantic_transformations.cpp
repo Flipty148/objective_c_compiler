@@ -55,6 +55,10 @@ void Statement_node::semanticTransform(LocalVariablesTable* locals)
 			cur->InitList->semanticTransform(locals, cur->NameType->toDataType());
 		if (cur->LoopBody != NULL)
 			cur->LoopBody->semanticTransform(locals);
+
+		if (cur->ForType == FOREACH_FOR_TYPE || cur->ForType == FOREACH_WITH_DECLARATION_FOR_TYPE) {
+			cur->checkFastEnumerationTypes(locals);
+		}
 	}
 	else if (type == DO_WHILE_STATEMENT_TYPE) {
 		Do_while_statement_node* cur = (Do_while_statement_node*)this;

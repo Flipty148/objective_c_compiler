@@ -791,6 +791,11 @@ void Statement_node::findLocalVariables(vector<string>* localVariablesNames, vec
 		if (for_stmt->InitList != NULL) {
 			declarators = for_stmt->InitList->getElements();
 		}
+		if (for_stmt->ForType == FOREACH_WITH_DECLARATION_FOR_TYPE) {
+			Init_declarator_node *dec = Init_declarator_node::createInitDeclaratorNode(SIMPLE_DECLARATOR_TYPE, for_stmt->name, NULL);
+			declarators = new vector<Init_declarator_node*>;
+			declarators->push_back(dec);
+		}
 		typeNode = for_stmt->NameType;
 	}
 	if (declarators != NULL && typeNode != NULL)

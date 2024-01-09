@@ -1,4 +1,4 @@
-#include "classes_nodes.h"
+#include "tables.h"
 
 void Expression_node::checkLvalueError()
 {
@@ -109,5 +109,69 @@ string Expression_node::getTypeName()
 		break;
 	default:
 		break;
+	}
+}
+
+void For_statement_node::checkFastEnumerationTypes(LocalVariablesTable* locals)
+{
+	// Проверка итерирующей переменной
+	if (locals->isContains(name)) { //Локальная переменная
+		Type* type = locals->items[name]->type;
+		if (type->ClassName == "") {
+			string msg = "Variable in fast enumeration isn't an object. It has type '" + type->toString();
+			throw new std::exception(msg.c_str());
+		}
+	}
+	else { //Поле
+		if (ClassesTable::items.count(locals->items["self"]->type->ClassName) != 0) {
+			ClassesTableElement* selfClass = ClassesTable::items[locals->items["self"]->type->ClassName];
+			if (selfClass->isContainsField(name)) {
+				string descr;
+				string className;
+				FieldsTableElement* field = selfClass->getFieldForRef(name, &descr, &className);
+				Type* type = field->type;
+				if (type->ClassName == "") {
+					string msg = "Variable in fast enumeration isn't an object. It has type '" + type->toString();
+					throw new std::exception(msg.c_str());
+				}
+			}
+			else {
+				string msg = "Variable '" + string(name) + "' is undeclarated";
+				throw new std::exception(msg.c_str());
+			}
+		}
+	}
+
+	//Проверка итерируемой переменной
+	if (ConditionExpression->type != IDENTIFIER_EXPRESSION_TYPE) {
+		string msg = "Iterable variable isn't variable. It has type '" + ConditionExpression->getTypeName() + "'";
+		throw new std::exception(msg.c_str());
+	}
+	if (locals->isContains(ConditionExpression->name)) { //Локальная переменная
+		Type* type = locals->items[ConditionExpression->name]->type;
+		if (type->ClassName == "") {
+			string msg = "Variable in fast enumeration isn't an object. It has type '" + type->toString() + "'";
+			throw new std::exception(msg.c_str());
+		}
+	}
+	else { //Поле
+		if (ClassesTable::items.count(locals->items["self"]->type->ClassName) != 0) {
+			ClassesTableElement* selfClass = ClassesTable::items[locals->items["self"]->type->ClassName];
+			if (selfClass->isContainsField(ConditionExpression->name)) {
+				string descr;
+				string className;
+				FieldsTableElement* field = selfClass->getFieldForRef(ConditionExpression->name, &descr, &className);
+				Type* type = field->type;
+				if (type->ClassName == "") {
+					string msg = "Variable in fast enumeration isn't an object. It has type '" + type->toString() + "'";
+					throw new std::exception(msg.c_str());
+				}
+			}
+			else {
+				string msg = "Variable '" + string(ConditionExpression->name) + "' is undeclarated";
+				throw new std::exception(msg.c_str());
+			}
+		}
+
 	}
 }

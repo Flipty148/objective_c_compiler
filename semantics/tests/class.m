@@ -30,7 +30,7 @@
         }
         return first + second;
     }
-    - (void) func2: (int) first a:(int) second
+    - (void) func2: (int) first :(int) second
     {
         int test[10];
         d = first + second;
@@ -77,9 +77,12 @@ int main()
     if ("abc" != "abc") return 0;
     Myclass* obj = [Myclass new];
     // int i;
-    // for (i in obj) {
+    // for ( i in obj) {
 
     // }
+    for (NSString *str in st) {
+        
+    }
     [Myclass func: 2 :3];
     obj->a;
     return 0;

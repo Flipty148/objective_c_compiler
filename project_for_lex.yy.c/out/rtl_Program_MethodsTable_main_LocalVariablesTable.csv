@@ -4,4 +4,5 @@ Id|Name|Type
 5|obj|global/Myclass
 0|self|rtl/Program
 4|st|rtl/NSString
+6|str|rtl/NSString
 2|t|int

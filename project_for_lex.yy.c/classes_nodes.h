@@ -614,6 +614,8 @@ class For_statement_node : public Statement_node
         static For_statement_node* createForStatementNodeFromForeach(for_type type, Type_node *varType, char *loopVar, Expression_node *expression, Statement_node *body);
 
         string toDot(string labelConection="");
+
+        void checkFastEnumerationTypes(LocalVariablesTable* locals);
 };
 
 // ---------- statement_list ----------

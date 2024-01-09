@@ -1106,7 +1106,7 @@ void Expression_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariable
 			throw new std::exception(msg.c_str());
 		}
 		else {
-			string msg = "Invalid expression type in function call.";
+			string msg = "Invalid expression type in field call.";
 			throw new std::exception(msg.c_str());
 		}
 

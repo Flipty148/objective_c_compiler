@@ -1899,8 +1899,10 @@ string For_statement_node::toDot(string labelConection)
             res += LoopExpression->toDot("loop_expression");
         }
 
-        res += to_string(id);
-        res += LoopBody->toDot("body");
+        if (LoopBody != NULL) {
+            res += to_string(id);
+            res += LoopBody->toDot("body");
+        }
     }
     else if (ForType == FOR_WITH_DECLARATION_FOR_TYPE)
     {
@@ -1920,8 +1922,11 @@ string For_statement_node::toDot(string labelConection)
             res += to_string(id);
             res += LoopExpression->toDot("loop_expression");
         }
-        res += to_string(id);
-        res += LoopBody->toDot("body");
+
+        if (LoopBody != NULL) {
+            res += to_string(id);
+            res += LoopBody->toDot("body");
+        }
     }
     else if (ForType == FOREACH_FOR_TYPE)
     {
@@ -1931,8 +1936,10 @@ string For_statement_node::toDot(string labelConection)
         res += to_string(id);
         res += ConditionExpression->toDot("expression");
 
-        res += to_string(id);
-        res += LoopBody->toDot("body");
+        if (LoopBody != NULL) {
+            res += to_string(id);
+            res += LoopBody->toDot("body");
+        }
     }
     else if (ForType == FOREACH_WITH_DECLARATION_FOR_TYPE)
     {
@@ -1944,9 +1951,10 @@ string For_statement_node::toDot(string labelConection)
 
         res += to_string(id);
         res += ConditionExpression->toDot("expression");
-
-        res += to_string(id);
-        res += LoopBody->toDot("body");
+        if (LoopBody != NULL) {
+            res += to_string(id);
+            res += LoopBody->toDot("body");
+        }
     }
     return res;
 }

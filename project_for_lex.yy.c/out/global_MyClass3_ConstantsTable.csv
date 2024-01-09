@@ -25,9 +25,3 @@ ID|Type|Value
 24|UTF8|(II)V
 25|NameAndType|23, 24
 26|MethodRef|25, 22
-27|UTF8|rtl/NSObject
-28|Class|27
-29|UTF8|new
-30|UTF8|()Lrtl/NSObject;
-31|NameAndType|29, 30
-32|MethodRef|31, 28

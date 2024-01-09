@@ -24,7 +24,7 @@
     {
         int y = 44560;
         int test;
-        for (int i = 0; i < 10; i = i + 1)
+        for (int i = 0, j = 0; i < 10; i = i + 1)
         {
             a[i] = 0;
         }
@@ -56,7 +56,7 @@
 + (void) funcMyClass3
 {
     obj->a = 10;
-    1+1->a;
+    // 1+1->a;
 }
 - (void) func
 {
@@ -73,6 +73,10 @@ int main()
     NSString *st = @"NS";
     if ("abc" != "abc") return 0;
     Myclass* obj = [Myclass new];
+    // int i;
+    // for (i in obj) {
+
+    // }
     [Myclass func: 2 :3];
     obj->a;
     return 0;

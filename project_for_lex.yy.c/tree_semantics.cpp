@@ -140,7 +140,8 @@ void Function_and_class_list_node::fillTables()
 								//Получение и добавление локальных переменных внутри метода
 								vector<string> varsNames;
 								vector<Type*> varsTypes;
-								method->BodyStart->findLocalVariables(&varsNames, &varsTypes);
+								if (method->BodyStart != NULL)
+									method->BodyStart->findLocalVariables(&varsNames, &varsTypes);
 								for (int i = 0; i < varsNames.size(); i++)
 								{
 									locals->findOrAddLocalVariable(varsNames[i], varsTypes[i]);
@@ -196,7 +197,8 @@ void Function_and_class_list_node::fillTables()
 							//Получение и добавление локальных переменных внутри метода
 							vector<string> varsNames;
 							vector<Type*> varsTypes;
-							method->BodyStart->findLocalVariables(&varsNames, &varsTypes);
+							if (method->BodyStart != NULL)
+								method->BodyStart->findLocalVariables(&varsNames, &varsTypes);
 							for (int i = 0; i < varsNames.size(); i++)
 							{
 								locals->findOrAddLocalVariable(varsNames[i], varsTypes[i]);

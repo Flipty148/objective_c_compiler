@@ -1285,8 +1285,8 @@ bool Type::isCastableTo(Type* other)
 	if (ArrSize != NULL)
 		return false;
 	if (this->DataType == other->DataType) {
-		if (this->DataType == CLASS_NAME_TYPE)
-			return this->ClassName == other->ClassName;
+		if (this->DataType == CLASS_NAME_TYPE && this->ClassName == other->ClassName)
+			return true;
 		else
 			return true;
 	}

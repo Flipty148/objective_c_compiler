@@ -415,6 +415,34 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 	}
 		break;
 	case ASSIGNMENT_EXPRESSION_TYPE:
+	{
+		DataType = Left->DataType;
+		if (!Right->DataType->equal(Left->DataType)) {
+			if (Right->DataType->isCastableTo(Left->DataType)) {
+				Expression_node* cast = new Expression_node();
+				cast->id = maxId++;
+				if (Left->DataType->DataType == INT_TYPE) {
+					cast->type = INT_CAST;
+					cast->DataType = new Type(INT_TYPE);
+				}
+				else if (Left->DataType->DataType == CHAR_TYPE) {
+					cast->type = CHAR_CAST;
+					cast->DataType = new Type(CHAR_TYPE);
+				}
+				else {
+					cast->type = CLASS_CAST;
+					cast->DataType = Left->DataType;
+				}
+				cast->Right = Right;
+				Right = cast;
+			}
+			else {
+				string msg = string("Type '") + Right->DataType->toString() + "' doesn't castable to type '" + Left->DataType->toString();
+				throw new std::exception(msg.c_str());
+			}
+		}
+	}
+	break;
 	case ARRAY_ASSIGNMENT_EXPRESSION_TYPE:
 	{
 		DataType = Left->DataType;

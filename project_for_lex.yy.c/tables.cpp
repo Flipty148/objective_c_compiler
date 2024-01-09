@@ -1282,7 +1282,7 @@ int Type::getDefaultValue()
 
 bool Type::isCastableTo(Type* other)
 {
-	if (ArrSize != NULL)
+	if (ArrSize != NULL || other->ArrSize != NULL)
 		return false;
 	if (this->DataType == other->DataType) {
 		if (this->DataType == CLASS_NAME_TYPE && this->ClassName == other->ClassName)

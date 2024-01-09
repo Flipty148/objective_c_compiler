@@ -68,7 +68,8 @@
 int main()
 {
     int a;
-    int b[10];
+    int b[11];
+    b = a;
     int t = 't';
     char c[] = "abc";
     NSString *st = @"NS";

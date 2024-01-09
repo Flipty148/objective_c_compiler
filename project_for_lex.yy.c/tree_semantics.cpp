@@ -1076,6 +1076,8 @@ string Function_node::getFunction(Type** returnType, Statement_node** bodyStart)
 // ---------- Expression_node ----------
 void Expression_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable *localVariablesTable, ClassesTableElement *classTableElement)
 {
+	checkLvalueError();
+
 	if (type == IDENTIFIER_EXPRESSION_TYPE) {
 		if (!localVariablesTable->isContains(name) && !classTableElement->isContainsField(name)) {
 			string msg = "Variable '" + string(name) + "' not declarated";

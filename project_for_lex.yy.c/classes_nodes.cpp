@@ -1364,7 +1364,8 @@ string Expression_node::toDot(string labelConection)
         res += to_string(id) + ".1 [label=\""+ name +"\"];\n";
         res += to_string(id) + "->" + to_string(id) + ".1 [label=\"name\"];\n";
         res += to_string(id);
-        res += ArgumentsList->toDot("arguments_list");
+        if (ArgumentsList != NULL)
+            res += ArgumentsList->toDot("arguments_list");
     }
     else if (type == UMINUS_EXPRESSION_TYPE)
     {

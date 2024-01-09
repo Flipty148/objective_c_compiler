@@ -55,6 +55,7 @@
 }
 + (void) funcMyClass3
 {
+    // 1=1 = [Myclass2 new];
     obj->a = 10;
     // 1+1->a;
 }

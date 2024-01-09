@@ -390,6 +390,9 @@ class Expression_node
 		virtual void assignmentTransform(); // Преобразование присваивания в дереве
 		virtual void setDataTypesAndCasts(LocalVariablesTable *locals); // Преобразование и установка DataType в дереве
 		virtual void setAttributes(LocalVariablesTable *locals); // Установка атрибутов (ссылок на локальные переменные, поля, методы)
+
+		void checkLvalueError(); // Проверка ошибки левого значения
+		string getTypeName(); // Возвращает имя вида выражения
 private:
 	void arrayAssignmentTransform(); // Преобразование присваивания и массива в дереве
 	void memberAccessAssignmentTransform(); // Преобразование присваивания и оператора точки и стрелочки в дереве

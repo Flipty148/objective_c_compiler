@@ -129,6 +129,10 @@ void Init_declarator_node::semanticTransform(LocalVariablesTable* locals, Type *
 		ArraySize->assignmentTransform();
 		ArraySize->setDataTypesAndCasts(locals);
 		ArraySize->setAttributes(locals);
+		if (!ArraySize->DataType->isCastableTo(new Type(INT_TYPE))) {
+			string msg = "Array size isn't 'int' or castable to 'int'. It has type '" + ArraySize->DataType->toString() + "'";
+			throw new std::exception(msg.c_str());
+		}
 	}
 }
 

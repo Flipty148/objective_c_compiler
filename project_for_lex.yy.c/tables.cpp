@@ -1251,6 +1251,14 @@ bool LocalVariablesTable::isContains(string name)
 
 Type::Type(type_type dataType, string className, Expression_node* arrSize)
 {
+	if (arrSize != NULL) {
+		if (arrSize->type == UMINUS_EXPRESSION_TYPE) {
+			if (arrSize->Right->type == NUMERIIC_CONSTANT_EXPRESSION_TYPE && arrSize->Right->num->Int > 0) {
+				string msg = "Negative array size '" + to_string(arrSize->num->Int) + "'";
+				throw new std::exception(msg.c_str());
+			}
+		}
+	}
 	DataType = dataType;
 	ClassName = className;
 	ArrSize = arrSize;
@@ -1269,6 +1277,14 @@ Type::Type(type_type dataType)
 
 Type::Type(type_type dataType, Expression_node* arrSize)
 {
+	if (arrSize != NULL) {
+		if (arrSize->type == UMINUS_EXPRESSION_TYPE) {
+			if (arrSize->Right->type == NUMERIIC_CONSTANT_EXPRESSION_TYPE && arrSize->Right->num->Int > 0) {
+				string msg = "Negative array size '-" + to_string(arrSize->Right->num->Int) + "'";
+				throw new std::exception(msg.c_str());
+			}
+		}
+	}
 	DataType = dataType;
 	ArrSize = arrSize;
 }

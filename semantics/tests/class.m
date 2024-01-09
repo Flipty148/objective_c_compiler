@@ -68,7 +68,7 @@
 int main()
 {
     int a;
-    int b[@"str"];
+    int b[-10];
     // b = a;
     // b[@"str"] = 1;
     int t = 't';

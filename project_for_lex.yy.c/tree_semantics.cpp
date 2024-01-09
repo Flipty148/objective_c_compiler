@@ -30,11 +30,11 @@ void Function_and_class_list_node::fillTables()
 					for (auto it = vars.begin(); it != vars.end(); it++) {
 						if (element->Fields->items.count(it->first) && element->Fields->items[it->first]->InitialValue != NULL && initializers[it->first] != NULL) {
 							string msg = "Variable '" + it->first + "' redifinition in class '" + className + "'\n";
-							throw std::exception(msg.c_str());
+							throw new std::exception(msg.c_str());
 						}
 						if (element->Fields->items.count(it->first) && (element->Fields->items[it->first]->DescriptorStr != it->second->getDescriptor() || !element->Fields->items[it->first]->type->equal(it->second))) {
 							string msg = "Variable '" + it->first + "' in class '" + className + "' has conflict types.\n";
-							throw std::exception(msg.c_str());
+							throw new std::exception(msg.c_str());
 						}
 						if (!element->Fields->items.count(it->first))
 							element->Fields->addField(element->ConstantTable, it->first, it->second->getDescriptor(), false, it->second, initializers[it->first]);
@@ -56,25 +56,25 @@ void Function_and_class_list_node::fillTables()
 							if (instanceVariables.size() != instVar.size())
 							{
 								string msg = "Instance variables have different size in interface and implementation in class'" + className + "'\n";
-								throw std::exception(msg.c_str());
+								throw new std::exception(msg.c_str());
 							}
 							// Сверить instance variables
 							for (int i = 0; i < instanceVariables.size(); i++)
 							{
 								if (!instVar.count(instanceVariables[i])) {
 									string msg = "Instance variable '" + instanceVariables[i] + "' not found in interface '" + className + "'\n";
-									throw std::exception(msg.c_str());
+									throw new std::exception(msg.c_str());
 								}
 
 								if (instVar[instanceVariables[i]]->InstanceIndex != i+1)
 								{
 									string msg = "Instance variable '" + instanceVariables[i] + "' in class '" + className + "' has different position from the position specified in the interface'\n";
-									throw std::exception(msg.c_str());
+									throw new std::exception(msg.c_str());
 								}
 								if (varTypes[i]->getDescriptor() != instVar[instanceVariables[i]]->DescriptorStr)
 								{
 									string msg = "Instance variable '" + instanceVariables[i] + "' in class '" + className + "' has different type from the type specified in the interface'\n";
-									throw std::exception(msg.c_str());
+									throw new std::exception(msg.c_str());
 								}
 							}
 						}
@@ -101,7 +101,7 @@ void Function_and_class_list_node::fillTables()
 								MethodsTableElement* curMethod = element->Methods->items[it->first];
 								if (descriptor != curMethod->DescriptorStr) {
 									string msg = "Method '" + it->first + "' in class '" + className + "' has different type from the type specified in the interface\n";
-									throw std::exception(msg.c_str());
+									throw new std::exception(msg.c_str());
 								}
 
 								curMethod->BodyStart = startNodes[it->first]; //Добавление тела
@@ -223,11 +223,11 @@ void Function_and_class_list_node::fillTables()
 					for (auto it = vars.begin(); it != vars.end(); it++) {
 						if (element->Fields->items.count(it->first) && element->Fields->items[it->first]->InitialValue != NULL && initializers[it->first] != NULL) {
 							string msg = "Variable '" + it->first + "' redifinition in class '" + className + "'\n";
-							throw std::exception(msg.c_str());
+							throw new std::exception(msg.c_str());
 						}
 						if (element->Fields->items.count(it->first) && (element->Fields->items[it->first]->DescriptorStr != it->second->getDescriptor() || element->Fields->items[it->first]->type->ArrSize != it->second->ArrSize)) {
 							string msg = "Variable '" + it->first + "' in class '" + className + "' has conflict types.\n";
-							throw std::exception(msg.c_str());
+							throw new std::exception(msg.c_str());
 						}
 						element->Fields->addField(element->ConstantTable, it->first, it->second->getDescriptor(), false, it->second, initializers[it->first]);
 					}
@@ -408,7 +408,7 @@ map<string, Type*> Interface_body_node::getMethods(map<string, vector<string>*>*
 				if (res.count(methodName))
 				{
 					string msg = "Method '" + methodName + "' redeclaration.\n";
-					throw std::exception(msg.c_str());
+					throw new std::exception(msg.c_str());
 				}
 				(*keywordsNames)[methodName] = curKeywordsNames;
 				(*keywordsTypes)[methodName] = curKeywordsTypes;
@@ -561,7 +561,7 @@ map<string, Type*> Implementation_body_node::getMethods(map<string, vector<strin
 				if (res.count(methodName))
 				{
 					string msg = "Method '" + methodName + "' redifinition.\n";
-					throw std::exception(msg.c_str());
+					throw new std::exception(msg.c_str());
 				}
 				(*keywordsNames)[methodName] = curKeywordsNames;
 				(*keywordsTypes)[methodName] = curKeywordsTypes;

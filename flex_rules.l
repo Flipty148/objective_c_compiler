@@ -292,40 +292,83 @@ int countChar(const char *str, char character)
 
 int main(int argc, char* argv[])
 {
-    if ( argc > 1 )
-            yyin = fopen( argv[1], "r" );
-    else
-            yyin = stdin;
+   if ( argc > 1 )
+        yyin = fopen( argv[1], "r" );
+else
+        yyin = stdin;
 
-    printf("Start parsing\n");
-    int parseRes = yyparse();
-    if (parseRes == 0) {
-        printf("Successful parsing\n");
+printf("Start parsing\n");
+int parseRes = yyparse(); //Синтаксический разбор
+if (parseRes == 0) {
+    printf("Successful parsing\n");
 
-        printf("Start generating dot file before semantic analysis\n");
-        string res = root->toDot();
-        ofstream out("dot_before.dot");
-        out << res;
-        out.close();
-        printf("Successful generating dot file before semantic analysis\n");
-        
-        printf("Start semantic analysis\n");
-        root->fillClassesTable();
-        printf("Successful semantic analysis\n");
+	bool isPreviousSuccess = true;
 
-        printf("Start printing tables after semantic analysis\n");
-        filesystem::path p = filesystem::path("./out/");
-        filesystem::remove_all(p);
-        filesystem::create_directory(p);
-        ClassesTable::toCsvFile("./out/");
-        FunctionsTable::toCsvFile("FunctionsTable.csv", "./out/");
-        printf("Successful printing tables after semantic analysis\n");
+	//Построение dot дерева до семантического анализа
+	if (isPreviousSuccess) {
+		try {
+			printf("Start generating dot file before semantic analysis\n");
+			string res = root->toDot();
+			ofstream out("dot_before.dot");
+			out << res;
+			out.close();
+			printf("Successful generating dot file before semantic analysis\n");
+		}
+		catch (...) {
+			printf("Failed generating dot file before semantic analysis\n");
+			isPreviousSuccess = false;
+		}
+	}
+    
+	//Семантический анализ
+	if (isPreviousSuccess) {
+		try {
+			printf("Start semantic analysis\n");
+			root->fillClassesTable();
+			printf("Successful semantic analysis\n");
+		}
+		catch (std::exception *e) {
+            printf("%s", e->what());
+            isPreviousSuccess = false;
+        }
+        catch (...) {
+            printf("Failed semantic analysis\n");
+            isPreviousSuccess = false;
+        }
+		
+	}
 
-        printf("Start generating dot file after semantic analysis\n");
-        res = root->toDot();
-        out.open("dot_after.dot");
-        out << res;
-        out.close();
-        printf("Successful generating dot file after semantic analysis\n");
-    }
+	// Вывод таблиц после семантического анализа
+	if (isPreviousSuccess) {
+		try {
+			printf("Start printing tables after semantic analysis\n");
+			filesystem::path p = filesystem::path("./out/");
+			filesystem::remove_all(p);
+			filesystem::create_directory(p);
+			ClassesTable::toCsvFile("./out/");
+			FunctionsTable::toCsvFile("FunctionsTable.csv", "./out/");
+			printf("Successful printing tables after semantic analysis\n");
+		}
+		catch (...) {
+			printf("Failed printing tables after semantic analysis\n");
+			isPreviousSuccess = false;
+		}
+	}
+
+	//Построение dot дерева после семантического анализа
+	if (isPreviousSuccess) {
+		try {
+			printf("Start generating dot file after semantic analysis\n");
+			string res = root->toDot();
+			ofstream out("dot_after.dot");
+			out << res;
+			out.close();
+			printf("Successful generating dot file after semantic analysis\n");
+		}
+		catch (...) {
+			printf("Failed generating dot file after semantic analysis\n");
+			isPreviousSuccess = false;
+		}
+	}
+}
 }

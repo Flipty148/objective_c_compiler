@@ -366,15 +366,15 @@ ClassesTableElement* ClassesTable::addClass(string name, string* superclassName,
 
 	if (!isImplementation && items.count(fullName) && items[fullName]->IsImplementation) { // Проверка, чтобы интерфейс класса при его наличии находился раньше реализации
 		string msg = "Class interface'" + name + "' after implementation";
-		throw std::exception(msg.c_str());
+		throw new std::exception(msg.c_str());
 	}
 	else if (items.count(fullName) && items[fullName]->IsImplementation == isImplementation) { // Проверка на повторное объявление класса
 		string msg = "Rediifnition of class '" + name + "'";
-		throw std::exception(msg.c_str());
+		throw new std::exception(msg.c_str());
 	}
 	else if (superclassName != NULL && items.count(fullName) && items[fullName]->ConstantTable->getConstantString(items[fullName]->SuperclassName) != *fullSuperclassName) { // Проверка на совпадение суперкласса в интерфейсе и реаизации
 		string msg = "Class '" + name + "' with different superclass";
-		throw std::exception(msg.c_str());
+		throw new std::exception(msg.c_str());
 	}
 	else if (items.count(fullName) && !items[fullName]->IsImplementation && isImplementation) { // Объявление реализации после интерфейса
 		items[fullName]->IsImplementation = true;
@@ -918,7 +918,7 @@ string ClassesTable::getFullClassName(string name)
 		fullName = "global/" + name;
 	if (items.count(fullName) == 0) {
 		string msg = "Class '" + name + "' not found";
-		throw std::exception(msg.c_str());
+		throw new std::exception(msg.c_str());
 	}
 	return fullName;
 }

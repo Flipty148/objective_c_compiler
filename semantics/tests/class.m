@@ -76,13 +76,13 @@ int main()
     NSString *st = @"NS";
     if ("abc" != "abc") return 0;
     Myclass* obj = [Myclass new];
-    // int i;
-    // for ( i in obj) {
+    int i;
+    for ( i in obj) {
+
+    }
+    // for (NSString *str in st) {
 
     // }
-    for (NSString *str in st) {
-        
-    }
     [Myclass func: 2 :3];
     obj->a;
     return 0;

@@ -11,7 +11,7 @@ void Expression_node::checkLvalueError()
 
 		if (isIncorrectLvalue) {
 			string msg = "Incorrect lvalue. Lvalue have '" + Left->getTypeName() + "' type";
-			throw std::exception(msg.c_str());
+			throw new std::exception(msg.c_str());
 		}
 	}
 }
@@ -118,7 +118,7 @@ void For_statement_node::checkFastEnumerationTypes(LocalVariablesTable* locals)
 	if (locals->isContains(name)) { //Локальная переменная
 		Type* type = locals->items[name]->type;
 		if (type->ClassName == "") {
-			string msg = "Variable in fast enumeration isn't an object. It has type '" + type->toString();
+			string msg = "Variable in fast enumeration isn't an object. It has type '" + type->toString() + "'";
 			throw new std::exception(msg.c_str());
 		}
 	}
@@ -131,7 +131,7 @@ void For_statement_node::checkFastEnumerationTypes(LocalVariablesTable* locals)
 				FieldsTableElement* field = selfClass->getFieldForRef(name, &descr, &className);
 				Type* type = field->type;
 				if (type->ClassName == "") {
-					string msg = "Variable in fast enumeration isn't an object. It has type '" + type->toString();
+					string msg = "Variable in fast enumeration isn't an object. It has type '" + type->toString() + "'";
 					throw new std::exception(msg.c_str());
 				}
 			}

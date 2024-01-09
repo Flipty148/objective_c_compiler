@@ -1,8 +1,7 @@
 Id|Name|Type
 1|a|int
-2|b|int[ expr(216) ]
-4|c|char
-6|obj|global/Myclass
+3|c|char
+5|obj|global/Myclass
 0|self|rtl/Program
-5|st|rtl/NSString
-3|t|int
+4|st|rtl/NSString
+2|t|int

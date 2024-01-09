@@ -739,6 +739,12 @@ void Method_selector_node::getParams(vector<string>* keywordsNames, vector<Type*
 		for (auto it = keywordsList->cbegin(); it < keywordsList->cend(); it++)
 		{
 			Keyword_declaration_node* keyword = *it; //Ключевое слово
+
+			if (keyword->Identifier != NULL) {
+					string msg = "ERROR! Unsupported identifiers in keyword: '" + string(keyword->Identifier) + "' in method '" + MethodName + "'";
+					throw new std::exception(msg.c_str());
+			}
+
 			string name = string(keyword->KeywordName); //Имя
 			Type* type = keyword->KeywordType->toDataType(); //Тип
 			if (std::find(keywordsNames->begin(), keywordsNames->end(), name) != keywordsNames->end()) { //Переопределение параметра

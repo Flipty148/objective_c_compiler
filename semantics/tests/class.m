@@ -30,7 +30,7 @@
         }
         return first + second;
     }
-    - (void) func2: (int) first :(int) second
+    - (void) func2: (int) first a:(int) second
     {
         int test[10];
         d = first + second;
@@ -68,7 +68,7 @@
 int main()
 {
     int a;
-    int b[-10];
+    // int b[-10];
     // b = a;
     // b[@"str"] = 1;
     int t = 't';

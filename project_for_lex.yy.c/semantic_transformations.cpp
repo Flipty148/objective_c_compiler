@@ -387,6 +387,10 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 		break;
 	case ARRAY_ELEMENT_ACCESS_EXPRESSION_TYPE:
 	{
+		if (!Right->DataType->isCastableTo(new Type(INT_TYPE))) {
+			string msg = "Array element access isn't 'int' or castable to 'int'. It have type '" + Right->DataType->toString() + "'";
+			throw new std::exception(msg.c_str());
+		}
 		DataType = new Type(Left->DataType->DataType, Left->DataType->ClassName);
 	}
 		break;
@@ -445,6 +449,10 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 	break;
 	case ARRAY_ASSIGNMENT_EXPRESSION_TYPE:
 	{
+		if (!Child->DataType->isCastableTo(new Type(INT_TYPE))) {
+			string msg = "Array element access isn't 'int' or castable to 'int'. It has type '" + Child->DataType->toString() + "'";
+			throw new std::exception(msg.c_str());
+		}
 		DataType = Left->DataType;
 		if (!Right->DataType->equal(new Type(Left->DataType->DataType))) {
 			if (Right->DataType->isCastableTo(Left->DataType)) {

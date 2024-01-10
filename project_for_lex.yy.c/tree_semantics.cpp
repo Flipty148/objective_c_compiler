@@ -687,8 +687,10 @@ string Method_definition_node::getMethod(Type** returnType, vector<string>* keyw
 {
 	if (MethodType != NULL)
 		*returnType = MethodType->toDataType(); // Тип возвращаемого значения
-	else
+	else {
+		MethodType = Type_node::createTypeNode(ID_TYPE); // Создать вершину возвращаемого значения
 		*returnType = new Type(ID_TYPE); // Тип возвращаемого значения по умолчанию
+	}
 	string methodName = string(MethodSelector->MethodName); // Имя метода
 	// Тип метода
 	if (type == CLASS_METHOD_DECLARATION_TYPE) {

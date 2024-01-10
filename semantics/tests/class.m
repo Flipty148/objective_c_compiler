@@ -59,7 +59,7 @@
     obj->a = 10;
     // 1+1->a;
 }
-- (void) func
+-  func
 {
     [obj1 func2: 't' :'a'];
 }

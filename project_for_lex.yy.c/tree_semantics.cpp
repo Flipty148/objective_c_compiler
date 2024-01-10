@@ -685,7 +685,10 @@ string Method_declaration_node::getMethod(Type** returnType, vector<string>* key
 // ---------- Method_definition_node ----------
 string Method_definition_node::getMethod(Type** returnType, vector<string>* keywordsNames, vector<Type*>* keywordsTypes, vector<string>* parametersNames, vector<Type*>* parametersTypes, bool* isClassmethod, Statement_node** bodyStart)
 {
-	*returnType = MethodType->toDataType(); // Тип возвращаемого значения
+	if (MethodType != NULL)
+		*returnType = MethodType->toDataType(); // Тип возвращаемого значения
+	else
+		*returnType = new Type(ID_TYPE); // Тип возвращаемого значения по умолчанию
 	string methodName = string(MethodSelector->MethodName); // Имя метода
 	// Тип метода
 	if (type == CLASS_METHOD_DECLARATION_TYPE) {

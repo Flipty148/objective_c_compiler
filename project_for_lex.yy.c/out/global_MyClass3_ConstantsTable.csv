@@ -9,19 +9,20 @@ ID|Type|Value
 8|UTF8|obj1
 9|UTF8|Lglobal/Myclass;
 10|UTF8|funcDynamic
-11|UTF8|()V
+11|UTF8|()Lrtl/NSObject;
 12|UTF8|funcMyClass3Static
-13|NameAndType|8, 9
-14|FieldRef|13, 4
-15|UTF8|a
-16|UTF8|I
-17|NameAndType|15, 16
-18|FieldRef|17, 5
-19|NameAndType|6, 7
-20|FieldRef|19, 4
-21|UTF8|global/Myclass
-22|Class|21
-23|UTF8|func2
-24|UTF8|(II)V
-25|NameAndType|23, 24
-26|MethodRef|25, 22
+13|UTF8|()V
+14|NameAndType|8, 9
+15|FieldRef|14, 4
+16|UTF8|a
+17|UTF8|I
+18|NameAndType|16, 17
+19|FieldRef|18, 5
+20|NameAndType|6, 7
+21|FieldRef|20, 4
+22|UTF8|global/Myclass
+23|Class|22
+24|UTF8|func2
+25|UTF8|(II)V
+26|NameAndType|24, 25
+27|MethodRef|26, 23

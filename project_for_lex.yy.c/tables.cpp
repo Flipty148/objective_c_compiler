@@ -278,7 +278,7 @@ bool ClassesTableElement::isContainsField(string fieldName)
 		return true;
 	else {
 		if (SuperclassName != NULL)
-			return ClassesTable::items[getSuperClassName()]->isContainsField(fieldName); //TODO: check types
+			return ClassesTable::items[getSuperClassName()]->isContainsField(fieldName);
 	}
 	return false;
 }
@@ -351,8 +351,6 @@ map<string, ClassesTableElement*> ClassesTable::items;
 
 ClassesTableElement* ClassesTable::addClass(string name, string* superclassName, bool isImplementation, Class_block_node* classBlock)
 {
-	//TODO: Добавить проверку на наличие реализации метода при наличии интерфейса
-	//TODO: Проверка на соответствие необходимых элементов в реализации и интерфейсе
 	string fullName = "global/" + name;
 	string* fullSuperclassName = NULL;
 	if (superclassName != NULL) {

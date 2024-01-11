@@ -2335,11 +2335,11 @@ if (parseRes == 0) {
 	if (isPreviousSuccess) {
 		try {
 			printf("Start printing tables after semantic analysis\n");
-			filesystem::path p = filesystem::path("./out/");
+			filesystem::path p = filesystem::path("./out/tables/");
 			filesystem::remove_all(p);
 			filesystem::create_directory(p);
-			ClassesTable::toCsvFile("./out/");
-			FunctionsTable::toCsvFile("FunctionsTable.csv", "./out/");
+			ClassesTable::toCsvFile("./out/tables/");
+			FunctionsTable::toCsvFile("FunctionsTable.csv", "./out/tables/");
 			printf("Successful printing tables after semantic analysis\n");
 		}
 		catch (...) {
@@ -2362,6 +2362,22 @@ if (parseRes == 0) {
 			printf("Failed generating dot file after semantic analysis\n");
 			isPreviousSuccess = false;
 		}
+	}
+
+	//Генерация .class файлов
+	if (isPreviousSuccess) {
+		//try {
+			printf("Start code generation\n");
+			filesystem::path p = filesystem::path("./out/code/global/");
+			filesystem::remove_all(p);
+			filesystem::create_directory(p);
+			ClassesTable::generateClassFiles("./out/code/");
+			printf("Successful code generation\n");
+		//}
+		//catch (...) {
+		//	printf("Failed code generation\n");
+		//	isPreviousSuccess = false;
+		//}
 	}
 }
 }

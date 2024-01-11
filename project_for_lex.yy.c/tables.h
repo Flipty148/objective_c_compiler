@@ -141,6 +141,9 @@ public:
 
 
 	void semanticTransform();
+
+	void generateClassFile(string filepath); //Генерация файла .class
+	bool isNeedToGenerateClassFile(); //Проверка необходимости генерации файла .class
 };
 
 class ClassesTable
@@ -161,6 +164,8 @@ public:
 	static string getFullClassName(string name); //Получение полного имени класса по короткому
 
     static void semanticTransform(); // Преобразования дерева
+
+	static void generateClassFiles(string filepath); //Генерация файла .class
 
 private:
     static void initClassProgram();

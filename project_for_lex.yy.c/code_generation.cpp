@@ -38,6 +38,35 @@ void ClassesTableElement::generateClassFile(string filepath)
 	vector<char> constantTableBytes = ConstantTable->generateBytes(); //Генерация таблицы констант
 	CodeGenerationHelpers::appendArrayToByteVector(data, constantTableBytes.data(), constantTableBytes.size()); //Добавление таблицы констант
 
+	//Флаги доступа
+	data->push_back(0x00); //Отсутствие ACC_ABSTRACT ????
+	data->push_back(0x21); //ACC_SUPER + ACC_PUBLIC
+
+	//Текущий класс
+	vector<char> classNameBytes = CodeGenerationHelpers::intToByteArray(ThisClass, 2); //Конвертация имени текущего класса в байты
+	CodeGenerationHelpers::appendArrayToByteVector(data, classNameBytes.data(), classNameBytes.size()); //Добавление имени текущего класса в байты
+
+	//Класс-родитель
+	vector<char> superClassBytes = CodeGenerationHelpers::intToByteArray(Superclass, 2); //Конвертация имени родительского класса в байты
+	CodeGenerationHelpers::appendArrayToByteVector(data, superClassBytes.data(), superClassBytes.size()); //Добавление имени родительского класса в байты
+
+	//Количество интерфейсов
+	vector<char> interfaceCountBytes = CodeGenerationHelpers::intToByteArray(0, 2); //Конвертация количества интерфейсов в байты
+	CodeGenerationHelpers::appendArrayToByteVector(data, interfaceCountBytes.data(), interfaceCountBytes.size()); //Добавление количества интерфейсов в байты
+
+	//Поля класса
+	int fieldCount = Fields->items.size(); //Количество полей TODO: Сделать
+	vector<char> fieldCountBytes = CodeGenerationHelpers::intToByteArray(0, 2); //Конвертация количества полей в байты
+	CodeGenerationHelpers::appendArrayToByteVector(data, fieldCountBytes.data(), fieldCountBytes.size()); //Добавление количества полей в байты
+	
+	//Методы класса
+	int methodCount = Methods->items.size(); //Количество методов TODO: Сделать
+	vector<char> methodCountBytes = CodeGenerationHelpers::intToByteArray(0, 2); //Конвертация количества методов в байты
+	CodeGenerationHelpers::appendArrayToByteVector(data, methodCountBytes.data(), methodCountBytes.size()); //Добавление количества методов в байты
+	
+	//Атрибуты класса
+	vector<char> attributeCountBytes = CodeGenerationHelpers::intToByteArray(0, 2); //Конвертация количества атрибутов в байты
+	CodeGenerationHelpers::appendArrayToByteVector(data, attributeCountBytes.data(), attributeCountBytes.size()); //Добавление количества атрибутов в байты
 
 	ofstream out(classFile, ios::out | ios::binary); //Создание и открытие потока на запись в файл
 	out.write(data->data(), data->size()); //Запись в файл

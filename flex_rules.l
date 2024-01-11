@@ -370,5 +370,21 @@ if (parseRes == 0) {
 			isPreviousSuccess = false;
 		}
 	}
+
+    //Генерация .class файлов
+    if (isPreviousSuccess) {
+        try {
+            printf("Start code generation\n");
+            filesystem::path p = filesystem::path("./out/code/global/");
+            filesystem::remove_all(p);
+            filesystem::create_directory(p);
+            ClassesTable::generateClassFiles("./out/code/");
+            printf("Successful code generation\n");
+        }
+        catch (...) {
+            printf("Failed code generation\n");
+            isPreviousSuccess = false;
+        }
+    }
 }
 }

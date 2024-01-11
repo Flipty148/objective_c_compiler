@@ -14,13 +14,13 @@ class Type;
 // ---------- Таблица констант ----------
 
 enum constantType {
-    UTF8,
-    Integer,
-    String,
-    Class,
-    NameAndType,
-    FieldRef,
-    MethodRef
+    UTF8 = 1,
+    Integer = 3,
+    String = 8,
+    Class = 7,
+    NameAndType = 12,
+    FieldRef = 9,
+    MethodRef = 10
 };
 
 class ConstantsTableElement
@@ -37,6 +37,8 @@ public:
     ConstantsTableElement(int id, constantType type, int number = NULL, int firstRef = NULL, int secondRef = NULL);
 
     string toCsvString(char separator = '|'); //Преобразование в строку формата CSV
+
+	vector<char> generateBytes(); //Генерация байт кода константы
 };
 
 class ConstantsTable
@@ -57,6 +59,8 @@ public:
     int findOrAddFieldRefConstant(string className, string fieldName, string descriptor); // Поиск или формирование константы fieldRef
 
 	int findOrAddMethodRefConstant(string className, string methodName, string descriptor); // Поиск или формирование константы methodRef
+
+	vector<char> generateBytes(); //Генерация байт кода таблицы констант
 private:
     int findConstant(constantType type, string* utf8string, int number = NULL, int firstRef = NULL, int secondRef = NULL);
 };

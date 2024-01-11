@@ -12,4 +12,14 @@ void CodeGenerationHelpers::appendArrayToByteVector(vector<char>* data, unsigned
 		data->push_back(array[i]);
 	}
 }
+
+vector<unsigned char> CodeGenerationHelpers::intToByteArray(int num, int arraySize)
+{
+	vector<unsigned char> result(arraySize);
+	for (int i = 0; i < arraySize; i++)
+	{
+		result[arraySize - i - 1] = (num >> ( i * 8));
+	}
+	return result;
+}
  

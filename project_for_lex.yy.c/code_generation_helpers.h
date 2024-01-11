@@ -12,4 +12,6 @@ public:
 	static unsigned char bigVersion[2]; // Большая версия формата файла
 
 	static void appendArrayToByteVector(vector<char>* data, unsigned char array[], int arraySize); // Добавление массива байт в вектор
+	static vector<unsigned char> intToByteArray(int num, int arraySize); // Генерация вектора байт
+
 };

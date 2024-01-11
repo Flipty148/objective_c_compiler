@@ -1,0 +1,12 @@
+ID|Type|Value
+1|UTF8|Code
+2|UTF8|global/MyClass6
+3|UTF8|global/MyClass5
+4|Class|2
+5|Class|3
+6|UTF8|printAStatic
+7|UTF8|()V
+8|UTF8|a
+9|UTF8|I
+10|NameAndType|8, 9
+11|FieldRef|10, 5

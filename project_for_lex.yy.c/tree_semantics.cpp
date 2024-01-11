@@ -40,8 +40,11 @@ void Function_and_class_list_node::fillTables()
 							element->Fields->addField(element->ConstantTable, it->first, it->second->getDescriptor(), false, it->second, initializers[it->first]);
 					}
 
+					
 					vector<Type*> varTypes;
-					vector<string> instanceVariables = curImplementation->Body->getInstanceVariables(&varTypes);
+					vector<string> instanceVariables;
+					if (curImplementation->Body->Variables != NULL)
+						instanceVariables = curImplementation->Body->getInstanceVariables(&varTypes);
 
 					if (element->IsHaveInterface) { // У класса был интерфейс
 						// Проверить instance variables

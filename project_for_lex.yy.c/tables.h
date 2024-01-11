@@ -198,6 +198,8 @@ public:
     string toCsvString(char separator = '|'); //Преобразование в строку формата CSV
 
     void fillLiterals(ConstantsTable* constantTable);
+
+	vector<char> generateBytes(); //Генерация байт кода поля
 };
 
 class FieldsTable
@@ -209,6 +211,8 @@ public:
     void addField(ConstantsTable* constantTable, string name, string descriptor, bool isInstance, Type* type, Expression_node* initValue);
 
     void toCsvFile(string filename, string filepath, char separator = '|'); //Преобразование в CSV-файл
+
+	vector<char> generateBytes(); //Генерация байт кода таблицы полей
 };
 
 // ---------- Таблица методов ----------

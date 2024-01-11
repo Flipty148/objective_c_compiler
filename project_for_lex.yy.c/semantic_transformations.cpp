@@ -326,8 +326,14 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 		break;
 	case FUNCTION_CALL_EXPRESSION_TYPE:
 	{
-		DataType = FunctionsTable::items[name]->ReturnType;
-		ArgumentsList->setDataTypesAndCasts(locals);
+		if (FunctionsTable::items.count(name) != 0) {
+			DataType = FunctionsTable::items[name]->ReturnType;
+			ArgumentsList->setDataTypesAndCasts(locals);
+		}
+		else {
+			string msg = "Function '" + string(name) + "' doesn't exist";
+			throw new std::exception(msg.c_str());
+		}
 	}
 		break;
 	case UMINUS_EXPRESSION_TYPE:

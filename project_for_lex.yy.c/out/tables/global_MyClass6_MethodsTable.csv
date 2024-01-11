@@ -1,2 +1,2 @@
 Name|Descriptor|IsClassMethod|ReturnType|ParamsTypes|KeywordsTypes|BodyStartStatementId|LocalVariablesTableName
-22 (main)|23 (()I)|true|int|||231|rtl_Program_MethodsTable_main_LocalVariablesTable.csv
+6 (printAStatic)|7 (()V)|true|void|||220|global_MyClass6_MethodsTable_printAStatic_LocalVariablesTable.csv

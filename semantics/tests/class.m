@@ -65,6 +65,19 @@
 }
 @end
 
+@implementation MyClass5 : NSObject
+
+int a = 10;
+
+@end
+
+@implementation MyClass6 : MyClass5
+
++ (void) printA {
+    a = 5;
+}
+@end
+
 int main()
 {
     int a;

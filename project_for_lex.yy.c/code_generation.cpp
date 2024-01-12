@@ -62,9 +62,11 @@ void ClassesTableElement::generateClassFile(string filepath)
 	CodeGenerationHelpers::appendArrayToByteVector(data, fieldTableBytes.data(), fieldTableBytes.size()); //Добавление таблицы полей
 	
 	//Методы класса
-	int methodCount = Methods->items.size(); //Количество методов TODO: Сделать
-	vector<char> methodCountBytes = CodeGenerationHelpers::intToByteArray(0, 2); //Конвертация количества методов в байты
+	int methodCount = Methods->items.size(); //Количество методов
+	vector<char> methodCountBytes = CodeGenerationHelpers::intToByteArray(methodCount, 2); //Конвертация количества методов в байты
 	CodeGenerationHelpers::appendArrayToByteVector(data, methodCountBytes.data(), methodCountBytes.size()); //Добавление количества методов в байты
+	vector<char> methodTableBytes = Methods->generateBytes(); //Генерация таблицы методов
+	CodeGenerationHelpers::appendArrayToByteVector(data, methodTableBytes.data(), methodTableBytes.size()); //Добавление таблицы методов
 	
 	//Атрибуты класса
 	vector<char> attributeCountBytes = CodeGenerationHelpers::intToByteArray(0, 2); //Конвертация количества атрибутов в байты
@@ -180,6 +182,45 @@ vector<char> FieldsTableElement::generateBytes()
 	CodeGenerationHelpers::appendArrayToByteVector(&res, typeBytes.data(), typeBytes.size());
 
 	//Добавление атрибутов
+	res.push_back(0x00);
+	res.push_back(0x00);
+
+	return res;
+}
+
+// -------------------- Таблица методов --------------------
+vector<char> MethodsTable::generateBytes()
+{
+	vector<char> res;
+	for (auto iter = items.cbegin(); iter != items.cend(); ++iter) {
+		vector<char> bytes = iter->second->generateBytes();
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+	}
+	return res;
+}
+
+vector<char> MethodsTableElement::generateBytes()
+{
+	vector<char> res;
+
+	// Добавление флага доступа
+	char publicDynamicFlag[2] = { 0x00, 0x01 }; //ACC_PUBLIC
+	char publicStaticFlag[2] = { 0x00, 0x09 }; //ACC_PUBLIC + ACC_STATIC
+
+	if (IsClassMethod)
+		CodeGenerationHelpers::appendArrayToByteVector(&res, publicStaticFlag, 2);
+	else
+		CodeGenerationHelpers::appendArrayToByteVector(&res, publicDynamicFlag, 2);
+
+	//Добавление имени метода
+	vector<char> nameBytes = CodeGenerationHelpers::intToByteArray(Name, 2);
+	CodeGenerationHelpers::appendArrayToByteVector(&res, nameBytes.data(), nameBytes.size());
+
+	// Добавление дескриптора метода
+	vector<char> typeBytes = CodeGenerationHelpers::intToByteArray(Descriptor, 2);
+	CodeGenerationHelpers::appendArrayToByteVector(&res, typeBytes.data(), typeBytes.size());
+
+	//Добавление атрибутов TODO:Code
 	res.push_back(0x00);
 	res.push_back(0x00);
 

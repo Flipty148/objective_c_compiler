@@ -243,6 +243,9 @@ public:
 
     void semanticTransform();
     void addDefaultReturn(Statement_node *lastStatement);
+
+
+	vector<char> generateBytes(); //Генерация байт кода метода
 };
 
 class MethodsTable
@@ -253,6 +256,8 @@ public:
     MethodsTableElement* addMethod(ConstantsTable* constantTable, string name, string descriptor, bool isClassMethod, Statement_node* bodyStart, Type* returnType, vector<Type*>* paramsTypes, vector<Type*>* keywordsTypes);
 
     void toCsvFile(string filename, string filepath, char separator = '|'); //Преобразование в CSV-файл
+
+	vector<char> generateBytes(); //Генерация байт кода таблицы методов
 };
 
 // ----------- Таблица свойств ----------

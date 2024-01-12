@@ -246,6 +246,7 @@ public:
 
 
 	vector<char> generateBytes(); //Генерация байт кода метода
+	vector<char> generateCodeAttribute(); //Генерация атрибута Code для метода
 };
 
 class MethodsTable

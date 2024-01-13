@@ -73,4 +73,5 @@ public:
 	static vector<char> iaload();
 	static vector<char> aaload();
 	static vector<char> iastore();
+	static vector<char> aastore();
 };

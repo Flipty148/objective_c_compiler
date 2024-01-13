@@ -408,3 +408,10 @@ vector<char> CodeGenerationCommands::iastore()
 	return res;
 }
 
+// ---------- aastore ----------
+vector<char> CodeGenerationCommands::aastore()
+{
+	vector<char> res;
+	res.push_back(0x53); //aastore
+	return res;
+}

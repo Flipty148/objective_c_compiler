@@ -84,4 +84,7 @@ public:
 	static vector<char> checkcast(int constant);
 
 	// ---------- КОМАНДЫ РАБОТЫ С МЕТОДАМИ ----------
+
+	static vector<char> invokevirtual(int constant);
+	static vector<char> invokespecial(int constant);
 };

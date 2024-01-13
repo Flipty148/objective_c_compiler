@@ -185,3 +185,11 @@ vector<char> CodeGenerationCommands::astore(int num)
 
 	return res;
 }
+
+// ---------- pop ----------
+vector<char> CodeGenerationCommands::pop()
+{
+	vector <char> res;
+	res.push_back(0x57);
+	return res;
+}

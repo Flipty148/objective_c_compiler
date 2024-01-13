@@ -72,4 +72,5 @@ public:
 	static vector<char> arraylength();
 	static vector<char> iaload();
 	static vector<char> aaload();
+	static vector<char> iastore();
 };

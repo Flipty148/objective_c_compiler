@@ -400,3 +400,11 @@ vector<char> CodeGenerationCommands::aaload()
 	return res;
 }
 
+// ---------- iastore ----------
+vector<char> CodeGenerationCommands::iastore()
+{
+	vector<char> res;
+	res.push_back(0x4F); //iastore
+	return res;
+}
+

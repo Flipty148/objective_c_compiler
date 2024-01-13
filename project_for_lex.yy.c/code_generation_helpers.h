@@ -16,3 +16,9 @@ public:
 	static vector<char> intToByteArray(int num, int arraySize); // Генерация вектора байт
 
 };
+
+class CodeGenerationCommands
+{
+public:
+	static vector<char> iconstBipushSipush(int num);
+};

@@ -165,6 +165,7 @@ vector<char> CodeGenerationCommands::istore(int num)
 	return res;
 }
 
+// ---------- astore ----------
 vector<char> CodeGenerationCommands::astore(int num)
 {
 	vector<char> res;
@@ -191,5 +192,13 @@ vector<char> CodeGenerationCommands::pop()
 {
 	vector <char> res;
 	res.push_back(0x57);
+	return res;
+}
+
+// ---------- dup ----------
+vector<char> CodeGenerationCommands::dup()
+{
+	vector <char> res;
+	res.push_back(0x59);
 	return res;
 }

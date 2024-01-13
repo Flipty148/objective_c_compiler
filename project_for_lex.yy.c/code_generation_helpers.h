@@ -74,6 +74,7 @@ public:
 	static vector<char> caload();
 	static vector<char> aaload();
 	static vector<char> iastore();
+	static vector<char> castore();
 	static vector<char> aastore();
 
 	// ---------- КОМАНДЫ РАБОТЫ С ОБЪЕКТАМИ ----------

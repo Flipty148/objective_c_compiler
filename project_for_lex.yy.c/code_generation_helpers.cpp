@@ -416,6 +416,14 @@ vector<char> CodeGenerationCommands::iastore()
 	return res;
 }
 
+// ---------- castore ----------
+vector<char> CodeGenerationCommands::castore()
+{
+	vector<char> res;
+	res.push_back(0x55); //castore
+	return res;
+}
+
 // ---------- aastore ----------
 vector<char> CodeGenerationCommands::aastore()
 {

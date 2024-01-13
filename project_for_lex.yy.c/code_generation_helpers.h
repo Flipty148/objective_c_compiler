@@ -80,4 +80,5 @@ public:
 	static vector<char> new_(int constant);
 	static vector<char> getfield(int constant);
 	static vector<char> putfield(int constant);
+	static vector<char> instanceof(int constant);
 };

@@ -445,3 +445,13 @@ vector<char> CodeGenerationCommands::putfield(int constant)
 	CodeGenerationHelpers::appendArrayToByteVector(&res, temp.data(), temp.size());
 	return res;
 }
+
+// ---------- instanceof ----------
+vector<char> CodeGenerationCommands::instanceof(int constant)
+{
+	vector <char> res;
+	res.push_back(0xC1); //instanceof
+	vector <char> temp = CodeGenerationHelpers::intToByteArray(constant, 2);
+	CodeGenerationHelpers::appendArrayToByteVector(&res, temp.data(), temp.size());
+	return res;
+}

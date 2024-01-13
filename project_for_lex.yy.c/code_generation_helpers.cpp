@@ -376,4 +376,12 @@ vector<char> CodeGenerationCommands::anewarray(int constant)
 	return res;
 }
 
+// ---------- arraylength ----------
+vector<char> CodeGenerationCommands::arraylength()
+{
+	vector<char> res;
+	res.push_back(0xBE); //arraylength
+	return res;
+}
+
 

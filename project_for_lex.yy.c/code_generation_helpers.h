@@ -78,4 +78,5 @@ public:
 	// ---------- КОМАНДЫ РАБОТЫ С ОБЪЕКТАМИ ----------
 
 	static vector<char> new_(int constant);
+	static vector<char> getfield(int constant);
 };

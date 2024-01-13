@@ -38,4 +38,5 @@ public:
 	static vector<char> imul();
 	static vector<char> isub();
 	static vector<char> idiv();
+	static vector<char> iinc();
 };

@@ -39,4 +39,15 @@ public:
 	static vector<char> isub();
 	static vector<char> idiv();
 	static vector<char> iinc();
+
+	// ---------- КОМАНДЫ ПЕРЕДАЧИ УПРАВЛЕНИЯ ----------
+	enum IfCommandType {
+		EQ,
+		NE,
+		LT,
+		LE,
+		GT,
+		GE
+	};
+	static vector<char> if_icmp(IfCommandType type, int offset);
 };

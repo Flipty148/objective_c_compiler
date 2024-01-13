@@ -251,4 +251,37 @@ vector<char> CodeGenerationCommands::iinc()
 	return res;
 }
 
+vector<char> CodeGenerationCommands::if_icmp(IfCommandType type, int offset)
+{
+	vector<char> res;
+	switch (type)
+	{
+	case EQ:
+		res.push_back(0x9F); //if_icmpeq
+		break;
+	case NE:
+		res.push_back(0xA0); //if_icmpne
+		break;
+	case LT:
+		res.push_back(0xA1); //if_icmplt
+		break;
+	case LE:
+		res.push_back(0xA4); //if_icmple
+		break;
+	case GT:
+		res.push_back(0xA3); //if_icmpgt
+		break;
+	case GE:
+		res.push_back(0xA2); //if_icmpge
+		break;
+	default:
+		break;
+	}
+
+	vector <char> temp = CodeGenerationHelpers::intToByteArray(offset, 2);
+	CodeGenerationHelpers::appendArrayToByteVector(&res, temp.data(), temp.size());
+
+	return res;
+}
+
 

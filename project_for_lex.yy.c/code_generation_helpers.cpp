@@ -320,4 +320,30 @@ vector<char> CodeGenerationCommands::if_(IfCommandType type, int offset)
 	return res;
 }
 
+// ---------- if_acmp ----------
+vector<char> CodeGenerationCommands::if_acmp(IfCommandType type, int offset)
+{
+	vector<char> res;
+
+	switch (type)
+	{
+	case EQ:
+		res.push_back(0xA5); //if_acmpeq
+		break;
+	case NE:
+		res.push_back(0xA6); //if_acmpne
+		break;
+	default:
+	{
+		throw std::exception("Error in if_acmp: Invalid type");
+	}
+		break;
+	}
+
+	vector <char> temp = CodeGenerationHelpers::intToByteArray(offset, 2);
+	CodeGenerationHelpers::appendArrayToByteVector(&res, temp.data(), temp.size());
+
+	return res;
+}
+
 

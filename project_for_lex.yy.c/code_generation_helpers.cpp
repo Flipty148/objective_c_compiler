@@ -511,3 +511,11 @@ vector<char> CodeGenerationCommands::areturn()
 	res.push_back(0xB0); //areturn
 	return res;
 }
+
+// ---------- return ----------
+vector<char> CodeGenerationCommands::return_()
+{
+	vector<char> res;
+	res.push_back(0xB1); //return
+	return res;
+}

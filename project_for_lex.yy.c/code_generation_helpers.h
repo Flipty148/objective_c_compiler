@@ -41,6 +41,7 @@ public:
 	static vector<char> iinc();
 
 	// ---------- КОМАНДЫ ПЕРЕДАЧИ УПРАВЛЕНИЯ ----------
+
 	enum IfCommandType {
 		EQ,
 		NE,
@@ -53,4 +54,18 @@ public:
 	static vector<char> if_ (IfCommandType type, int offset);
 	static vector<char> if_acmp(IfCommandType type, int offset);
 	static vector<char> goto_(int offset);
+
+	// ---------- КОМАНДЫ РАБОТЫ С МАССИВАМИ ----------
+
+	enum ArrayCommandType {
+		T_BOOLEAN = 4,
+		T_CHAR = 5,
+		T_FLOAT = 6,
+		T_DOUBLE = 7,
+		T_BYTE = 8,
+		T_SHORT = 9,
+		T_INT = 10,
+		T_LONG = 11
+	};
+	static vector<char> newarray(ArrayCommandType type);
 };

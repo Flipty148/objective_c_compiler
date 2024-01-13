@@ -356,4 +356,13 @@ vector<char> CodeGenerationCommands::goto_(int offset)
 	return res;
 }
 
+vector<char> CodeGenerationCommands::newarray(ArrayCommandType type)
+{
+	vector<char> res;
+	res.push_back(0xBC); //newarray
+	res.push_back(type);
+	return res;
+
+}
+
 

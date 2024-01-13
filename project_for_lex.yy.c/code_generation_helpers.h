@@ -22,4 +22,5 @@ class CodeGenerationCommands
 public:
 	static vector<char> iconstBipushSipush(int num);
 	static vector<char> ldc(int num);
+	static vector<char> iload(int num);
 };

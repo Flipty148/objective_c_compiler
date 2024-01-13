@@ -85,17 +85,37 @@ vector<char> CodeGenerationCommands::ldc(int num)
 		//ldc
 		res.push_back(0x12);
 		res.push_back(num);
-		return res;
 	}
 	else if (num >= 256 && num <= 65535) {
 		//ldc_w
 		res.push_back(0x13);
 		vector <char> temp = CodeGenerationHelpers::intToByteArray(num, 2);
 		CodeGenerationHelpers::appendArrayToByteVector(&res, temp.data(), temp.size());
-		return res;
 	}
 	else {
-		throw std::exception("Error in ldc: Invalid number");
+		throw std::exception("Error in ldc, ldc_w: Invalid number");
+	}
+
+	return res;
+}
+
+// ---------- iload ----------
+vector<char> CodeGenerationCommands::iload(int num)
+{
+	vector<char> res;
+	if (num >= 0 && num <= 255) {
+		res.push_back(0x15);
+		res.push_back(num);
+	}
+	else if (num >= 256 && num <= 65535) {
+		// wide iload
+		res.push_back(0xC4); //wide
+		res.push_back(0x15); //iload
+		vector <char> temp = CodeGenerationHelpers::intToByteArray(num, 2);
+		CodeGenerationHelpers::appendArrayToByteVector(&res, temp.data(), temp.size());
+	}
+	else {
+		throw std::exception("Error in iload: Invalid number");
 	}
 
 	return res;

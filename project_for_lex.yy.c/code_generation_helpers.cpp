@@ -495,3 +495,11 @@ vector<char> CodeGenerationCommands::invokestatic(int constant)
 	CodeGenerationHelpers::appendArrayToByteVector(&res, temp.data(), temp.size());
 	return res;
 }
+
+// ---------- ireturn ----------
+vector<char> CodeGenerationCommands::ireturn()
+{
+	vector<char> res;
+	res.push_back(0xAC); //ireturn
+	return res;
+}

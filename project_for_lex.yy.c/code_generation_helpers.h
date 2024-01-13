@@ -89,4 +89,5 @@ public:
 	static vector<char> invokespecial(int constant);
 	static vector<char> invokestatic(int constant);
 	static vector<char> ireturn();
+	static vector<char> areturn();
 };

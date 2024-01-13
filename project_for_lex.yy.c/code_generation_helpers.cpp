@@ -32,25 +32,25 @@ vector<char> CodeGenerationCommands::iconstBipushSipush(int num)
 
 	// iconst
 	if (num == -1) {
-		res.push_back(0x2);
+		res.push_back(0x2); //iconst_m1
 	}
 	else if (num == 0) {
-		res.push_back(0x3);
+		res.push_back(0x3); //iconst_0
 	}
 	else if (num == 1) {
-		res.push_back(0x4);
+		res.push_back(0x4); //iconst_1
 	}
 	else if (num == 2) {
-		res.push_back(0x5);
+		res.push_back(0x5); //iconst_2
 	}
 	else if (num == 3) {
-		res.push_back(0x6);
+		res.push_back(0x6); //iconst_3
 	}
 	else if (num == 4) {
-		res.push_back(0x7);
+		res.push_back(0x7); //iconst_4
 	}
 	else if (num == 5) {
-		res.push_back(0x8);
+		res.push_back(0x8); //iconst_5
 	}
 
 	if (num <= 5 && num >= -1) {
@@ -59,14 +59,14 @@ vector<char> CodeGenerationCommands::iconstBipushSipush(int num)
 
 	if (num >= -128 && num <= 127) {
 		// bipush
-		res.push_back(0x10);
+		res.push_back(0x10); //bipush
 		res.push_back(num);
 		return res;
 	}
 
 	if (num >= -32768 && num <= 32767) {
 		// sipush
-		res.push_back(0x11);
+		res.push_back(0x11); //sipush
 		vector <char> temp = CodeGenerationHelpers::intToByteArray(num, 2);
 		CodeGenerationHelpers::appendArrayToByteVector(&res, temp.data(), temp.size());
 		return res;
@@ -83,12 +83,12 @@ vector<char> CodeGenerationCommands::ldc(int num)
 	vector<char> res;
 	if (num >= 0 && num <= 255) {
 		//ldc
-		res.push_back(0x12);
+		res.push_back(0x12); //ldc
 		res.push_back(num);
 	}
 	else if (num >= 256 && num <= 65535) {
 		//ldc_w
-		res.push_back(0x13);
+		res.push_back(0x13); //ldc_w
 		vector <char> temp = CodeGenerationHelpers::intToByteArray(num, 2);
 		CodeGenerationHelpers::appendArrayToByteVector(&res, temp.data(), temp.size());
 	}
@@ -104,7 +104,7 @@ vector<char> CodeGenerationCommands::iload(int num)
 {
 	vector<char> res;
 	if (num >= 0 && num <= 255) {
-		res.push_back(0x15);
+		res.push_back(0x15); //iload
 		res.push_back(num);
 	}
 	else if (num >= 256 && num <= 65535) {
@@ -126,8 +126,8 @@ vector<char> CodeGenerationCommands::aload(int num)
 {
 	vector<char> res;
 	if (num >= 0 && num <= 255) {
-		res.push_back(0x19);
-		res.push_back(num);
+		res.push_back(0x19); //aload
+		res.push_back(num); 
 	}
 	else if (num >= 256 && num <= 65535) {
 		// wide aload
@@ -148,7 +148,7 @@ vector<char> CodeGenerationCommands::istore(int num)
 {
 	vector<char> res;
 	if (num >= 0 && num <= 255) {
-		res.push_back(0x36);
+		res.push_back(0x36); //istore
 		res.push_back(num);
 	}
 	else if (num >= 256 && num <= 65535) {
@@ -170,7 +170,7 @@ vector<char> CodeGenerationCommands::astore(int num)
 {
 	vector<char> res;
 	if (num >= 0 && num <= 255) {
-		res.push_back(0x3A);
+		res.push_back(0x3A); //astore
 		res.push_back(num);
 	}
 	else if (num >= 256 && num <= 65535) {
@@ -191,7 +191,7 @@ vector<char> CodeGenerationCommands::astore(int num)
 vector<char> CodeGenerationCommands::pop()
 {
 	vector <char> res;
-	res.push_back(0x57);
+	res.push_back(0x57); //pop
 	return res;
 }
 
@@ -199,6 +199,14 @@ vector<char> CodeGenerationCommands::pop()
 vector<char> CodeGenerationCommands::dup()
 {
 	vector <char> res;
-	res.push_back(0x59);
+	res.push_back(0x59); //dup
+	return res;
+}
+
+// ---------- dup2 ----------
+vector<char> CodeGenerationCommands::dup2()
+{
+	vector <char> res;
+	res.push_back(0x5C); //dup2
 	return res;
 }

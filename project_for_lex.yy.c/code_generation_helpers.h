@@ -27,4 +27,6 @@ public:
 	static vector<char> istore(int num);
 	static vector<char> astore(int num);
 	static vector<char> pop();
+	static vector<char> dup();
+	static vector<char> dup2();
 };

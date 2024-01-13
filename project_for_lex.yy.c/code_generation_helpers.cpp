@@ -142,3 +142,23 @@ vector<char> CodeGenerationCommands::aload(int num)
 
 	return res;
 }
+
+// ---------- istore ----------
+vector<char> CodeGenerationCommands::istore(int num)
+{
+	vector<char> res;
+	if (num >= 0 && num <= 255) {
+		res.push_back(0x36);
+		res.push_back(num);
+	}
+	else if (num >= 256 && num <= 65535) {
+		// wide istore
+		res.push_back(0xC4); //wide
+		res.push_back(0x36); //istore
+		vector <char> temp = CodeGenerationHelpers::intToByteArray(num, 2);
+		CodeGenerationHelpers::appendArrayToByteVector(&res, temp.data(), temp.size());
+	}
+	else {
+		throw std::exception("Error in istore: Invalid number");
+	}
+}

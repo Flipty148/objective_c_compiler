@@ -68,4 +68,5 @@ public:
 		T_LONG = 11
 	};
 	static vector<char> newarray(ArrayCommandType type);
+	static vector<char> anewarray(int constant);
 };

@@ -356,6 +356,7 @@ vector<char> CodeGenerationCommands::goto_(int offset)
 	return res;
 }
 
+// ---------- newarray ----------
 vector<char> CodeGenerationCommands::newarray(ArrayCommandType type)
 {
 	vector<char> res;
@@ -363,6 +364,16 @@ vector<char> CodeGenerationCommands::newarray(ArrayCommandType type)
 	res.push_back(type);
 	return res;
 
+}
+
+// ---------- anewarray ----------
+vector<char> CodeGenerationCommands::anewarray(int constant)
+{
+	vector<char> res;
+	res.push_back(0xBD); //anewarray
+	vector <char> temp = CodeGenerationHelpers::intToByteArray(constant, 2);
+	CodeGenerationHelpers::appendArrayToByteVector(&res, temp.data(), temp.size());
+	return res;
 }
 
 

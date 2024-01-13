@@ -227,10 +227,19 @@ vector<char> CodeGenerationCommands::imul()
 	return res;
 }
 
+// ---------- isub ----------
 vector<char> CodeGenerationCommands::isub()
 {
 	vector<char> res;
 	res.push_back(0x64); //isub
+	return res;
+}
+
+// ---------- idiv ----------
+vector<char> CodeGenerationCommands::idiv()
+{
+	vector<char> res;
+	res.push_back(0x6C); //idiv
 	return res;
 }
 

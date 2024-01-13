@@ -25,4 +25,5 @@ public:
 	static vector<char> iload(int num);
 	static vector<char> aload(int num);
 	static vector<char> istore(int num);
+	static vector<char> astore(int num);
 };

@@ -71,4 +71,5 @@ public:
 	static vector<char> anewarray(int constant);
 	static vector<char> arraylength();
 	static vector<char> iaload();
+	static vector<char> aaload();
 };

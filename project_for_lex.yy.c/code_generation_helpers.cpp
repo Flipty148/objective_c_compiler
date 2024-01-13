@@ -346,4 +346,14 @@ vector<char> CodeGenerationCommands::if_acmp(IfCommandType type, int offset)
 	return res;
 }
 
+// ---------- goto ----------
+vector<char> CodeGenerationCommands::goto_(int offset)
+{
+	vector<char> res;
+	res.push_back(0xA7); //goto
+	vector <char> temp = CodeGenerationHelpers::intToByteArray(offset, 2);
+	CodeGenerationHelpers::appendArrayToByteVector(&res, temp.data(), temp.size());
+	return res;
+}
+
 

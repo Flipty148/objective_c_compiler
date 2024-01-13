@@ -52,4 +52,5 @@ public:
 	static vector<char> if_icmp(IfCommandType type, int offset);
 	static vector<char> if_ (IfCommandType type, int offset);
 	static vector<char> if_acmp(IfCommandType type, int offset);
+	static vector<char> goto_(int offset);
 };

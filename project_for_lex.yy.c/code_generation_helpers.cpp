@@ -251,6 +251,7 @@ vector<char> CodeGenerationCommands::iinc()
 	return res;
 }
 
+// ---------- if_icmp ----------
 vector<char> CodeGenerationCommands::if_icmp(IfCommandType type, int offset)
 {
 	vector<char> res;
@@ -273,6 +274,41 @@ vector<char> CodeGenerationCommands::if_icmp(IfCommandType type, int offset)
 		break;
 	case GE:
 		res.push_back(0xA2); //if_icmpge
+		break;
+	default:
+		break;
+	}
+
+	vector <char> temp = CodeGenerationHelpers::intToByteArray(offset, 2);
+	CodeGenerationHelpers::appendArrayToByteVector(&res, temp.data(), temp.size());
+
+	return res;
+}
+
+// ---------- if ----------
+vector<char> CodeGenerationCommands::if_(IfCommandType type, int offset)
+{
+	vector<char> res;
+
+	switch (type)
+	{
+	case EQ:
+		res.push_back(0x99); //ifeq
+		break;
+	case NE:
+		res.push_back(0x9A); //ifne
+		break;
+	case LT:
+		res.push_back(0x9B); //iflt
+		break;
+	case LE:
+		res.push_back(0x9E); //ifle
+		break;
+	case GT:
+		res.push_back(0x9D); //ifgt
+		break;
+	case GE:
+		res.push_back(0x9C); //ifge
 		break;
 	default:
 		break;

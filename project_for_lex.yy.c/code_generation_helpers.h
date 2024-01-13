@@ -36,4 +36,5 @@ public:
 
 	static vector<char> iadd();
 	static vector<char> imul();
+	static vector<char> isub();
 };

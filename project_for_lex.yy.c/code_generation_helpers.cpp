@@ -227,4 +227,11 @@ vector<char> CodeGenerationCommands::imul()
 	return res;
 }
 
+vector<char> CodeGenerationCommands::isub()
+{
+	vector<char> res;
+	res.push_back(0x64); //isub
+	return res;
+}
+
 

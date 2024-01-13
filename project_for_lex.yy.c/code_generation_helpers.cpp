@@ -210,3 +210,10 @@ vector<char> CodeGenerationCommands::dup2()
 	res.push_back(0x5C); //dup2
 	return res;
 }
+
+vector<char> CodeGenerationCommands::iadd()
+{
+	vector<char> res;
+	res.push_back(0x60); //iadd
+	return res;
+}

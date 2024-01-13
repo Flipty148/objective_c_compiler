@@ -20,6 +20,8 @@ public:
 class CodeGenerationCommands
 {
 public:
+	// ---------- КОМАНДЫ РАБОТЫ СО СТЕКОМ ----------
+
 	static vector<char> iconstBipushSipush(int num);
 	static vector<char> ldc(int num);
 	static vector<char> iload(int num);
@@ -29,4 +31,8 @@ public:
 	static vector<char> pop();
 	static vector<char> dup();
 	static vector<char> dup2();
+
+	// ---------- КОМАНДЫ, ВЫПОЛНЯЮЩИЕ АРИФМЕТИЧЕСКИЕ ОПЕРАЦИИ ----------
+
+	static vector<char> iadd();
 };

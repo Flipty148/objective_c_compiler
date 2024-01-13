@@ -465,3 +465,13 @@ vector<char> CodeGenerationCommands::checkcast(int constant)
 	CodeGenerationHelpers::appendArrayToByteVector(&res, temp.data(), temp.size());
 	return res;
 }
+
+// ---------- invokevirtual ----------
+vector<char> CodeGenerationCommands::invokevirtual(int constant)
+{
+	vector <char> res;
+	res.push_back(0xB6); //invokevirtual
+	vector <char> temp = CodeGenerationHelpers::intToByteArray(constant, 2);
+	CodeGenerationHelpers::appendArrayToByteVector(&res, temp.data(), temp.size());
+	return res;
+}

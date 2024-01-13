@@ -392,6 +392,14 @@ vector<char> CodeGenerationCommands::iaload()
 	return res;
 }
 
+// ---------- caload ----------
+vector<char> CodeGenerationCommands::caload()
+{
+	vector<char> res;
+	res.push_back(0x34); //caload
+	return res;
+}
+
 // ---------- aaload ----------
 vector<char> CodeGenerationCommands::aaload()
 {

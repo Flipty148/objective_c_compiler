@@ -435,3 +435,13 @@ vector<char> CodeGenerationCommands::getfield(int constant)
 	CodeGenerationHelpers::appendArrayToByteVector(&res, temp.data(), temp.size());
 	return res;
 }
+
+// ---------- putfield ----------
+vector<char> CodeGenerationCommands::putfield(int constant)
+{
+	vector<char> res;
+	res.push_back(0xB5); //putfield
+	vector <char> temp = CodeGenerationHelpers::intToByteArray(constant, 2);
+	CodeGenerationHelpers::appendArrayToByteVector(&res, temp.data(), temp.size());
+	return res;
+}

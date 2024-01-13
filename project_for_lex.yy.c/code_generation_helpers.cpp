@@ -244,10 +244,12 @@ vector<char> CodeGenerationCommands::idiv()
 }
 
 // ---------- iinc ----------
-vector<char> CodeGenerationCommands::iinc()
+vector<char> CodeGenerationCommands::iinc(int index, int num)
 {
 	vector<char> res;
 	res.push_back(0x84); //iinc
+	res.push_back(index);
+	res.push_back(num);
 	return res;
 }
 

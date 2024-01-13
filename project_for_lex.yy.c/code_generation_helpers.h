@@ -74,4 +74,8 @@ public:
 	static vector<char> aaload();
 	static vector<char> iastore();
 	static vector<char> aastore();
+
+	// ---------- КОМАНДЫ РАБОТЫ С ОБЪЕКТАМИ ----------
+
+	static vector<char> new_(int constant);
 };

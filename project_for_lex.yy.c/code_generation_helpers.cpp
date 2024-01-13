@@ -415,3 +415,13 @@ vector<char> CodeGenerationCommands::aastore()
 	res.push_back(0x53); //aastore
 	return res;
 }
+
+// ---------- new ----------
+vector<char> CodeGenerationCommands::new_(int constant)
+{
+	vector <char> res;
+	res.push_back(0xBB); //new
+	vector <char> temp = CodeGenerationHelpers::intToByteArray(constant, 2);
+	CodeGenerationHelpers::appendArrayToByteVector(&res, temp.data(), temp.size());
+	return res;
+}

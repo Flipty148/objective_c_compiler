@@ -485,3 +485,13 @@ vector<char> CodeGenerationCommands::invokespecial(int constant)
 	CodeGenerationHelpers::appendArrayToByteVector(&res, temp.data(), temp.size());
 	return res;
 }
+
+// ---------- invokestatic ----------
+vector<char> CodeGenerationCommands::invokestatic(int constant)
+{
+	vector<char> res;
+	res.push_back(0xB8); //invokestatic
+	vector <char> temp = CodeGenerationHelpers::intToByteArray(constant, 2);
+	CodeGenerationHelpers::appendArrayToByteVector(&res, temp.data(), temp.size());
+	return res;
+}

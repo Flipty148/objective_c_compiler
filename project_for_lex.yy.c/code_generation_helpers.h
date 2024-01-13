@@ -87,4 +87,5 @@ public:
 
 	static vector<char> invokevirtual(int constant);
 	static vector<char> invokespecial(int constant);
+	static vector<char> invokestatic(int constant);
 };

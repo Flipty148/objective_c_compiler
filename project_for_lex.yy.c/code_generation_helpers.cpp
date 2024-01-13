@@ -384,4 +384,12 @@ vector<char> CodeGenerationCommands::arraylength()
 	return res;
 }
 
+// ---------- iaload ----------
+vector<char> CodeGenerationCommands::iaload()
+{
+	vector<char> res;
+	res.push_back(0x2E); //iaload
+	return res;
+}
+
 

@@ -70,4 +70,5 @@ public:
 	static vector<char> newarray(ArrayCommandType type);
 	static vector<char> anewarray(int constant);
 	static vector<char> arraylength();
+	static vector<char> iaload();
 };

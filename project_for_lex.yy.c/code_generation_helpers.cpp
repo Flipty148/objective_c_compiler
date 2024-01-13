@@ -211,9 +211,20 @@ vector<char> CodeGenerationCommands::dup2()
 	return res;
 }
 
+// ---------- iadd ----------
 vector<char> CodeGenerationCommands::iadd()
 {
 	vector<char> res;
 	res.push_back(0x60); //iadd
 	return res;
 }
+
+// ---------- imul ----------
+vector<char> CodeGenerationCommands::imul()
+{
+	vector<char> res;
+	res.push_back(0x68); //imul
+	return res;
+}
+
+

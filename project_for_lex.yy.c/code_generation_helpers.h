@@ -35,4 +35,5 @@ public:
 	// ---------- КОМАНДЫ, ВЫПОЛНЯЮЩИЕ АРИФМЕТИЧЕСКИЕ ОПЕРАЦИИ ----------
 
 	static vector<char> iadd();
+	static vector<char> imul();
 };

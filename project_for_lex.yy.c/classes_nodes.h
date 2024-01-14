@@ -419,6 +419,7 @@ private:
 	vector<char> generateCodeForGreater(); // Генерация кода для Greater
 	vector<char> generateCodeForLess(); // Генерация кода для Less
 	vector<char> generateCodeForLessEqual(); // Генерация кода для LessEqual
+	vector<char> generateCodeForGreaterEqual(); // Генерация кода для GreaterEqual
 };
 
 // ---------- expression_list ----------

@@ -405,6 +405,7 @@ private:
 	void memberAccessAssignmentTransform(); // Преобразование присваивания и оператора точки и стрелочки в дереве
 
 	vector<char> generateCodeForNumericConstant(); // Генерация кода для NumericConstant
+    vector<char> generateCodeForPlus(); // Генерация кода для Plus
 };
 
 // ---------- expression_list ----------

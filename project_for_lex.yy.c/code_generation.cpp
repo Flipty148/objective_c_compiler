@@ -422,7 +422,8 @@ vector<char> Expression_node::generateCode()
 	}
 		break;
 	case PLUS_EXPRESSION_TYPE: {
-
+		vector<char> bytes = generateCodeForPlus();
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case MINUS_EXPRESSION_TYPE: {
@@ -511,6 +512,22 @@ vector<char> Expression_node::generateCodeForNumericConstant()
 	int number = num->Int; // Число
 
 	vector<char> bytes = CodeGenerationCommands::iconstBipushSipush(number); //Команда
+	CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+
+	return res;
+}
+
+vector<char> Expression_node::generateCodeForPlus()
+{
+	vector<char> res;
+
+	vector<char> leftOperand = Left->generateCode(); //1-ое слагаемое
+	CodeGenerationHelpers::appendArrayToByteVector(&res, leftOperand.data(), leftOperand.size());
+
+	vector<char> rightOperand = Right->generateCode(); //2-ое слагаемое
+	CodeGenerationHelpers::appendArrayToByteVector(&res, rightOperand.data(), rightOperand.size());
+
+	vector<char> bytes = CodeGenerationCommands::iadd(); //Команда
 	CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 
 	return res;

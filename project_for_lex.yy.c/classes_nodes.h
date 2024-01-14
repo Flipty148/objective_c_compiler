@@ -416,6 +416,7 @@ private:
 	vector<char> generateCodeForLiteral(); // Генерация кода для Literal
 	vector<char> generateCodeForEqual(); // Генерация кода для Equal
 	vector<char> generateCodeForNotEqual(); // Генерация кода для NotEqual
+	vector<char> generateCodeForGreater(); // Генерация кода для Greater
 };
 
 // ---------- expression_list ----------

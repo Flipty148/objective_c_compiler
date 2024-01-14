@@ -12,4 +12,5 @@ int main()
     "hello world";
     @"nshello";
     9 == 9;
+    11 != 11;
 }

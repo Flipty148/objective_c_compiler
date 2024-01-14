@@ -446,7 +446,8 @@ vector<char> Expression_node::generateCode()
 	}
 		break;
 	case NOT_EQUAL_EXPRESSION_TYPE: {
-
+		vector<char> bytes = generateCodeForNotEqual();
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case GREATER_EXPRESSION_TYPE: {
@@ -635,6 +636,32 @@ vector<char> Expression_node::generateCodeForEqual()
 
 	int offset = trueBytes.size() + gotoBytes.size(); //Смещение, с которого начинается альтернативная ветка
 	vector<char> ifBytes = CodeGenerationCommands::if_icmp(CodeGenerationCommands::NE, offset); //Условный переход
+
+	// Формирование кода
+	CodeGenerationHelpers::appendArrayToByteVector(&res, ifBytes.data(), ifBytes.size());
+	CodeGenerationHelpers::appendArrayToByteVector(&res, trueBytes.data(), trueBytes.size());
+	CodeGenerationHelpers::appendArrayToByteVector(&res, gotoBytes.data(), gotoBytes.size());
+	CodeGenerationHelpers::appendArrayToByteVector(&res, falseBytes.data(), falseBytes.size());
+
+	return res;
+}
+
+vector<char> Expression_node::generateCodeForNotEqual()
+{
+	vector<char> res;
+
+	vector<char> leftOperand = Left->generateCode(); //левый операнд	
+	CodeGenerationHelpers::appendArrayToByteVector(&res, leftOperand.data(), leftOperand.size());
+
+	vector<char> rightOperand = Right->generateCode(); //правый операнд
+	CodeGenerationHelpers::appendArrayToByteVector(&res, rightOperand.data(), rightOperand.size());
+
+	vector<char> trueBytes = CodeGenerationCommands::iconstBipushSipush(1); //Ветка, если равны
+	vector<char> falseBytes = CodeGenerationCommands::iconstBipushSipush(0); //Ветка, если не равны
+	vector<char> gotoBytes = CodeGenerationCommands::goto_(falseBytes.size()); //Безусловный переход в случае положительной ветки
+
+	int offset = trueBytes.size() + gotoBytes.size(); //Смещение, с которого начинается альтернативная ветка
+	vector<char> ifBytes = CodeGenerationCommands::if_icmp(CodeGenerationCommands::EQ, offset); //Условный переход
 
 	// Формирование кода
 	CodeGenerationHelpers::appendArrayToByteVector(&res, ifBytes.data(), ifBytes.size());

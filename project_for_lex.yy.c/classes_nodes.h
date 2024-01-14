@@ -415,6 +415,7 @@ private:
 	vector<char> generateCodeForUplus(); // Генерация кода для Uplus
 	vector<char> generateCodeForLiteral(); // Генерация кода для Literal
 	vector<char> generateCodeForEqual(); // Генерация кода для Equal
+	vector<char> generateCodeForNotEqual(); // Генерация кода для NotEqual
 };
 
 // ---------- expression_list ----------

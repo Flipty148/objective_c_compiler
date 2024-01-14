@@ -12,6 +12,7 @@ class ClassesTableElement;
 class LocalVariablesTableElement;
 class FieldsTableElement;
 class MethodsTableElement;
+class ConstantsTableElement;
 
 //---------- Прототипы классов ----------
 class Init_declarator_list_node;
@@ -110,6 +111,7 @@ class Literal_node
         int id;
         enum literal_type type;
         char *value;
+		ConstantsTableElement* constant;
 
         static Literal_node* createLiteralNode(literal_type type, char *value);
 
@@ -153,7 +155,7 @@ class Statement_node
 		void fillLiterals(ConstantsTable* constantTable); //Поиск и заполнение литералов
 
 
-        void semanticTransform(LocalVariablesTable* locals);
+        void semanticTransform(LocalVariablesTable* locals, ConstantsTable* constants);
 
 		vector<char> generateCode(); //Функция генерации кода
 private:
@@ -213,7 +215,7 @@ class Init_declarator_list_node
 		void fillLiterals(ConstantsTable* constantTable); //Поиск и заполнение литералов
 
         
-        void semanticTransform(LocalVariablesTable* locals, Type *dataType);
+        void semanticTransform(LocalVariablesTable* locals, Type *dataType, ConstantsTable* constants);
 };
 
 // ---------- init_declarator ----------
@@ -246,7 +248,7 @@ class Init_declarator_node
 		void fillLiterals(ConstantsTable* constantTable);
 
 
-		void semanticTransform(LocalVariablesTable* locals, Type* dataType);
+		void semanticTransform(LocalVariablesTable* locals, Type* dataType, ConstantsTable* constants);
 
 };
 
@@ -394,7 +396,7 @@ class Expression_node
 
 		virtual void assignmentTransform(); // Преобразование присваивания в дереве
 		virtual void setDataTypesAndCasts(LocalVariablesTable *locals); // Преобразование и установка DataType в дереве
-		virtual void setAttributes(LocalVariablesTable *locals); // Установка атрибутов (ссылок на локальные переменные, поля, методы)
+		virtual void setAttributes(LocalVariablesTable *locals, ConstantsTable *constants); // Установка атрибутов (ссылок на локальные переменные, поля, методы)
 
 		void checkLvalueError(); // Проверка ошибки левого значения
 		string getTypeName(); // Возвращает имя вида выражения
@@ -434,7 +436,7 @@ class Expression_list_node : public Expression_node
 
 		void assignmentTransform(); // Преобразование присваивания в дереве
 		void setDataTypesAndCasts(LocalVariablesTable* locals); // Преобразование и установка DataType в дереве
-		void setAttributes(LocalVariablesTable* locals); // Установка атрибутов (ссылок на локальные переменные, поля, методы)
+		void setAttributes(LocalVariablesTable* locals, ConstantsTable* constants); // Установка атрибутов (ссылок на локальные переменные, поля, методы)
 };
 
 // ---------- receiver ----------
@@ -479,7 +481,7 @@ class Receiver_node
 
 		void setDataType(LocalVariablesTable* locals); //Установка DataType
 
-		void setAttributes(LocalVariablesTable* locals); //Установка атрибутов (ссылок на локальные переменные, поля, методы)
+		void setAttributes(LocalVariablesTable* locals, ConstantsTable* constants); //Установка атрибутов (ссылок на локальные переменные, поля, методы)
 };
 
 // ---------- message_selector -----------
@@ -502,7 +504,7 @@ class Message_selector_node
 		void fillLiterals(ConstantsTable* constantTable); //Поиск и заполнение литералов
 
 		void setDataTypes(LocalVariablesTable* locals, string receiverClassName); //Установка DataType
-		void setAttributes(LocalVariablesTable* locals);
+		void setAttributes(LocalVariablesTable* locals, ConstantsTable* constants);
 };
 
 // ---------- keyword_argument_list ----------
@@ -525,7 +527,7 @@ class Keyword_argument_list_node
 		void fillLiterals(ConstantsTable* constantTable); //Поиск и заполнение литералов
 
 		void setDataTypes(LocalVariablesTable* locals); //Установка DataType
-		void setAttributes(LocalVariablesTable* locals); //Установка атрибутов
+		void setAttributes(LocalVariablesTable* locals, ConstantsTable* constant); //Установка атрибутов
 };
 
 // ---------- keyword_argument ----------

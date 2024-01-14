@@ -2,59 +2,59 @@
 #include <string>
 extern long maxId;
 
-void Statement_node::semanticTransform(LocalVariablesTable* locals)
+void Statement_node::semanticTransform(LocalVariablesTable* locals, ConstantsTable *constants)
 {
 	if (type == SIMPLE_STATEMENT_TYPE) {
 		Expression->assignmentTransform();
 		Expression->setDataTypesAndCasts(locals);
-		Expression->setAttributes(locals);
+		Expression->setAttributes(locals, constants);
 	}
 	else if (type == RETURN_STATEMENT_TYPE) {
 		if (Expression != NULL) {
 			Expression->assignmentTransform();
 			Expression->setDataTypesAndCasts(locals);
-			Expression->setAttributes(locals);
+			Expression->setAttributes(locals, constants);
 		}
 	}
 	else if (type == IF_STATEMENT_TYPE) {
 		If_statement_node* cur = (If_statement_node*)this;
 		cur->Condition->assignmentTransform();
 		cur->Condition->setDataTypesAndCasts(locals);
-		cur->Condition->setAttributes(locals);
-		cur->TrueBranch->semanticTransform(locals);
+		cur->Condition->setAttributes(locals, constants);
+		cur->TrueBranch->semanticTransform(locals, constants);
 		if (cur->FalseBranch != NULL) {
-			cur->FalseBranch->semanticTransform(locals);
+			cur->FalseBranch->semanticTransform(locals, constants);
 		}
 	}
 	else if (type == WHILE_STATEMENT_TYPE) {
 		While_statement_node* cur = (While_statement_node*)this;
 		cur->LoopCondition->assignmentTransform();
 		cur->LoopCondition->setDataTypesAndCasts(locals);
-		cur->LoopCondition->setAttributes(locals);
+		cur->LoopCondition->setAttributes(locals, constants);
 		if (cur->LoopBody != NULL)
-			cur->LoopBody->semanticTransform(locals);
+			cur->LoopBody->semanticTransform(locals, constants);
 	}
 	else if (type == FOR_STATEMENT_TYPE) {
 		For_statement_node* cur = (For_statement_node*)this;
 		if (cur->InitExpression != NULL) {
 			cur->InitExpression->assignmentTransform();
 			cur->InitExpression->setDataTypesAndCasts(locals);
-			cur->InitExpression->setAttributes(locals);
+			cur->InitExpression->setAttributes(locals, constants);
 		}
 		if (cur->ConditionExpression != NULL) {
 			cur->ConditionExpression->assignmentTransform();
 			cur->ConditionExpression->setDataTypesAndCasts(locals);
-			cur->ConditionExpression->setAttributes(locals);
+			cur->ConditionExpression->setAttributes(locals, constants);
 		}
 		if (cur->LoopExpression != NULL) {
 			cur->LoopExpression->assignmentTransform();
 			cur->LoopExpression->setDataTypesAndCasts(locals);
-			cur->LoopExpression->setAttributes(locals);
+			cur->LoopExpression->setAttributes(locals, constants);
 		}
 		if (cur->InitList != NULL)
-			cur->InitList->semanticTransform(locals, cur->NameType->toDataType());
+			cur->InitList->semanticTransform(locals, cur->NameType->toDataType(), constants);
 		if (cur->LoopBody != NULL)
-			cur->LoopBody->semanticTransform(locals);
+			cur->LoopBody->semanticTransform(locals, constants);
 
 		if (cur->ForType == FOREACH_FOR_TYPE || cur->ForType == FOREACH_WITH_DECLARATION_FOR_TYPE) {
 			cur->checkFastEnumerationTypes(locals);
@@ -64,16 +64,16 @@ void Statement_node::semanticTransform(LocalVariablesTable* locals)
 		Do_while_statement_node* cur = (Do_while_statement_node*)this;
 		cur->LoopCondition->assignmentTransform();
 		cur->LoopCondition->setDataTypesAndCasts(locals);
-		cur->LoopCondition->setAttributes(locals);
+		cur->LoopCondition->setAttributes(locals, constants);
 		if (cur->LoopBody != NULL)
-			cur->LoopBody->semanticTransform(locals);
+			cur->LoopBody->semanticTransform(locals, constants);
 	}
 	else if (type == COMPOUND_STATEMENT_TYPE) {
 		Statement_list_node* cur = (Statement_list_node*)this;
 		if (cur->First != NULL) {
 			Statement_node* elem = cur->First;
 			while (elem != NULL) {
-				elem->semanticTransform(locals);
+				elem->semanticTransform(locals, constants);
 				elem = elem->Next;
 			}
 		}
@@ -81,26 +81,26 @@ void Statement_node::semanticTransform(LocalVariablesTable* locals)
 	else if (type == DECLARATION_STATEMENT_TYPE) {
 		Declaration_node* cur = (Declaration_node*)this;
 		if (cur->init_declarator_list != NULL)
-			cur->init_declarator_list->semanticTransform(locals, cur->typeNode->toDataType());
+			cur->init_declarator_list->semanticTransform(locals, cur->typeNode->toDataType(), constants);
 	}
 }
 
-void Init_declarator_list_node::semanticTransform(LocalVariablesTable *locals, Type *dataType)
+void Init_declarator_list_node::semanticTransform(LocalVariablesTable *locals, Type *dataType, ConstantsTable *constants)
 {
 	Init_declarator_node* declarator = First;
 	while (declarator != NULL)
 	{
-		declarator->semanticTransform(locals, dataType);
+		declarator->semanticTransform(locals, dataType, constants);
 		declarator = declarator->Next;
 	}
 }
 
-void Init_declarator_node::semanticTransform(LocalVariablesTable* locals, Type *dataType)
+void Init_declarator_node::semanticTransform(LocalVariablesTable* locals, Type *dataType, ConstantsTable *constants)
 {
 	if (expression != NULL) {
 		expression->assignmentTransform();
 		expression->setDataTypesAndCasts(locals);
-		expression->setAttributes(locals);
+		expression->setAttributes(locals, constants);
 		if (!expression->DataType->equal(dataType) && !(type == ARRAY_WITH_INITIALIZING_DECLARATOR_TYPE && expression->DataType->DataType == dataType->DataType && expression->DataType->ClassName == dataType->ClassName)) {
 			if (expression->DataType->isCastableTo(dataType)) {
 				Expression_node* cast = new Expression_node();
@@ -127,12 +127,12 @@ void Init_declarator_node::semanticTransform(LocalVariablesTable* locals, Type *
 	if (InitializerList != NULL) {
 		InitializerList->assignmentTransform();
 		InitializerList->setDataTypesAndCasts(locals);
-		InitializerList->setAttributes(locals);
+		InitializerList->setAttributes(locals, constants);
 	}
 	if (ArraySize != NULL) {
 		ArraySize->assignmentTransform();
 		ArraySize->setDataTypesAndCasts(locals);
-		ArraySize->setAttributes(locals);
+		ArraySize->setAttributes(locals, constants);
 		if (!ArraySize->DataType->isCastableTo(new Type(INT_TYPE))) {
 			string msg = "Array size isn't 'int' or castable to 'int'. It has type '" + ArraySize->DataType->toString() + "'";
 			throw new std::exception(msg.c_str());
@@ -799,15 +799,15 @@ void Expression_list_node::setDataTypesAndCasts(LocalVariablesTable* locals)
 
 // -------------------- SET ATTRIBUTES --------------------
 
-void Expression_node::setAttributes(LocalVariablesTable* locals)
+void Expression_node::setAttributes(LocalVariablesTable* locals, ConstantsTable* constants)
 {
 	// Вызов на дочерних элементах
 	if (Left != NULL)
-		Left->setAttributes(locals);
+		Left->setAttributes(locals, constants);
 	if (Right != NULL)
-		Right->setAttributes(locals);
+		Right->setAttributes(locals, constants);
 	if (Child != NULL)
-		Child->setAttributes(locals);
+		Child->setAttributes(locals, constants);
 	string className;
 	ClassesTableElement* classElem;
 
@@ -825,6 +825,14 @@ void Expression_node::setAttributes(LocalVariablesTable* locals)
 		}
 	}
 	break;
+	case LITERAL_EXPRESSION_TYPE: {
+		if (literal->type != CHAR_CONSTANT_TYPE) {
+			int num = constants->findConstant(UTF8, new string(literal->value));
+			int str = constants->findConstant(String, NULL, NULL, num);
+			literal->constant = constants->getConstant(str);
+		}
+	}
+	break;
 	case SELF_EXPRESSION_TYPE:
 	{
 		LocalVariable = locals->items["self"];
@@ -832,12 +840,12 @@ void Expression_node::setAttributes(LocalVariablesTable* locals)
 	break;
 	case MESSAGE_EXPRESSION_EXPRESSION_TYPE:
 	{
-		Receiver->setAttributes(locals);
+		Receiver->setAttributes(locals, constants);
 		Type* receiverType = Receiver->DataType;
 		string descriptor;
 		string className;
 		Method = ClassesTable::items[receiverType->ClassName]->getMethodForRef(Arguments->MethodName, &descriptor, &className);
-		Arguments->setAttributes(locals); //Установить атрибуты для параметров
+		Arguments->setAttributes(locals, constants); //Установить атрибуты для параметров
 	}
 	break;
 	case ARROW_EXPRESSION_TYPE:
@@ -863,18 +871,18 @@ void Expression_node::setAttributes(LocalVariablesTable* locals)
 	}
 }
 
-void Expression_list_node::setAttributes(LocalVariablesTable* locals)
+void Expression_list_node::setAttributes(LocalVariablesTable* locals, ConstantsTable *constants)
 {
 	Expression_node* cur = First;
 	while (cur != NULL)
 	{
-		cur->setAttributes(locals);
+		cur->setAttributes(locals, constants);
 		cur = cur->Next;
 	}
 }
 
 
-void Receiver_node::setAttributes(LocalVariablesTable* locals)
+void Receiver_node::setAttributes(LocalVariablesTable* locals, ConstantsTable *constants)
 {
 	switch (type)
 	{
@@ -898,13 +906,13 @@ void Receiver_node::setAttributes(LocalVariablesTable* locals)
 	break;
 	case MESSAGE_EXPRESSION_RECEIVER_TYPE:
 	{
-		Receiver->setAttributes(locals);
+		Receiver->setAttributes(locals, constants);
 		Type* receiverType = Receiver->DataType;
 		
 		string descriptor;
 		string className;
 		Method = ClassesTable::items[receiverType->ClassName]->getMethodForRef(Arguments->MethodName, &descriptor, &className);
-		Arguments->setAttributes(locals); //Установить атрибуты для параметров
+		Arguments->setAttributes(locals, constants); //Установить атрибуты для параметров
 	}
 	break;
 	default:
@@ -913,23 +921,23 @@ void Receiver_node::setAttributes(LocalVariablesTable* locals)
 }
 
 
-void Message_selector_node::setAttributes(LocalVariablesTable* locals)
+void Message_selector_node::setAttributes(LocalVariablesTable* locals, ConstantsTable *constants)
 {
 	if (FirstArgument != NULL)
-		FirstArgument->setAttributes(locals);
+		FirstArgument->setAttributes(locals, constants);
 	if (Arguments != NULL)
-		Arguments->setAttributes(locals);
+		Arguments->setAttributes(locals, constants);
 	if (ExprArguments != NULL)
-		ExprArguments->setAttributes(locals);
+		ExprArguments->setAttributes(locals, constants);
 
 }
 
-void Keyword_argument_list_node::setAttributes(LocalVariablesTable* locals)
+void Keyword_argument_list_node::setAttributes(LocalVariablesTable* locals, ConstantsTable *constant)
 {
 	Keyword_argument_node* cur = First;
 	while (cur != NULL)
 	{
-		cur->expression->setAttributes(locals);
+		cur->expression->setAttributes(locals, constant);
 		cur = cur->Next;
 	}
 }

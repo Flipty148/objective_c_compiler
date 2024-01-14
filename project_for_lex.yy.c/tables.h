@@ -61,7 +61,7 @@ public:
 	int findOrAddMethodRefConstant(string className, string methodName, string descriptor); // Поиск или формирование константы methodRef
 
 	vector<char> generateBytes(); //Генерация байт кода таблицы констант
-private:
+
     int findConstant(constantType type, string* utf8string, int number = NULL, int firstRef = NULL, int secondRef = NULL);
 };
 
@@ -241,7 +241,7 @@ public:
 	void fillLiterals(ConstantsTable* constantTable);
 
 
-    void semanticTransform();
+    void semanticTransform(ConstantsTable* constants);
     void addDefaultReturn(Statement_node *lastStatement);
 
 

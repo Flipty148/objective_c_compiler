@@ -342,7 +342,7 @@ void ClassesTableElement::semanticTransform()
 {
 	for (auto iter = Methods->items.cbegin(); iter != Methods->items.cend(); ++iter)
 	{
-		iter->second->semanticTransform();
+		iter->second->semanticTransform(ConstantTable);
 	}
 
 	if (Superclass == NULL) {
@@ -1092,20 +1092,20 @@ void MethodsTableElement::fillLiterals(ConstantsTable* constantTable)
 	}
 }
 
-void MethodsTableElement::semanticTransform()
+void MethodsTableElement::semanticTransform(ConstantsTable *constants)
 {
 	Statement_node* cur = BodyStart;
 	while (cur != NULL)
 	{
 		if (cur->Next == NULL) {
 			addDefaultReturn(cur);
-			cur->Next->semanticTransform(LocalVariables);
+			cur->Next->semanticTransform(LocalVariables, constants);
 			cur = NULL;
 		}
 		else {
 			cur = cur->Next;
 		}
-		cur->semanticTransform(LocalVariables);
+		cur->semanticTransform(LocalVariables, constants);
 	}
 }
 
@@ -1534,13 +1534,14 @@ void FunctionsTableElement::convertToClassProgramMethods(ClassesTableElement* cl
 
 void FunctionsTableElement::semanticTransform()
 {
+	ConstantsTable *constants = ClassesTable::items["rtl/Program"]->ConstantTable;
 	Statement_node* cur = BodyStart;
 	while (cur != NULL)
 	{
-		cur->semanticTransform(LocalVariables);
+		cur->semanticTransform(LocalVariables, constants);
 		if (cur->Next == NULL) {
 			addDefaultReturn(cur);
-			cur->Next->semanticTransform(LocalVariables);
+			cur->Next->semanticTransform(LocalVariables, constants);
 			cur = NULL;
 		}
 		else {

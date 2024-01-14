@@ -1,7 +1,2 @@
 Id|Name|Type
-1|a|int
-3|c|char
-5|obj|global/Myclass
 0|self|rtl/Program
-4|st|rtl/NSString
-2|t|int

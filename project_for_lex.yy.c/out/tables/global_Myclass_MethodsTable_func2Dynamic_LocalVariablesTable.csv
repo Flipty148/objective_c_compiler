@@ -1,5 +1,0 @@
-Id|Name|Type
-1|first|int
-2|second|int
-0|self|global/Myclass
-3|test|int[10]

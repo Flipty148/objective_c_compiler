@@ -154,6 +154,10 @@ class Statement_node
 
 
         void semanticTransform(LocalVariablesTable* locals);
+
+		vector<char> generateCode(); //Функция генерации кода
+private:
+	vector<char> generateCodeForSimpleStatement(); //Функция генерации кода для SimpleStatement
 };
 
 // ---------- declaration ----------
@@ -393,9 +397,13 @@ class Expression_node
 
 		void checkLvalueError(); // Проверка ошибки левого значения
 		string getTypeName(); // Возвращает имя вида выражения
+
+		virtual vector<char> generateCode(); // Генерация кода
 private:
 	void arrayAssignmentTransform(); // Преобразование присваивания и массива в дереве
 	void memberAccessAssignmentTransform(); // Преобразование присваивания и оператора точки и стрелочки в дереве
+
+	vector<char> generateCodeForNumericConstant(); // Генерация кода для NumericConstant
 };
 
 // ---------- expression_list ----------

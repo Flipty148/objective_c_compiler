@@ -1,6 +1,7 @@
 ﻿#include <fstream>
 #include "tables.h"
 #include "code_generation_helpers.h"
+#include <iostream>
 
 using namespace std;
 
@@ -237,8 +238,19 @@ vector<char> MethodsTableElement::generateCodeAttribute()
 	vector<char> nameBytes = CodeGenerationHelpers::intToByteArray(1, 2);
 	CodeGenerationHelpers::appendArrayToByteVector(&res, nameBytes.data(), nameBytes.size());
 
-	//Добавление длины атрибута TODO: сделать
-	vector<char> lengthBytes = CodeGenerationHelpers::intToByteArray(12, 4);
+	//Формирование байт-кода метода
+	vector<char> codeBytes;
+	if (BodyStart != NULL) {
+		Statement_node* curStatement = BodyStart;
+		while (curStatement != NULL) {
+			vector<char> bytes = curStatement->generateCode();
+			CodeGenerationHelpers::appendArrayToByteVector(&codeBytes, bytes.data(), bytes.size());
+			curStatement = curStatement->Next;
+		}
+	}
+
+	//Добавление длины атрибута
+	vector<char> lengthBytes = CodeGenerationHelpers::intToByteArray(12 + codeBytes.size(), 4);
 	CodeGenerationHelpers::appendArrayToByteVector(&res, lengthBytes.data(), lengthBytes.size());
 
 	//Добавление размера стека операндов
@@ -252,11 +264,13 @@ vector<char> MethodsTableElement::generateCodeAttribute()
 	vector<char> localsSizeBytes = CodeGenerationHelpers::intToByteArray(localsSize, 2);
 	CodeGenerationHelpers::appendArrayToByteVector(&res, localsSizeBytes.data(), localsSizeBytes.size());
 
+
 	//Добавление длины байт-кода TODO: сделать
-	vector<char> codeSizeBytes = CodeGenerationHelpers::intToByteArray(0, 4);
+	vector<char> codeSizeBytes = CodeGenerationHelpers::intToByteArray(codeBytes.size(), 4);
 	CodeGenerationHelpers::appendArrayToByteVector(&res, codeSizeBytes.data(), codeSizeBytes.size());
 
-	//Добавление байт-кода TODO: сделать
+	//Добавление байт-кода
+	CodeGenerationHelpers::appendArrayToByteVector(&res, codeBytes.data(), codeBytes.size());
 
 	//Добавление количества записей в таблице исключений
 	vector<char> exceptionTableSizeBytes = CodeGenerationHelpers::intToByteArray(0, 2);
@@ -265,6 +279,213 @@ vector<char> MethodsTableElement::generateCodeAttribute()
 	//Добавление количества атрибутов
 	vector<char> attributesCountBytes = CodeGenerationHelpers::intToByteArray(0, 2);
 	CodeGenerationHelpers::appendArrayToByteVector(&res, attributesCountBytes.data(), attributesCountBytes.size());
+
+	return res;
+}
+
+
+// -------------------- Генерация байт-кода метода для атрибута Code --------------------
+
+// ---------- Statement ----------
+vector<char> Statement_node::generateCode()
+{
+	vector<char> res;
+
+	switch (type)
+	{
+	case EMPTY_STATEMENT_TYPE:
+		break;
+	case SIMPLE_STATEMENT_TYPE: {
+		vector<char> bytes = generateCodeForSimpleStatement();
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+	}
+		break;
+	case RETURN_STATEMENT_TYPE: {
+
+	}
+		break;
+	case IF_STATEMENT_TYPE: {
+
+	}
+		break;
+	case WHILE_STATEMENT_TYPE: {
+
+	}
+		break;
+	case DO_WHILE_STATEMENT_TYPE: {
+
+	}
+		break;
+	case FOR_STATEMENT_TYPE: {
+
+	}
+		break;
+	case COMPOUND_STATEMENT_TYPE: {
+
+	}
+		break;
+	case DECLARATION_STATEMENT_TYPE: {
+
+	}
+		break;
+	default:
+		break;
+	}
+
+	return res;
+}
+
+vector<char> Statement_node::generateCodeForSimpleStatement()
+{
+	vector<char> res;
+
+	vector<char> expr = Expression->generateCode();
+	CodeGenerationHelpers::appendArrayToByteVector(&res, expr.data(), expr.size());
+
+	return res;
+}
+
+
+// ---------- Expression ----------
+
+vector<char> Expression_node::generateCode()
+{
+	vector<char> res;
+
+	switch (type)
+	{
+	case IDENTIFIER_EXPRESSION_TYPE: {
+
+	}
+		break;
+	case LITERAL_EXPRESSION_TYPE: {
+
+	}
+		break;
+	case NUMERIIC_CONSTANT_EXPRESSION_TYPE: {
+		vector<char> bytes = generateCodeForNumericConstant();
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+	}
+		break;
+	case SELF_EXPRESSION_TYPE: {
+
+	}
+		break;
+	case SUPER_EXPRESSION_TYPE: {
+
+	}
+		break;
+	case MESSAGE_EXPRESSION_EXPRESSION_TYPE: {
+
+	}
+		break;
+	case FUNCTION_CALL_EXPRESSION_TYPE: {
+
+	}
+		break;
+	case UMINUS_EXPRESSION_TYPE: {
+
+	}
+		break;
+	case UPLUS_EXPRESSION_TYPE: {
+
+	}
+		break;
+	case UAMPERSAND_EXPRESSION_TYPE: {
+
+	}
+		break;
+	case PLUS_EXPRESSION_TYPE: {
+
+	}
+		break;
+	case MINUS_EXPRESSION_TYPE: {
+
+	}
+		break;
+	case MUL_EXPRESSION_TYPE: {
+
+	}
+		break;
+	case DIV_EXPRESSION_TYPE: {
+
+	}
+		break;
+	case EQUAL_EXPRESSION_TYPE: {
+
+	}
+		break;
+	case NOT_EQUAL_EXPRESSION_TYPE: {
+
+	}
+		break;
+	case GREATER_EXPRESSION_TYPE: {
+
+	}
+		break;
+	case LESS_EXPRESSION_TYPE: {
+
+	}
+		break;
+	case LESS_EQUAL_EXPRESSION_TYPE: {
+
+	}
+		break;
+	case GREATER_EQUAL_EXPRESSION_TYPE: {
+
+	}
+		break;
+	case ASSIGNMENT_EXPRESSION_TYPE: {
+
+	}
+		break;
+	case DOT_EXPRESSION_TYPE: {
+
+	}
+		break;
+	case ARROW_EXPRESSION_TYPE: {
+
+	}
+		break;
+	case ARRAY_ELEMENT_ACCESS_EXPRESSION_TYPE: {
+
+	}
+		break;
+	case ARRAY_ASSIGNMENT_EXPRESSION_TYPE: {
+
+	}
+		break;
+	case MEMBER_ACCESS_ASSIGNMENT_EXPRESSION_TYPE: {
+
+	}
+		break;
+	case CHAR_CAST: {
+
+	}
+		break;
+	case INT_CAST: {
+
+	}
+		break;
+	case CLASS_CAST: {
+
+	}
+		break;
+	default:
+		break;
+	}
+
+	return res;
+}
+
+vector<char> Expression_node::generateCodeForNumericConstant()
+{
+	vector<char> res;
+	
+	int number = num->Int; // Число
+
+	vector<char> bytes = CodeGenerationCommands::iconstBipushSipush(number); //Команда
+	CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 
 	return res;
 }

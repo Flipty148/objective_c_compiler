@@ -410,7 +410,8 @@ vector<char> Expression_node::generateCode()
 	}
 		break;
 	case UMINUS_EXPRESSION_TYPE: {
-
+		vector<char> bytes = generateCodeForUminus();
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case UPLUS_EXPRESSION_TYPE: {
@@ -579,6 +580,19 @@ vector<char> Expression_node::generateCodeForDiv()
 	CodeGenerationHelpers::appendArrayToByteVector(&res, rightOperand.data(), rightOperand.size());
 
 	vector<char> bytes = CodeGenerationCommands::idiv(); //Команда
+	CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+
+	return res;
+}
+
+vector<char> Expression_node::generateCodeForUminus()
+{
+	vector<char> res;
+
+	vector<char> rightOperand = Right->generateCode(); //Число
+	CodeGenerationHelpers::appendArrayToByteVector(&res, rightOperand.data(), rightOperand.size());
+
+	vector<char> bytes = CodeGenerationCommands::ineg(); //Команда
 	CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 
 	return res;

@@ -386,5 +386,28 @@ if (parseRes == 0) {
             isPreviousSuccess = false;
         }
     }
+
+    //Генерация .jar файла
+    if (isPreviousSuccess) {
+        try {
+            printf("Start generating .jar file\n");
+            string manifest = "main-class: rtl.Program\nclass-path: code/\n";
+            ofstream out("./out/manifest.mf");
+            out << manifest;
+            out.close();
+            string jar = "cd ./out/ && jar -cmf manifest.mf code.jar -C code .";
+            system(jar.c_str());
+            string runBat = "@echo off\njava -jar code.jar";
+            ofstream outBat("./out/run.bat");
+            outBat << runBat;
+            outBat.close();
+
+            printf("Successful generating .jar file\n");
+        }
+        catch (...) {
+            printf("Failed generating .jar file\n");
+            isPreviousSuccess = false;
+        }
+    }
 }
 }

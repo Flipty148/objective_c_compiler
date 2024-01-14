@@ -1,0 +1,2 @@
+main-class: rtl.Program
+class-path: code/

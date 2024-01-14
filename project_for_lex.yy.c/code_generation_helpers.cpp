@@ -253,6 +253,14 @@ vector<char> CodeGenerationCommands::iinc(int index, int num)
 	return res;
 }
 
+// ---------- ineg ----------
+vector<char> CodeGenerationCommands::ineg()
+{
+	vector<char> res;
+	res.push_back(0x74); //ineg
+	return res;
+}
+
 // ---------- if_icmp ----------
 vector<char> CodeGenerationCommands::if_icmp(IfCommandType type, int offset)
 {

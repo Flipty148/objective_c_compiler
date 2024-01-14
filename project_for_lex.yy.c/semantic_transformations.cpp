@@ -219,7 +219,7 @@ void MethodsTableElement::addDefaultReturn(Statement_node* lastStatement)
 void FunctionsTableElement::addDefaultReturn(Statement_node* lastStatement)
 {
 	Statement_node* defaultReturn;
-	if (ReturnType->DataType == VOID_TYPE)
+	if (ReturnType->DataType == VOID_TYPE || NameStr == "main")
 		defaultReturn = Statement_node::createStatementNodeFromSimpleStatement(RETURN_STATEMENT_TYPE, NULL); //Создать пустой return
 	else {
 		int defaultValue = ReturnType->getDefaultValue(); //Получить значение по умолчанию

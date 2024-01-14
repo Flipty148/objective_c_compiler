@@ -5,4 +5,4 @@ ID|Type|Value
 4|UTF8|java/lang/Object
 5|Class|4
 6|UTF8|main
-7|UTF8|()I
+7|UTF8|([Ljava/lang/String;)V

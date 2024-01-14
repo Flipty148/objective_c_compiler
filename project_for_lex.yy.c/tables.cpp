@@ -1512,8 +1512,24 @@ void FunctionsTableElement::fillLiterals(ConstantsTable* constantTable)
 
 void FunctionsTableElement::convertToClassProgramMethods(ClassesTableElement* classTableElement)
 {
-	MethodsTableElement* method = classTableElement->Methods->addMethod(classTableElement->ConstantTable, NameStr, DescriptorStr, true, BodyStart, ReturnType, new vector<Type*>, ParametersTypes);
-	method->LocalVariables = LocalVariables;
+	if (NameStr == "main") {
+		string descr = "([Ljava/lang/String;)V";
+		Type* returnType = new Type(VOID_TYPE);
+		vector<Type*>* parametersTypes = new vector<Type*>;
+		parametersTypes->push_back(new Type(CLASS_NAME_TYPE, "java/lang/String", 1024));
+		MethodsTableElement* method = classTableElement->Methods->addMethod(classTableElement->ConstantTable, NameStr, descr, true, BodyStart, returnType, new vector<Type*>, parametersTypes);
+		method->LocalVariables->findOrAddLocalVariable("self", new Type(CLASS_NAME_TYPE, "rtl/Program"));
+		method->LocalVariables->findOrAddLocalVariable("args", new Type(CLASS_NAME_TYPE, "java/lang/String", 1024));
+
+		for (auto i = LocalVariables->items.begin(); i != LocalVariables->items.end(); i++) {
+			if (i->first != "self" && i->first != "args")
+				method->LocalVariables->findOrAddLocalVariable(i->first, i->second->type);
+		}
+	}
+	else {
+		MethodsTableElement* method = classTableElement->Methods->addMethod(classTableElement->ConstantTable, NameStr, DescriptorStr, true, BodyStart, ReturnType, new vector<Type*>, ParametersTypes);
+		method->LocalVariables = LocalVariables;
+	}
 }
 
 void FunctionsTableElement::semanticTransform()

@@ -1097,14 +1097,15 @@ void MethodsTableElement::semanticTransform()
 	Statement_node* cur = BodyStart;
 	while (cur != NULL)
 	{
-		cur->semanticTransform(LocalVariables);
 		if (cur->Next == NULL) {
 			addDefaultReturn(cur);
+			cur->Next->semanticTransform(LocalVariables);
 			cur = NULL;
 		}
 		else {
 			cur = cur->Next;
 		}
+		cur->semanticTransform(LocalVariables);
 	}
 }
 
@@ -1523,6 +1524,7 @@ void FunctionsTableElement::semanticTransform()
 		cur->semanticTransform(LocalVariables);
 		if (cur->Next == NULL) {
 			addDefaultReturn(cur);
+			cur->Next->semanticTransform(LocalVariables);
 			cur = NULL;
 		}
 		else {

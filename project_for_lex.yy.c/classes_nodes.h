@@ -410,6 +410,7 @@ private:
     vector<char> generateCodeForMul(); // Генерация кода для Mul
 	vector<char> generateCodeForDiv(); // Генерация кода для Div
 	vector<char> generateCodeForUminus(); // Генерация кода для Uminus
+	vector<char> generateCodeForUplus(); // Генерация кода для Uplus
 };
 
 // ---------- expression_list ----------

@@ -2,7 +2,11 @@ ID|Type|Value
 1|UTF8|Code
 2|UTF8|rtl/Program
 3|Class|2
-4|UTF8|java/lang/Object
-5|Class|4
-6|UTF8|main
-7|UTF8|([Ljava/lang/String;)V
+4|UTF8|hello world
+5|String|4
+6|UTF8|nshello
+7|String|6
+8|UTF8|java/lang/Object
+9|Class|8
+10|UTF8|main
+11|UTF8|([Ljava/lang/String;)V

@@ -413,6 +413,7 @@ private:
 	vector<char> generateCodeForDiv(); // Генерация кода для Div
 	vector<char> generateCodeForUminus(); // Генерация кода для Uminus
 	vector<char> generateCodeForUplus(); // Генерация кода для Uplus
+	vector<char> generateCodeForLiteral(); // Генерация кода для Literal
 };
 
 // ---------- expression_list ----------

@@ -33,7 +33,7 @@ public:
 	/*!
 	* Генерирует команды ldc и ldc_w.
 	* Команды ldc (0x12) и ldc_w (0x13) загружают на стек целую или дробную константу из таблицы констант класса.
-	* @param[in] num - номер константы типа CONSTANT_Integer
+	* @param[in] num - номер константы типа CONSTANT_Integer, CONSTANT_String
 	* @return вектор байт
 	*/
 	static vector<char> ldc(int num);

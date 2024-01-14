@@ -9,4 +9,6 @@ int main()
     40 / 3;
     -15;
     +13;
+    "hello world";
+    @"nshello";
 }

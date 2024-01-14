@@ -385,7 +385,8 @@ vector<char> Expression_node::generateCode()
 	}
 		break;
 	case LITERAL_EXPRESSION_TYPE: {
-
+		vector<char> bytes = generateCodeForLiteral();
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case NUMERIIC_CONSTANT_EXPRESSION_TYPE: {
@@ -602,5 +603,21 @@ vector<char> Expression_node::generateCodeForUminus()
 vector<char> Expression_node::generateCodeForUplus()
 {
 	vector<char> res = Right->generateCode(); //Число
+	return res;
+}
+
+vector<char> Expression_node::generateCodeForLiteral()
+{
+	vector<char> res;
+
+	if (literal->type == CHAR_CONSTANT_TYPE) {
+		vector<char> bytes = CodeGenerationCommands::iconstBipushSipush(*literal->value); //Команда
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+	}
+	else {
+		vector<char> bytes = CodeGenerationCommands::ldc(literal->constant->Id); //Команда
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+	}
+
 	return res;
 }

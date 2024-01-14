@@ -2,5 +2,7 @@ ID|Type|Value
 1|UTF8|Code
 2|UTF8|rtl/Program
 3|Class|2
-4|UTF8|main
-5|UTF8|()I
+4|UTF8|java/lang/Object
+5|Class|4
+6|UTF8|main
+7|UTF8|()I

@@ -344,6 +344,11 @@ void ClassesTableElement::semanticTransform()
 	{
 		iter->second->semanticTransform();
 	}
+
+	if (Superclass == NULL) {
+		SuperclassName = ConstantTable->findOrAddConstant(UTF8, "java/lang/Object");
+		Superclass = ConstantTable->findOrAddConstant(Class, NULL, SuperclassName);
+	}
 }
 
 // -------------------- ClassesTable --------------------

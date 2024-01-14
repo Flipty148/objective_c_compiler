@@ -408,6 +408,7 @@ private:
     vector<char> generateCodeForPlus(); // Генерация кода для Plus
 	vector<char> generateCodeForMinus(); // Генерация кода для Minus
     vector<char> generateCodeForMul(); // Генерация кода для Mul
+	vector<char> generateCodeForDiv(); // Генерация кода для Div
 };
 
 // ---------- expression_list ----------

@@ -301,7 +301,8 @@ vector<char> Statement_node::generateCode()
 	}
 		break;
 	case RETURN_STATEMENT_TYPE: {
-
+		vector<char> bytes = generateCodeForReturnStatement();
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case IF_STATEMENT_TYPE: {
@@ -341,6 +342,31 @@ vector<char> Statement_node::generateCodeForSimpleStatement()
 
 	vector<char> expr = Expression->generateCode();
 	CodeGenerationHelpers::appendArrayToByteVector(&res, expr.data(), expr.size());
+
+	return res;
+}
+
+vector<char> Statement_node::generateCodeForReturnStatement()
+{
+	vector<char> res;
+
+	if (Expression != NULL) {
+		vector<char> expr = Expression->generateCode();
+		CodeGenerationHelpers::appendArrayToByteVector(&res, expr.data(), expr.size()); //Загрузить expression (значение)
+
+		if (Expression->DataType->DataType == CLASS_NAME_TYPE || Expression->DataType->DataType == ID_TYPE) { //Возвращается ссылка
+			vector<char> returnBytes = CodeGenerationCommands::areturn();
+			CodeGenerationHelpers::appendArrayToByteVector(&res, returnBytes.data(), returnBytes.size());
+		}
+		else { //Возвращается значение
+			vector<char> returnBytes = CodeGenerationCommands::ireturn();
+			CodeGenerationHelpers::appendArrayToByteVector(&res, returnBytes.data(), returnBytes.size());
+		}
+	}
+	else { //void return
+		vector<char> returnBytes = CodeGenerationCommands::return_();
+		CodeGenerationHelpers::appendArrayToByteVector(&res, returnBytes.data(), returnBytes.size());
+	}
 
 	return res;
 }

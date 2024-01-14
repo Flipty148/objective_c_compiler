@@ -158,6 +158,7 @@ class Statement_node
 		vector<char> generateCode(); //Функция генерации кода
 private:
 	vector<char> generateCodeForSimpleStatement(); //Функция генерации кода для SimpleStatement
+	vector<char> generateCodeForReturnStatement(); //Функция генерации кода для ReturnStatement
 };
 
 // ---------- declaration ----------

@@ -11,4 +11,5 @@ int main()
     +13;
     "hello world";
     @"nshello";
+    9 == 9;
 }

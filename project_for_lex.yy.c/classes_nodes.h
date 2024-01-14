@@ -414,6 +414,7 @@ private:
 	vector<char> generateCodeForUminus(); // Генерация кода для Uminus
 	vector<char> generateCodeForUplus(); // Генерация кода для Uplus
 	vector<char> generateCodeForLiteral(); // Генерация кода для Literal
+	vector<char> generateCodeForEqual(); // Генерация кода для Equal
 };
 
 // ---------- expression_list ----------

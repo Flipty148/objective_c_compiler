@@ -289,7 +289,7 @@ vector<char> CodeGenerationCommands::if_icmp(IfCommandType type, int offset)
 		break;
 	}
 
-	vector <char> temp = CodeGenerationHelpers::intToByteArray(offset, 2);
+	vector <char> temp = CodeGenerationHelpers::intToByteArray(offset + 3, 2);
 	CodeGenerationHelpers::appendArrayToByteVector(&res, temp.data(), temp.size());
 
 	return res;
@@ -324,7 +324,7 @@ vector<char> CodeGenerationCommands::if_(IfCommandType type, int offset)
 		break;
 	}
 
-	vector <char> temp = CodeGenerationHelpers::intToByteArray(offset, 2);
+	vector <char> temp = CodeGenerationHelpers::intToByteArray(offset + 3, 2);
 	CodeGenerationHelpers::appendArrayToByteVector(&res, temp.data(), temp.size());
 
 	return res;
@@ -350,7 +350,7 @@ vector<char> CodeGenerationCommands::if_acmp(IfCommandType type, int offset)
 		break;
 	}
 
-	vector <char> temp = CodeGenerationHelpers::intToByteArray(offset, 2);
+	vector <char> temp = CodeGenerationHelpers::intToByteArray(offset + 3, 2);
 	CodeGenerationHelpers::appendArrayToByteVector(&res, temp.data(), temp.size());
 
 	return res;
@@ -361,7 +361,7 @@ vector<char> CodeGenerationCommands::goto_(int offset)
 {
 	vector<char> res;
 	res.push_back(0xA7); //goto
-	vector <char> temp = CodeGenerationHelpers::intToByteArray(offset, 2);
+	vector <char> temp = CodeGenerationHelpers::intToByteArray(offset + 3, 2);
 	CodeGenerationHelpers::appendArrayToByteVector(&res, temp.data(), temp.size());
 	return res;
 }

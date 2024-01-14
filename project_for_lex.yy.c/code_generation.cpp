@@ -406,10 +406,6 @@ vector<char> Expression_node::generateCode()
 
 	}
 		break;
-	case FUNCTION_CALL_EXPRESSION_TYPE: {
-
-	}
-		break;
 	case UMINUS_EXPRESSION_TYPE: {
 		vector<char> bytes = generateCodeForUminus();
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
@@ -445,7 +441,8 @@ vector<char> Expression_node::generateCode()
 	}
 		break;
 	case EQUAL_EXPRESSION_TYPE: {
-
+		vector<char> bytes = generateCodeForEqual();
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case NOT_EQUAL_EXPRESSION_TYPE: {
@@ -618,6 +615,32 @@ vector<char> Expression_node::generateCodeForLiteral()
 		vector<char> bytes = CodeGenerationCommands::ldc(literal->constant->Id); //Команда
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
+
+	return res;
+}
+
+vector<char> Expression_node::generateCodeForEqual()
+{
+	vector<char> res;
+
+	vector<char> leftOperand = Left->generateCode(); //левый операнд	
+	CodeGenerationHelpers::appendArrayToByteVector(&res, leftOperand.data(), leftOperand.size());
+
+	vector<char> rightOperand = Right->generateCode(); //правый операнд
+	CodeGenerationHelpers::appendArrayToByteVector(&res, rightOperand.data(), rightOperand.size());
+
+	vector<char> trueBytes = CodeGenerationCommands::iconstBipushSipush(1); //Ветка, если равны
+	vector<char> falseBytes = CodeGenerationCommands::iconstBipushSipush(0); //Ветка, если не равны
+	vector<char> gotoBytes = CodeGenerationCommands::goto_(falseBytes.size()); //Безусловный переход в случае положительной ветки
+
+	int offset = trueBytes.size() + gotoBytes.size(); //Смещение, с которого начинается альтернативная ветка
+	vector<char> ifBytes = CodeGenerationCommands::if_icmp(CodeGenerationCommands::NE, offset); //Условный переход
+
+	// Формирование кода
+	CodeGenerationHelpers::appendArrayToByteVector(&res, ifBytes.data(), ifBytes.size());
+	CodeGenerationHelpers::appendArrayToByteVector(&res, trueBytes.data(), trueBytes.size());
+	CodeGenerationHelpers::appendArrayToByteVector(&res, gotoBytes.data(), gotoBytes.size());
+	CodeGenerationHelpers::appendArrayToByteVector(&res, falseBytes.data(), falseBytes.size());
 
 	return res;
 }

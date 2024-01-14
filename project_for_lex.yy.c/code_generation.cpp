@@ -432,7 +432,8 @@ vector<char> Expression_node::generateCode()
 	}
 		break;
 	case MUL_EXPRESSION_TYPE: {
-
+		vector<char> bytes = generateCodeForMul();
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case DIV_EXPRESSION_TYPE: {
@@ -545,6 +546,22 @@ vector<char> Expression_node::generateCodeForMinus()
 	CodeGenerationHelpers::appendArrayToByteVector(&res, rightOperand.data(), rightOperand.size());
 
 	vector<char> bytes = CodeGenerationCommands::isub(); //Команда
+	CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+
+	return res;
+}
+
+vector<char> Expression_node::generateCodeForMul()
+{
+	vector<char> res;
+
+	vector<char> leftOperand = Left->generateCode(); //1-ый множитель
+	CodeGenerationHelpers::appendArrayToByteVector(&res, leftOperand.data(), leftOperand.size());
+
+	vector<char> rightOperand = Right->generateCode(); //2-ой множитель
+	CodeGenerationHelpers::appendArrayToByteVector(&res, rightOperand.data(), rightOperand.size());
+
+	vector<char> bytes = CodeGenerationCommands::imul(); //Команда
 	CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 
 	return res;

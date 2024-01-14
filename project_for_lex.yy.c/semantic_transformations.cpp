@@ -389,6 +389,10 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 				}
 			}
 		}
+		else if (!Left->DataType->isPrimitive() && !Right->DataType->isPrimitive() && (type == EQUAL_EXPRESSION_TYPE || type == NOT_EQUAL_EXPRESSION_TYPE))
+		{
+			DataType = new Type(INT_TYPE);
+		}
 		else {
 			string msg = "Type '";
 			if (!Left->DataType->isPrimitive())

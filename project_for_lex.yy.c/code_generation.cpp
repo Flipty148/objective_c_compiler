@@ -636,7 +636,11 @@ vector<char> Expression_node::generateCodeForEqual()
 	vector<char> gotoBytes = CodeGenerationCommands::goto_(falseBytes.size()); //Безусловный переход в случае положительной ветки
 
 	int offset = trueBytes.size() + gotoBytes.size(); //Смещение, с которого начинается альтернативная ветка
-	vector<char> ifBytes = CodeGenerationCommands::if_icmp(CodeGenerationCommands::NE, offset); //Условный переход
+	vector<char> ifBytes; //Условный переход
+	if (Left->DataType->isPrimitive() && Right->DataType->isPrimitive())
+		ifBytes = CodeGenerationCommands::if_icmp(CodeGenerationCommands::NE, offset);
+	else 
+		ifBytes = CodeGenerationCommands::if_acmp(CodeGenerationCommands::NE, offset);
 
 	// Формирование кода
 	CodeGenerationHelpers::appendArrayToByteVector(&res, ifBytes.data(), ifBytes.size());
@@ -662,7 +666,11 @@ vector<char> Expression_node::generateCodeForNotEqual()
 	vector<char> gotoBytes = CodeGenerationCommands::goto_(falseBytes.size()); //Безусловный переход в случае положительной ветки
 
 	int offset = trueBytes.size() + gotoBytes.size(); //Смещение, с которого начинается альтернативная ветка
-	vector<char> ifBytes = CodeGenerationCommands::if_icmp(CodeGenerationCommands::EQ, offset); //Условный переход
+	vector<char> ifBytes; //Условный переход
+	if (Left->DataType->isPrimitive() && Right->DataType->isPrimitive())
+		ifBytes = CodeGenerationCommands::if_icmp(CodeGenerationCommands::NE, offset);
+	else
+		ifBytes = CodeGenerationCommands::if_acmp(CodeGenerationCommands::NE, offset);
 
 	// Формирование кода
 	CodeGenerationHelpers::appendArrayToByteVector(&res, ifBytes.data(), ifBytes.size());

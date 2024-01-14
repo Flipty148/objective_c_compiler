@@ -406,6 +406,7 @@ private:
 
 	vector<char> generateCodeForNumericConstant(); // Генерация кода для NumericConstant
     vector<char> generateCodeForPlus(); // Генерация кода для Plus
+	vector<char> generateCodeForMinus(); // Генерация кода для Minus
 };
 
 // ---------- expression_list ----------

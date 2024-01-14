@@ -418,6 +418,7 @@ private:
 	vector<char> generateCodeForNotEqual(); // Генерация кода для NotEqual
 	vector<char> generateCodeForGreater(); // Генерация кода для Greater
 	vector<char> generateCodeForLess(); // Генерация кода для Less
+	vector<char> generateCodeForLessEqual(); // Генерация кода для LessEqual
 };
 
 // ---------- expression_list ----------

@@ -618,6 +618,22 @@ vector<char> Expression_node::generateCodeForLiteral()
 		vector<char> bytes = CodeGenerationCommands::iconstBipushSipush(*literal->value); //Команда
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
+	else if (literal->type == STRING_CONSTANT_TYPE) {
+		vector<char> size = CodeGenerationCommands::iconstBipushSipush(strlen(literal->value)); //Команда
+		CodeGenerationHelpers::appendArrayToByteVector(&res, size.data(), size.size());
+		vector<char> bytes = CodeGenerationCommands::newarray(CodeGenerationCommands::T_CHAR); //Команда
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+		for (int i = 0; i < strlen(literal->value); i++) {
+			vector<char> dup = CodeGenerationCommands::dup(); //Дублирование ссылки на массив
+			CodeGenerationHelpers::appendArrayToByteVector(&res, dup.data(), dup.size());
+			vector<char> index = CodeGenerationCommands::iconstBipushSipush(i); //Индекс
+			CodeGenerationHelpers::appendArrayToByteVector(&res, index.data(), index.size());
+			vector<char> charValue = CodeGenerationCommands::iconstBipushSipush(literal->value[i]); //Значение
+			CodeGenerationHelpers::appendArrayToByteVector(&res, charValue.data(), charValue.size());
+			vector<char> aastore = CodeGenerationCommands::castore(); //Команда
+			CodeGenerationHelpers::appendArrayToByteVector(&res, aastore.data(), aastore.size());
+		}
+	}
 	else {
 		vector<char> bytes = CodeGenerationCommands::ldc(literal->constant->Id); //Команда
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());

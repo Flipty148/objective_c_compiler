@@ -13,7 +13,7 @@ int main()
     [InOutFuncs printInt:40 / 3];
     [InOutFuncs printInt:-15];
     [InOutFuncs printInt:+13];
-    //[InOutFuncs printCharArray:"hello world"];
+    [InOutFuncs printCharArray:"aaaaabbbbbccccc"];
     // [InOutFuncs printString:@"nshello"];
     [InOutFuncs printInt:9 == 9];
     [InOutFuncs printInt:11 != 11];

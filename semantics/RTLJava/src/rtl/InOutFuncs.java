@@ -16,7 +16,7 @@ public class InOutFuncs {
     } //TODO Возможно стоит заменить на NSString
 
     public static void printCharArrayStatic(char[] s) {
-        System.out.println(s);
+        System.out.println(new String(s));
     }
 
     public static void printObjectStatic(Object o) {

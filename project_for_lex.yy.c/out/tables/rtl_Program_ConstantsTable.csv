@@ -14,11 +14,7 @@ ID|Type|Value
 13|UTF8|()Lrtl/NSObject;
 14|NameAndType|12, 13
 15|MethodRef|14, 11
-16|UTF8|hello world
-17|String|16
-18|UTF8|nshello
-19|String|18
-20|UTF8|java/lang/Object
-21|Class|20
-22|UTF8|main
-23|UTF8|([Ljava/lang/String;)V
+16|UTF8|java/lang/Object
+17|Class|16
+18|UTF8|main
+19|UTF8|([Ljava/lang/String;)V

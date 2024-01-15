@@ -666,16 +666,16 @@ vector<char> Expression_node::generateCodeForNotEqual(bool isInsideClassMethod, 
 	vector<char> rightOperand = Right->generateCode(isInsideClassMethod, constantsTable); //правый операнд
 	CodeGenerationHelpers::appendArrayToByteVector(&res, rightOperand.data(), rightOperand.size());
 
-	vector<char> trueBytes = CodeGenerationCommands::iconstBipushSipush(1); //Ветка, если равны
-	vector<char> falseBytes = CodeGenerationCommands::iconstBipushSipush(0); //Ветка, если не равны
+	vector<char> trueBytes = CodeGenerationCommands::iconstBipushSipush(1); //Ветка, если не равны
+	vector<char> falseBytes = CodeGenerationCommands::iconstBipushSipush(0); //Ветка, если равны
 	vector<char> gotoBytes = CodeGenerationCommands::goto_(falseBytes.size()); //Безусловный переход в случае положительной ветки
 
 	int offset = trueBytes.size() + gotoBytes.size(); //Смещение, с которого начинается альтернативная ветка
 	vector<char> ifBytes; //Условный переход
 	if (Left->DataType->isPrimitive() && Right->DataType->isPrimitive())
-		ifBytes = CodeGenerationCommands::if_icmp(CodeGenerationCommands::NE, offset);
+		ifBytes = CodeGenerationCommands::if_icmp(CodeGenerationCommands::EQ, offset);
 	else
-		ifBytes = CodeGenerationCommands::if_acmp(CodeGenerationCommands::NE, offset);
+		ifBytes = CodeGenerationCommands::if_acmp(CodeGenerationCommands::EQ, offset);
 
 	// Формирование кода
 	CodeGenerationHelpers::appendArrayToByteVector(&res, ifBytes.data(), ifBytes.size());

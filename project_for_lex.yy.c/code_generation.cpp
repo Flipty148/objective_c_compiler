@@ -8,8 +8,8 @@ using namespace std;
 
 void ClassesTable::generateClassFiles(string filepath)
 {
-	auto iter = items.cbegin();
-	while (iter != items.cend())
+	auto iter = items->cbegin();
+	while (iter != items->cend())
 	{
 		if (iter->second->isNeedToGenerateClassFile())
 			iter->second->generateClassFile(filepath);
@@ -23,59 +23,59 @@ void ClassesTableElement::generateClassFile(string filepath)
 	string classFile = filepath + className + ".class"; //Путь к файлу
 	
 	//Генерация .class файла
-	vector<char> *data = new vector<char>;
+	vector<char> data;
 
 	//Указание магических констант
 	int magicConstantSize = sizeof(CodeGenerationHelpers::magicConstant)/sizeof(CodeGenerationHelpers::magicConstant[0]); //Количество элементов в магической константе
 	int smallVersionSize = sizeof(CodeGenerationHelpers::smallVersion)/sizeof(CodeGenerationHelpers::smallVersion[0]); //Количество элементов в малой версии формата файла
 	int bigVersionSize = sizeof(CodeGenerationHelpers::bigVersion)/sizeof(CodeGenerationHelpers::bigVersion[0]); //Количество элементов в большой версии формата файла
-	CodeGenerationHelpers::appendArrayToByteVector(data, CodeGenerationHelpers::magicConstant, magicConstantSize); //Добавление магической константы
-	CodeGenerationHelpers::appendArrayToByteVector(data, CodeGenerationHelpers::smallVersion, smallVersionSize); //Добавление малой версии формата файла
-	CodeGenerationHelpers::appendArrayToByteVector(data, CodeGenerationHelpers::bigVersion, bigVersionSize); //Добавление большой версии формата файла
+	CodeGenerationHelpers::appendArrayToByteVector(&data, CodeGenerationHelpers::magicConstant, magicConstantSize); //Добавление магической константы
+	CodeGenerationHelpers::appendArrayToByteVector(&data, CodeGenerationHelpers::smallVersion, smallVersionSize); //Добавление малой версии формата файла
+	CodeGenerationHelpers::appendArrayToByteVector(&data, CodeGenerationHelpers::bigVersion, bigVersionSize); //Добавление большой версии формата файла
 
 	// Таблица констант
 	int constantSize = ConstantTable->items.size() + 1; //Количество констант + 1
 	vector<char> constantSizeBytes = CodeGenerationHelpers::intToByteArray(constantSize, 2); //Конвертация размера таблицы констант в байты
-	CodeGenerationHelpers::appendArrayToByteVector(data, constantSizeBytes.data(), constantSizeBytes.size()); //Добавление размера таблицы констант в байты
+	CodeGenerationHelpers::appendArrayToByteVector(&data, constantSizeBytes.data(), constantSizeBytes.size()); //Добавление размера таблицы констант в байты
 	vector<char> constantTableBytes = ConstantTable->generateBytes(); //Генерация таблицы констант
-	CodeGenerationHelpers::appendArrayToByteVector(data, constantTableBytes.data(), constantTableBytes.size()); //Добавление таблицы констант
+	CodeGenerationHelpers::appendArrayToByteVector(&data, constantTableBytes.data(), constantTableBytes.size()); //Добавление таблицы констант
 
 	//Флаги доступа
-	data->push_back(0x00); //Отсутствие ACC_ABSTRACT ????
-	data->push_back(0x21); //ACC_SUPER + ACC_PUBLIC
+	data.push_back(0x00); //Отсутствие ACC_ABSTRACT ????
+	data.push_back(0x21); //ACC_SUPER + ACC_PUBLIC
 
 	//Текущий класс
 	vector<char> classNameBytes = CodeGenerationHelpers::intToByteArray(ThisClass, 2); //Конвертация имени текущего класса в байты
-	CodeGenerationHelpers::appendArrayToByteVector(data, classNameBytes.data(), classNameBytes.size()); //Добавление имени текущего класса в байты
+	CodeGenerationHelpers::appendArrayToByteVector(&data, classNameBytes.data(), classNameBytes.size()); //Добавление имени текущего класса в байты
 
 	//Класс-родитель
 	vector<char> superClassBytes = CodeGenerationHelpers::intToByteArray(Superclass, 2); //Конвертация имени родительского класса в байты
-	CodeGenerationHelpers::appendArrayToByteVector(data, superClassBytes.data(), superClassBytes.size()); //Добавление имени родительского класса в байты
+	CodeGenerationHelpers::appendArrayToByteVector(&data, superClassBytes.data(), superClassBytes.size()); //Добавление имени родительского класса в байты
 
 	//Количество интерфейсов
 	vector<char> interfaceCountBytes = CodeGenerationHelpers::intToByteArray(0, 2); //Конвертация количества интерфейсов в байты
-	CodeGenerationHelpers::appendArrayToByteVector(data, interfaceCountBytes.data(), interfaceCountBytes.size()); //Добавление количества интерфейсов в байты
+	CodeGenerationHelpers::appendArrayToByteVector(&data, interfaceCountBytes.data(), interfaceCountBytes.size()); //Добавление количества интерфейсов в байты
 
 	//Поля класса
 	int fieldCount = Fields->items.size(); //Количество полей
 	vector<char> fieldCountBytes = CodeGenerationHelpers::intToByteArray(fieldCount, 2); //Конвертация количества полей в байты
-	CodeGenerationHelpers::appendArrayToByteVector(data, fieldCountBytes.data(), fieldCountBytes.size()); //Добавление количества полей в байты
+	CodeGenerationHelpers::appendArrayToByteVector(&data, fieldCountBytes.data(), fieldCountBytes.size()); //Добавление количества полей в байты
 	vector<char> fieldTableBytes = Fields->generateBytes(); //Генерация таблицы полей
-	CodeGenerationHelpers::appendArrayToByteVector(data, fieldTableBytes.data(), fieldTableBytes.size()); //Добавление таблицы полей
+	CodeGenerationHelpers::appendArrayToByteVector(&data, fieldTableBytes.data(), fieldTableBytes.size()); //Добавление таблицы полей
 	
 	//Методы класса
 	int methodCount = Methods->items.size(); //Количество методов
 	vector<char> methodCountBytes = CodeGenerationHelpers::intToByteArray(methodCount, 2); //Конвертация количества методов в байты
-	CodeGenerationHelpers::appendArrayToByteVector(data, methodCountBytes.data(), methodCountBytes.size()); //Добавление количества методов в байты
+	CodeGenerationHelpers::appendArrayToByteVector(&data, methodCountBytes.data(), methodCountBytes.size()); //Добавление количества методов в байты
 	vector<char> methodTableBytes = Methods->generateBytes(ConstantTable); //Генерация таблицы методов
-	CodeGenerationHelpers::appendArrayToByteVector(data, methodTableBytes.data(), methodTableBytes.size()); //Добавление таблицы методов
+	CodeGenerationHelpers::appendArrayToByteVector(&data, methodTableBytes.data(), methodTableBytes.size()); //Добавление таблицы методов
 	
 	//Атрибуты класса
 	vector<char> attributeCountBytes = CodeGenerationHelpers::intToByteArray(0, 2); //Конвертация количества атрибутов в байты
-	CodeGenerationHelpers::appendArrayToByteVector(data, attributeCountBytes.data(), attributeCountBytes.size()); //Добавление количества атрибутов в байты
+	CodeGenerationHelpers::appendArrayToByteVector(&data, attributeCountBytes.data(), attributeCountBytes.size()); //Добавление количества атрибутов в байты
 
 	ofstream out(classFile, ios::out | ios::binary); //Создание и открытие потока на запись в файл
-	out.write(data->data(), data->size()); //Запись в файл
+	out.write(data.data(), data.size()); //Запись в файл
 	out.close(); //Закрытие потока
 }
 
@@ -114,6 +114,7 @@ vector<char> ConstantsTableElement::generateBytes()
 		strcpy(str, Utf8String->c_str());
 		CodeGenerationHelpers::appendArrayToByteVector(&res, len.data(), len.size());
 		CodeGenerationHelpers::appendArrayToByteVector(&res, str, Utf8String->length());
+		delete[] str;
 	}
 		break;
 	case Integer: {
@@ -876,7 +877,7 @@ vector<char> Receiver_node::generateCode(bool isInsideClassMethod, ConstantsTabl
 			CodeGenerationHelpers::appendArrayToByteVector(&res, obj.data(), obj.size());
 
 			string className = Receiver->DataType->ClassName;
-			ConstantsTable* constantsTable = ClassesTable::items[className]->ConstantTable;
+			ConstantsTable* constantsTable = ClassesTable::items->at(className)->ConstantTable;
 			if (constantsTable->items.count(Constant) == 0) {
 				string msg = "Class " + className + " doesn't have constant " + to_string(Constant);
 				throw std::exception(msg.c_str());

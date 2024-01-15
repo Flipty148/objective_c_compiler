@@ -123,8 +123,8 @@ void For_statement_node::checkFastEnumerationTypes(LocalVariablesTable* locals)
 		}
 	}
 	else { //Поле
-		if (ClassesTable::items.count(locals->items["self"]->type->ClassName) != 0) {
-			ClassesTableElement* selfClass = ClassesTable::items[locals->items["self"]->type->ClassName];
+		if (ClassesTable::items->count(locals->items["self"]->type->ClassName) != 0) {
+			ClassesTableElement* selfClass = ClassesTable::items->at(locals->items["self"]->type->ClassName);
 			if (selfClass->isContainsField(name)) {
 				string descr;
 				string className;
@@ -155,8 +155,8 @@ void For_statement_node::checkFastEnumerationTypes(LocalVariablesTable* locals)
 		}
 	}
 	else { //Поле
-		if (ClassesTable::items.count(locals->items["self"]->type->ClassName) != 0) {
-			ClassesTableElement* selfClass = ClassesTable::items[locals->items["self"]->type->ClassName];
+		if (ClassesTable::items->count(locals->items["self"]->type->ClassName) != 0) {
+			ClassesTableElement* selfClass = ClassesTable::items->at(locals->items["self"]->type->ClassName);
 			if (selfClass->isContainsField(ConditionExpression->name)) {
 				string descr;
 				string className;

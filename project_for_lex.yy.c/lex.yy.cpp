@@ -2298,6 +2298,7 @@ if (parseRes == 0) {
 
 	bool isPreviousSuccess = true;
 
+
 	//Построение dot дерева до семантического анализа
 	if (isPreviousSuccess) {
 		try {
@@ -2381,6 +2382,8 @@ if (parseRes == 0) {
 		}
 	}
 
+	delete root;
+	delete ClassesTable::items;
 
 	//Генерация .jar файла
 	if (isPreviousSuccess) {

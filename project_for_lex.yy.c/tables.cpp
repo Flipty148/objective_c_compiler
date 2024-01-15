@@ -100,7 +100,7 @@ int ConstantsTable::findOrAddConstant(constantType type, int number, int firstRe
 	return res;
 }
 
-int ConstantsTable::findConstant(constantType type, string *utf8string, int number, int firstRef, int secondRef)
+int ConstantsTable::findConstant(constantType type, string* utf8string, int number, int firstRef, int secondRef)
 {
 	string compared = utf8string == NULL ? "" : *utf8string;
 	auto iter = items.cbegin();
@@ -135,7 +135,7 @@ void ConstantsTable::toCsvFile(string filename, string filepath, char separator)
 	ofstream out(filepath + filename); //Создание и открытие потока на запись в файл
 	out << "ID" << separator << "Type" << separator << "Value" << endl; // Запись заголовков
 	auto iter = items.cbegin();
-	while (iter != items.cend()) 
+	while (iter != items.cend())
 	{
 
 		string str = iter->second->toCsvString(separator); // Формирование строки
@@ -165,13 +165,13 @@ int ConstantsTable::findOrAddMethodRefConstant(string className, string methodNa
 	int descriptorConst = this->findOrAddConstant(UTF8, descriptor);
 	int nameAndTypeConst = this->findOrAddConstant(NameAndType, NULL, nameConst, descriptorConst);
 	int methodRefConst = this->findOrAddConstant(MethodRef, NULL, nameAndTypeConst, classConst);
-	
+
 	return methodRefConst;
 }
 
 // -------------------- ClassesTableElement --------------------
 
-ClassesTableElement::ClassesTableElement(string name, string *superclassName, bool isImplementation)
+ClassesTableElement::ClassesTableElement(string name, string* superclassName, bool isImplementation)
 {
 	ConstantTable = new ConstantsTable();
 	Fields = new FieldsTable();
@@ -203,7 +203,7 @@ string ClassesTableElement::toCsvString(char separator)
 	else
 		res += string("emptyTable") + separator;
 
-	if (Methods->items.size() >0 )
+	if (Methods->items.size() > 0)
 		res += *ConstantTable->getConstant(Name)->Utf8String + "_MethodsTable.csv" + separator;
 	else
 		res += string("emptyTable") + separator;
@@ -212,7 +212,7 @@ string ClassesTableElement::toCsvString(char separator)
 		res += *ConstantTable->getConstant(Name)->Utf8String + "_PropertiesTable.csv" + separator;
 	else
 		res += string("emptyTable") + separator;
-		
+
 	res += *ConstantTable->getConstant(Name)->Utf8String + "_ConstantsTable.csv";
 	return res;
 }
@@ -223,7 +223,7 @@ void ClassesTableElement::refTablesToCsvFile(string filepath, char separator)
 	replace(className.begin(), className.end(), '/', '_');
 	if (Fields->items.size() > 0)
 		Fields->toCsvFile(className + "_FieldsTable.csv", filepath, separator); //Записать таблицу полей в файл
-	
+
 	if (Methods->items.size() > 0)
 		Methods->toCsvFile(className + "_MethodsTable.csv", filepath, separator); //Записать таблицу методов в файл
 
@@ -278,14 +278,14 @@ bool ClassesTableElement::isContainsField(string fieldName)
 		return true;
 	else {
 		if (SuperclassName != NULL)
-			return ClassesTable::items[getSuperClassName()]->isContainsField(fieldName);
+			return ClassesTable::items->at(getSuperClassName())->isContainsField(fieldName);
 	}
 	return false;
 }
 
 FieldsTableElement* ClassesTableElement::getFieldForRef(string name, string* descriptor, string* className)
 {
-	if (isContainsField(name)){ // Содержит поле
+	if (isContainsField(name)) { // Содержит поле
 		if (Fields->items.count(name) != 0) { //Поле содержится в текущем классе
 			*descriptor = Fields->items[name]->DescriptorStr;
 			*className = getClassName();
@@ -293,7 +293,7 @@ FieldsTableElement* ClassesTableElement::getFieldForRef(string name, string* des
 		}
 		else { //Поле содержится в одном из родительских классов
 			if (SuperclassName != NULL)
-				return ClassesTable::items[getSuperClassName()]->getFieldForRef(name, descriptor, className);
+				return ClassesTable::items->at(getSuperClassName())->getFieldForRef(name, descriptor, className);
 		}
 	}
 	return NULL;
@@ -307,7 +307,7 @@ bool ClassesTableElement::isHaveOneOfSuperclass(string name)
 	else {
 		if (getSuperClassName() == name) //Имя родительского класса совпадает с искомым
 			return true;
-		else return ClassesTable::items[getSuperClassName()]->isHaveOneOfSuperclass(name); //Проверить является искомый класс родительским для родительского
+		else return ClassesTable::items->at(getSuperClassName())->isHaveOneOfSuperclass(name); //Проверить является искомый класс родительским для родительского
 	}
 }
 
@@ -317,7 +317,7 @@ bool ClassesTableElement::isContainsMethod(string methodName)
 		return true;
 	else {
 		if (SuperclassName != NULL)
-			return ClassesTable::items[getSuperClassName()]->isContainsMethod(methodName);
+			return ClassesTable::items->at(getSuperClassName())->isContainsMethod(methodName);
 	}
 	return false;
 }
@@ -332,7 +332,7 @@ MethodsTableElement* ClassesTableElement::getMethodForRef(string name, string* d
 		}
 		else { //Метод содержится в одном из родительских классов
 			if (SuperclassName != NULL) {
-				MethodsTableElement *method = ClassesTable::items[getSuperClassName()]->getMethodForRef(name, descriptor, className);
+				MethodsTableElement* method = ClassesTable::items->at(getSuperClassName())->getMethodForRef(name, descriptor, className);
 				if (isSupercall)
 					*className = getSuperClassName();
 				else
@@ -358,7 +358,7 @@ void ClassesTableElement::semanticTransform()
 }
 
 // -------------------- ClassesTable --------------------
-map<string, ClassesTableElement*> ClassesTable::items;
+map<string, ClassesTableElement*>* ClassesTable::items = new map<string, ClassesTableElement*>;
 
 ClassesTableElement* ClassesTable::addClass(string name, string* superclassName, bool isImplementation, Class_block_node* classBlock)
 {
@@ -370,28 +370,28 @@ ClassesTableElement* ClassesTable::addClass(string name, string* superclassName,
 		else
 			fullSuperclassName = new string("global/" + *superclassName);
 	}
-	ClassesTableElement *element = new ClassesTableElement("global/" + name, fullSuperclassName, isImplementation); // Новый добавляемый элемент
+	ClassesTableElement* element = new ClassesTableElement("global/" + name, fullSuperclassName, isImplementation); // Новый добавляемый элемент
 
 
-	if (!isImplementation && items.count(fullName) && items[fullName]->IsImplementation) { // Проверка, чтобы интерфейс класса при его наличии находился раньше реализации
+	if (!isImplementation && items->count(fullName) && items->at(fullName)->IsImplementation) { // Проверка, чтобы интерфейс класса при его наличии находился раньше реализации
 		string msg = "Class interface'" + name + "' after implementation";
 		throw new std::exception(msg.c_str());
 	}
-	else if (items.count(fullName) && items[fullName]->IsImplementation == isImplementation) { // Проверка на повторное объявление класса
+	else if (items->count(fullName) && items->at(fullName)->IsImplementation == isImplementation) { // Проверка на повторное объявление класса
 		string msg = "Rediifnition of class '" + name + "'";
 		throw new std::exception(msg.c_str());
 	}
-	else if (superclassName != NULL && items.count(fullName) && items[fullName]->ConstantTable->getConstantString(items[fullName]->SuperclassName) != *fullSuperclassName) { // Проверка на совпадение суперкласса в интерфейсе и реаизации
+	else if (superclassName != NULL && items->count(fullName) && items->at(fullName)->ConstantTable->getConstantString(items->at(fullName)->SuperclassName) != *fullSuperclassName) { // Проверка на совпадение суперкласса в интерфейсе и реаизации
 		string msg = "Class '" + name + "' with different superclass";
 		throw new std::exception(msg.c_str());
 	}
-	else if (items.count(fullName) && !items[fullName]->IsImplementation && isImplementation) { // Объявление реализации после интерфейса
-		items[fullName]->IsImplementation = true;
-		items[fullName]->IsHaveInterface = true;
+	else if (items->count(fullName) && !items->at(fullName)->IsImplementation && isImplementation) { // Объявление реализации после интерфейса
+		items->at(fullName)->IsImplementation = true;
+		items->at(fullName)->IsHaveInterface = true;
 		delete element;
 	}
 	else {
-		items[fullName] = element; // Добавление (обновление элемента в таблице классов)
+		(*items)[fullName] = element; // Добавление (обновление элемента в таблице классов)
 	}
 
 	//Преобразование имени в узле дерева
@@ -402,7 +402,7 @@ ClassesTableElement* ClassesTable::addClass(string name, string* superclassName,
 			strcpy(implementation->SuperclassName, fullSuperclassName->c_str());
 		else
 			implementation->SuperclassName = NULL;
-		
+
 	}
 	else {
 		Class_interface_node* interface = (Class_interface_node*)classBlock;
@@ -413,7 +413,7 @@ ClassesTableElement* ClassesTable::addClass(string name, string* superclassName,
 			interface->SuperclassName = NULL;
 	}
 
-	return items[fullName];
+	return items->at(fullName);
 }
 
 void ClassesTable::initRTL()
@@ -431,7 +431,7 @@ void ClassesTable::initClassProgram()
 	ClassesTableElement* Program = new ClassesTableElement("rtl/Program", NULL, true);
 
 	//Добавление класса InOutFuncs в таблицу классов
-	items["rtl/Program"] = Program;
+	(*items)["rtl/Program"] = Program;
 }
 
 void ClassesTable::initClassInOutFuncs()
@@ -441,51 +441,51 @@ void ClassesTable::initClassInOutFuncs()
 
 	// Добавление метода printInt
 	ConstantsTable* сonstantTable = InOutFuncs->ConstantTable;
-	Type *printIntReturnType = new Type(VOID_TYPE);
-	vector<Type*> *printIntKeywordsType = new vector<Type*>{ new Type(INT_TYPE) };
-	vector<Type*> *printIntParamsType = new vector<Type*>;
+	Type* printIntReturnType = new Type(VOID_TYPE);
+	vector<Type*>* printIntKeywordsType = new vector<Type*>{ new Type(INT_TYPE) };
+	vector<Type*>* printIntParamsType = new vector<Type*>;
 	InOutFuncs->Methods->addMethod(сonstantTable, "printIntStatic", "(I)V", true, NULL, printIntReturnType, printIntParamsType, printIntKeywordsType);
 
 	//Добавление метода printChar
 	Type* printCharReturnType = new Type(VOID_TYPE);
-	vector<Type*> *printCharKeywordsType = new vector<Type*>{ new Type(CHAR_TYPE) };
-	vector<Type*> *printCharParamsType = new vector<Type*>;
+	vector<Type*>* printCharKeywordsType = new vector<Type*>{ new Type(CHAR_TYPE) };
+	vector<Type*>* printCharParamsType = new vector<Type*>;
 	InOutFuncs->Methods->addMethod(сonstantTable, "printCharStatic", "(C)V", true, NULL, printCharReturnType, printCharParamsType, printCharKeywordsType);
 
 	//Добавление метода printString
 	Type* printStringReturnType = new Type(VOID_TYPE);
-	vector<Type*> *printStringKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "java/lang/String")};
-	vector<Type*> *printStringParamsType = new vector<Type*>;
+	vector<Type*>* printStringKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "java/lang/String") };
+	vector<Type*>* printStringParamsType = new vector<Type*>;
 	InOutFuncs->Methods->addMethod(сonstantTable, "printNSStringStatic", "(Lrtl/NSString;)V", true, NULL, printStringReturnType, printStringParamsType, printStringKeywordsType);
 
 	//Добавление метода printCharArray
 	Type* printCharArrayReturnType = new Type(VOID_TYPE);
-	vector<Type*> *printCharArrayKeywordsType = new vector<Type*>{ new Type(CHAR_TYPE, 1024) };
-	vector<Type*> *printCharArrayParamsType = new vector<Type*>;
+	vector<Type*>* printCharArrayKeywordsType = new vector<Type*>{ new Type(CHAR_TYPE, 1024) };
+	vector<Type*>* printCharArrayParamsType = new vector<Type*>;
 	InOutFuncs->Methods->addMethod(сonstantTable, "printCharArrayStatic", "([C)V", true, NULL, printCharArrayReturnType, printCharArrayParamsType, printCharArrayKeywordsType);
 
 	//Добавление метода printObject
 	Type* printObjectReturnType = new Type(VOID_TYPE);
-	vector<Type*> *printObjectKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "java/lang/Object") };
-	vector<Type*> *printObjectParamsType = new vector<Type*>;
+	vector<Type*>* printObjectKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "java/lang/Object") };
+	vector<Type*>* printObjectParamsType = new vector<Type*>;
 	InOutFuncs->Methods->addMethod(сonstantTable, "printObjectStatic", "(Ljava/lang/Object;)V", true, NULL, printObjectReturnType, printObjectParamsType, printObjectKeywordsType);
 
 	//Добавление метода read
 	Type* readReturnType = new Type(CLASS_NAME_TYPE, "java/lang/String");
-	vector<Type*> *readKeywordsType = new vector<Type*>;
-	vector<Type*> *readParamsType = new vector<Type*>;
+	vector<Type*>* readKeywordsType = new vector<Type*>;
+	vector<Type*>* readParamsType = new vector<Type*>;
 	InOutFuncs->Methods->addMethod(сonstantTable, "readStatic", "()Ljava/lang/String;", true, NULL, readReturnType, readParamsType, readKeywordsType);
 
 	//Добавление метода readInt
 	Type* readIntReturnType = new Type(INT_TYPE);
-	vector<Type*> *readIntKeywordsType = new vector<Type*>;
-	vector<Type*> *readIntParamsType = new vector<Type*>;
+	vector<Type*>* readIntKeywordsType = new vector<Type*>;
+	vector<Type*>* readIntParamsType = new vector<Type*>;
 	InOutFuncs->Methods->addMethod(сonstantTable, "readIntStatic", "()I", true, NULL, readIntReturnType, readIntParamsType, readIntKeywordsType);
 
 	//Добавление метода readChar
 	Type* readCharReturnType = new Type(CHAR_TYPE);
-	vector<Type*> *readCharKeywordsType = new vector<Type*>;
-	vector<Type*> *readCharParamsType = new vector<Type*>;
+	vector<Type*>* readCharKeywordsType = new vector<Type*>;
+	vector<Type*>* readCharParamsType = new vector<Type*>;
 	InOutFuncs->Methods->addMethod(сonstantTable, "readCharStatic", "()C", true, NULL, readCharReturnType, readCharParamsType, readCharKeywordsType);
 
 
@@ -506,7 +506,7 @@ void ClassesTable::initClassInOutFuncs()
 	сonstantTable->findOrAddMethodRefConstant("java/lang/String", "charAt", "(I)C");
 
 	//Добавление класса InOutFuncs в таблицу классов
-	items["rtl/InOutFuncs"] = InOutFuncs;
+	(*items)["rtl/InOutFuncs"] = InOutFuncs;
 }
 
 void ClassesTable::initClassNSObject()
@@ -514,7 +514,7 @@ void ClassesTable::initClassNSObject()
 	//Создание класса NSObject
 	ClassesTableElement* nsobject = new ClassesTableElement("rtl/NSObject", NULL, true);
 	ConstantsTable* constantTable = nsobject->ConstantTable;
-	
+
 	//Добавление конструктора <init>
 	Type* constructorReturnType = new Type(VOID_TYPE);
 	vector<Type*>* constructorKeywordsType = new vector<Type*>;
@@ -526,13 +526,13 @@ void ClassesTable::initClassNSObject()
 	vector<Type*>* allocKeywordsType = new vector<Type*>;
 	vector<Type*>* allocParamsType = new vector<Type*>;
 	nsobject->Methods->addMethod(constantTable, "allocStatic", "()Lrtl/NSObject;", true, NULL, allocReturnType, allocParamsType, allocKeywordsType);
-	
+
 	//Добавление метода init
 	Type* initReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSObject");
 	vector<Type*>* initKeywordsType = new vector<Type*>;
 	vector<Type*>* initParamsType = new vector<Type*>;
 	nsobject->Methods->addMethod(constantTable, "initDynamic", "()Lrtl/NSObject;", false, NULL, initReturnType, initParamsType, initKeywordsType);
-	
+
 	//Добавление метода new
 	Type* newReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSObject");
 	vector<Type*>* newKeywordsType = new vector<Type*>;
@@ -553,7 +553,7 @@ void ClassesTable::initClassNSObject()
 
 	//Добавление метода isSubclassOfClass
 	Type* isSubclassOfClassReturnType = new Type(INT_TYPE);
-	vector<Type*>* isSubclassOfClassKeywordsType = new vector<Type*>{new Type(CLASS_NAME_TYPE, "java/lang/Class")};
+	vector<Type*>* isSubclassOfClassKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "java/lang/Class") };
 	vector<Type*>* isSubclassOfClassParamsType = new vector<Type*>;
 	nsobject->Methods->addMethod(constantTable, "isSubclassOfClassStatic", "(Ljava/lang/Class;)I", true, NULL, isSubclassOfClassReturnType, isSubclassOfClassParamsType, isSubclassOfClassKeywordsType);
 
@@ -577,7 +577,7 @@ void ClassesTable::initClassNSObject()
 
 	//Добавление метода isEqual
 	Type* isEqualReturnType = new Type(INT_TYPE);
-	vector<Type*>* isEqualKeywordsType = new vector<Type*>{new Type(CLASS_NAME_TYPE, "rtl/NSObject")};
+	vector<Type*>* isEqualKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "rtl/NSObject") };
 	vector<Type*>* isEqualParamsType = new vector<Type*>;
 	nsobject->Methods->addMethod(constantTable, "isEqualDynamic", "(Lrtl/NSObject;)I", false, NULL, isEqualReturnType, isEqualParamsType, isEqualKeywordsType);
 
@@ -599,7 +599,7 @@ void ClassesTable::initClassNSObject()
 	constantTable->findOrAddConstant(String, NULL, strNum);
 
 	//Добавление класса NSObject в таблицу классов
-	items["rtl/NSObject"] = nsobject;
+	(*items)["rtl/NSObject"] = nsobject;
 }
 
 void ClassesTable::initClassNSString()
@@ -623,7 +623,7 @@ void ClassesTable::initClassNSString()
 
 	//Добавление метода stringWithString
 	Type* stringWithStringReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSString");
-	vector<Type*>* stringWithStringKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "rtl/NSString")};
+	vector<Type*>* stringWithStringKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "rtl/NSString") };
 	vector<Type*>* stringWithStringParamsType = new vector<Type*>;
 	nsstring->Methods->addMethod(constantTable, "stringWithStringStatic", "(Lrtl/NSString;)Lrtl/NSString;", true, NULL, stringWithStringReturnType, stringWithStringParamsType, stringWithStringKeywordsType);
 
@@ -644,7 +644,7 @@ void ClassesTable::initClassNSString()
 	vector<Type*>* characterAtIndexKeywordsType = new vector<Type*>{ new Type(INT_TYPE) };
 	vector<Type*>* characterAtIndexParamsType = new vector<Type*>;
 	nsstring->Methods->addMethod(constantTable, "characterAtIndexDynamic", "(I)C;", false, NULL, characterAtIndexReturnType, characterAtIndexParamsType, characterAtIndexKeywordsType);
-	
+
 	//Добавление метода hasPrefix
 	Type* hasPrefixReturnType = new Type(INT_TYPE);
 	vector<Type*>* hasPrefixKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "rtl/NSString") };
@@ -695,7 +695,7 @@ void ClassesTable::initClassNSString()
 
 	//Добавление метода stringByAppendingString
 	Type* stringByAppendingStringReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSString");
-	vector<Type*>* stringByAppendingStringKeywordsType = new vector<Type*>{new Type(CLASS_NAME_TYPE, "rtl/NSString")};
+	vector<Type*>* stringByAppendingStringKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "rtl/NSString") };
 	vector<Type*>* stringByAppendingStringParamsType = new vector<Type*>;
 	nsstring->Methods->addMethod(constantTable, "stringByAppendingStringDynamic", "(Lrtl/NSString;)Lrtl/NSString;", false, NULL, stringByAppendingStringReturnType, stringByAppendingStringParamsType, stringByAppendingStringKeywordsType);
 
@@ -724,9 +724,9 @@ void ClassesTable::initClassNSString()
 	constantTable->findOrAddMethodRefConstant("java/lang/String", "equals", "(Ljava/lang/Object;)Z");
 	constantTable->findOrAddMethodRefConstant("java/lang/String", "toLowerCase", "()Ljava/lang/String;");
 	constantTable->findOrAddMethodRefConstant("java/lang/String", "toUpperCase", "()Ljava/lang/String;");
-	
+
 	//Добавление класса NSString в таблицу классов
-	items["rtl/NSString"] = nsstring;
+	(*items)["rtl/NSString"] = nsstring;
 }
 
 void ClassesTable::initClassNSArray()
@@ -804,7 +804,7 @@ void ClassesTable::initClassNSArray()
 
 	//Добавление метода firstObjectCommonWithArray
 	Type* firstObjectCommonWithArrayReturnType = new Type(CLASS_NAME_TYPE, "rtl/NSObject");
-	vector<Type*>* firstObjectCommonWithArrayKeywordsType = new vector<Type*>{new Type(CLASS_NAME_TYPE, "rtl/NSArray")};
+	vector<Type*>* firstObjectCommonWithArrayKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "rtl/NSArray") };
 	vector<Type*>* firstObjectCommonWithArrayParamsType = new vector<Type*>;
 	nsarray->Methods->addMethod(constantTable, "firstObjectCommonWithArrayDynamic", "(Lrtl/NSArray;)Lrtl/NSObject;", false, NULL, firstObjectCommonWithArrayReturnType, firstObjectCommonWithArrayParamsType, firstObjectCommonWithArrayKeywordsType);
 
@@ -864,7 +864,7 @@ void ClassesTable::initClassNSArray()
 	constantTable->findOrAddMethodRefConstant("rtl/NSArray", "initDynamic", "()Lrtl/NSArray;");
 
 	//Добавление класса NSArray в таблицу классов
-	items["rtl/NSArray"] = nsarray;
+	(*items)["rtl/NSArray"] = nsarray;
 }
 
 
@@ -873,8 +873,8 @@ void ClassesTable::toCsvFile(string filepath, char separator)
 {
 	ofstream out(filepath + "ClassesTable.csv"); //Создание и открытие потока на запись в файл
 	out << "Name" << separator << "SuperclassName" << separator << "IsImplementation" << separator << "ThisClass" << separator << "Superclass" << separator << "FieldsTableName" << separator << "MethodsTableName" << separator << "PropertiesTableName" << separator << "ConstantsTableName" << endl; // Запись заголовков
-	auto iter = items.cbegin();
-	while (iter != items.cend())
+	auto iter = items->cbegin();
+	while (iter != items->cend())
 	{
 		string str = iter->second->toCsvString(separator); // Формирование строки
 		out << str << endl; //Запись строки в файл
@@ -886,8 +886,8 @@ void ClassesTable::toCsvFile(string filepath, char separator)
 
 void ClassesTable::fillFieldRefs()
 {
-	auto iter = items.cbegin();
-	while (iter != items.cend())
+	auto iter = items->cbegin();
+	while (iter != items->cend())
 	{
 		iter->second->fillFieldRefs();
 		++iter;
@@ -896,8 +896,8 @@ void ClassesTable::fillFieldRefs()
 
 void ClassesTable::fillMethodRefs()
 {
-	auto iter = items.cbegin();
-	while (iter != items.cend())
+	auto iter = items->cbegin();
+	while (iter != items->cend())
 	{
 		iter->second->fillMethodRefs();
 		++iter;
@@ -906,8 +906,8 @@ void ClassesTable::fillMethodRefs()
 
 void ClassesTable::fillLiterals()
 {
-	auto iter = items.cbegin();
-	while (iter != items.cend())
+	auto iter = items->cbegin();
+	while (iter != items->cend())
 	{
 		iter->second->fillLiterals();
 		++iter;
@@ -925,7 +925,7 @@ string ClassesTable::getFullClassName(string name)
 		fullName = "rtl/" + name;
 	else
 		fullName = "global/" + name;
-	if (items.count(fullName) == 0) {
+	if (items->count(fullName) == 0) {
 		string msg = "Class '" + name + "' not found";
 		throw new std::exception(msg.c_str());
 	}
@@ -934,8 +934,8 @@ string ClassesTable::getFullClassName(string name)
 
 void ClassesTable::semanticTransform()
 {
-	auto iter = items.cbegin();
-	while (iter != items.cend())
+	auto iter = items->cbegin();
+	while (iter != items->cend())
 	{
 		iter->second->semanticTransform();
 		++iter;
@@ -944,7 +944,7 @@ void ClassesTable::semanticTransform()
 
 // ------------------- FieldsTableElement --------------------
 
-FieldsTableElement::FieldsTableElement(int name, int descriptor, bool isInstance, int instanceIndex, Type *type, string nameStr, string descriptorStr, Expression_node* initialValue)
+FieldsTableElement::FieldsTableElement(int name, int descriptor, bool isInstance, int instanceIndex, Type* type, string nameStr, string descriptorStr, Expression_node* initialValue)
 {
 	Name = name;
 	Descriptor = descriptor;
@@ -991,13 +991,13 @@ void FieldsTable::addField(ConstantsTable* constantTable, string name, string de
 		FieldsTableElement* field = new FieldsTableElement(NameId, DescriptorId, isInstance, 0, type, name, descriptor, initValue);
 		items[name] = field;
 	}
-	
+
 }
 
 void FieldsTable::toCsvFile(string filename, string filepath, char separator)
 {
 	ofstream out(filepath + filename); //Создание и открытие потока на запись в файл
-	out << "Name" << separator << "Descriptor" << separator << "IsInstance" << separator << "Type" << separator << "InitValueIdNode" <<  endl; // Запись заголовков
+	out << "Name" << separator << "Descriptor" << separator << "IsInstance" << separator << "Type" << separator << "InitValueIdNode" << endl; // Запись заголовков
 	auto iter = items.cbegin();
 	while (iter != items.cend())
 	{
@@ -1010,7 +1010,7 @@ void FieldsTable::toCsvFile(string filename, string filepath, char separator)
 
 // -------------------- MethodsTableElement --------------------
 
-MethodsTableElement::MethodsTableElement(int name, int descriptor, bool isClassMethod, Statement_node* bodyStart, Type *returnType, vector<Type*>* paramsTypes, vector<Type*>* keywordsTypes, string nameStr, string descriptorStr)
+MethodsTableElement::MethodsTableElement(int name, int descriptor, bool isClassMethod, Statement_node* bodyStart, Type* returnType, vector<Type*>* paramsTypes, vector<Type*>* keywordsTypes, string nameStr, string descriptorStr)
 {
 	Name = name;
 	Descriptor = descriptor;
@@ -1064,13 +1064,13 @@ string MethodsTableElement::toCsvString(string methodName, char separator)
 	if (LocalVariables->items.size() > 0)
 		res += methodName + "_LocalVariablesTable.csv"; //Добавление имени таблицы локальных переменных
 	else
-		res += string("emptyTable"); 
+		res += string("emptyTable");
 	return res;
 }
 
-void MethodsTableElement::fillFieldRefs(ConstantsTable *constantTable, ClassesTableElement* classTableElement)
+void MethodsTableElement::fillFieldRefs(ConstantsTable* constantTable, ClassesTableElement* classTableElement)
 {
-	Statement_node *cur = BodyStart;
+	Statement_node* cur = BodyStart;
 	while (cur != NULL)
 	{
 		cur->fillFieldRefs(constantTable, LocalVariables, classTableElement); // Заполнить таблицу
@@ -1098,7 +1098,7 @@ void MethodsTableElement::fillLiterals(ConstantsTable* constantTable)
 	}
 }
 
-void MethodsTableElement::semanticTransform(ConstantsTable *constants)
+void MethodsTableElement::semanticTransform(ConstantsTable* constants)
 {
 	Statement_node* cur = BodyStart;
 	while (cur != NULL)
@@ -1123,7 +1123,7 @@ void MethodsTableElement::refTablesToCsvFile(string methodName, string filepath,
 
 // -------------------- MethodsTable --------------------
 
-MethodsTableElement* MethodsTable::addMethod(ConstantsTable *constantTable, string name, string descriptor, bool isClassMethod, Statement_node* bodyStart, Type *returnType, vector<Type*>* paramsTypes, vector<Type*>* keywordsTypes)
+MethodsTableElement* MethodsTable::addMethod(ConstantsTable* constantTable, string name, string descriptor, bool isClassMethod, Statement_node* bodyStart, Type* returnType, vector<Type*>* paramsTypes, vector<Type*>* keywordsTypes)
 {
 	if (items.count(name) != 0)
 	{
@@ -1132,7 +1132,7 @@ MethodsTableElement* MethodsTable::addMethod(ConstantsTable *constantTable, stri
 	}
 	int NameId = constantTable->findOrAddConstant(UTF8, name);
 	int DescriptorId = constantTable->findOrAddConstant(UTF8, descriptor);
-	MethodsTableElement *method = new MethodsTableElement(NameId, DescriptorId, isClassMethod, bodyStart, returnType, paramsTypes, keywordsTypes, name, descriptor);
+	MethodsTableElement* method = new MethodsTableElement(NameId, DescriptorId, isClassMethod, bodyStart, returnType, paramsTypes, keywordsTypes, name, descriptor);
 	items[name] = method;
 
 	return method;
@@ -1156,7 +1156,7 @@ void MethodsTable::toCsvFile(string filename, string filepath, char separator)
 
 // -------------------- PropertiesTableElement --------------------
 
-PropertiesTableElement::PropertiesTableElement(int name, int descriptor, bool isReadonly, Type *type, string nameStr, string descriptorStr)
+PropertiesTableElement::PropertiesTableElement(int name, int descriptor, bool isReadonly, Type* type, string nameStr, string descriptorStr)
 {
 	Name = name;
 	Descriptor = descriptor;
@@ -1178,54 +1178,54 @@ string PropertiesTableElement::toCsvString(char separator)
 
 // -------------------- PropertiesTable --------------------
 
- void PropertiesTable::addProperty(ConstantsTable *constantTable, string name, string descriptor, bool isReadonly, Type *type)
- {
-	 if (items.count(name) != 0)
-	 {
-		 string msg = "Property '" + name + "' already exists";
-		 throw new exception(msg.c_str());
-	 }
-	 int NameId = constantTable->findOrAddConstant(UTF8, name);
-	 int DescriptorId = constantTable->findOrAddConstant(UTF8, descriptor);
-	 PropertiesTableElement *property = new PropertiesTableElement(NameId, DescriptorId, isReadonly, type, name, descriptor);
-	 items[name] = property;
- }
+void PropertiesTable::addProperty(ConstantsTable* constantTable, string name, string descriptor, bool isReadonly, Type* type)
+{
+	if (items.count(name) != 0)
+	{
+		string msg = "Property '" + name + "' already exists";
+		throw new exception(msg.c_str());
+	}
+	int NameId = constantTable->findOrAddConstant(UTF8, name);
+	int DescriptorId = constantTable->findOrAddConstant(UTF8, descriptor);
+	PropertiesTableElement* property = new PropertiesTableElement(NameId, DescriptorId, isReadonly, type, name, descriptor);
+	items[name] = property;
+}
 
- void PropertiesTable::toCsvFile(string filename, string filepath, char separator)
- {
-	 ofstream out(filepath + filename); //Создание и открытие потока на запись в файл
-	 out << "Name" << separator << "Descriptor" << separator << "IsReadonly" << separator << "Type" << endl; // Запись заголовков
-	 auto iter = items.cbegin();
-	 while (iter != items.cend())
-	 {
-		 string str = iter->second->toCsvString(separator); // Формирование строки
-		 out << str << endl; //Запись строки в файл
-		 ++iter;
-	 }
-	 out.close(); // Закрытие потока
- }
+void PropertiesTable::toCsvFile(string filename, string filepath, char separator)
+{
+	ofstream out(filepath + filename); //Создание и открытие потока на запись в файл
+	out << "Name" << separator << "Descriptor" << separator << "IsReadonly" << separator << "Type" << endl; // Запись заголовков
+	auto iter = items.cbegin();
+	while (iter != items.cend())
+	{
+		string str = iter->second->toCsvString(separator); // Формирование строки
+		out << str << endl; //Запись строки в файл
+		++iter;
+	}
+	out.close(); // Закрытие потока
+}
 
- // ------------------- LocalVariablesTableElement --------------------
+// ------------------- LocalVariablesTableElement --------------------
 
- LocalVariablesTableElement::LocalVariablesTableElement(int id, string name, Type *type)
- {
-	 Id = id;
-	 Name = name;
-	 this->type = type;
- }
+LocalVariablesTableElement::LocalVariablesTableElement(int id, string name, Type* type)
+{
+	Id = id;
+	Name = name;
+	this->type = type;
+}
 
- string LocalVariablesTableElement::toCsvString(char separator)
- {
-	 string res = "";
-	 res += to_string(Id) + separator;
-	 res += Name + separator;
-	 res += type->toString();
-	 return res;
- }
+string LocalVariablesTableElement::toCsvString(char separator)
+{
+	string res = "";
+	res += to_string(Id) + separator;
+	res += Name + separator;
+	res += type->toString();
+	return res;
+}
 
 // -------------------- LocalVariablesTable --------------------
 
-int LocalVariablesTable::findOrAddLocalVariable(string name, Type *type)
+int LocalVariablesTable::findOrAddLocalVariable(string name, Type* type)
 {
 	if (items.count(name) == 0)
 	{
@@ -1328,14 +1328,14 @@ bool Type::isCastableTo(Type* other)
 		return true;
 
 	if (this->DataType == CLASS_NAME_TYPE && other->DataType == CLASS_NAME_TYPE) {
-		ClassesTableElement* thisClass = ClassesTable::items[this->ClassName];
-		ClassesTableElement* otherClass = ClassesTable::items[other->ClassName];
+		ClassesTableElement* thisClass = ClassesTable::items->at(this->ClassName);
+		ClassesTableElement* otherClass = ClassesTable::items->at(other->ClassName);
 		if (thisClass->isHaveOneOfSuperclass(other->ClassName))
 			return true;
 		if (otherClass->isHaveOneOfSuperclass(this->ClassName))
 			return true;
 	}
-	
+
 	return false;
 }
 
@@ -1349,7 +1349,7 @@ Type* Type::getSuperType()
 	if (DataType != CLASS_NAME_TYPE)
 		throw new std::exception("Type is not a class");
 
-	ClassesTableElement* thisClass = ClassesTable::items[ClassName];
+	ClassesTableElement* thisClass = ClassesTable::items->at(ClassName);
 	string superClassName = thisClass->getSuperClassName();
 	if (superClassName == "")
 		return NULL;
@@ -1368,7 +1368,7 @@ Type::Type(type_type dataType, string className, int arrSize)
 Type::Type(type_type dataType, int arrSize)
 {
 	DataType = dataType;
-	
+
 	Numeric_constant_node* Num = Numeric_constant_node::createNumericConstantNodeFromInteger(arrSize);
 	ArrSize = Expression_node::createExpressionNodeFromNumericConstant(Num);
 }
@@ -1470,7 +1470,7 @@ FunctionsTableElement::FunctionsTableElement(Statement_node* bodyStart, string n
 string FunctionsTableElement::toCsvString(string funcName, char separator)
 {
 	string res = "";
-	res +=  NameStr + separator; //Добавление имени
+	res += NameStr + separator; //Добавление имени
 	res += DescriptorStr + separator; //Добавление дескриптора
 	res += to_string(BodyStart->id) + separator; //Добавление id узла начала тела функции
 	if (LocalVariables->items.size() > 0)
@@ -1540,7 +1540,7 @@ void FunctionsTableElement::convertToClassProgramMethods(ClassesTableElement* cl
 
 void FunctionsTableElement::semanticTransform()
 {
-	ConstantsTable *constants = ClassesTable::items["rtl/Program"]->ConstantTable;
+	ConstantsTable* constants = ClassesTable::items->at("rtl/Program")->ConstantTable;
 	Statement_node* cur = BodyStart;
 	while (cur != NULL)
 	{
@@ -1567,7 +1567,7 @@ FunctionsTableElement* FunctionsTable::addFunction(string name, string descripto
 		string msg = "Function '" + name + "' already exists";
 		throw new exception(msg.c_str());
 	}
-	FunctionsTableElement *function = new FunctionsTableElement(bodyStart, name, descriptor, params, returnType);
+	FunctionsTableElement* function = new FunctionsTableElement(bodyStart, name, descriptor, params, returnType);
 	items[name] = function;
 	return function;
 }
@@ -1590,7 +1590,7 @@ void FunctionsTable::toCsvFile(string filename, string filepath, char separator)
 
 void FunctionsTable::fillFieldRefs()
 {
-	ClassesTableElement* classTableElement = ClassesTable::items["rtl/Program"];
+	ClassesTableElement* classTableElement = ClassesTable::items->at("rtl/Program");
 	bool isDontContainsMain = true;
 	auto iter = items.cbegin();
 	while (iter != items.cend())
@@ -1608,7 +1608,7 @@ void FunctionsTable::fillFieldRefs()
 
 void FunctionsTable::fillMethodRefs()
 {
-	ClassesTableElement* classTableElement = ClassesTable::items["rtl/Program"];
+	ClassesTableElement* classTableElement = ClassesTable::items->at("rtl/Program");
 	auto iter = items.cbegin();
 	while (iter != items.cend())
 	{
@@ -1619,7 +1619,7 @@ void FunctionsTable::fillMethodRefs()
 
 void FunctionsTable::fillLiterals()
 {
-	ClassesTableElement* classTableElement = ClassesTable::items["rtl/Program"];
+	ClassesTableElement* classTableElement = ClassesTable::items->at("rtl/Program");
 	auto iter = items.cbegin();
 	while (iter != items.cend())
 	{
@@ -1636,7 +1636,7 @@ void FunctionsTable::convertToClassProgramMethods()
 		throw new exception(msg.c_str());
 	}
 
-	ClassesTableElement* classTableElement = ClassesTable::items["rtl/Program"];
+	ClassesTableElement* classTableElement = ClassesTable::items->at("rtl/Program");
 	auto iter = items.cbegin();
 	while (iter != items.cend())
 	{

@@ -1152,7 +1152,7 @@ void Expression_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariable
 				throw new std::exception(msg.c_str());
 			}
 			string className = field->type->ClassName; //Имя класса локальной переменной
-			ClassesTableElement* classElem = ClassesTable::items[className];
+			ClassesTableElement* classElem = ClassesTable::items->at(className);
 			if (!classElem->isContainsField(fieldName) || classElem->Fields->items[fieldName]->IsInstance == false) { //Поле не содержится в классе объекта
 				string msg = "Class '" + className + "' don't contains field '" + fieldName;
 				throw new std::exception(msg.c_str());
@@ -1177,7 +1177,7 @@ void Expression_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariable
 				throw new std::exception(msg.c_str());
 			}
 			string className = local->type->ClassName; //Имя класса локальной переменной
-			ClassesTableElement* classElem = ClassesTable::items[className];
+			ClassesTableElement* classElem = ClassesTable::items->at(className);
 			if (!classElem->isContainsField(fieldName) || classElem->Fields->items[fieldName]->IsInstance == false) { //Поле не содержится в классе объекта
 				string msg = "Class '" + className + "' don't contains field '" + fieldName;
 				throw new std::exception(msg.c_str());
@@ -1260,7 +1260,7 @@ void Expression_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariabl
 
 		// Проверить наличие метода в классе
 		if (isReceiver) {
-			bool isContainsMethod = ClassesTable::items[receiverName]->isContainsMethod(methodNameWithType);
+			bool isContainsMethod = ClassesTable::items->at(receiverName)->isContainsMethod(methodNameWithType);
 			if (!isContainsMethod) {
 				string msg = "Class '" + receiverName + "' don't contains method '-" + methodName + "'";
 				throw new std::exception(msg.c_str());
@@ -1279,7 +1279,7 @@ void Expression_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariabl
 						throw new std::exception(msg.c_str());
 					}
 					string className = field->type->ClassName;
-					bool isContainsMethod = ClassesTable::items[className]->isContainsMethod(methodNameWithType);
+					bool isContainsMethod = ClassesTable::items->at(className)->isContainsMethod(methodNameWithType);
 					if (!isContainsMethod) {
 						string msg = "Class '" + className + "' don't contains method '-" + methodName + "'";
 						throw new std::exception(msg.c_str());
@@ -1292,7 +1292,7 @@ void Expression_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariabl
 						throw new std::exception(msg.c_str());
 					}
 					string className = local->type->ClassName;
-					bool isContainsMethod = ClassesTable::items[className]->isContainsMethod(methodNameWithType);
+					bool isContainsMethod = ClassesTable::items->at(className)->isContainsMethod(methodNameWithType);
 					if (!isContainsMethod) {
 						string msg = "Class '" + receiverName + "' don't contains method '-" + methodName + "'";
 						throw new std::exception(msg.c_str());
@@ -1300,7 +1300,7 @@ void Expression_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariabl
 				}
 				else { //Super
 					string className = classTableElement->getSuperClassName();
-					bool isContainsMethod = ClassesTable::items[className]->isContainsMethod(methodNameWithType);
+					bool isContainsMethod = ClassesTable::items->at(className)->isContainsMethod(methodNameWithType);
 					if (!isContainsMethod) {
 						string msg = "Class '" + className + "' don't contains method '-" + methodName + "'";
 						throw new std::exception(msg.c_str());
@@ -1311,7 +1311,7 @@ void Expression_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariabl
 				string fullClassName = ClassesTable::getFullClassName(receiverName); //Получить полное имя класса //TODO: Возможно, нужно будет убрать, если при преобразовании дерева будут заменяться сразу все имена классов
 				if (Receiver->name != NULL)
 					strcpy(Receiver->name, fullClassName.c_str());
-				bool isContainsMethod = ClassesTable::items[fullClassName]->isContainsMethod(methodNameWithType); //Проверить наличие метода
+				bool isContainsMethod = ClassesTable::items->at(fullClassName)->isContainsMethod(methodNameWithType); //Проверить наличие метода
 				if (!isContainsMethod) {
 					string msg = "Class '" + receiverName + "' don't contains method '+" + methodName + "'";
 					throw new std::exception(msg.c_str());
@@ -1321,7 +1321,7 @@ void Expression_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariabl
 
 		// Добавить methodRef
 		if (isReceiver) {
-			ClassesTableElement* element = ClassesTable::items[receiverName];
+			ClassesTableElement* element = ClassesTable::items->at(receiverName);
 			// Получить информацию для создания константы типа method ref
 			string descriptor;
 			string className;
@@ -1343,7 +1343,7 @@ void Expression_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariabl
 					LocalVariablesTableElement* local = localVariablesTable->items[receiverName];
 					className = local->type->ClassName;
 				}
-				ClassesTableElement* element = ClassesTable::items[className];
+				ClassesTableElement* element = ClassesTable::items->at(className);
 				// Получить информацию для создания константы типа method ref
 				string descriptor;
 				element->getMethodForRef(methodNameWithType, &descriptor, &className, Receiver->type == SUPER_RECEIVER_TYPE);
@@ -1354,7 +1354,7 @@ void Expression_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariabl
 				string fullClassName = ClassesTable::getFullClassName(receiverName); //Получить полное имя класса //TODO: Возможно, нужно будет убрать, если при преобразовании дерева будут заменяться сразу все имена классов
 				if (Receiver->name != NULL)
 					strcpy(Receiver->name, fullClassName.c_str()); // Преобразование имени класса в узле дерева
-				ClassesTableElement* element = ClassesTable::items[fullClassName];
+				ClassesTableElement* element = ClassesTable::items->at(fullClassName);
 				// Получить информацию для создания константы типа method ref
 				string descriptor;
 				string className;
@@ -1496,7 +1496,7 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 
 		// Проверить наличие метода в классе
 		if (isReceiver) {
-			bool isContainsMethod = ClassesTable::items[receiverName]->isContainsMethod(methodNameWithType);
+			bool isContainsMethod = ClassesTable::items->at(receiverName)->isContainsMethod(methodNameWithType);
 			if (!isContainsMethod) {
 				string msg = "Class '" + receiverName + "' don't contains method '-" + methodName + "'";
 				throw new std::exception(msg.c_str());
@@ -1515,7 +1515,7 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 						throw new std::exception(msg.c_str());
 					}
 					string className = field->type->ClassName;
-					bool isContainsMethod = ClassesTable::items[className]->isContainsMethod(methodNameWithType);
+					bool isContainsMethod = ClassesTable::items->at(className)->isContainsMethod(methodNameWithType);
 					if (!isContainsMethod) {
 						string msg = "Class '" + receiverName + "' don't contains method '-" + methodName + "'";
 						throw new std::exception(msg.c_str());
@@ -1528,7 +1528,7 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 						throw new std::exception(msg.c_str());
 					}
 					string className = local->type->ClassName;
-					bool isContainsMethod = ClassesTable::items[className]->isContainsMethod(methodNameWithType);
+					bool isContainsMethod = ClassesTable::items->at(className)->isContainsMethod(methodNameWithType);
 					if (!isContainsMethod) {
 						string msg = "Class '" + receiverName + "' don't contains method '-" + methodName + "'";
 						throw new std::exception(msg.c_str());
@@ -1536,7 +1536,7 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 				}
 				else { //Super
 					string className = classTableElement->getSuperClassName();
-					bool isContainsMethod = ClassesTable::items[className]->isContainsMethod(methodNameWithType);
+					bool isContainsMethod = ClassesTable::items->at(className)->isContainsMethod(methodNameWithType);
 					if (!isContainsMethod) {
 						string msg = "Class '" + className + "' don't contains method '-" + methodName + "'";
 						throw new std::exception(msg.c_str());
@@ -1547,7 +1547,7 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 				string fullClassName = ClassesTable::getFullClassName(receiverName); //Получить полное имя класса //TODO: Возможно, нужно будет убрать, если при преобразовании дерева будут заменяться сразу все имена классов
 				if (Receiver->name != NULL)
 					strcpy(Receiver->name, fullClassName.c_str()); //Преобразование имени класса в узле дерева
-				bool isContainsMethod = ClassesTable::items[fullClassName]->isContainsMethod(methodNameWithType); //Проверить наличие метода
+				bool isContainsMethod = ClassesTable::items->at(fullClassName)->isContainsMethod(methodNameWithType); //Проверить наличие метода
 				if (!isContainsMethod) {
 					string msg = "Class '" + receiverName + "' don't contains method '+" + methodName + "'";
 					throw new std::exception(msg.c_str());
@@ -1557,14 +1557,14 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 
 		// Добавить methodRef
 		if (isReceiver) {
-			ClassesTableElement* element = ClassesTable::items[receiverName];
+			ClassesTableElement* element = ClassesTable::items->at(receiverName);
 			// Получить информацию для создания константы типа method ref
 			string descriptor;
 			string className;
 			element->getMethodForRef(methodNameWithType, &descriptor, &className, Receiver->type == SUPER_RECEIVER_TYPE);
 			// Добавить константу method ref
 			Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
-			*returnType = ClassesTable::items[className]->Methods->items[methodNameWithType]->ReturnType;
+			*returnType = ClassesTable::items->at(className)->Methods->items[methodNameWithType]->ReturnType;
 		}
 		else {
 			if (isObject) {
@@ -1580,20 +1580,20 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 					LocalVariablesTableElement* local = localVariablesTable->items[receiverName];
 					className = local->type->ClassName;
 				}
-				ClassesTableElement* element = ClassesTable::items[className];
+				ClassesTableElement* element = ClassesTable::items->at(className);
 				// Получить информацию для создания константы типа method ref
 				string descriptor;
 				element->getMethodForRef(methodNameWithType, &descriptor, &className, Receiver->type == SUPER_RECEIVER_TYPE);
 				// Добавить константу method ref
 				Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
 
-				*returnType = ClassesTable::items[className]->Methods->items[methodNameWithType]->ReturnType;
+				*returnType = ClassesTable::items->at(className)->Methods->items[methodNameWithType]->ReturnType;
 			}
 			else {
 				string fullClassName = ClassesTable::getFullClassName(receiverName); //Получить полное имя класса //TODO: Возможно, нужно будет убрать, если при преобразовании дерева будут заменяться сразу все имена классов
 				if (Receiver->name != NULL)
 					strcpy(Receiver->name, fullClassName.c_str()); // Преобразование имени класса в узле дерева
-				ClassesTableElement* element = ClassesTable::items[fullClassName];
+				ClassesTableElement* element = ClassesTable::items->at(fullClassName);
 				// Получить информацию для создания константы типа method ref
 				string descriptor;
 				string className;
@@ -1601,7 +1601,7 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 				// Добавить константу method ref
 				Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
 
-				*returnType = ClassesTable::items[className]->Methods->items[methodNameWithType]->ReturnType;
+				*returnType = ClassesTable::items->at(className)->Methods->items[methodNameWithType]->ReturnType;
 			}
 		}
 

@@ -133,10 +133,12 @@ void Init_declarator_node::semanticTransform(LocalVariablesTable* locals, Type *
 		ArraySize->assignmentTransform();
 		ArraySize->setDataTypesAndCasts(locals);
 		ArraySize->setAttributes(locals, constants);
-		if (!ArraySize->DataType->isCastableTo(new Type(INT_TYPE))) {
+		Type* castType = new Type(INT_TYPE);
+		if (!ArraySize->DataType->isCastableTo(castType)) {
 			string msg = "Array size isn't 'int' or castable to 'int'. It has type '" + ArraySize->DataType->toString() + "'";
 			throw new std::exception(msg.c_str());
 		}
+		delete castType;
 	}
 }
 
@@ -252,8 +254,8 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 			DataType = locals->items[name]->type;
 		}
 		else { //Поле
-			if (ClassesTable::items.count(locals->items["self"]->type->ClassName) != 0) {
-				ClassesTableElement* selfClass = ClassesTable::items[locals->items["self"]->type->ClassName];
+			if (ClassesTable::items->count(locals->items["self"]->type->ClassName) != 0) {
+				ClassesTableElement* selfClass = ClassesTable::items->at(locals->items["self"]->type->ClassName);
 				if (selfClass->isContainsField(name)) {
 					string descr;
 					string className;
@@ -307,18 +309,18 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 			string msg = string("Receiver is not a class or object. It has type: '") + receiverType->toString();
 			throw new std::exception(msg.c_str());
 		}
-		else if (ClassesTable::items.count(receiverType->ClassName) == 0) {
+		else if (ClassesTable::items->count(receiverType->ClassName) == 0) {
 			string msg = string("Class '") + receiverType->ClassName + "' doesn't exist";
 			throw new std::exception(msg.c_str());
 		}
-		else if (!ClassesTable::items[receiverType->ClassName]->isContainsMethod(Arguments->MethodName)) {
+		else if (!ClassesTable::items->at(receiverType->ClassName)->isContainsMethod(Arguments->MethodName)) {
 			string msg = string("Class '") + receiverType->ClassName + "doesn't contains method '" + string(Arguments->MethodName);
 			throw new std::exception(msg.c_str());
 		}
 		else {
 			string descriptor;
 			string className;
-			MethodsTableElement* method = ClassesTable::items[receiverType->ClassName]->getMethodForRef(Arguments->MethodName, &descriptor, &className);
+			MethodsTableElement* method = ClassesTable::items->at(receiverType->ClassName)->getMethodForRef(Arguments->MethodName, &descriptor, &className);
 			DataType = method->ReturnType;
 			Arguments->setDataTypes(locals, receiverType->ClassName); //Установить DataType для параметров
 		}
@@ -419,11 +421,11 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 			throw new std::exception(msg.c_str());
 		}
 		className = Left->DataType->ClassName;
-		if (ClassesTable::items.count(className) == 0) {
+		if (ClassesTable::items->count(className) == 0) {
 			string msg = string("Class '") + className + "' doesn't exist";
 			throw new std::exception(msg.c_str());
 		}
-		ClassesTableElement* classElem = ClassesTable::items[className];
+		ClassesTableElement* classElem = ClassesTable::items->at(className);
 		if (classElem->isContainsField(name)) {
 			string descr;
 			string n;
@@ -506,11 +508,11 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 			throw new std::exception(msg.c_str());
 		}
 		className = Left->DataType->ClassName;
-		if (ClassesTable::items.count(className) == 0) {
+		if (ClassesTable::items->count(className) == 0) {
 			string msg = string("Class '") + className + "' doesn't exist";
 			throw new std::exception(msg.c_str());
 		}
-		ClassesTableElement* classElem = ClassesTable::items[className];
+		ClassesTableElement* classElem = ClassesTable::items->at(className);
 		if (classElem->isContainsField(name)) {
 			string descr;
 			string n;
@@ -579,8 +581,8 @@ void Receiver_node::setDataType(LocalVariablesTable* locals)
 			DataType = locals->items[name]->type;
 		}
 		else { //Поле
-			if (ClassesTable::items.count(locals->items["self"]->type->ClassName) != 0) {
-				ClassesTableElement* selfClass = ClassesTable::items[locals->items["self"]->type->ClassName];
+			if (ClassesTable::items->count(locals->items["self"]->type->ClassName) != 0) {
+				ClassesTableElement* selfClass = ClassesTable::items->at(locals->items["self"]->type->ClassName);
 				if (selfClass->isContainsField(name)) {
 					string descr;
 					string className;
@@ -602,7 +604,7 @@ void Receiver_node::setDataType(LocalVariablesTable* locals)
 		break;
 	case CLASS_NAME_RECEIVER_TYPE:
 	{
-		if (ClassesTable::items.count(name) != NULL) {
+		if (ClassesTable::items->count(name) != NULL) {
 			DataType = new Type(CLASS_NAME_TYPE, ClassesTable::getFullClassName(name));
 		}
 		else {
@@ -619,18 +621,18 @@ void Receiver_node::setDataType(LocalVariablesTable* locals)
 			string msg = string("Receiver is not a class or object. It has type: '") + receiverType->toString();
 			throw new std::exception(msg.c_str());
 		}
-		else if (ClassesTable::items.count(receiverType->ClassName) == 0) {
+		else if (ClassesTable::items->count(receiverType->ClassName) == 0) {
 			string msg = string("Class '") + receiverType->ClassName + "' doesn't exist";
 			throw new std::exception(msg.c_str());
 		}
-		else if (!ClassesTable::items[receiverType->ClassName]->isContainsMethod(Arguments->MethodName)) {
+		else if (!ClassesTable::items->at(receiverType->ClassName)->isContainsMethod(Arguments->MethodName)) {
 			string msg = string("Class '") + receiverType->ClassName + "doesn't contains method '" + string(Arguments->MethodName);
 			throw new std::exception(msg.c_str());
 		}
 		else {
 			string descriptor;
 			string className;
-			MethodsTableElement* method = ClassesTable::items[receiverType->ClassName]->getMethodForRef(Arguments->MethodName, &descriptor, &className);
+			MethodsTableElement* method = ClassesTable::items->at(receiverType->ClassName)->getMethodForRef(Arguments->MethodName, &descriptor, &className);
 			DataType = method->ReturnType;
 			Arguments->setDataTypes(locals, receiverType->ClassName); //Установить DataType для параметров
 		}
@@ -653,7 +655,7 @@ void Message_selector_node::setDataTypes(LocalVariablesTable* locals, string rec
 	// Проверка типов и добавление при необходимости cast
 
 	// Получить метод
-	ClassesTableElement* classElem = ClassesTable::items[receiverClassName];
+	ClassesTableElement* classElem = ClassesTable::items->at(receiverClassName);
 	MethodsTableElement* method;
 	if (classElem->isContainsMethod(MethodName)) {
 		string descr;
@@ -822,7 +824,7 @@ void Expression_node::setAttributes(LocalVariablesTable* locals, ConstantsTable*
 			LocalVariable = locals->items[name];
 		}
 		else { //Поле
-				ClassesTableElement* selfClass = ClassesTable::items[locals->items["self"]->type->ClassName];
+				ClassesTableElement* selfClass = ClassesTable::items->at(locals->items["self"]->type->ClassName);
 				string descr;
 				string className;
 				Field = selfClass->getFieldForRef(name, &descr, &className);
@@ -848,14 +850,14 @@ void Expression_node::setAttributes(LocalVariablesTable* locals, ConstantsTable*
 		Type* receiverType = Receiver->DataType;
 		string descriptor;
 		string className;
-		Method = ClassesTable::items[receiverType->ClassName]->getMethodForRef(Arguments->MethodName, &descriptor, &className);
+		Method = ClassesTable::items->at(receiverType->ClassName)->getMethodForRef(Arguments->MethodName, &descriptor, &className);
 		Arguments->setAttributes(locals, constants); //Установить атрибуты для параметров
 	}
 	break;
 	case ARROW_EXPRESSION_TYPE:
 	{
 		className = Left->DataType->ClassName;
-		ClassesTableElement* classElem = ClassesTable::items[className];
+		ClassesTableElement* classElem = ClassesTable::items->at(className);
 		string descr;
 		string n;
 		Field = classElem->getFieldForRef(name, &descr, &n);
@@ -864,7 +866,7 @@ void Expression_node::setAttributes(LocalVariablesTable* locals, ConstantsTable*
 	case MEMBER_ACCESS_ASSIGNMENT_EXPRESSION_TYPE:
 	{
 		className = Left->DataType->ClassName;
-		ClassesTableElement* classElem = ClassesTable::items[className];
+		ClassesTableElement* classElem = ClassesTable::items->at(className);
 		string descr;
 		string n;
 		Field = classElem->getFieldForRef(name, &descr, &n);
@@ -901,7 +903,7 @@ void Receiver_node::setAttributes(LocalVariablesTable* locals, ConstantsTable *c
 			LocalVariable = locals->items[name];
 		}
 		else { //Поле
-			ClassesTableElement* selfClass = ClassesTable::items[locals->items["self"]->type->ClassName];
+			ClassesTableElement* selfClass = ClassesTable::items->at(locals->items["self"]->type->ClassName);
 			string descr;
 			string className;
 			Field = selfClass->getFieldForRef(name, &descr, &className);
@@ -915,7 +917,7 @@ void Receiver_node::setAttributes(LocalVariablesTable* locals, ConstantsTable *c
 		
 		string descriptor;
 		string className;
-		Method = ClassesTable::items[receiverType->ClassName]->getMethodForRef(Arguments->MethodName, &descriptor, &className);
+		Method = ClassesTable::items->at(receiverType->ClassName)->getMethodForRef(Arguments->MethodName, &descriptor, &className);
 		Arguments->setAttributes(locals, constants); //Установить атрибуты для параметров
 	}
 	break;

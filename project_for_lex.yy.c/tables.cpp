@@ -1313,7 +1313,7 @@ bool Type::isCastableTo(Type* other)
 	if (this->DataType == other->DataType) {
 		if (this->DataType == CLASS_NAME_TYPE && this->ClassName == other->ClassName)
 			return true;
-		else
+		else if (this->DataType != CLASS_NAME_TYPE)
 			return true;
 	}
 

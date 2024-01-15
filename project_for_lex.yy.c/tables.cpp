@@ -441,49 +441,49 @@ void ClassesTable::initClassInOutFuncs()
 	Type *printIntReturnType = new Type(VOID_TYPE);
 	vector<Type*> *printIntKeywordsType = new vector<Type*>{ new Type(INT_TYPE) };
 	vector<Type*> *printIntParamsType = new vector<Type*>;
-	InOutFuncs->Methods->addMethod(сonstantTable, "printInt", "(I)V", true, NULL, printIntReturnType, printIntParamsType, printIntKeywordsType);
+	InOutFuncs->Methods->addMethod(сonstantTable, "printIntStatic", "(I)V", true, NULL, printIntReturnType, printIntParamsType, printIntKeywordsType);
 
 	//Добавление метода printChar
 	Type* printCharReturnType = new Type(VOID_TYPE);
 	vector<Type*> *printCharKeywordsType = new vector<Type*>{ new Type(CHAR_TYPE) };
 	vector<Type*> *printCharParamsType = new vector<Type*>;
-	InOutFuncs->Methods->addMethod(сonstantTable, "printChar", "(C)V", true, NULL, printCharReturnType, printCharParamsType, printCharKeywordsType);
+	InOutFuncs->Methods->addMethod(сonstantTable, "printCharStatic", "(C)V", true, NULL, printCharReturnType, printCharParamsType, printCharKeywordsType);
 
 	//Добавление метода printString
 	Type* printStringReturnType = new Type(VOID_TYPE);
 	vector<Type*> *printStringKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "java/lang/String")};
 	vector<Type*> *printStringParamsType = new vector<Type*>;
-	InOutFuncs->Methods->addMethod(сonstantTable, "printString", "(Ljava/lang/String;)V", true, NULL, printStringReturnType, printStringParamsType, printStringKeywordsType);
+	InOutFuncs->Methods->addMethod(сonstantTable, "printStringStatic", "(Ljava/lang/String;)V", true, NULL, printStringReturnType, printStringParamsType, printStringKeywordsType);
 
 	//Добавление метода printCharArray
 	Type* printCharArrayReturnType = new Type(VOID_TYPE);
 	vector<Type*> *printCharArrayKeywordsType = new vector<Type*>{ new Type(CHAR_TYPE, 1024) };
 	vector<Type*> *printCharArrayParamsType = new vector<Type*>;
-	InOutFuncs->Methods->addMethod(сonstantTable, "printCharArray", "([C)V", true, NULL, printCharArrayReturnType, printCharArrayParamsType, printCharArrayKeywordsType);
+	InOutFuncs->Methods->addMethod(сonstantTable, "printCharArrayStatic", "([C)V", true, NULL, printCharArrayReturnType, printCharArrayParamsType, printCharArrayKeywordsType);
 
 	//Добавление метода printObject
 	Type* printObjectReturnType = new Type(VOID_TYPE);
 	vector<Type*> *printObjectKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "java/lang/Object") };
 	vector<Type*> *printObjectParamsType = new vector<Type*>;
-	InOutFuncs->Methods->addMethod(сonstantTable, "printObject", "(Ljava/lang/Object;)V", true, NULL, printObjectReturnType, printObjectParamsType, printObjectKeywordsType);
+	InOutFuncs->Methods->addMethod(сonstantTable, "printObjectStatic", "(Ljava/lang/Object;)V", true, NULL, printObjectReturnType, printObjectParamsType, printObjectKeywordsType);
 
 	//Добавление метода read
 	Type* readReturnType = new Type(CLASS_NAME_TYPE, "java/lang/String");
 	vector<Type*> *readKeywordsType = new vector<Type*>;
 	vector<Type*> *readParamsType = new vector<Type*>;
-	InOutFuncs->Methods->addMethod(сonstantTable, "read", "()Ljava/lang/String;", true, NULL, readReturnType, readParamsType, readKeywordsType);
+	InOutFuncs->Methods->addMethod(сonstantTable, "readStatic", "()Ljava/lang/String;", true, NULL, readReturnType, readParamsType, readKeywordsType);
 
 	//Добавление метода readInt
 	Type* readIntReturnType = new Type(INT_TYPE);
 	vector<Type*> *readIntKeywordsType = new vector<Type*>;
 	vector<Type*> *readIntParamsType = new vector<Type*>;
-	InOutFuncs->Methods->addMethod(сonstantTable, "readInt", "()I", true, NULL, readIntReturnType, readIntParamsType, readIntKeywordsType);
+	InOutFuncs->Methods->addMethod(сonstantTable, "readIntStatic", "()I", true, NULL, readIntReturnType, readIntParamsType, readIntKeywordsType);
 
 	//Добавление метода readChar
 	Type* readCharReturnType = new Type(CHAR_TYPE);
 	vector<Type*> *readCharKeywordsType = new vector<Type*>;
 	vector<Type*> *readCharParamsType = new vector<Type*>;
-	InOutFuncs->Methods->addMethod(сonstantTable, "readChar", "()C", true, NULL, readCharReturnType, readCharParamsType, readCharKeywordsType);
+	InOutFuncs->Methods->addMethod(сonstantTable, "readCharStatic", "()C", true, NULL, readCharReturnType, readCharParamsType, readCharKeywordsType);
 
 
 	//Добавление FieldRef

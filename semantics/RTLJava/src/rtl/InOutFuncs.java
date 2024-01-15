@@ -3,23 +3,23 @@ package rtl;
 public class InOutFuncs {
 
     //---------- Print Methods ----------
-    public static void printInt(int i) {
+    public static void printIntStatic(int i) {
         System.out.print(i);
     }
 
-    public static void printChar(char c) {
+    public static void printCharStatic(char c) {
         System.out.print(c);
     }
 
-    public static void printString(String s) {
+    public static void printStringStatic(String s) {
         System.out.print(s);
     } //TODO Возможно стоит заменить на NSString
 
-    public static void printCharArray(char[] s) {
+    public static void printCharArrayStatic(char[] s) {
         System.out.print(s);
     }
 
-    public static void printObject(Object o) {
+    public static void printObjectStatic(Object o) {
         System.out.print(o);
     } //TODO Возможно стоит заменить на NSObject
 
@@ -27,21 +27,21 @@ public class InOutFuncs {
     /**
      * Считывает строку с консоли
      * */
-    public static String read() {
+    public static String readStatic() {
         return  System.console().readLine();
     }
 
     /**
      * Считывает целое число с консоли
      * */
-    public static int readInt() {
-        return  Integer.parseInt(read());
+    public static int readIntStatic() {
+        return  Integer.parseInt(readStatic());
     }
 
     /**
      * Считывает символ с консоли
      * */
-    public static char readChar() {
-        return  read().charAt(0);
+    public static char readCharStatic() {
+        return  readStatic().charAt(0);
     }
 }

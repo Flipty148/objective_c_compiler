@@ -2,17 +2,23 @@ ID|Type|Value
 1|UTF8|Code
 2|UTF8|rtl/Program
 3|Class|2
-4|UTF8|global/MyClass1
+4|UTF8|rtl/InOutFuncs
 5|Class|4
-6|UTF8|newStatic
-7|UTF8|()Lrtl/NSObject;
+6|UTF8|printIntStatic
+7|UTF8|(I)V
 8|NameAndType|6, 7
 9|MethodRef|8, 5
-10|UTF8|hello world
-11|String|10
-12|UTF8|nshello
-13|String|12
-14|UTF8|java/lang/Object
-15|Class|14
-16|UTF8|main
-17|UTF8|([Ljava/lang/String;)V
+10|UTF8|global/MyClass1
+11|Class|10
+12|UTF8|newStatic
+13|UTF8|()Lrtl/NSObject;
+14|NameAndType|12, 13
+15|MethodRef|14, 11
+16|UTF8|hello world
+17|String|16
+18|UTF8|nshello
+19|String|18
+20|UTF8|java/lang/Object
+21|Class|20
+22|UTF8|main
+23|UTF8|([Ljava/lang/String;)V

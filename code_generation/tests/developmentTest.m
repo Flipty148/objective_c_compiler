@@ -1,9 +1,10 @@
+@class InOutFuncs;
 @implementation MyClass1 : NSObject
 @end
 
 int main()
 {
-    10;
+    [InOutFuncs printInt:10];
     10 + 20;
     10 - 20;
     20 - 10;

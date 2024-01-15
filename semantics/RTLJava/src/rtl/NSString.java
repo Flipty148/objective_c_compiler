@@ -163,4 +163,8 @@ public class NSString extends  NSObject {
         return new NSString(string);
     }
 
+    @Override
+    public String toString() {
+        return string;
+    }
 }

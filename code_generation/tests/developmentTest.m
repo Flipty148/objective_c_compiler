@@ -5,7 +5,7 @@
 int main()
 {
     [InOutFuncs printInt:10];
-    [InOutFuncs printInt:10 + 20];
+    [InOutFuncs printInt: 10 + 20];
     [InOutFuncs printInt:10 - 20];
     [InOutFuncs printInt:20 - 10];
     [InOutFuncs printInt:10 * 30];
@@ -13,8 +13,9 @@ int main()
     [InOutFuncs printInt:40 / 3];
     [InOutFuncs printInt:-15];
     [InOutFuncs printInt:+13];
+    [InOutFuncs printInt: (10 + 20) / 2];
     [InOutFuncs printCharArray:"aaaaabbbbbccccc"];
-    // [InOutFuncs printString:@"nshello"];
+    //[InOutFuncs printNSString:@"nshello"];
     [InOutFuncs printInt:9 == 9];
     [InOutFuncs printInt:11 != 11];
     [InOutFuncs printInt:113 > 110];

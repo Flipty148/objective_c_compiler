@@ -11,9 +11,9 @@ public class InOutFuncs {
         System.out.println(c);
     }
 
-    public static void printStringStatic(String s) {
-        System.out.println(s);
-    } //TODO Возможно стоит заменить на NSString
+    public static void printNSStringStatic(NSString s) {
+        System.out.println(s.toString());
+    }
 
     public static void printCharArrayStatic(char[] s) {
         System.out.println(new String(s));

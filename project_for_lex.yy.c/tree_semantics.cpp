@@ -1107,7 +1107,7 @@ void Expression_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariable
 			string className; //Имя класса
 			classTableElement->getFieldForRef(name, &descriptor, &className); //Получение дескриптора и имени класса
 			//Формирование fieldRef
-			constantTable->findOrAddFieldRefConstant(className, name, descriptor);
+			Constant = constantTable->findOrAddFieldRefConstant(className, name, descriptor);
 		}
 	}
 	else if (type == SELF_EXPRESSION_TYPE) {
@@ -1168,7 +1168,7 @@ void Expression_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariable
 			string fieldClassName;  // Имя класса поля
 			classElem->getFieldForRef(fieldName, &descriptor, &fieldClassName); // получение данных для field ref
 			//Формирование fieldRef
-			constantTable->findOrAddFieldRefConstant(fieldClassName, fieldName, descriptor);
+			Constant = constantTable->findOrAddFieldRefConstant(fieldClassName, fieldName, descriptor);
 		}
 		else { //Является локальной переменной
 			LocalVariablesTableElement* local = localVariablesTable->items[objName]; //Локальная переменная
@@ -1193,7 +1193,7 @@ void Expression_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariable
 			string fieldClassName;  // Имя класса поля
 			classElem->getFieldForRef(fieldName, &descriptor, &fieldClassName); // получение данных для field ref
 			//Формирование fieldRef
-			constantTable->findOrAddFieldRefConstant(fieldClassName, fieldName, descriptor);
+			Constant = constantTable->findOrAddFieldRefConstant(fieldClassName, fieldName, descriptor);
 		}
 		
 	}
@@ -1326,7 +1326,7 @@ void Expression_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariabl
 			string className;
 			element->getMethodForRef(methodNameWithType, &descriptor, &className);
 			// Добавить константу method ref
-			constantTable->findOrAddMethodRefConstant(className, methodName, descriptor);
+			Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
 		}
 		else {
 			if (isObject) {
@@ -1347,7 +1347,7 @@ void Expression_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariabl
 				string descriptor;
 				element->getMethodForRef(methodNameWithType, &descriptor, &className);
 				// Добавить константу method ref
-				constantTable->findOrAddMethodRefConstant(className, methodName, descriptor);
+				Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
 			}
 			else {
 				string fullClassName = ClassesTable::getFullClassName(receiverName); //Получить полное имя класса //TODO: Возможно, нужно будет убрать, если при преобразовании дерева будут заменяться сразу все имена классов
@@ -1358,7 +1358,7 @@ void Expression_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariabl
 				string className;
 				element->getMethodForRef(methodNameWithType, &descriptor, &className);
 				// Добавить константу method ref
-				constantTable->findOrAddMethodRefConstant(className, methodName, descriptor);
+				Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
 			}
 		}
 
@@ -1407,14 +1407,14 @@ void Receiver_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariablesT
 		string descriptor = self->type->getDescriptor(); //Строка дескриптора
 		string className = self->type->ClassName; //Имя класса
 		//Формирование fieldRef
-		constantTable->findOrAddFieldRefConstant(className, "self", descriptor);
+		Constant = constantTable->findOrAddFieldRefConstant(className, "self", descriptor);
 	}
 	else if (type == OBJECT_NAME_RECEIVER_TYPE) {
 		if (classTableElement->isContainsField(name)) {
 			string descriptor; //Дескриптор
 			string className; //Имя класса
 			classTableElement->getFieldForRef(name, &descriptor, &className); //Получение данных поля для создания fieldRef
-			constantTable->findOrAddFieldRefConstant(className, name, descriptor); //Формирование fieldRef
+			Constant = constantTable->findOrAddFieldRefConstant(className, name, descriptor); //Формирование fieldRef
 		}
 	}
 	else if (type == MESSAGE_EXPRESSION_RECEIVER_TYPE) {
@@ -1560,7 +1560,7 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 			string className;
 			element->getMethodForRef(methodNameWithType, &descriptor, &className);
 			// Добавить константу method ref
-			constantTable->findOrAddMethodRefConstant(className, methodName, descriptor);
+			Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
 			*returnType = ClassesTable::items[className]->Methods->items[methodNameWithType]->ReturnType;
 		}
 		else {
@@ -1582,7 +1582,7 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 				string descriptor;
 				element->getMethodForRef(methodNameWithType, &descriptor, &className);
 				// Добавить константу method ref
-				constantTable->findOrAddMethodRefConstant(className, methodName, descriptor);
+				Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
 
 				*returnType = ClassesTable::items[className]->Methods->items[methodNameWithType]->ReturnType;
 			}
@@ -1595,7 +1595,7 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 				string className;
 				element->getMethodForRef(methodNameWithType, &descriptor, &className);
 				// Добавить константу method ref
-				constantTable->findOrAddMethodRefConstant(className, methodName, descriptor);
+				Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
 
 				*returnType = ClassesTable::items[className]->Methods->items[methodNameWithType]->ReturnType;
 			}

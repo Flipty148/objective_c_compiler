@@ -2,6 +2,7 @@
 #include "tables.h"
 #include "code_generation_helpers.h"
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -66,7 +67,7 @@ void ClassesTableElement::generateClassFile(string filepath)
 	int methodCount = Methods->items.size(); //Количество методов
 	vector<char> methodCountBytes = CodeGenerationHelpers::intToByteArray(methodCount, 2); //Конвертация количества методов в байты
 	CodeGenerationHelpers::appendArrayToByteVector(data, methodCountBytes.data(), methodCountBytes.size()); //Добавление количества методов в байты
-	vector<char> methodTableBytes = Methods->generateBytes(); //Генерация таблицы методов
+	vector<char> methodTableBytes = Methods->generateBytes(ConstantTable); //Генерация таблицы методов
 	CodeGenerationHelpers::appendArrayToByteVector(data, methodTableBytes.data(), methodTableBytes.size()); //Добавление таблицы методов
 	
 	//Атрибуты класса
@@ -190,17 +191,17 @@ vector<char> FieldsTableElement::generateBytes()
 }
 
 // -------------------- Таблица методов --------------------
-vector<char> MethodsTable::generateBytes()
+vector<char> MethodsTable::generateBytes(ConstantsTable* constantsTable)
 {
 	vector<char> res;
 	for (auto iter = items.cbegin(); iter != items.cend(); ++iter) {
-		vector<char> bytes = iter->second->generateBytes();
+		vector<char> bytes = iter->second->generateBytes(constantsTable);
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 	return res;
 }
 
-vector<char> MethodsTableElement::generateBytes()
+vector<char> MethodsTableElement::generateBytes(ConstantsTable* constantsTable)
 {
 	vector<char> res;
 
@@ -224,13 +225,13 @@ vector<char> MethodsTableElement::generateBytes()
 	//Добавление атрибутов TODO:Code
 	vector<char> codeAttributeSizeBytes = CodeGenerationHelpers::intToByteArray(1, 2);
 	CodeGenerationHelpers::appendArrayToByteVector(&res, codeAttributeSizeBytes.data(), codeAttributeSizeBytes.size());
-	vector<char> codeAttributeBytes = generateCodeAttribute();
+	vector<char> codeAttributeBytes = generateCodeAttribute(constantsTable);
 	CodeGenerationHelpers::appendArrayToByteVector(&res, codeAttributeBytes.data(), codeAttributeBytes.size());
 
 	return res;
 }
 
-vector<char> MethodsTableElement::generateCodeAttribute()
+vector<char> MethodsTableElement::generateCodeAttribute(ConstantsTable* constantsTable)
 {
 	vector<char> res;
 
@@ -243,7 +244,7 @@ vector<char> MethodsTableElement::generateCodeAttribute()
 	if (BodyStart != NULL) {
 		Statement_node* curStatement = BodyStart;
 		while (curStatement != NULL) {
-			vector<char> bytes = curStatement->generateCode();
+			vector<char> bytes = curStatement->generateCode(IsClassMethod, constantsTable);
 			CodeGenerationHelpers::appendArrayToByteVector(&codeBytes, bytes.data(), bytes.size());
 			curStatement = curStatement->Next;
 		}
@@ -287,7 +288,7 @@ vector<char> MethodsTableElement::generateCodeAttribute()
 // -------------------- Генерация байт-кода метода для атрибута Code --------------------
 
 // ---------- Statement ----------
-vector<char> Statement_node::generateCode()
+vector<char> Statement_node::generateCode(bool isInsideClassMethod, ConstantsTable* constantsTable)
 {
 	vector<char> res;
 
@@ -296,12 +297,12 @@ vector<char> Statement_node::generateCode()
 	case EMPTY_STATEMENT_TYPE:
 		break;
 	case SIMPLE_STATEMENT_TYPE: {
-		vector<char> bytes = generateCodeForSimpleStatement();
+		vector<char> bytes = generateCodeForSimpleStatement(isInsideClassMethod, constantsTable);
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case RETURN_STATEMENT_TYPE: {
-		vector<char> bytes = generateCodeForReturnStatement();
+		vector<char> bytes = generateCodeForReturnStatement(isInsideClassMethod, constantsTable);
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
@@ -336,22 +337,22 @@ vector<char> Statement_node::generateCode()
 	return res;
 }
 
-vector<char> Statement_node::generateCodeForSimpleStatement()
+vector<char> Statement_node::generateCodeForSimpleStatement(bool isInsideClassMethod, ConstantsTable* constantsTable)
 {
 	vector<char> res;
 
-	vector<char> expr = Expression->generateCode();
+	vector<char> expr = Expression->generateCode(isInsideClassMethod, constantsTable);
 	CodeGenerationHelpers::appendArrayToByteVector(&res, expr.data(), expr.size());
 
 	return res;
 }
 
-vector<char> Statement_node::generateCodeForReturnStatement()
+vector<char> Statement_node::generateCodeForReturnStatement(bool isInsideClassMethod, ConstantsTable* constantsTable)
 {
 	vector<char> res;
 
 	if (Expression != NULL) {
-		vector<char> expr = Expression->generateCode();
+		vector<char> expr = Expression->generateCode(isInsideClassMethod, constantsTable);
 		CodeGenerationHelpers::appendArrayToByteVector(&res, expr.data(), expr.size()); //Загрузить expression (значение)
 
 		if (Expression->DataType->DataType == CLASS_NAME_TYPE || Expression->DataType->DataType == ID_TYPE) { //Возвращается ссылка
@@ -374,7 +375,7 @@ vector<char> Statement_node::generateCodeForReturnStatement()
 
 // ---------- Expression ----------
 
-vector<char> Expression_node::generateCode()
+vector<char> Expression_node::generateCode(bool isInsideClassMethod, ConstantsTable *constantsTable)
 {
 	vector<char> res;
 
@@ -403,16 +404,17 @@ vector<char> Expression_node::generateCode()
 	}
 		break;
 	case MESSAGE_EXPRESSION_EXPRESSION_TYPE: {
-
+		vector<char> bytes = generateCodeForMessageExpression(isInsideClassMethod, constantsTable);
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case UMINUS_EXPRESSION_TYPE: {
-		vector<char> bytes = generateCodeForUminus();
+		vector<char> bytes = generateCodeForUminus(isInsideClassMethod, constantsTable);
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case UPLUS_EXPRESSION_TYPE: {
-		vector<char> bytes = generateCodeForUplus();
+		vector<char> bytes = generateCodeForUplus(isInsideClassMethod, constantsTable);
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
@@ -421,52 +423,52 @@ vector<char> Expression_node::generateCode()
 	}
 		break;
 	case PLUS_EXPRESSION_TYPE: {
-		vector<char> bytes = generateCodeForPlus();
+		vector<char> bytes = generateCodeForPlus(isInsideClassMethod, constantsTable);
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case MINUS_EXPRESSION_TYPE: {
-		vector<char> bytes = generateCodeForMinus();
+		vector<char> bytes = generateCodeForMinus(isInsideClassMethod, constantsTable);
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case MUL_EXPRESSION_TYPE: {
-		vector<char> bytes = generateCodeForMul();
+		vector<char> bytes = generateCodeForMul(isInsideClassMethod, constantsTable);
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case DIV_EXPRESSION_TYPE: {
-		vector<char> bytes = generateCodeForDiv();
+		vector<char> bytes = generateCodeForDiv(isInsideClassMethod, constantsTable);
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case EQUAL_EXPRESSION_TYPE: {
-		vector<char> bytes = generateCodeForEqual();
+		vector<char> bytes = generateCodeForEqual(isInsideClassMethod, constantsTable);
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case NOT_EQUAL_EXPRESSION_TYPE: {
-		vector<char> bytes = generateCodeForNotEqual();
+		vector<char> bytes = generateCodeForNotEqual(isInsideClassMethod, constantsTable);
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case GREATER_EXPRESSION_TYPE: {
-		vector<char> bytes = generateCodeForGreater();
+		vector<char> bytes = generateCodeForGreater(isInsideClassMethod, constantsTable);
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case LESS_EXPRESSION_TYPE: {
-		vector<char> bytes = generateCodeForLess();
+		vector<char> bytes = generateCodeForLess(isInsideClassMethod, constantsTable);
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case LESS_EQUAL_EXPRESSION_TYPE: {
-		vector<char> bytes = generateCodeForLessEqual();
+		vector<char> bytes = generateCodeForLessEqual(isInsideClassMethod, constantsTable);
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case GREATER_EQUAL_EXPRESSION_TYPE: {
-		vector<char> bytes = generateCodeForGreaterEqual();
+		vector<char> bytes = generateCodeForGreaterEqual(isInsideClassMethod, constantsTable);
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
@@ -525,14 +527,14 @@ vector<char> Expression_node::generateCodeForNumericConstant()
 	return res;
 }
 
-vector<char> Expression_node::generateCodeForPlus()
+vector<char> Expression_node::generateCodeForPlus(bool isInsideClassMethod, ConstantsTable* constantsTable)
 {
 	vector<char> res;
 
-	vector<char> leftOperand = Left->generateCode(); //1-ое слагаемое
+	vector<char> leftOperand = Left->generateCode(isInsideClassMethod, constantsTable); //1-ое слагаемое
 	CodeGenerationHelpers::appendArrayToByteVector(&res, leftOperand.data(), leftOperand.size());
 
-	vector<char> rightOperand = Right->generateCode(); //2-ое слагаемое
+	vector<char> rightOperand = Right->generateCode(isInsideClassMethod, constantsTable); //2-ое слагаемое
 	CodeGenerationHelpers::appendArrayToByteVector(&res, rightOperand.data(), rightOperand.size());
 
 	vector<char> bytes = CodeGenerationCommands::iadd(); //Команда
@@ -541,14 +543,14 @@ vector<char> Expression_node::generateCodeForPlus()
 	return res;
 }
 
-vector<char> Expression_node::generateCodeForMinus()
+vector<char> Expression_node::generateCodeForMinus(bool isInsideClassMethod, ConstantsTable* constantsTable)
 {
 	vector<char> res;
 
-	vector<char> leftOperand = Left->generateCode(); //Уменьшаемое
+	vector<char> leftOperand = Left->generateCode(isInsideClassMethod, constantsTable); //Уменьшаемое
 	CodeGenerationHelpers::appendArrayToByteVector(&res, leftOperand.data(), leftOperand.size());
 
-	vector<char> rightOperand = Right->generateCode(); //Вычитаемое
+	vector<char> rightOperand = Right->generateCode(isInsideClassMethod, constantsTable); //Вычитаемое
 	CodeGenerationHelpers::appendArrayToByteVector(&res, rightOperand.data(), rightOperand.size());
 
 	vector<char> bytes = CodeGenerationCommands::isub(); //Команда
@@ -557,14 +559,14 @@ vector<char> Expression_node::generateCodeForMinus()
 	return res;
 }
 
-vector<char> Expression_node::generateCodeForMul()
+vector<char> Expression_node::generateCodeForMul(bool isInsideClassMethod, ConstantsTable* constantsTable)
 {
 	vector<char> res;
 
-	vector<char> leftOperand = Left->generateCode(); //1-ый множитель
+	vector<char> leftOperand = Left->generateCode(isInsideClassMethod, constantsTable); //1-ый множитель
 	CodeGenerationHelpers::appendArrayToByteVector(&res, leftOperand.data(), leftOperand.size());
 
-	vector<char> rightOperand = Right->generateCode(); //2-ой множитель
+	vector<char> rightOperand = Right->generateCode(isInsideClassMethod, constantsTable); //2-ой множитель
 	CodeGenerationHelpers::appendArrayToByteVector(&res, rightOperand.data(), rightOperand.size());
 
 	vector<char> bytes = CodeGenerationCommands::imul(); //Команда
@@ -573,14 +575,14 @@ vector<char> Expression_node::generateCodeForMul()
 	return res;
 }
 
-vector<char> Expression_node::generateCodeForDiv()
+vector<char> Expression_node::generateCodeForDiv(bool isInsideClassMethod, ConstantsTable* constantsTable)
 {
 	vector<char> res;
 
-	vector<char> leftOperand = Left->generateCode(); //Делимое
+	vector<char> leftOperand = Left->generateCode(isInsideClassMethod, constantsTable); //Делимое
 	CodeGenerationHelpers::appendArrayToByteVector(&res, leftOperand.data(), leftOperand.size());
 
-	vector<char> rightOperand = Right->generateCode(); //Делитель
+	vector<char> rightOperand = Right->generateCode(isInsideClassMethod, constantsTable); //Делитель
 	CodeGenerationHelpers::appendArrayToByteVector(&res, rightOperand.data(), rightOperand.size());
 
 	vector<char> bytes = CodeGenerationCommands::idiv(); //Команда
@@ -589,11 +591,11 @@ vector<char> Expression_node::generateCodeForDiv()
 	return res;
 }
 
-vector<char> Expression_node::generateCodeForUminus()
+vector<char> Expression_node::generateCodeForUminus(bool isInsideClassMethod, ConstantsTable* constantsTable)
 {
 	vector<char> res;
 
-	vector<char> rightOperand = Right->generateCode(); //Число
+	vector<char> rightOperand = Right->generateCode(isInsideClassMethod, constantsTable); //Число
 	CodeGenerationHelpers::appendArrayToByteVector(&res, rightOperand.data(), rightOperand.size());
 
 	vector<char> bytes = CodeGenerationCommands::ineg(); //Команда
@@ -602,9 +604,9 @@ vector<char> Expression_node::generateCodeForUminus()
 	return res;
 }
 
-vector<char> Expression_node::generateCodeForUplus()
+vector<char> Expression_node::generateCodeForUplus(bool isInsideClassMethod, ConstantsTable* constantsTable)
 {
-	vector<char> res = Right->generateCode(); //Число
+	vector<char> res = Right->generateCode(isInsideClassMethod, constantsTable); //Число
 	return res;
 }
 
@@ -624,14 +626,14 @@ vector<char> Expression_node::generateCodeForLiteral()
 	return res;
 }
 
-vector<char> Expression_node::generateCodeForEqual()
+vector<char> Expression_node::generateCodeForEqual(bool isInsideClassMethod, ConstantsTable* constantsTable)
 {
 	vector<char> res;
 
-	vector<char> leftOperand = Left->generateCode(); //левый операнд	
+	vector<char> leftOperand = Left->generateCode(isInsideClassMethod, constantsTable); //левый операнд	
 	CodeGenerationHelpers::appendArrayToByteVector(&res, leftOperand.data(), leftOperand.size());
 
-	vector<char> rightOperand = Right->generateCode(); //правый операнд
+	vector<char> rightOperand = Right->generateCode(isInsideClassMethod, constantsTable); //правый операнд
 	CodeGenerationHelpers::appendArrayToByteVector(&res, rightOperand.data(), rightOperand.size());
 
 	vector<char> trueBytes = CodeGenerationCommands::iconstBipushSipush(1); //Ветка, если равны
@@ -654,14 +656,14 @@ vector<char> Expression_node::generateCodeForEqual()
 	return res;
 }
 
-vector<char> Expression_node::generateCodeForNotEqual()
+vector<char> Expression_node::generateCodeForNotEqual(bool isInsideClassMethod, ConstantsTable* constantsTable)
 {
 	vector<char> res;
 
-	vector<char> leftOperand = Left->generateCode(); //левый операнд	
+	vector<char> leftOperand = Left->generateCode(isInsideClassMethod, constantsTable); //левый операнд	
 	CodeGenerationHelpers::appendArrayToByteVector(&res, leftOperand.data(), leftOperand.size());
 
-	vector<char> rightOperand = Right->generateCode(); //правый операнд
+	vector<char> rightOperand = Right->generateCode(isInsideClassMethod, constantsTable); //правый операнд
 	CodeGenerationHelpers::appendArrayToByteVector(&res, rightOperand.data(), rightOperand.size());
 
 	vector<char> trueBytes = CodeGenerationCommands::iconstBipushSipush(1); //Ветка, если равны
@@ -684,14 +686,14 @@ vector<char> Expression_node::generateCodeForNotEqual()
 	return res;
 }
 
-vector<char> Expression_node::generateCodeForGreater()
+vector<char> Expression_node::generateCodeForGreater(bool isInsideClassMethod, ConstantsTable* constantsTable)
 {
 	vector<char> res;
 
-	vector<char> leftOperand = Left->generateCode(); //левый операнд	
+	vector<char> leftOperand = Left->generateCode(isInsideClassMethod, constantsTable); //левый операнд	
 	CodeGenerationHelpers::appendArrayToByteVector(&res, leftOperand.data(), leftOperand.size());
 
-	vector<char> rightOperand = Right->generateCode(); //правый операнд
+	vector<char> rightOperand = Right->generateCode(isInsideClassMethod, constantsTable); //правый операнд
 	CodeGenerationHelpers::appendArrayToByteVector(&res, rightOperand.data(), rightOperand.size());
 
 	vector<char> trueBytes = CodeGenerationCommands::iconstBipushSipush(1); //Ветка, если больше
@@ -710,14 +712,14 @@ vector<char> Expression_node::generateCodeForGreater()
 	return res;
 }
 
-vector<char> Expression_node::generateCodeForLess()
+vector<char> Expression_node::generateCodeForLess(bool isInsideClassMethod, ConstantsTable* constantsTable)
 {
 	vector<char> res;
 
-	vector<char> leftOperand = Left->generateCode(); //левый операнд	
+	vector<char> leftOperand = Left->generateCode(isInsideClassMethod, constantsTable); //левый операнд	
 	CodeGenerationHelpers::appendArrayToByteVector(&res, leftOperand.data(), leftOperand.size());
 
-	vector<char> rightOperand = Right->generateCode(); //правый операнд
+	vector<char> rightOperand = Right->generateCode(isInsideClassMethod, constantsTable); //правый операнд
 	CodeGenerationHelpers::appendArrayToByteVector(&res, rightOperand.data(), rightOperand.size());
 
 	vector<char> trueBytes = CodeGenerationCommands::iconstBipushSipush(1); //Ветка, если меньше
@@ -736,14 +738,14 @@ vector<char> Expression_node::generateCodeForLess()
 	return res;
 }
 
-vector<char> Expression_node::generateCodeForLessEqual()
+vector<char> Expression_node::generateCodeForLessEqual(bool isInsideClassMethod, ConstantsTable* constantsTable)
 {
 	vector<char> res;
 
-	vector<char> leftOperand = Left->generateCode(); //левый операнд	
+	vector<char> leftOperand = Left->generateCode(isInsideClassMethod, constantsTable); //левый операнд	
 	CodeGenerationHelpers::appendArrayToByteVector(&res, leftOperand.data(), leftOperand.size());
 
-	vector<char> rightOperand = Right->generateCode(); //правый операнд
+	vector<char> rightOperand = Right->generateCode(isInsideClassMethod, constantsTable); //правый операнд
 	CodeGenerationHelpers::appendArrayToByteVector(&res, rightOperand.data(), rightOperand.size());
 
 	vector<char> trueBytes = CodeGenerationCommands::iconstBipushSipush(1); //Ветка, если меньше или равно
@@ -762,14 +764,14 @@ vector<char> Expression_node::generateCodeForLessEqual()
 	return res;
 }
 
-vector<char> Expression_node::generateCodeForGreaterEqual()
+vector<char> Expression_node::generateCodeForGreaterEqual(bool isInsideClassMethod, ConstantsTable* constantsTable)
 {
 	vector<char> res;
 
-	vector<char> leftOperand = Left->generateCode(); //левый операнд	
+	vector<char> leftOperand = Left->generateCode(isInsideClassMethod, constantsTable); //левый операнд	
 	CodeGenerationHelpers::appendArrayToByteVector(&res, leftOperand.data(), leftOperand.size());
 
-	vector<char> rightOperand = Right->generateCode(); //правый операнд
+	vector<char> rightOperand = Right->generateCode(isInsideClassMethod, constantsTable); //правый операнд
 	CodeGenerationHelpers::appendArrayToByteVector(&res, rightOperand.data(), rightOperand.size());
 
 	vector<char> trueBytes = CodeGenerationCommands::iconstBipushSipush(1); //Ветка, если больше или равно
@@ -785,5 +787,170 @@ vector<char> Expression_node::generateCodeForGreaterEqual()
 	CodeGenerationHelpers::appendArrayToByteVector(&res, gotoBytes.data(), gotoBytes.size());
 	CodeGenerationHelpers::appendArrayToByteVector(&res, falseBytes.data(), falseBytes.size());
 
+	return res;
+}
+
+vector<char> Expression_node::generateCodeForMessageExpression(bool isInsideClassMethod, ConstantsTable *constantsTable)
+{
+	vector<char> res;
+
+	vector<char> receiver = Receiver->generateCode(isInsideClassMethod, constantsTable); //Объект
+
+	vector<char> messageSelector = Arguments->generateCode(isInsideClassMethod, constantsTable); //Аргументы
+
+	
+
+	if (constantsTable->items.count(Constant) == 0) {
+		string msg = "Class doesn't have constant " + to_string(Constant);
+		throw std::exception(msg.c_str());
+	}
+	else if (constantsTable->items[Constant]->Type != MethodRef) {
+		string msg = "Constant " + to_string(Constant) + " is not methodRef";
+		throw std::exception(msg.c_str());
+	}
+	
+	if (Method->IsClassMethod) {
+		CodeGenerationHelpers::appendArrayToByteVector(&res, messageSelector.data(), messageSelector.size());
+		vector<char> invoke = CodeGenerationCommands::invokestatic(Constant);
+		CodeGenerationHelpers::appendArrayToByteVector(&res, invoke.data(), invoke.size());
+	}
+	else {
+		CodeGenerationHelpers::appendArrayToByteVector(&res, messageSelector.data(), messageSelector.size());
+		CodeGenerationHelpers::appendArrayToByteVector(&res, receiver.data(), receiver.size());
+		vector<char> invoke;
+		if (Receiver->type == SUPER_RECEIVER_TYPE)
+			invoke = CodeGenerationCommands::invokespecial(Constant);
+		else
+			invoke = CodeGenerationCommands::invokevirtual(Constant);
+		CodeGenerationHelpers::appendArrayToByteVector(&res, invoke.data(), invoke.size());
+	}
+	
+
+	return res;
+}
+
+vector<char> Receiver_node::generateCode(bool isInsideClassMethod, ConstantsTable* constantsTable)
+{
+	vector<char> res;
+	
+	switch (type)
+	{
+	case SUPER_RECEIVER_TYPE: {
+		if (!isInsideClassMethod) {
+			vector<char> obj = CodeGenerationCommands::aload(LocalVariable->Id); //Объект
+			CodeGenerationHelpers::appendArrayToByteVector(&res, obj.data(), obj.size());
+		}
+	}
+		break;
+	case SELF_RECEIVER_TYPE: {
+		if (!isInsideClassMethod) {
+			vector<char> obj = CodeGenerationCommands::aload(LocalVariable->Id); //Объект
+			CodeGenerationHelpers::appendArrayToByteVector(&res, obj.data(), obj.size());
+		}
+	}
+		break;
+	case OBJECT_NAME_RECEIVER_TYPE: {
+		if (LocalVariable != NULL)
+		{
+			vector<char> obj = CodeGenerationCommands::aload(LocalVariable->Id - isInsideClassMethod); //Объект
+			CodeGenerationHelpers::appendArrayToByteVector(&res, obj.data(), obj.size());
+		}
+		else if (Field != NULL) {
+			vector<char> obj = CodeGenerationCommands::aload(0); //Объект
+			CodeGenerationHelpers::appendArrayToByteVector(&res, obj.data(), obj.size());
+
+			string className = Receiver->DataType->ClassName;
+			ConstantsTable* constantsTable = ClassesTable::items[className]->ConstantTable;
+			if (constantsTable->items.count(Constant) == 0) {
+				string msg = "Class " + className + " doesn't have constant " + to_string(Constant);
+				throw std::exception(msg.c_str());
+			}
+			else if (constantsTable->items[Constant]->Type != FieldRef) {
+				string msg = "Constant " + to_string(Constant) + " is not fieldRef";
+				throw std::exception(msg.c_str());
+			}
+
+			vector<char> field = CodeGenerationCommands::getfield(Constant); //Поле
+			CodeGenerationHelpers::appendArrayToByteVector(&res, field.data(), field.size());
+		}
+	}
+		break;
+	case CLASS_NAME_RECEIVER_TYPE: {
+
+	}
+		break;
+	case MESSAGE_EXPRESSION_RECEIVER_TYPE: {
+		vector<char> receiver = Receiver->generateCode(isInsideClassMethod, constantsTable); //Объект
+
+		vector<char> messageSelector = Arguments->generateCode(isInsideClassMethod, constantsTable); //Аргументы
+
+		
+
+		if (constantsTable->items.count(Constant) == 0) {
+			string msg = "Class doesn't have constant " + to_string(Constant);
+			throw std::exception(msg.c_str());
+		}
+		else if (constantsTable->items[Constant]->Type != MethodRef) {
+			string msg = "Constant " + to_string(Constant) + " is not methodRef";
+			throw std::exception(msg.c_str());
+		}
+
+		if (Method->IsClassMethod) {
+			CodeGenerationHelpers::appendArrayToByteVector(&res, messageSelector.data(), messageSelector.size());
+			vector<char> invoke = CodeGenerationCommands::invokestatic(Constant);
+			CodeGenerationHelpers::appendArrayToByteVector(&res, invoke.data(), invoke.size());
+		}
+		else {
+			CodeGenerationHelpers::appendArrayToByteVector(&res, messageSelector.data(), messageSelector.size());
+			CodeGenerationHelpers::appendArrayToByteVector(&res, receiver.data(), receiver.size());
+			vector<char> invoke;
+			if (Receiver->type == SUPER_RECEIVER_TYPE)
+				invoke = CodeGenerationCommands::invokespecial(Constant);
+			else
+				invoke = CodeGenerationCommands::invokevirtual(Constant);
+			CodeGenerationHelpers::appendArrayToByteVector(&res, invoke.data(), invoke.size());
+		}
+	}
+		break;
+	default:
+		break;
+	}
+
+	return res;
+}
+
+vector<char> Message_selector_node::generateCode(bool isInsideClassMethod, ConstantsTable* constantsTable)
+{
+	vector<char> res;
+
+	if (FirstArgument != NULL) {
+		vector<char> firstArgument = FirstArgument->generateCode(isInsideClassMethod, constantsTable);
+		CodeGenerationHelpers::appendArrayToByteVector(&res, firstArgument.data(), firstArgument.size());
+	}
+	if (Arguments != NULL) {
+		Keyword_argument_node* cur = Arguments->First;
+		while (cur != NULL) {
+			vector<char> argument = cur->expression->generateCode(isInsideClassMethod, constantsTable);
+			CodeGenerationHelpers::appendArrayToByteVector(&res, argument.data(), argument.size());
+			cur = cur->Next;
+		}
+	}
+	if (ExprArguments != NULL) {
+		vector<char> exprArguments = ExprArguments->generateCode(isInsideClassMethod, constantsTable);
+		CodeGenerationHelpers::appendArrayToByteVector(&res, exprArguments.data(), exprArguments.size());
+	}
+
+	return res;
+}
+
+vector<char> Expression_list_node::generateCode(bool isInsideClassMethod, ConstantsTable* constantsTable)
+{
+	vector<char> res;
+	Expression_node* cur = First;
+	while (cur != NULL) {
+		vector<char> expression = cur->generateCode(isInsideClassMethod, constantsTable);
+		CodeGenerationHelpers::appendArrayToByteVector(&res, expression.data(), expression.size());
+		cur = cur->Next;
+	}
 	return res;
 }

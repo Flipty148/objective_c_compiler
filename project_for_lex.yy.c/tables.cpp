@@ -331,8 +331,11 @@ MethodsTableElement* ClassesTableElement::getMethodForRef(string name, string* d
 			return Methods->items[name];
 		}
 		else { //Метод содержится в одном из родительских классов
-			if (SuperclassName != NULL)
-				return ClassesTable::items[getSuperClassName()]->getMethodForRef(name, descriptor, className);
+			if (SuperclassName != NULL) {
+				MethodsTableElement *method = ClassesTable::items[getSuperClassName()]->getMethodForRef(name, descriptor, className);
+				*className = getClassName();
+				return method;
+			}
 		}
 	}
 	return NULL;

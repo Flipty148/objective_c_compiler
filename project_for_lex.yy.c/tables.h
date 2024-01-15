@@ -245,8 +245,8 @@ public:
     void addDefaultReturn(Statement_node *lastStatement);
 
 
-	vector<char> generateBytes(); //Генерация байт кода метода
-	vector<char> generateCodeAttribute(); //Генерация атрибута Code для метода
+	vector<char> generateBytes(ConstantsTable* constantsTable); //Генерация байт кода метода
+	vector<char> generateCodeAttribute(ConstantsTable* constantsTable); //Генерация атрибута Code для метода
 };
 
 class MethodsTable
@@ -258,7 +258,7 @@ public:
 
     void toCsvFile(string filename, string filepath, char separator = '|'); //Преобразование в CSV-файл
 
-	vector<char> generateBytes(); //Генерация байт кода таблицы методов
+	vector<char> generateBytes(ConstantsTable* constantsTable); //Генерация байт кода таблицы методов
 };
 
 // ----------- Таблица свойств ----------

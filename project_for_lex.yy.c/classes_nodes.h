@@ -157,10 +157,10 @@ class Statement_node
 
         void semanticTransform(LocalVariablesTable* locals, ConstantsTable* constants);
 
-		vector<char> generateCode(); //Функция генерации кода
+		vector<char> generateCode(bool isInsideClassMethod, ConstantsTable* constantsTable); //Функция генерации кода
 private:
-	vector<char> generateCodeForSimpleStatement(); //Функция генерации кода для SimpleStatement
-	vector<char> generateCodeForReturnStatement(); //Функция генерации кода для ReturnStatement
+	vector<char> generateCodeForSimpleStatement(bool isInsideClassMethod, ConstantsTable* constantsTable); //Функция генерации кода для SimpleStatement
+	vector<char> generateCodeForReturnStatement(bool isInsideClassMethod, ConstantsTable* constantsTable); //Функция генерации кода для ReturnStatement
 };
 
 // ---------- declaration ----------
@@ -373,6 +373,7 @@ class Expression_node
 		LocalVariablesTableElement* LocalVariable = NULL; //Ссылка на локальную переменную
 		FieldsTableElement* Field = NULL; //Ссылка на поле
 		MethodsTableElement* Method = NULL; //Ссылка на метод
+		int Constant = NULL; //Ссылка на константу
 
 		Type* DataType = NULL;
 
@@ -401,25 +402,26 @@ class Expression_node
 		void checkLvalueError(); // Проверка ошибки левого значения
 		string getTypeName(); // Возвращает имя вида выражения
 
-		virtual vector<char> generateCode(); // Генерация кода
+		virtual vector<char> generateCode(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода
 private:
 	void arrayAssignmentTransform(); // Преобразование присваивания и массива в дереве
 	void memberAccessAssignmentTransform(); // Преобразование присваивания и оператора точки и стрелочки в дереве
 
 	vector<char> generateCodeForNumericConstant(); // Генерация кода для NumericConstant
-    vector<char> generateCodeForPlus(); // Генерация кода для Plus
-	vector<char> generateCodeForMinus(); // Генерация кода для Minus
-    vector<char> generateCodeForMul(); // Генерация кода для Mul
-	vector<char> generateCodeForDiv(); // Генерация кода для Div
-	vector<char> generateCodeForUminus(); // Генерация кода для Uminus
-	vector<char> generateCodeForUplus(); // Генерация кода для Uplus
+    vector<char> generateCodeForPlus(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для Plus
+	vector<char> generateCodeForMinus(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для Minus
+    vector<char> generateCodeForMul(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для Mul
+	vector<char> generateCodeForDiv(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для Div
+	vector<char> generateCodeForUminus(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для Uminus
+	vector<char> generateCodeForUplus(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для Uplus
 	vector<char> generateCodeForLiteral(); // Генерация кода для Literal
-	vector<char> generateCodeForEqual(); // Генерация кода для Equal
-	vector<char> generateCodeForNotEqual(); // Генерация кода для NotEqual
-	vector<char> generateCodeForGreater(); // Генерация кода для Greater
-	vector<char> generateCodeForLess(); // Генерация кода для Less
-	vector<char> generateCodeForLessEqual(); // Генерация кода для LessEqual
-	vector<char> generateCodeForGreaterEqual(); // Генерация кода для GreaterEqual
+	vector<char> generateCodeForEqual(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для Equal
+	vector<char> generateCodeForNotEqual(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для NotEqual
+	vector<char> generateCodeForGreater(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для Greater
+	vector<char> generateCodeForLess(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для Less
+	vector<char> generateCodeForLessEqual(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для LessEqual
+	vector<char> generateCodeForGreaterEqual(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для GreaterEqual
+	vector<char> generateCodeForMessageExpression(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для MessageExpression
 };
 
 // ---------- expression_list ----------
@@ -444,6 +446,8 @@ class Expression_list_node : public Expression_node
 		void assignmentTransform(); // Преобразование присваивания в дереве
 		void setDataTypesAndCasts(LocalVariablesTable* locals); // Преобразование и установка DataType в дереве
 		void setAttributes(LocalVariablesTable* locals, ConstantsTable* constants); // Установка атрибутов (ссылок на локальные переменные, поля, методы)
+
+		vector<char> generateCode(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода
 };
 
 // ---------- receiver ----------
@@ -469,6 +473,7 @@ class Receiver_node
 		LocalVariablesTableElement* LocalVariable = NULL; //Ссылка на локальную переменную
 		FieldsTableElement* Field = NULL; //Ссылка на поле
 		MethodsTableElement* Method = NULL; //Ссылка на метод
+		int Constant = NULL; //Ссылка на константу
 
         static Receiver_node* createReceiverNode(receiver_type type, char *name);
         static Receiver_node* createReceiverNodeFromMessageExpression(Receiver_node *receiver, Message_selector_node *arguments);
@@ -489,6 +494,8 @@ class Receiver_node
 		void setDataType(LocalVariablesTable* locals); //Установка DataType
 
 		void setAttributes(LocalVariablesTable* locals, ConstantsTable* constants); //Установка атрибутов (ссылок на локальные переменные, поля, методы)
+
+		vector<char> generateCode(bool isInsideClassMethod, ConstantsTable* constantsTable); //Генерация кода
 };
 
 // ---------- message_selector -----------
@@ -512,6 +519,8 @@ class Message_selector_node
 
 		void setDataTypes(LocalVariablesTable* locals, string receiverClassName); //Установка DataType
 		void setAttributes(LocalVariablesTable* locals, ConstantsTable* constants);
+
+		vector<char> generateCode(bool isInsideClassMethod, ConstantsTable* constantsTable); //Генерация кода
 };
 
 // ---------- keyword_argument_list ----------

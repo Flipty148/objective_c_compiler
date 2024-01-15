@@ -1,3 +1,6 @@
+@implementation MyClass1 : NSObject
+@end
+
 int main()
 {
     10;
@@ -17,4 +20,5 @@ int main()
     243 < 15;
     513 <= 513;
     5 >= 5;
+    [MyClass1 new];
 }

@@ -17,6 +17,7 @@ UNDERLINE_LETTER [A-Za-z_]
     #include "tables.h"
     #include "bison_rules_with_code_tab.h"
     #include <stdio.h>
+    #include <crtdbg.h>
     #include <string.h>
     #include <stdlib.h>
     #include <iostream>
@@ -410,4 +411,6 @@ if (parseRes == 0) {
         }
     }
 }
+
+    _CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_DEBUG);
 }

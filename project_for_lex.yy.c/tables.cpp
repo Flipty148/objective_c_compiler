@@ -322,7 +322,7 @@ bool ClassesTableElement::isContainsMethod(string methodName)
 	return false;
 }
 
-MethodsTableElement* ClassesTableElement::getMethodForRef(string name, string* descriptor, string* className)
+MethodsTableElement* ClassesTableElement::getMethodForRef(string name, string* descriptor, string* className, bool isSupercall)
 {
 	if (isContainsMethod(name)) { // Содержит метод
 		if (Methods->items.count(name) != 0) { //Метод содержится в текущем классе
@@ -333,7 +333,10 @@ MethodsTableElement* ClassesTableElement::getMethodForRef(string name, string* d
 		else { //Метод содержится в одном из родительских классов
 			if (SuperclassName != NULL) {
 				MethodsTableElement *method = ClassesTable::items[getSuperClassName()]->getMethodForRef(name, descriptor, className);
-				*className = getClassName();
+				if (isSupercall)
+					*className = getSuperClassName();
+				else
+					*className = getClassName();
 				return method;
 			}
 		}
@@ -1100,6 +1103,7 @@ void MethodsTableElement::semanticTransform(ConstantsTable *constants)
 	Statement_node* cur = BodyStart;
 	while (cur != NULL)
 	{
+		cur->semanticTransform(LocalVariables, constants);
 		if (cur->Next == NULL) {
 			addDefaultReturn(cur);
 			cur->Next->semanticTransform(LocalVariables, constants);
@@ -1108,7 +1112,6 @@ void MethodsTableElement::semanticTransform(ConstantsTable *constants)
 		else {
 			cur = cur->Next;
 		}
-		cur->semanticTransform(LocalVariables, constants);
 	}
 }
 

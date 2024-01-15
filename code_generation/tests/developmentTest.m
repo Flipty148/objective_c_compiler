@@ -1,5 +1,10 @@
 @class InOutFuncs;
 @implementation MyClass1 : NSObject
+
+ + (id) new
+ {
+    return [super new];
+ }
 @end
 
 int main()

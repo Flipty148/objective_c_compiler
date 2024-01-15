@@ -141,7 +141,7 @@ public:
     FieldsTableElement* getFieldForRef(string name, string* descriptor, string* className); //Получение информации о поле
 	bool isHaveOneOfSuperclass(string name); // Является ли указанный класс одним из потомков указанного класса
 	bool isContainsMethod(string methodName); // Проверка наличия метода
-	MethodsTableElement* getMethodForRef(string name, string* descriptor, string* className); //Получение информации о методе
+	MethodsTableElement* getMethodForRef(string name, string* descriptor, string* className, bool isSupercall = false); //Получение информации о методе
 
 
 	void semanticTransform();

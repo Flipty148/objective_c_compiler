@@ -4,3 +4,7 @@ ID|Type|Value
 3|UTF8|rtl/NSObject
 4|Class|2
 5|Class|3
+6|UTF8|newStatic
+7|UTF8|()Lrtl/NSObject;
+8|NameAndType|6, 7
+9|MethodRef|8, 5

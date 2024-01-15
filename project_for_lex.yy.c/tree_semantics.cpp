@@ -1309,7 +1309,8 @@ void Expression_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariabl
 			}
 			else {
 				string fullClassName = ClassesTable::getFullClassName(receiverName); //ѕолучить полное им€ класса //TODO: ¬озможно, нужно будет убрать, если при преобразовании дерева будут замен€тьс€ сразу все имена классов
-				strcpy(Receiver->name, fullClassName.c_str());
+				if (Receiver->name != NULL)
+					strcpy(Receiver->name, fullClassName.c_str());
 				bool isContainsMethod = ClassesTable::items[fullClassName]->isContainsMethod(methodNameWithType); //ѕроверить наличие метода
 				if (!isContainsMethod) {
 					string msg = "Class '" + receiverName + "' don't contains method '+" + methodName + "'";
@@ -1324,7 +1325,7 @@ void Expression_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariabl
 			// ѕолучить информацию дл€ создани€ константы типа method ref
 			string descriptor;
 			string className;
-			element->getMethodForRef(methodNameWithType, &descriptor, &className);
+			element->getMethodForRef(methodNameWithType, &descriptor, &className, Receiver->type == SUPER_RECEIVER_TYPE);
 			// ƒобавить константу method ref
 			Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
 		}
@@ -1345,18 +1346,19 @@ void Expression_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariabl
 				ClassesTableElement* element = ClassesTable::items[className];
 				// ѕолучить информацию дл€ создани€ константы типа method ref
 				string descriptor;
-				element->getMethodForRef(methodNameWithType, &descriptor, &className);
+				element->getMethodForRef(methodNameWithType, &descriptor, &className, Receiver->type == SUPER_RECEIVER_TYPE);
 				// ƒобавить константу method ref
 				Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
 			}
 			else {
 				string fullClassName = ClassesTable::getFullClassName(receiverName); //ѕолучить полное им€ класса //TODO: ¬озможно, нужно будет убрать, если при преобразовании дерева будут замен€тьс€ сразу все имена классов
-				strcpy(Receiver->name, fullClassName.c_str()); // ѕреобразование имени класса в узле дерева
+				if (Receiver->name != NULL)
+					strcpy(Receiver->name, fullClassName.c_str()); // ѕреобразование имени класса в узле дерева
 				ClassesTableElement* element = ClassesTable::items[fullClassName];
 				// ѕолучить информацию дл€ создани€ константы типа method ref
 				string descriptor;
 				string className;
-				element->getMethodForRef(methodNameWithType, &descriptor, &className);
+				element->getMethodForRef(methodNameWithType, &descriptor, &className, Receiver->type == SUPER_RECEIVER_TYPE);
 				// ƒобавить константу method ref
 				Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
 			}
@@ -1543,7 +1545,8 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 			}
 			else {
 				string fullClassName = ClassesTable::getFullClassName(receiverName); //ѕолучить полное им€ класса //TODO: ¬озможно, нужно будет убрать, если при преобразовании дерева будут замен€тьс€ сразу все имена классов
-				strcpy(Receiver->name, fullClassName.c_str()); //ѕреобразование имени класса в узле дерева
+				if (Receiver->name != NULL)
+					strcpy(Receiver->name, fullClassName.c_str()); //ѕреобразование имени класса в узле дерева
 				bool isContainsMethod = ClassesTable::items[fullClassName]->isContainsMethod(methodNameWithType); //ѕроверить наличие метода
 				if (!isContainsMethod) {
 					string msg = "Class '" + receiverName + "' don't contains method '+" + methodName + "'";
@@ -1558,7 +1561,7 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 			// ѕолучить информацию дл€ создани€ константы типа method ref
 			string descriptor;
 			string className;
-			element->getMethodForRef(methodNameWithType, &descriptor, &className);
+			element->getMethodForRef(methodNameWithType, &descriptor, &className, Receiver->type == SUPER_RECEIVER_TYPE);
 			// ƒобавить константу method ref
 			Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
 			*returnType = ClassesTable::items[className]->Methods->items[methodNameWithType]->ReturnType;
@@ -1580,7 +1583,7 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 				ClassesTableElement* element = ClassesTable::items[className];
 				// ѕолучить информацию дл€ создани€ константы типа method ref
 				string descriptor;
-				element->getMethodForRef(methodNameWithType, &descriptor, &className);
+				element->getMethodForRef(methodNameWithType, &descriptor, &className, Receiver->type == SUPER_RECEIVER_TYPE);
 				// ƒобавить константу method ref
 				Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
 
@@ -1588,12 +1591,13 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 			}
 			else {
 				string fullClassName = ClassesTable::getFullClassName(receiverName); //ѕолучить полное им€ класса //TODO: ¬озможно, нужно будет убрать, если при преобразовании дерева будут замен€тьс€ сразу все имена классов
-				strcpy(Receiver->name, fullClassName.c_str()); // ѕреобразование имени класса в узле дерева
+				if (Receiver->name != NULL)
+					strcpy(Receiver->name, fullClassName.c_str()); // ѕреобразование имени класса в узле дерева
 				ClassesTableElement* element = ClassesTable::items[fullClassName];
 				// ѕолучить информацию дл€ создани€ константы типа method ref
 				string descriptor;
 				string className;
-				element->getMethodForRef(methodNameWithType, &descriptor, &className);
+				element->getMethodForRef(methodNameWithType, &descriptor, &className, Receiver->type == SUPER_RECEIVER_TYPE);
 				// ƒобавить константу method ref
 				Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
 

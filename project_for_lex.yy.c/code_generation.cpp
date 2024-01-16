@@ -492,7 +492,8 @@ vector<char> Expression_node::generateCode(bool isInsideClassMethod, ConstantsTa
 	}
 		break;
 	case ARRAY_ASSIGNMENT_EXPRESSION_TYPE: {
-
+		vector<char> bytes = generateCodeForArrayAssignment(isInsideClassMethod, constantsTable);
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case MEMBER_ACCESS_ASSIGNMENT_EXPRESSION_TYPE: {
@@ -1011,10 +1012,10 @@ vector<char> Expression_node::generateCodeForArrayElementAccess(bool isInsideCla
 {
 	vector<char> res;
 
-	vector<char> arr = Right->generateCode(isInsideClassMethod, constantsTable); //ссылка на Массив
+	vector<char> arr = Left->generateCode(isInsideClassMethod, constantsTable); //ссылка на Массив
 	CodeGenerationHelpers::appendArrayToByteVector(&res, arr.data(), arr.size());
 	
-	vector<char> index = Left->generateCode(isInsideClassMethod, constantsTable); //индекс
+	vector<char> index = Right->generateCode(isInsideClassMethod, constantsTable); //индекс
 	CodeGenerationHelpers::appendArrayToByteVector(&res, index.data(), index.size());
 
 	if (DataType->DataType == INT_TYPE) {
@@ -1030,6 +1031,35 @@ vector<char> Expression_node::generateCodeForArrayElementAccess(bool isInsideCla
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 
+
+	return res;
+}
+
+vector<char> Expression_node::generateCodeForArrayAssignment(bool isInsideClassMethod, ConstantsTable* constantsTable)
+{
+	vector<char> res;
+
+	vector<char> arr = Left->generateCode(isInsideClassMethod, constantsTable); //ссылка на Массив
+	CodeGenerationHelpers::appendArrayToByteVector(&res, arr.data(), arr.size());
+
+	vector<char> index = Child->generateCode(isInsideClassMethod, constantsTable); //индекс
+	CodeGenerationHelpers::appendArrayToByteVector(&res, index.data(), index.size());
+
+	vector<char> value = Right->generateCode(isInsideClassMethod, constantsTable); //значение
+	CodeGenerationHelpers::appendArrayToByteVector(&res, value.data(), value.size());
+
+	if (DataType->DataType == INT_TYPE) {
+		vector<char> bytes = CodeGenerationCommands::iastore(); //Команда
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+	}
+	else if (DataType->DataType == CHAR_TYPE) {
+		vector<char> bytes = CodeGenerationCommands::castore(); //Команда
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+	}
+	else if (DataType->DataType == CLASS_NAME_TYPE || DataType->DataType == ID_TYPE) {
+		vector<char> bytes = CodeGenerationCommands::aastore(); //Команда
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+	}
 
 	return res;
 }

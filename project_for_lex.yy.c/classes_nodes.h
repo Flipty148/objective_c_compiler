@@ -424,6 +424,7 @@ private:
 	vector<char> generateCodeForLessEqual(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для LessEqual
 	vector<char> generateCodeForGreaterEqual(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для GreaterEqual
 	vector<char> generateCodeForMessageExpression(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для MessageExpression
+	vector<char> generateCodeForIdentifier(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для Identifier
 };
 
 // ---------- expression_list ----------

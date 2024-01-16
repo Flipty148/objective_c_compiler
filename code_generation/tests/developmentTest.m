@@ -29,4 +29,6 @@ int main()
     [InOutFuncs printInt:5 >= 5];
     [MyClass1 new];
     [InOutFuncs printInt:40578];
+    int a;
+    a;
 }

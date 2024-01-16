@@ -383,7 +383,8 @@ vector<char> Expression_node::generateCode(bool isInsideClassMethod, ConstantsTa
 	switch (type)
 	{
 	case IDENTIFIER_EXPRESSION_TYPE: {
-
+		vector<char> bytes = generateCodeForIdentifier(isInsideClassMethod, constantsTable);
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case LITERAL_EXPRESSION_TYPE: {
@@ -853,6 +854,36 @@ vector<char> Expression_node::generateCodeForMessageExpression(bool isInsideClas
 	}
 	
 
+	return res;
+}
+
+vector<char> Expression_node::generateCodeForIdentifier(bool isInsideClassMethod, ConstantsTable* constantsTable)
+{
+	vector<char> res;
+	if (LocalVariable != NULL) { //Локальная переменная
+		vector<char> bytes;
+		if (DataType->ClassName != "")
+			bytes = CodeGenerationCommands::aload(LocalVariable->Id - isInsideClassMethod); //Команда
+		else
+			bytes = CodeGenerationCommands::iload(LocalVariable->Id - isInsideClassMethod); //Команда
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+	}
+	else if (Field != NULL) {
+		vector<char> obj = CodeGenerationCommands::aload(0); //Объект
+		CodeGenerationHelpers::appendArrayToByteVector(&res, obj.data(), obj.size());
+
+		if (constantsTable->items.count(Constant) == 0) {
+			string msg = "Class doesn't have constant " + to_string(Constant);
+			throw new std::exception(msg.c_str());
+		}
+
+		vector<char> field = CodeGenerationCommands::getfield(Constant); //Поле
+		CodeGenerationHelpers::appendArrayToByteVector(&res, field.data(), field.size());
+	}
+	else {
+		string msg = "Unknown identifier '" + string(name);
+		throw new std::exception(msg.c_str());
+	}
 	return res;
 }
 

@@ -427,6 +427,7 @@ private:
 	vector<char> generateCodeForIdentifier(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для Identifier
     vector<char> generateCodeForSelf(); //Генерация кода для Self
 	vector<char> generateCodeForSuper(); //Генерация кода для Super
+	vector<char> generateCodeForAssignment(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для Assignment
 };
 
 // ---------- expression_list ----------

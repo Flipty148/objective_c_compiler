@@ -30,5 +30,6 @@ int main()
     [MyClass1 new];
     [InOutFuncs printInt:40578];
     int a;
-    a;
+    a = 5;
+    [InOutFuncs printInt:a];
 }

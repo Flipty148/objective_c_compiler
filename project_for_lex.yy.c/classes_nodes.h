@@ -432,6 +432,9 @@ private:
 	vector<char> generateCodeForArrayElementAccess(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для ArrayElementAccess
 	vector<char> generateCodeForArrayAssignment(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для ArrayAssignment
 	vector<char> generateCodeForMemberAccessAssignment(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для MemberAccessAssignment
+	vector<char> generateCodeForCharCast(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для CharCast
+	vector<char> generateCodeForIntCast(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для IntCast
+	vector<char> generateCodeForClassCast(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для ClassCast
 };
 
 // ---------- expression_list ----------

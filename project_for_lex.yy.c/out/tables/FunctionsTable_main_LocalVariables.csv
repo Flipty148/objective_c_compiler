@@ -1,4 +1,6 @@
 Id|Name|Type
 2|a|int
+3|b|int
+4|c|char
 1|obj|global/MyClass1
 0|self|rtl/Program

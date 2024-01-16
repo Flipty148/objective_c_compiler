@@ -1,5 +1,7 @@
 Id|Name|Type
 2|a|int
 1|args|java/lang/String[1024]
-3|obj|global/MyClass1
+3|b|int
+4|c|char
+5|obj|global/MyClass1
 0|self|rtl/Program

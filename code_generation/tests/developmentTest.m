@@ -50,4 +50,13 @@ int main()
     // int b[10];
     // b[0] = 1;
     // [InOutFuncs printInt:b[0]];
+
+    int b;
+    b = 'b';
+    [InOutFuncs printInt:b];
+
+    char c;
+    c = 98;
+    [InOutFuncs printChar:c];
+    return 0;
 }

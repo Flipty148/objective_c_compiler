@@ -502,15 +502,18 @@ vector<char> Expression_node::generateCode(bool isInsideClassMethod, ConstantsTa
 	}
 		break;
 	case CHAR_CAST: {
-
+		vector<char> bytes = generateCodeForCharCast(isInsideClassMethod, constantsTable);
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case INT_CAST: {
-
+		vector<char> bytes = generateCodeForIntCast(isInsideClassMethod, constantsTable);
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case CLASS_CAST: {
-
+		vector<char> bytes = generateCodeForClassCast(isInsideClassMethod, constantsTable);
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	default:
@@ -1087,6 +1090,55 @@ vector<char> Expression_node::generateCodeForMemberAccessAssignment(bool isInsid
 
 		vector<char> bytes = CodeGenerationCommands::putfield(Left->Constant); //Команда
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+	}
+
+	return res;
+}
+
+vector<char> Expression_node::generateCodeForCharCast(bool isInsideClassMethod, ConstantsTable* constantsTable)
+{
+	vector<char> res;
+
+
+	if (Right->DataType->isCastableTo(DataType)) {
+		vector<char> value = Right->generateCode(isInsideClassMethod, constantsTable); //Значение
+		CodeGenerationHelpers::appendArrayToByteVector(&res, value.data(), value.size());
+	}
+	else {
+		string msg = "Cannot cast " + Right->DataType->ClassName + " to " + DataType->ClassName;
+		throw new std::exception(msg.c_str());
+	}
+
+	return res;
+}
+
+vector<char> Expression_node::generateCodeForIntCast(bool isInsideClassMethod, ConstantsTable* constantsTable)
+{
+	vector<char> res;
+
+	if (Right->DataType->isCastableTo(DataType)) {
+		vector<char> value = Right->generateCode(isInsideClassMethod, constantsTable); //Значение
+		CodeGenerationHelpers::appendArrayToByteVector(&res, value.data(), value.size());
+	}
+	else {
+		string msg = "Cannot cast " + Right->DataType->ClassName + " to " + DataType->ClassName;
+		throw new std::exception(msg.c_str());
+	}
+
+	return res;
+}
+
+vector<char> Expression_node::generateCodeForClassCast(bool isInsideClassMethod, ConstantsTable* constantsTable)
+{
+	vector<char> res;
+
+	if (Right->DataType->isCastableTo(DataType)) {
+		vector<char> value = Right->generateCode(isInsideClassMethod, constantsTable); //Значение
+		CodeGenerationHelpers::appendArrayToByteVector(&res, value.data(), value.size());
+	}
+	else {
+		string msg = "Cannot cast " + Right->DataType->ClassName + " to " + DataType->ClassName;
+		throw new std::exception(msg.c_str());
 	}
 
 	return res;

@@ -12,16 +12,10 @@ ID|Type|Value
 11|UTF8|([C)V
 12|NameAndType|10, 11
 13|MethodRef|12, 5
-14|UTF8|global/MyClass1
-15|Class|14
-16|UTF8|newStatic
-17|UTF8|()Lrtl/NSObject;
-18|NameAndType|16, 17
-19|MethodRef|18, 15
-20|UTF8|aaaaabbbbbccccc
-21|String|20
-22|Integer|40578
-23|UTF8|java/lang/Object
-24|Class|23
-25|UTF8|main
-26|UTF8|([Ljava/lang/String;)V
+14|UTF8|aaaaabbbbbccccc
+15|String|14
+16|Integer|40578
+17|UTF8|java/lang/Object
+18|Class|17
+19|UTF8|main
+20|UTF8|([Ljava/lang/String;)V

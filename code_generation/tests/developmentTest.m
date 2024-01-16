@@ -1,10 +1,19 @@
 @class InOutFuncs;
 @implementation MyClass1 : NSObject
+{
+    int a;
+}
 
  + (id) new
  {
     return [super new];
  }
+
+- (void) setA: (int) value
+{
+    a = value;
+}
+
 @end
 
 int main()
@@ -27,9 +36,12 @@ int main()
     [InOutFuncs printInt:243 < 15];
     [InOutFuncs printInt:513 <= 513];
     [InOutFuncs printInt:5 >= 5];
-    [MyClass1 new];
+    MyClass1 *obj;
+    // obj = [MyClass1 new];
+    // [obj setA:10];
     [InOutFuncs printInt:40578];
     int a;
     a = 5;
     [InOutFuncs printInt:a];
+    // [InOutFuncs printInt: obj->a];
 }

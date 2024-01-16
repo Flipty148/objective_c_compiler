@@ -4,7 +4,13 @@ ID|Type|Value
 3|UTF8|rtl/NSObject
 4|Class|2
 5|Class|3
-6|UTF8|newStatic
-7|UTF8|()Lrtl/NSObject;
-8|NameAndType|6, 7
-9|MethodRef|8, 5
+6|UTF8|a
+7|UTF8|I
+8|UTF8|newStatic
+9|UTF8|()Lrtl/NSObject;
+10|UTF8|setADynamic
+11|UTF8|(I)V
+12|NameAndType|6, 7
+13|FieldRef|12, 4
+14|NameAndType|8, 9
+15|MethodRef|14, 5

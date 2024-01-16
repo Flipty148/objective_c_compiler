@@ -428,6 +428,7 @@ private:
     vector<char> generateCodeForSelf(); //Генерация кода для Self
 	vector<char> generateCodeForSuper(); //Генерация кода для Super
 	vector<char> generateCodeForAssignment(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для Assignment
+	vector<char> generateCodeForArrow(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для Arrow
 };
 
 // ---------- expression_list ----------

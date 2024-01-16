@@ -482,7 +482,8 @@ vector<char> Expression_node::generateCode(bool isInsideClassMethod, ConstantsTa
 	}
 		break;
 	case ARROW_EXPRESSION_TYPE: {
-
+		vector<char> bytes = generateCodeForArrow(isInsideClassMethod, constantsTable);
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case ARRAY_ELEMENT_ACCESS_EXPRESSION_TYPE: {
@@ -930,16 +931,16 @@ vector<char> Expression_node::generateCodeForAssignment(bool isInsideClassMethod
 			vector<char> obj = CodeGenerationCommands::aload(0); //Объект
 			CodeGenerationHelpers::appendArrayToByteVector(&res, obj.data(), obj.size());
 
-			if (constantsTable->items.count(Constant) == 0) {
+			if (constantsTable->items.count(Left->Constant) == 0) {
 				string msg = "Class doesn't have constant " + to_string(Constant);
 				throw new std::exception(msg.c_str());
 			}
-			else if (constantsTable->items[Constant]->Type != FieldRef) {
-				string msg = "Constant " + to_string(Constant) + " is not fieldRef";
+			else if (constantsTable->items[Left->Constant]->Type != FieldRef) {
+				string msg = "Constant " + to_string(Left->Constant) + " is not fieldRef";
 				throw new std::exception(msg.c_str());
 			}
 
-			vector<char> field = CodeGenerationCommands::putfield(Constant); //Поле
+			vector<char> field = CodeGenerationCommands::putfield(Left->Constant); //Поле
 			CodeGenerationHelpers::appendArrayToByteVector(&res, field.data(), field.size());
 		}
 		else {
@@ -956,22 +957,50 @@ vector<char> Expression_node::generateCodeForAssignment(bool isInsideClassMethod
 			vector<char> obj = CodeGenerationCommands::aload(0); //Объект
 			CodeGenerationHelpers::appendArrayToByteVector(&res, obj.data(), obj.size());
 
-			if (constantsTable->items.count(Constant) == 0) {
+			if (constantsTable->items.count(Left->Constant) == 0) {
 				string msg = "Class doesn't have constant " + to_string(Constant);
 				throw new std::exception(msg.c_str());
 			}
-			else if (constantsTable->items[Constant]->Type != FieldRef) {
-				string msg = "Constant " + to_string(Constant) + " is not fieldRef";
+			else if (constantsTable->items[Left->Constant]->Type != FieldRef) {
+				string msg = "Constant " + to_string(Left->Constant) + " is not fieldRef";
 				throw new std::exception(msg.c_str());
 			}
 
-			vector<char> field = CodeGenerationCommands::putfield(Constant); //Поле
+			vector<char> field = CodeGenerationCommands::putfield(Left->Constant); //Поле
 			CodeGenerationHelpers::appendArrayToByteVector(&res, field.data(), field.size());
 		}
 		else {
 			string msg = "Unknown identifier '" + string(name);
 			throw new std::exception(msg.c_str());
 		}
+	}
+
+	return res;
+}
+
+vector<char> Expression_node::generateCodeForArrow(bool isInsideClassMethod, ConstantsTable* constantsTable)
+{
+	vector<char> res;
+
+	if (Field != NULL) {
+		vector<char> obj = CodeGenerationCommands::aload(0); //Объект
+		CodeGenerationHelpers::appendArrayToByteVector(&res, obj.data(), obj.size());
+
+		if (constantsTable->items.count(Constant) == 0) {
+			string msg = "Class doesn't have constant " + to_string(Constant);
+			throw new std::exception(msg.c_str());
+		}
+		else if (constantsTable->items[Constant]->Type != FieldRef) {
+			string msg = "Constant " + to_string(Constant) + " is not fieldRef";
+			throw new std::exception(msg.c_str());
+		}
+
+		vector<char> field = CodeGenerationCommands::getfield(Constant); //Поле
+		CodeGenerationHelpers::appendArrayToByteVector(&res, field.data(), field.size());
+	}
+	else {
+		string msg = "Unknown identifier '" + string(name);
+		throw new std::exception(msg.c_str());
 	}
 
 	return res;

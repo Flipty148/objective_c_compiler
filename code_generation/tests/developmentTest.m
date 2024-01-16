@@ -44,6 +44,8 @@ int main()
     a = 5;
     [InOutFuncs printInt:a];
     // [InOutFuncs printInt: obj->a];
+    // obj->a = 15;
+    // [InOutFuncs printInt:obj->a];
 
     // int b[10];
     // b[0] = 1;

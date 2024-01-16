@@ -431,6 +431,7 @@ private:
 	vector<char> generateCodeForArrow(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для Arrow
 	vector<char> generateCodeForArrayElementAccess(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для ArrayElementAccess
 	vector<char> generateCodeForArrayAssignment(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для ArrayAssignment
+	vector<char> generateCodeForMemberAccessAssignment(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода для MemberAccessAssignment
 };
 
 // ---------- expression_list ----------

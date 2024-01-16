@@ -497,7 +497,8 @@ vector<char> Expression_node::generateCode(bool isInsideClassMethod, ConstantsTa
 	}
 		break;
 	case MEMBER_ACCESS_ASSIGNMENT_EXPRESSION_TYPE: {
-
+		vector<char> bytes = generateCodeForMemberAccessAssignment(isInsideClassMethod, constantsTable);
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case CHAR_CAST: {
@@ -985,7 +986,7 @@ vector<char> Expression_node::generateCodeForArrow(bool isInsideClassMethod, Con
 	vector<char> res;
 
 	if (Field != NULL) {
-		vector<char> obj = CodeGenerationCommands::aload(0); //Объект
+		vector<char> obj = Left->generateCode(isInsideClassMethod, constantsTable); //Объект
 		CodeGenerationHelpers::appendArrayToByteVector(&res, obj.data(), obj.size());
 
 		if (constantsTable->items.count(Constant) == 0) {
@@ -1058,6 +1059,33 @@ vector<char> Expression_node::generateCodeForArrayAssignment(bool isInsideClassM
 	}
 	else if (DataType->DataType == CLASS_NAME_TYPE || DataType->DataType == ID_TYPE) {
 		vector<char> bytes = CodeGenerationCommands::aastore(); //Команда
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+	}
+
+	return res;
+}
+
+vector<char> Expression_node::generateCodeForMemberAccessAssignment(bool isInsideClassMethod, ConstantsTable* constantsTable)
+{
+	vector<char> res;
+
+	if (Field != NULL) {
+		vector<char> obj = Left->generateCode(isInsideClassMethod, constantsTable); //Ссылка на Объект
+		CodeGenerationHelpers::appendArrayToByteVector(&res, obj.data(), obj.size());
+
+		vector<char> value = Right->generateCode(isInsideClassMethod, constantsTable); //Значение
+		CodeGenerationHelpers::appendArrayToByteVector(&res, value.data(), value.size());
+
+		if (constantsTable->items.count(Left->Constant) == 0) {
+			string msg = "Class doesn't have constant " + to_string(Left->Constant);
+			throw new std::exception(msg.c_str());
+		}
+		else if (constantsTable->items[Left->Constant]->Type != FieldRef) {
+			string msg = "Constant " + to_string(Left->Constant) + " is not fieldRef";
+			throw new std::exception(msg.c_str());
+		}
+
+		vector<char> bytes = CodeGenerationCommands::putfield(Left->Constant); //Команда
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 

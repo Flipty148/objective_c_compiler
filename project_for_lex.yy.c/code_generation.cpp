@@ -481,10 +481,6 @@ vector<char> Expression_node::generateCode(bool isInsideClassMethod, ConstantsTa
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
-	case DOT_EXPRESSION_TYPE: {
-
-	}
-		break;
 	case ARROW_EXPRESSION_TYPE: {
 
 	}

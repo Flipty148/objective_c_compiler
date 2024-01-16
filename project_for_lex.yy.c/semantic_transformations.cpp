@@ -430,6 +430,10 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 			string msg = string("Class '") + className + "' doesn't exist";
 			throw new std::exception(msg.c_str());
 		}
+		if (Left->type == SUPER_EXPRESSION_TYPE) {
+			string msg = "Can't access to field of super object";
+			throw new std::exception(msg.c_str());
+		}
 		ClassesTableElement* classElem = ClassesTable::items->at(className);
 		if (classElem->isContainsField(name)) {
 			string descr;

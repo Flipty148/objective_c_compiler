@@ -846,6 +846,7 @@ void Expression_node::setAttributes(LocalVariablesTable* locals, ConstantsTable*
 	}
 	break;
 	case SELF_EXPRESSION_TYPE:
+	case SUPER_EXPRESSION_TYPE:
 	{
 		LocalVariable = locals->items["self"];
 	}
@@ -899,6 +900,7 @@ void Receiver_node::setAttributes(LocalVariablesTable* locals, ConstantsTable *c
 	switch (type)
 	{
 	case SELF_RECEIVER_TYPE:
+	case SUPER_RECEIVER_TYPE:
 	{
 		LocalVariable = locals->items["self"];
 	}

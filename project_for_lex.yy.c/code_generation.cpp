@@ -398,7 +398,10 @@ vector<char> Expression_node::generateCode(bool isInsideClassMethod, ConstantsTa
 	}
 		break;
 	case SELF_EXPRESSION_TYPE: {
-
+		if (!isInsideClassMethod) {
+			vector<char> bytes = generateCodeForSelf();
+			CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+		}
 	}
 		break;
 	case SUPER_EXPRESSION_TYPE: {
@@ -884,6 +887,12 @@ vector<char> Expression_node::generateCodeForIdentifier(bool isInsideClassMethod
 		string msg = "Unknown identifier '" + string(name);
 		throw new std::exception(msg.c_str());
 	}
+	return res;
+}
+
+vector<char> Expression_node::generateCodeForSelf()
+{
+	vector<char> res = CodeGenerationCommands::aload(LocalVariable->Id);
 	return res;
 }
 

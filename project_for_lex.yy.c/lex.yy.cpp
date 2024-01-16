@@ -2376,6 +2376,10 @@ if (parseRes == 0) {
 			ClassesTable::generateClassFiles("./out/code/");
 			printf("Successful code generation\n");
 		}
+		catch (std::exception* e) {
+			printf("%s", e->what());
+			isPreviousSuccess = false;
+		}
 		catch (...) {
 			printf("Failed code generation\n");
 			isPreviousSuccess = false;

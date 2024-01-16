@@ -89,6 +89,8 @@ class Numeric_constant_node
         int Int;
         float Float;
 
+		int constant; // номер константы если значение более 2-х байт
+
         static Numeric_constant_node* createNumericConstantNodeFromInteger(int number);
         static Numeric_constant_node* createNumericConstantNodeFromFloat(float number);
 

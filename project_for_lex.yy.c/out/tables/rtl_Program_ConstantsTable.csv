@@ -20,7 +20,8 @@ ID|Type|Value
 19|MethodRef|18, 15
 20|UTF8|aaaaabbbbbccccc
 21|String|20
-22|UTF8|java/lang/Object
-23|Class|22
-24|UTF8|main
-25|UTF8|([Ljava/lang/String;)V
+22|Integer|40578
+23|UTF8|java/lang/Object
+24|Class|23
+25|UTF8|main
+26|UTF8|([Ljava/lang/String;)V

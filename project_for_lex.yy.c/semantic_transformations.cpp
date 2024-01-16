@@ -839,6 +839,12 @@ void Expression_node::setAttributes(LocalVariablesTable* locals, ConstantsTable*
 		}
 	}
 	break;
+	case NUMERIIC_CONSTANT_EXPRESSION_TYPE: {
+		if (num->Int < -32768 || num->Int > 32767) {
+			num->constant = constants->findConstant(Integer, NULL, num->Int);
+		}
+	}
+	break;
 	case SELF_EXPRESSION_TYPE:
 	{
 		LocalVariable = locals->items["self"];

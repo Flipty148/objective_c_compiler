@@ -405,7 +405,10 @@ vector<char> Expression_node::generateCode(bool isInsideClassMethod, ConstantsTa
 	}
 		break;
 	case SUPER_EXPRESSION_TYPE: {
-
+		if (!isInsideClassMethod) {
+			vector<char> bytes = generateCodeForSuper();
+			CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+		}
 	}
 		break;
 	case MESSAGE_EXPRESSION_EXPRESSION_TYPE: {
@@ -891,6 +894,12 @@ vector<char> Expression_node::generateCodeForIdentifier(bool isInsideClassMethod
 }
 
 vector<char> Expression_node::generateCodeForSelf()
+{
+	vector<char> res = CodeGenerationCommands::aload(LocalVariable->Id);
+	return res;
+}
+
+vector<char> Expression_node::generateCodeForSuper()
 {
 	vector<char> res = CodeGenerationCommands::aload(LocalVariable->Id);
 	return res;

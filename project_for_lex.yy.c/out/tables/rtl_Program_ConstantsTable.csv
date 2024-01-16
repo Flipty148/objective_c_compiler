@@ -16,25 +16,16 @@ ID|Type|Value
 15|UTF8|(Lrtl/NSString;)V
 16|NameAndType|14, 15
 17|MethodRef|16, 5
-18|UTF8|global/MyClass1
-19|Class|18
-20|UTF8|newStatic
-21|UTF8|()Lrtl/NSObject;
-22|NameAndType|20, 21
-23|MethodRef|22, 19
-24|UTF8|setADynamic
-25|NameAndType|24, 7
-26|MethodRef|25, 19
-27|UTF8|printCharStatic
-28|UTF8|(C)V
-29|NameAndType|27, 28
-30|MethodRef|29, 5
-31|UTF8|aaaaabbbbbccccc
-32|String|31
-33|UTF8|nshello
-34|String|33
-35|Integer|40578
-36|UTF8|java/lang/Object
-37|Class|36
-38|UTF8|main
-39|UTF8|([Ljava/lang/String;)V
+18|UTF8|printCharStatic
+19|UTF8|(C)V
+20|NameAndType|18, 19
+21|MethodRef|20, 5
+22|UTF8|aaaaabbbbbccccc
+23|String|22
+24|UTF8|nshello
+25|String|24
+26|Integer|40578
+27|UTF8|java/lang/Object
+28|Class|27
+29|UTF8|main
+30|UTF8|([Ljava/lang/String;)V

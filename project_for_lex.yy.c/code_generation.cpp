@@ -426,10 +426,6 @@ vector<char> Expression_node::generateCode(bool isInsideClassMethod, ConstantsTa
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
-	case UAMPERSAND_EXPRESSION_TYPE: {
-
-	}
-		break;
 	case PLUS_EXPRESSION_TYPE: {
 		vector<char> bytes = generateCodeForPlus(isInsideClassMethod, constantsTable);
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());

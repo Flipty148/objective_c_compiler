@@ -340,7 +340,6 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 		break;
 	case UMINUS_EXPRESSION_TYPE:
 	case UPLUS_EXPRESSION_TYPE:
-	case UAMPERSAND_EXPRESSION_TYPE:
 	{
 		if (Right->DataType->isPrimitive())
 			DataType = Right->DataType;
@@ -350,6 +349,12 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 		}
 	}
 		break;
+	case UAMPERSAND_EXPRESSION_TYPE:
+	{
+		string msg = "Error! Unsupported operation unary ampersand.";
+		throw new std::exception(msg.c_str());
+	}
+	break;
 	case PLUS_EXPRESSION_TYPE:
 	case MINUS_EXPRESSION_TYPE:
 	case MUL_EXPRESSION_TYPE:

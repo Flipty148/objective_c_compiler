@@ -29,7 +29,7 @@ int main()
     [InOutFuncs printInt:+13];
     [InOutFuncs printInt: (10 + 20) / 2];
     [InOutFuncs printCharArray:"aaaaabbbbbccccc"];
-    //[InOutFuncs printNSString:@"nshello"];
+    [InOutFuncs printNSString:@"nshello"];
     [InOutFuncs printInt:9 == 9];
     [InOutFuncs printInt:11 != 11];
     [InOutFuncs printInt:113 > 110];
@@ -58,5 +58,4 @@ int main()
     char c;
     c = 98;
     [InOutFuncs printChar:c];
-    return 0;
 }

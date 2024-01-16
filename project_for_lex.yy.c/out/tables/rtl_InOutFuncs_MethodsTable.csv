@@ -2,7 +2,7 @@ Name|Descriptor|IsClassMethod|ReturnType|ParamsTypes|KeywordsTypes|BodyStartStat
 10 (printCharArrayStatic)|11 (([C)V)|true|void||char[1024]|empty|emptyTable
 6 (printCharStatic)|7 ((C)V)|true|void||char|empty|emptyTable
 4 (printIntStatic)|5 ((I)V)|true|void||int|empty|emptyTable
-8 (printNSStringStatic)|9 ((Lrtl/NSString;)V)|true|void||java/lang/String|empty|emptyTable
+8 (printNSStringStatic)|9 ((Lrtl/NSString;)V)|true|void||rtl/NSString|empty|emptyTable
 12 (printObjectStatic)|13 ((Ljava/lang/Object;)V)|true|void||java/lang/Object|empty|emptyTable
 18 (readCharStatic)|19 (()C)|true|char|||empty|emptyTable
 16 (readIntStatic)|17 (()I)|true|int|||empty|emptyTable

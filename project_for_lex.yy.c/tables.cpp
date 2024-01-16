@@ -454,7 +454,7 @@ void ClassesTable::initClassInOutFuncs()
 
 	//Добавление метода printString
 	Type* printStringReturnType = new Type(VOID_TYPE);
-	vector<Type*>* printStringKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "java/lang/String") };
+	vector<Type*>* printStringKeywordsType = new vector<Type*>{ new Type(CLASS_NAME_TYPE, "rtl/NSString") };
 	vector<Type*>* printStringParamsType = new vector<Type*>;
 	InOutFuncs->Methods->addMethod(сonstantTable, "printNSStringStatic", "(Lrtl/NSString;)V", true, NULL, printStringReturnType, printStringParamsType, printStringKeywordsType);
 

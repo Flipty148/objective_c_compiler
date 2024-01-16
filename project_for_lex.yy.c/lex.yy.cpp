@@ -2326,10 +2326,10 @@ if (parseRes == 0) {
 			printf("%s", e->what());
 			isPreviousSuccess = false;
 		}
-		catch (...) {
+		/*catch (...) {
 			printf("Failed semantic analysis\n");
 			isPreviousSuccess = false;
-		}
+		}*/
 		
 	}
 

@@ -377,6 +377,7 @@ class Expression_node
 		FieldsTableElement* Field = NULL; //Ссылка на поле
 		MethodsTableElement* Method = NULL; //Ссылка на метод
 		int Constant = NULL; //Ссылка на константу
+		bool isInitMethod = false;
 
 		Type* DataType = NULL;
 
@@ -488,6 +489,7 @@ class Receiver_node
 		FieldsTableElement* Field = NULL; //Ссылка на поле
 		MethodsTableElement* Method = NULL; //Ссылка на метод
 		int Constant = NULL; //Ссылка на константу
+        bool isInitMethod = false;
 
         static Receiver_node* createReceiverNode(receiver_type type, char *name);
         static Receiver_node* createReceiverNodeFromMessageExpression(Receiver_node *receiver, Message_selector_node *arguments);

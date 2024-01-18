@@ -972,20 +972,29 @@ vector<char> Expression_node::generateCodeForMessageExpression(bool isInsideClas
 		throw std::exception(msg.c_str());
 	}
 	
-	if (Method->IsClassMethod) {
+
+	if (isInitMethod) {
 		CodeGenerationHelpers::appendArrayToByteVector(&res, messageSelector.data(), messageSelector.size());
-		vector<char> invoke = CodeGenerationCommands::invokestatic(Constant);
+		CodeGenerationHelpers::appendArrayToByteVector(&res, receiver.data(), receiver.size());
+		vector<char> invoke = CodeGenerationCommands::invokespecial(Constant);
 		CodeGenerationHelpers::appendArrayToByteVector(&res, invoke.data(), invoke.size());
 	}
 	else {
-		CodeGenerationHelpers::appendArrayToByteVector(&res, messageSelector.data(), messageSelector.size());
-		CodeGenerationHelpers::appendArrayToByteVector(&res, receiver.data(), receiver.size());
-		vector<char> invoke;
-		if (Receiver->type == SUPER_RECEIVER_TYPE)
-			invoke = CodeGenerationCommands::invokespecial(Constant);
-		else
-			invoke = CodeGenerationCommands::invokevirtual(Constant);
-		CodeGenerationHelpers::appendArrayToByteVector(&res, invoke.data(), invoke.size());
+		if (Method->IsClassMethod) {
+			CodeGenerationHelpers::appendArrayToByteVector(&res, messageSelector.data(), messageSelector.size());
+			vector<char> invoke = CodeGenerationCommands::invokestatic(Constant);
+			CodeGenerationHelpers::appendArrayToByteVector(&res, invoke.data(), invoke.size());
+		}
+		else {
+			CodeGenerationHelpers::appendArrayToByteVector(&res, messageSelector.data(), messageSelector.size());
+			CodeGenerationHelpers::appendArrayToByteVector(&res, receiver.data(), receiver.size());
+			vector<char> invoke;
+			if (Receiver->type == SUPER_RECEIVER_TYPE)
+				invoke = CodeGenerationCommands::invokespecial(Constant);
+			else
+				invoke = CodeGenerationCommands::invokevirtual(Constant);
+			CodeGenerationHelpers::appendArrayToByteVector(&res, invoke.data(), invoke.size());
+		}
 	}
 	
 

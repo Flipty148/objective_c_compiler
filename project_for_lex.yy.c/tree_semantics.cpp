@@ -1323,7 +1323,16 @@ void Expression_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariabl
 			string className;
 			element->getMethodForRef(methodNameWithType, &descriptor, &className, Receiver->type == SUPER_RECEIVER_TYPE);
 			// Добавить константу method ref
-			Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
+			if (methodNameWithType != "newStatic" && methodNameWithType != "allocStatic")
+				Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
+			else {
+				if (element->Methods->items.count(methodNameWithType) == 0) {
+					Constant = constantTable->findOrAddMethodRefConstant(className, "<init>", "()V");
+					isInitMethod = true;
+				}
+				else
+					Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
+			}
 		}
 		else {
 			if (isObject) {
@@ -1344,7 +1353,13 @@ void Expression_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariabl
 				string descriptor;
 				element->getMethodForRef(methodNameWithType, &descriptor, &className, Receiver->type == SUPER_RECEIVER_TYPE);
 				// Добавить константу method ref
-				Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
+				if (methodNameWithType != "newStatic" && methodNameWithType != "allocStatic")
+					Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
+				else
+					if (element->Methods->items.count(methodNameWithType) == 0)
+						Constant = constantTable->findOrAddMethodRefConstant(className, "<init>", "()V");
+					else
+						Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
 			}
 			else {
 				string fullClassName = ClassesTable::getFullClassName(receiverName); //Получить полное имя класса //TODO: Возможно, нужно будет убрать, если при преобразовании дерева будут заменяться сразу все имена классов
@@ -1356,7 +1371,15 @@ void Expression_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariabl
 				string className;
 				element->getMethodForRef(methodNameWithType, &descriptor, &className, Receiver->type == SUPER_RECEIVER_TYPE);
 				// Добавить константу method ref
-				Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
+				if (methodNameWithType != "newStatic" && methodNameWithType != "allocStatic")
+					Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
+				else
+					if (element->Methods->items.count(methodNameWithType) == 0) {
+						Constant = constantTable->findOrAddMethodRefConstant(className, "<init>", "()V");
+						isInitMethod = true;
+					}
+					else
+						Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
 			}
 		}
 
@@ -1559,7 +1582,15 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 			string className;
 			element->getMethodForRef(methodNameWithType, &descriptor, &className, Receiver->type == SUPER_RECEIVER_TYPE);
 			// Добавить константу method ref
-			Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
+			if (methodNameWithType != "newStatic" && methodNameWithType != "allocStatic")
+				Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
+			else
+				if (element->Methods->items.count(methodNameWithType) == 0) {
+					Constant = constantTable->findOrAddMethodRefConstant(className, "<init>", "()V");
+					isInitMethod = true;
+				}
+				else
+					Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
 			*returnType = ClassesTable::items->at(className)->Methods->items[methodNameWithType]->ReturnType;
 		}
 		else {
@@ -1581,7 +1612,15 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 				string descriptor;
 				element->getMethodForRef(methodNameWithType, &descriptor, &className, Receiver->type == SUPER_RECEIVER_TYPE);
 				// Добавить константу method ref
-				Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
+				if (methodNameWithType != "newStatic" && methodNameWithType != "allocStatic")
+					Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
+				else
+					if (element->Methods->items.count(methodNameWithType) == 0) {
+						Constant = constantTable->findOrAddMethodRefConstant(className, "<init>", "()V");
+						isInitMethod = true;
+					}
+					else
+						Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
 
 				*returnType = ClassesTable::items->at(className)->Methods->items[methodNameWithType]->ReturnType;
 			}
@@ -1595,7 +1634,13 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 				string className;
 				element->getMethodForRef(methodNameWithType, &descriptor, &className, Receiver->type == SUPER_RECEIVER_TYPE);
 				// Добавить константу method ref
-				Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
+				if (methodNameWithType != "newStatic" && methodNameWithType != "allocStatic")
+					Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
+				else 
+					if (element->Methods->items.count(methodNameWithType) == 0)
+						Constant = constantTable->findOrAddMethodRefConstant(className, "<init>", "()V");
+					else
+						Constant = constantTable->findOrAddMethodRefConstant(className, methodNameWithType, descriptor);
 
 				*returnType = ClassesTable::items->at(className)->Methods->items[methodNameWithType]->ReturnType;
 			}

@@ -411,16 +411,29 @@ vector<char> Statement_node::generateCodeForDeclarationStatement(bool isInsideCl
 				CodeGenerationHelpers::appendArrayToByteVector(&res, arrSize.data(), arrSize.size());
 				vector<char> array = CodeGenerationCommands::newarray(CodeGenerationCommands::T_INT);
 				CodeGenerationHelpers::appendArrayToByteVector(&res, array.data(), array.size());
-				if (initDeclarator->expression != NULL) {
-					vector<char> bytes = initDeclarator->expression->generateCode(isInsideClassMethod, constantsTable);
-					CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
-				}
-				else if (initDeclarator->InitializerList != NULL) {
-					vector<char> bytes = initDeclarator->InitializerList->generateCode(isInsideClassMethod, constantsTable);
-					CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
-				}
 				vector<char> astore = CodeGenerationCommands::astore(local->Id - isInsideClassMethod);
 				CodeGenerationHelpers::appendArrayToByteVector(&res, astore.data(), astore.size());
+				if (initDeclarator->InitializerList != NULL) {
+					vector<char> aload = CodeGenerationCommands::aload(local->Id - isInsideClassMethod);
+					CodeGenerationHelpers::appendArrayToByteVector(&res, aload.data(), aload.size());
+
+					Expression_node* cur = initDeclarator->InitializerList->First;
+					int i = 0;
+					while (cur != NULL) {
+						vector<char> dup = CodeGenerationCommands::dup(); //Дублирование ссылки на массив
+						CodeGenerationHelpers::appendArrayToByteVector(&res, dup.data(), dup.size());
+						vector<char> index = CodeGenerationCommands::iconstBipushSipush(i); //Индекс
+						CodeGenerationHelpers::appendArrayToByteVector(&res, index.data(), index.size());
+						vector<char> bytes = cur->generateCode(isInsideClassMethod, constantsTable); //Значение
+						CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+						vector<char> iastore = CodeGenerationCommands::iastore(); //Команда
+						CodeGenerationHelpers::appendArrayToByteVector(&res, iastore.data(), iastore.size());
+
+						i++;
+						cur = cur->Next;
+					}
+				}
+				
 			}
 		}
 		else if (dataType->DataType == CHAR_TYPE) { //Тип char
@@ -442,16 +455,45 @@ vector<char> Statement_node::generateCodeForDeclarationStatement(bool isInsideCl
 				CodeGenerationHelpers::appendArrayToByteVector(&res, arrSize.data(), arrSize.size());
 				vector<char> array = CodeGenerationCommands::newarray(CodeGenerationCommands::T_CHAR);
 				CodeGenerationHelpers::appendArrayToByteVector(&res, array.data(), array.size());
-				if (initDeclarator->expression != NULL) {
-					vector<char> bytes = initDeclarator->expression->generateCode(isInsideClassMethod, constantsTable);
-					CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
-				}
-				else if (initDeclarator->InitializerList != NULL) {
-					vector<char> bytes = initDeclarator->InitializerList->generateCode(isInsideClassMethod, constantsTable);
-					CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
-				}
 				vector<char> astore = CodeGenerationCommands::astore(local->Id - isInsideClassMethod);
 				CodeGenerationHelpers::appendArrayToByteVector(&res, astore.data(), astore.size());
+				if (initDeclarator->expression != NULL) {
+					vector<char> aload = CodeGenerationCommands::aload(local->Id - isInsideClassMethod);
+					CodeGenerationHelpers::appendArrayToByteVector(&res, aload.data(), aload.size());
+
+					Literal_node *literal = initDeclarator->expression->literal;
+					for (int i = 0; i < strlen(literal->value); i++) {
+						vector<char> dup = CodeGenerationCommands::dup(); //Дублирование ссылки на массив
+						CodeGenerationHelpers::appendArrayToByteVector(&res, dup.data(), dup.size());
+						vector<char> index = CodeGenerationCommands::iconstBipushSipush(i); //Индекс
+						CodeGenerationHelpers::appendArrayToByteVector(&res, index.data(), index.size());
+						vector<char> charValue = CodeGenerationCommands::iconstBipushSipush(literal->value[i]); //Значение
+						CodeGenerationHelpers::appendArrayToByteVector(&res, charValue.data(), charValue.size());
+						vector<char> aastore = CodeGenerationCommands::castore(); //Команда
+						CodeGenerationHelpers::appendArrayToByteVector(&res, aastore.data(), aastore.size());
+					}
+				}
+				else if (initDeclarator->InitializerList != NULL) {
+					vector<char> aload = CodeGenerationCommands::aload(local->Id - isInsideClassMethod);
+					CodeGenerationHelpers::appendArrayToByteVector(&res, aload.data(), aload.size());
+					
+					Expression_node* cur = initDeclarator->InitializerList->First;
+					int i = 0;
+					while (cur != NULL) {
+						vector<char> dup = CodeGenerationCommands::dup(); //Дублирование ссылки на массив
+						CodeGenerationHelpers::appendArrayToByteVector(&res, dup.data(), dup.size());
+						vector<char> index = CodeGenerationCommands::iconstBipushSipush(i); //Индекс
+						CodeGenerationHelpers::appendArrayToByteVector(&res, index.data(), index.size());
+						vector<char> bytes = cur->generateCode(isInsideClassMethod, constantsTable); //Значение
+						CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+						vector<char> castore = CodeGenerationCommands::castore(); //Команда
+						CodeGenerationHelpers::appendArrayToByteVector(&res, castore.data(), castore.size());
+
+						i++;
+						cur = cur->Next;
+					}
+					
+				}
 			}
 		}
 		else if (dataType->DataType == CLASS_NAME_TYPE || dataType->DataType == ID_TYPE) { //Тип класса
@@ -484,19 +526,30 @@ vector<char> Statement_node::generateCodeForDeclarationStatement(bool isInsideCl
 				CodeGenerationHelpers::appendArrayToByteVector(&res, arrSize.data(), arrSize.size());
 				vector<char> array = CodeGenerationCommands::anewarray(constClass);
 				CodeGenerationHelpers::appendArrayToByteVector(&res, array.data(), array.size());
-
-				if (initDeclarator->expression != NULL) {
-					vector<char> bytes = initDeclarator->expression->generateCode(isInsideClassMethod, constantsTable);
-					CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
-				}
-				else if (initDeclarator->InitializerList != NULL) {
-					vector<char> bytes = initDeclarator->InitializerList->generateCode(isInsideClassMethod, constantsTable);
-					CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
-				}
-
-
 				vector<char> astore = CodeGenerationCommands::astore(local->Id - isInsideClassMethod);
 				CodeGenerationHelpers::appendArrayToByteVector(&res, astore.data(), astore.size());
+
+				if (initDeclarator->InitializerList != NULL) {
+					vector<char> aload = CodeGenerationCommands::aload(local->Id - isInsideClassMethod);
+					CodeGenerationHelpers::appendArrayToByteVector(&res, aload.data(), aload.size());
+					
+					Expression_node* cur = initDeclarator->InitializerList->First;
+					int i = 0;
+					while (cur != NULL) {
+						vector<char> dup = CodeGenerationCommands::dup(); //Дублирование ссылки на массив
+						CodeGenerationHelpers::appendArrayToByteVector(&res, dup.data(), dup.size());
+						vector<char> index = CodeGenerationCommands::iconstBipushSipush(i); //Индекс
+						CodeGenerationHelpers::appendArrayToByteVector(&res, index.data(), index.size());
+						vector<char> bytes = cur->generateCode(isInsideClassMethod, constantsTable); //Значение
+						CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+						vector<char> aastore = CodeGenerationCommands::aastore(); //Команда
+						CodeGenerationHelpers::appendArrayToByteVector(&res, aastore.data(), aastore.size());
+
+						i++;
+						cur = cur->Next;
+					}
+
+				}
 				
 			}
 		}

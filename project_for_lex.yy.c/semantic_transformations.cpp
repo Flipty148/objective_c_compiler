@@ -101,6 +101,14 @@ void Init_declarator_node::semanticTransform(LocalVariablesTable* locals, Type *
 		expression->assignmentTransform();
 		expression->setDataTypesAndCasts(locals);
 		expression->setAttributes(locals, constants);
+
+		if (type == ARRAY_WITH_INITIALIZING_DECLARATOR_TYPE) {
+			if (dataType->DataType != CHAR_TYPE || expression->type != LITERAL_EXPRESSION_TYPE) {
+				string msg = string("Type '") + expression->DataType->toString() + "' can't assignment to '" + dataType->toString() + "'";
+				throw new std::exception(msg.c_str());
+			}
+		}
+
 		if (!expression->DataType->equal(dataType) && !(type == ARRAY_WITH_INITIALIZING_DECLARATOR_TYPE && expression->DataType->DataType == dataType->DataType && expression->DataType->ClassName == dataType->ClassName)) {
 			if (expression->DataType->isCastableTo(dataType)) {
 				Expression_node* cast = new Expression_node();

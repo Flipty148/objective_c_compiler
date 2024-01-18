@@ -40,17 +40,17 @@ int main()
     // [InOutFuncs printInt:243 < 15];
     // [InOutFuncs printInt:513 <= 513];
     // [InOutFuncs printInt:5 >= 5];
-    MyClass1 *obj= [MyClass1 new];
-    // [obj print];
-    // // obj = [MyClass1 new];
-    // [obj setA:10];
-    // [InOutFuncs printInt:40578];
-    // int a;
-    // a = 5;
-    // [InOutFuncs printInt:a];
-    // [InOutFuncs printInt: obj->a];
-    // obj->a = 15;
-    [InOutFuncs printInt:obj->a];
+    // MyClass1 *obj= [MyClass1 new];
+    // // [obj print];
+    // // // obj = [MyClass1 new];
+    // // [obj setA:10];
+    // // [InOutFuncs printInt:40578];
+    // // int a;
+    // // a = 5;
+    // // [InOutFuncs printInt:a];
+    // // [InOutFuncs printInt: obj->a];
+    // // obj->a = 15;
+    // [InOutFuncs printInt:obj->a];
 
     // int arr[10];
     // arr[0] = 1;
@@ -69,4 +69,7 @@ int main()
 
     // char arrChar[10];
     // [InOutFuncs printInt:arrChar[0]];
+
+    char a[10] = {'a', 'b', 'c'};
+    [InOutFuncs printCharArray:a];
 }

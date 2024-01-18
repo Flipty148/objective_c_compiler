@@ -12,21 +12,14 @@ ID|Type|Value
 11|UTF8|()V
 12|NameAndType|10, 11
 13|MethodRef|12, 5
-14|UTF8|printDynamic
-15|NameAndType|14, 11
-16|MethodRef|15, 5
-17|UTF8|setADynamic
-18|UTF8|(I)V
-19|NameAndType|17, 18
-20|MethodRef|19, 5
-21|UTF8|rtl/InOutFuncs
-22|Class|21
-23|UTF8|printIntStatic
-24|NameAndType|23, 18
-25|MethodRef|24, 22
-26|Integer|40578
-27|UTF8|main
-28|UTF8|([Ljava/lang/String;)V
-29|UTF8|java/lang/Object
-30|Class|29
-31|MethodRef|12, 30
+14|UTF8|rtl/InOutFuncs
+15|Class|14
+16|UTF8|printIntStatic
+17|UTF8|(I)V
+18|NameAndType|16, 17
+19|MethodRef|18, 15
+20|UTF8|main
+21|UTF8|([Ljava/lang/String;)V
+22|UTF8|java/lang/Object
+23|Class|22
+24|MethodRef|12, 23

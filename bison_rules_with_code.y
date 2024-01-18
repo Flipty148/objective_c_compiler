@@ -207,7 +207,7 @@ init_declarator: IDENTIFIER														{$$ = Init_declarator_node::createInitD
 			   ;
 
 declarator_with_asterisk: '*' IDENTIFIER					{$$ = Declarator_node::createDeclaratorNode($2, NULL);}
-						| IDENTIFIER '[' expression ']'		{$$ = Declarator_node::createDeclaratorNode($1, $3);}
+						| '*' IDENTIFIER '[' expression ']'		{$$ = Declarator_node::createDeclaratorNode($2, $4);}
 						;
 
 declarator_with_asterisk_list: declarator_with_asterisk										{$$ = Declarator_list_node::createDeclaratorListNode($1);}
@@ -224,9 +224,9 @@ declarator_list: declarator							{$$ = Declarator_list_node::createDeclaratorLi
 
 init_declarator_with_asterisk: '*' IDENTIFIER													{$$ = Init_declarator_node::createInitDeclaratorNode(SIMPLE_DECLARATOR_TYPE, $2, NULL);}
 			   				 | '*' IDENTIFIER '=' expression									{$$ = Init_declarator_node::createInitDeclaratorNode(DECLARATOR_WITH_INITIALIZING_TYPE, $2, $4);}
-							 | IDENTIFIER '[' expression_e ']'									{$$ = Init_declarator_node::createInitDeclaratorNodeFromArray(ARRAY_DECLARATOR_TYPE, $1, $3, NULL, NULL);}
-			   				 | IDENTIFIER '[' expression_e ']' '=' '{' expression_list_e '}' 	{$$ = Init_declarator_node::createInitDeclaratorNodeFromArray(ARRAY_WITH_INITIALIZING_DECLARATOR_TYPE, $1, $3, NULL, $7);}
-							 | IDENTIFIER '[' expression_e ']' '=' expression					{$$ = Init_declarator_node::createInitDeclaratorNodeFromArray(ARRAY_WITH_INITIALIZING_DECLARATOR_TYPE, $1, $3, $6, NULL);}
+							 | '*' IDENTIFIER '[' expression_e ']'									{$$ = Init_declarator_node::createInitDeclaratorNodeFromArray(ARRAY_DECLARATOR_TYPE, $2, $4, NULL, NULL);}
+			   				 | '*' IDENTIFIER '[' expression_e ']' '=' '{' expression_list_e '}' 	{$$ = Init_declarator_node::createInitDeclaratorNodeFromArray(ARRAY_WITH_INITIALIZING_DECLARATOR_TYPE, $2, $4, NULL, $8);}
+							 | '*' IDENTIFIER '[' expression_e ']' '=' expression					{$$ = Init_declarator_node::createInitDeclaratorNodeFromArray(ARRAY_WITH_INITIALIZING_DECLARATOR_TYPE, $2, $4, $7, NULL);}
 							 ;
 
 init_declarator_with_asterisk_list: init_declarator_with_asterisk											{$$ = Init_declarator_list_node::createInitDeclaratorListNode($1);}								

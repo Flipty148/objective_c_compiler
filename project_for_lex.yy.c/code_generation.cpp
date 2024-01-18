@@ -454,28 +454,52 @@ vector<char> Statement_node::generateCodeForDeclarationStatement(bool isInsideCl
 				CodeGenerationHelpers::appendArrayToByteVector(&res, astore.data(), astore.size());
 			}
 		}
-		//else if (dataType->DataType == CLASS_NAME_TYPE || dataType->DataType == ID_TYPE) { //Тип класса
-		//	if (dataType->ArrSize == NULL) { //Не является массивом
-		//					
-		//		// Поиск константы с создаваемым классом
-		//		int constUtf = constantsTable->findConstant(UTF8, &dataType->ClassName);
-		//		int constClass = constantsTable->findConstant(Class, NULL, NULL, constUtf); 
+		else if (dataType->DataType == CLASS_NAME_TYPE || dataType->DataType == ID_TYPE) { //Тип класса
+			if (dataType->ArrSize == NULL) { //Не является массивом
+							
+				// Поиск константы с создаваемым классом
+				int constUtf = constantsTable->findConstant(UTF8, &dataType->ClassName);
+				int constClass = constantsTable->findConstant(Class, NULL, NULL, constUtf); 
 
-		//		vector<char> bytes = CodeGenerationCommands::new_(constClass); // Создание объекта
-		//		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+				vector<char> bytes = CodeGenerationCommands::new_(constClass); // Создание объекта
+				CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 
-		//		if (initDeclarator->expression != NULL) { //Указано начальное значение
-		//			/*vector<char> dup = CodeGenerationCommands::dup();
-		//			CodeGenerationHelpers::appendArrayToByteVector(&res, dup.data(), dup.size());*/
+				if (initDeclarator->expression != NULL) { //Указано начальное значение
+					vector<char> dup = CodeGenerationCommands::dup();
+					CodeGenerationHelpers::appendArrayToByteVector(&res, dup.data(), dup.size());
 
-		//			vector<char> expr = initDeclarator->expression->generateCode(isInsideClassMethod, constantsTable);
-		//			CodeGenerationHelpers::appendArrayToByteVector(&res, expr.data(), expr.size()); //Загрузить expression (значение)
-		//		}
+					vector<char> expr = initDeclarator->expression->generateCode(isInsideClassMethod, constantsTable);
+					CodeGenerationHelpers::appendArrayToByteVector(&res, expr.data(), expr.size()); //Загрузить expression (значение)
+				}
 
-		//		vector<char> astore = CodeGenerationCommands::astore(local->Id - isInsideClassMethod);
-		//		CodeGenerationHelpers::appendArrayToByteVector(&res, astore.data(), astore.size());
-		//	}
-		//}
+				vector<char> astore = CodeGenerationCommands::astore(local->Id - isInsideClassMethod);
+				CodeGenerationHelpers::appendArrayToByteVector(&res, astore.data(), astore.size());
+			}
+			else { //Является массивом
+				// Поиск константы с создаваемым классом
+				int constUtf = constantsTable->findConstant(UTF8, &dataType->ClassName);
+				int constClass = constantsTable->findConstant(Class, NULL, NULL, constUtf);
+
+				vector<char> arrSize = dataType->ArrSize->generateCode(isInsideClassMethod, constantsTable);
+				CodeGenerationHelpers::appendArrayToByteVector(&res, arrSize.data(), arrSize.size());
+				vector<char> array = CodeGenerationCommands::anewarray(constClass);
+				CodeGenerationHelpers::appendArrayToByteVector(&res, array.data(), array.size());
+
+				if (initDeclarator->expression != NULL) {
+					vector<char> bytes = initDeclarator->expression->generateCode(isInsideClassMethod, constantsTable);
+					CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+				}
+				else if (initDeclarator->InitializerList != NULL) {
+					vector<char> bytes = initDeclarator->InitializerList->generateCode(isInsideClassMethod, constantsTable);
+					CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+				}
+
+
+				vector<char> astore = CodeGenerationCommands::astore(local->Id - isInsideClassMethod);
+				CodeGenerationHelpers::appendArrayToByteVector(&res, astore.data(), astore.size());
+				
+			}
+		}
 
 		initDeclarator = initDeclarator->Next;
 	}

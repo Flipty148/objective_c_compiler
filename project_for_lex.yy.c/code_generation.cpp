@@ -998,8 +998,8 @@ vector<char> Expression_node::generateCodeForMessageExpression(bool isInsideClas
 	
 
 	if (isInitMethod) {
-		CodeGenerationHelpers::appendArrayToByteVector(&res, messageSelector.data(), messageSelector.size());
 		CodeGenerationHelpers::appendArrayToByteVector(&res, receiver.data(), receiver.size());
+		CodeGenerationHelpers::appendArrayToByteVector(&res, messageSelector.data(), messageSelector.size());
 		vector<char> invoke = CodeGenerationCommands::invokespecial(Constant);
 		CodeGenerationHelpers::appendArrayToByteVector(&res, invoke.data(), invoke.size());
 	}
@@ -1010,8 +1010,8 @@ vector<char> Expression_node::generateCodeForMessageExpression(bool isInsideClas
 			CodeGenerationHelpers::appendArrayToByteVector(&res, invoke.data(), invoke.size());
 		}
 		else {
-			CodeGenerationHelpers::appendArrayToByteVector(&res, messageSelector.data(), messageSelector.size());
 			CodeGenerationHelpers::appendArrayToByteVector(&res, receiver.data(), receiver.size());
+			CodeGenerationHelpers::appendArrayToByteVector(&res, messageSelector.data(), messageSelector.size());
 			vector<char> invoke;
 			if (Receiver->type == SUPER_RECEIVER_TYPE)
 				invoke = CodeGenerationCommands::invokespecial(Constant);
@@ -1071,11 +1071,10 @@ vector<char> Expression_node::generateCodeForAssignment(bool isInsideClassMethod
 {
 	vector<char> res;
 
-	vector<char>rightOperand = Right->generateCode(isInsideClassMethod, constantsTable); //Левая часть выражения
-	CodeGenerationHelpers::appendArrayToByteVector(&res, rightOperand.data(), rightOperand.size());
-
 	if (Left->DataType->ClassName != "") { //Объект
 		if (Left->LocalVariable != NULL) { //Запись в локальную переменную
+			vector<char>rightOperand = Right->generateCode(isInsideClassMethod, constantsTable); //Левая часть выражения
+			CodeGenerationHelpers::appendArrayToByteVector(&res, rightOperand.data(), rightOperand.size());
 			vector<char> bytes = CodeGenerationCommands::astore(Left->LocalVariable->Id - isInsideClassMethod); //Команда
 			CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 		}
@@ -1091,6 +1090,8 @@ vector<char> Expression_node::generateCodeForAssignment(bool isInsideClassMethod
 				string msg = "Constant " + to_string(Left->Constant) + " is not fieldRef";
 				throw new std::exception(msg.c_str());
 			}
+			vector<char>rightOperand = Right->generateCode(isInsideClassMethod, constantsTable); //Левая часть выражения
+			CodeGenerationHelpers::appendArrayToByteVector(&res, rightOperand.data(), rightOperand.size());
 
 			vector<char> field = CodeGenerationCommands::putfield(Left->Constant); //Поле
 			CodeGenerationHelpers::appendArrayToByteVector(&res, field.data(), field.size());
@@ -1102,6 +1103,8 @@ vector<char> Expression_node::generateCodeForAssignment(bool isInsideClassMethod
 	}
 	else { //Целое число
 		if (Left->LocalVariable != NULL) {//Запись в локальную переменную
+			vector<char>rightOperand = Right->generateCode(isInsideClassMethod, constantsTable); //Левая часть выражения
+			CodeGenerationHelpers::appendArrayToByteVector(&res, rightOperand.data(), rightOperand.size());
 			vector<char> bytes = CodeGenerationCommands::istore(Left->LocalVariable->Id - isInsideClassMethod); //Команда
 			CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 		}
@@ -1117,6 +1120,8 @@ vector<char> Expression_node::generateCodeForAssignment(bool isInsideClassMethod
 				string msg = "Constant " + to_string(Left->Constant) + " is not fieldRef";
 				throw new std::exception(msg.c_str());
 			}
+			vector<char>rightOperand = Right->generateCode(isInsideClassMethod, constantsTable); //Левая часть выражения
+			CodeGenerationHelpers::appendArrayToByteVector(&res, rightOperand.data(), rightOperand.size());
 
 			vector<char> field = CodeGenerationCommands::putfield(Left->Constant); //Поле
 			CodeGenerationHelpers::appendArrayToByteVector(&res, field.data(), field.size());
@@ -1225,16 +1230,16 @@ vector<char> Expression_node::generateCodeForMemberAccessAssignment(bool isInsid
 		vector<char> value = Right->generateCode(isInsideClassMethod, constantsTable); //Значение
 		CodeGenerationHelpers::appendArrayToByteVector(&res, value.data(), value.size());
 
-		if (constantsTable->items.count(Left->Constant) == 0) {
-			string msg = "Class doesn't have constant " + to_string(Left->Constant);
+		if (constantsTable->items.count(Constant) == 0) {
+			string msg = "Class doesn't have constant " + to_string(Constant);
 			throw new std::exception(msg.c_str());
 		}
-		else if (constantsTable->items[Left->Constant]->Type != FieldRef) {
-			string msg = "Constant " + to_string(Left->Constant) + " is not fieldRef";
+		else if (constantsTable->items[Constant]->Type != FieldRef) {
+			string msg = "Constant " + to_string(Constant) + " is not fieldRef";
 			throw new std::exception(msg.c_str());
 		}
 
-		vector<char> bytes = CodeGenerationCommands::putfield(Left->Constant); //Команда
+		vector<char> bytes = CodeGenerationCommands::putfield(Constant); //Команда
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 

@@ -22,51 +22,51 @@
 
 int main()
 {
-    [InOutFuncs printInt:10];
-    [InOutFuncs printInt: 10 + 20];
-    [InOutFuncs printInt:10 - 20];
-    [InOutFuncs printInt:20 - 10];
-    [InOutFuncs printInt:10 * 30];
-    [InOutFuncs printInt:40 / 10];
-    [InOutFuncs printInt:40 / 3];
-    [InOutFuncs printInt:-15];
-    [InOutFuncs printInt:+13];
-    [InOutFuncs printInt: (10 + 20) / 2];
-    [InOutFuncs printCharArray:"aaaaabbbbbccccc"];
-    [InOutFuncs printNSString:@"nshello"];
-    [InOutFuncs printInt:9 == 9];
-    [InOutFuncs printInt:11 != 11];
-    [InOutFuncs printInt:113 > 110];
-    [InOutFuncs printInt:243 < 15];
-    [InOutFuncs printInt:513 <= 513];
-    [InOutFuncs printInt:5 >= 5];
+    // [InOutFuncs printInt:10];
+    // [InOutFuncs printInt: 10 + 20];
+    // [InOutFuncs printInt:10 - 20];
+    // [InOutFuncs printInt:20 - 10];
+    // [InOutFuncs printInt:10 * 30];
+    // [InOutFuncs printInt:40 / 10];
+    // [InOutFuncs printInt:40 / 3];
+    // [InOutFuncs printInt:-15];
+    // [InOutFuncs printInt:+13];
+    // [InOutFuncs printInt: (10 + 20) / 2];
+    // [InOutFuncs printCharArray:"aaaaabbbbbccccc"];
+    // [InOutFuncs printNSString:@"nshello"];
+    // [InOutFuncs printInt:9 == 9];
+    // [InOutFuncs printInt:11 != 11];
+    // [InOutFuncs printInt:113 > 110];
+    // [InOutFuncs printInt:243 < 15];
+    // [InOutFuncs printInt:513 <= 513];
+    // [InOutFuncs printInt:5 >= 5];
     MyClass1 *obj= [MyClass1 new];
     [obj print];
     // obj = [MyClass1 new];
-    // [obj setA:10];
+    [obj setA:10];
     [InOutFuncs printInt:40578];
     int a;
     a = 5;
-    // [InOutFuncs printInt:a];
-    // [InOutFuncs printInt: obj->a];
-    // obj->a = 15;
-    // [InOutFuncs printInt:obj->a];
+    [InOutFuncs printInt:a];
+    [InOutFuncs printInt: obj->a];
+    obj->a = 15;
+    [InOutFuncs printInt:obj->a];
 
-    int arr[10];
+    // int arr[10];
     // arr[0] = 1;
-    [InOutFuncs printInt:arr[0]];
+    // [InOutFuncs printInt:arr[0]];
 
-    int b;
-    b = 'b';
-    [InOutFuncs printInt:b];
+    // int b;
+    // b = 'b';
+    // [InOutFuncs printInt:b];
 
-    char c;
-    c = 98;
-    [InOutFuncs printChar:c];
+    // char c;
+    // c = 98;
+    // [InOutFuncs printChar:c];
 
-    int d;
-    [InOutFuncs printInt:d];
+    // int d;
+    // [InOutFuncs printInt:d];
 
-    char arrChar[10];
-    [InOutFuncs printInt:arrChar[0]];
+    // char arrChar[10];
+    // [InOutFuncs printInt:arrChar[0]];
 }

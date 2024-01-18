@@ -179,6 +179,8 @@ void Expression_node::memberAccessAssignmentTransform()
 		Expression_node* tmp = this->Left;
 		this->Left = tmp->Left; //Левая часть от expr dot
 		this->name = tmp->name; //Правая часть от expr dot (identifier)
+		this->Constant = tmp->Constant;
+		this->Field = tmp->Field;
 		delete tmp;
 	}
 

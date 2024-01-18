@@ -4,4 +4,4 @@ Name|SuperclassName|IsImplementation|ThisClass|Superclass|FieldsTableName|Method
 2(rtl/NSArray)|3(rtl/NSObject)|true|4|5|emptyTable|rtl/NSArray_MethodsTable.csv|emptyTable|rtl/NSArray_ConstantsTable.csv
 2(rtl/NSObject)|21(java/lang/Object)|true|3|22|emptyTable|rtl/NSObject_MethodsTable.csv|emptyTable|rtl/NSObject_ConstantsTable.csv
 2(rtl/NSString)|3(rtl/NSObject)|true|4|5|emptyTable|rtl/NSString_MethodsTable.csv|emptyTable|rtl/NSString_ConstantsTable.csv
-2(rtl/Program)|38(java/lang/Object)|true|3|39|emptyTable|rtl/Program_MethodsTable.csv|emptyTable|rtl/Program_ConstantsTable.csv
+2(rtl/Program)|29(java/lang/Object)|true|3|30|emptyTable|rtl/Program_MethodsTable.csv|emptyTable|rtl/Program_ConstantsTable.csv

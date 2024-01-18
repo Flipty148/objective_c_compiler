@@ -1189,7 +1189,7 @@ void Expression_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariable
 			string fieldClassName;  // Имя класса поля
 			classElem->getFieldForRef(fieldName, &descriptor, &fieldClassName); // получение данных для field ref
 			//Формирование fieldRef
-			Constant = constantTable->findOrAddFieldRefConstant(fieldClassName, fieldName, descriptor);
+ 			Constant = constantTable->findOrAddFieldRefConstant(fieldClassName, fieldName, descriptor);
 		}
 		
 	}

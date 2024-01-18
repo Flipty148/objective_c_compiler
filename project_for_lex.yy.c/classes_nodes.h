@@ -159,10 +159,11 @@ class Statement_node
 
         void semanticTransform(LocalVariablesTable* locals, ConstantsTable* constants);
 
-		vector<char> generateCode(bool isInsideClassMethod, ConstantsTable* constantsTable); //Функция генерации кода
+		vector<char> generateCode(bool isInsideClassMethod, ConstantsTable* constantsTable, LocalVariablesTable* locals); //Функция генерации кода
 private:
 	vector<char> generateCodeForSimpleStatement(bool isInsideClassMethod, ConstantsTable* constantsTable); //Функция генерации кода для SimpleStatement
 	vector<char> generateCodeForReturnStatement(bool isInsideClassMethod, ConstantsTable* constantsTable); //Функция генерации кода для ReturnStatement
+	vector<char> generateCodeForDeclarationStatement(bool isInsideClassMethod, ConstantsTable* constantsTable, LocalVariablesTable* locals); //Функция генерации кода для DeclarationStatement
 };
 
 // ---------- declaration ----------

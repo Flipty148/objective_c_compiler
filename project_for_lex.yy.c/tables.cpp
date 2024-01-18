@@ -307,7 +307,10 @@ bool ClassesTableElement::isHaveOneOfSuperclass(string name)
 	else {
 		if (getSuperClassName() == name) //Имя родительского класса совпадает с искомым
 			return true;
-		else return ClassesTable::items->at(getSuperClassName())->isHaveOneOfSuperclass(name); //Проверить является искомый класс родительским для родительского
+		else if (getSuperClassName() != "java/lang/Object")
+			return ClassesTable::items->at(getSuperClassName())->isHaveOneOfSuperclass(name); //Проверить является искомый класс родительским для родительского
+		else
+			return false;
 	}
 }
 

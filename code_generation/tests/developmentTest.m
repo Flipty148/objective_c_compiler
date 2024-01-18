@@ -4,14 +4,18 @@
     int a;
 }
 
- + (id) new
- {
-    return [super new];
- }
+//  + (id) new
+//  {
+//     return [super new];
+//  }
 
 - (void) setA: (int) value
 {
     a = value;
+}
+
+- (void) print{
+    [InOutFuncs printCharArray:"print"];
 }
 
 @end
@@ -36,20 +40,21 @@ int main()
     [InOutFuncs printInt:243 < 15];
     [InOutFuncs printInt:513 <= 513];
     [InOutFuncs printInt:5 >= 5];
-    MyClass1 *obj;
+    // MyClass1 *obj = [MyClass1 new];
+    // [obj print];
     // obj = [MyClass1 new];
     // [obj setA:10];
     [InOutFuncs printInt:40578];
     int a;
     a = 5;
-    [InOutFuncs printInt:a];
+    // [InOutFuncs printInt:a];
     // [InOutFuncs printInt: obj->a];
     // obj->a = 15;
     // [InOutFuncs printInt:obj->a];
 
-    // int b[10];
-    // b[0] = 1;
-    // [InOutFuncs printInt:b[0]];
+    int arr[10];
+    // arr[0] = 1;
+    [InOutFuncs printInt:arr[0]];
 
     int b;
     b = 'b';
@@ -58,4 +63,10 @@ int main()
     char c;
     c = 98;
     [InOutFuncs printChar:c];
+
+    int d;
+    [InOutFuncs printInt:d];
+
+    char arrChar[10];
+    [InOutFuncs printInt:arrChar[0]];
 }

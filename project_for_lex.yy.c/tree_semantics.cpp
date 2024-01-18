@@ -330,12 +330,8 @@ void Function_and_class_list_node::fillTables()
 
 
 
-
-	ClassesTable::semanticTransform(); //Преобразование дерева в классах
-	FunctionsTable::semanticTransform(); //Преобразование дерева в функциях
-
-
 	FunctionsTable::convertToClassProgramMethods(); // Преобразовать функции в статические методы класса Program
+	ClassesTable::semanticTransform(); //Преобразование дерева в классах
 }
 
 //---------- Program_node ----------

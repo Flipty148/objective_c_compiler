@@ -1,3 +1,3 @@
 Name|Descriptor|IsClassMethod|ReturnType|ParamsTypes|KeywordsTypes|BodyStartStatementId|LocalVariablesTableName
-8 (newStatic)|9 (()Lrtl/NSObject;)|true|id|||13|global_MyClass1_MethodsTable_newStatic_LocalVariablesTable.csv
-10 (setADynamic)|11 ((I)V)|false|void||int|23|global_MyClass1_MethodsTable_setADynamic_LocalVariablesTable.csv
+8 (printDynamic)|9 (()V)|false|void|||25|global_MyClass1_MethodsTable_printDynamic_LocalVariablesTable.csv
+10 (setADynamic)|11 ((I)V)|false|void||int|14|global_MyClass1_MethodsTable_setADynamic_LocalVariablesTable.csv

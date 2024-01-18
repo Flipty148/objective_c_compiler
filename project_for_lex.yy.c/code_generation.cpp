@@ -67,7 +67,7 @@ void ClassesTableElement::generateClassFile(string filepath)
 	int methodCount = Methods->items.size(); //Количество методов
 	vector<char> methodCountBytes = CodeGenerationHelpers::intToByteArray(methodCount, 2); //Конвертация количества методов в байты
 	CodeGenerationHelpers::appendArrayToByteVector(&data, methodCountBytes.data(), methodCountBytes.size()); //Добавление количества методов в байты
-	vector<char> methodTableBytes = Methods->generateBytes(ConstantTable); //Генерация таблицы методов
+	vector<char> methodTableBytes = Methods->generateBytes(ConstantTable, constructorNumber); //Генерация таблицы методов
 	CodeGenerationHelpers::appendArrayToByteVector(&data, methodTableBytes.data(), methodTableBytes.size()); //Добавление таблицы методов
 	
 	//Атрибуты класса
@@ -192,17 +192,17 @@ vector<char> FieldsTableElement::generateBytes()
 }
 
 // -------------------- Таблица методов --------------------
-vector<char> MethodsTable::generateBytes(ConstantsTable* constantsTable)
+vector<char> MethodsTable::generateBytes(ConstantsTable* constantsTable, int parrentInitNumber)
 {
 	vector<char> res;
 	for (auto iter = items.cbegin(); iter != items.cend(); ++iter) {
-		vector<char> bytes = iter->second->generateBytes(constantsTable);
+		vector<char> bytes = iter->second->generateBytes(constantsTable, parrentInitNumber);
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 	return res;
 }
 
-vector<char> MethodsTableElement::generateBytes(ConstantsTable* constantsTable)
+vector<char> MethodsTableElement::generateBytes(ConstantsTable* constantsTable, int parrentInitNumber)
 {
 	vector<char> res;
 
@@ -226,8 +226,15 @@ vector<char> MethodsTableElement::generateBytes(ConstantsTable* constantsTable)
 	//Добавление атрибутов TODO:Code
 	vector<char> codeAttributeSizeBytes = CodeGenerationHelpers::intToByteArray(1, 2);
 	CodeGenerationHelpers::appendArrayToByteVector(&res, codeAttributeSizeBytes.data(), codeAttributeSizeBytes.size());
-	vector<char> codeAttributeBytes = generateCodeAttribute(constantsTable);
-	CodeGenerationHelpers::appendArrayToByteVector(&res, codeAttributeBytes.data(), codeAttributeBytes.size());
+
+	if (NameStr != "<init>") {
+		vector<char> codeAttributeBytes = generateCodeAttribute(constantsTable);
+		CodeGenerationHelpers::appendArrayToByteVector(&res, codeAttributeBytes.data(), codeAttributeBytes.size());
+	}
+	else {
+		vector<char> codeAttributeBytes = CodeGenerationHelpers::defaultConstructorCodeAttribute(parrentInitNumber);
+		CodeGenerationHelpers::appendArrayToByteVector(&res, codeAttributeBytes.data(), codeAttributeBytes.size());
+	}
 
 	return res;
 }

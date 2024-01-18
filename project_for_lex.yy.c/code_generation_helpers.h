@@ -14,6 +14,7 @@ public:
 
 	static void appendArrayToByteVector(vector<char>* data, char array[], int arraySize); // Добавление массива байт в вектор
 	static vector<char> intToByteArray(int num, int arraySize); // Генерация вектора байт
+	static vector<char> defaultConstructorCodeAttribute(int parrentInitConstant); //Генерация атрибута Code для конструктора по умолчанию
 
 };
 

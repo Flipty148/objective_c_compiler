@@ -20,3 +20,6 @@ ID|Type|Value
 19|MethodRef|18, 15
 20|UTF8|print
 21|String|20
+22|UTF8|<init>
+23|NameAndType|22, 9
+24|MethodRef|23, 5

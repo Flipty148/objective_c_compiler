@@ -23,6 +23,54 @@ vector<char> CodeGenerationHelpers::intToByteArray(int num, int arraySize)
 	return result;
 }
 
+vector<char> CodeGenerationHelpers::defaultConstructorCodeAttribute(int parrentInitConstant)
+{
+	vector<char> res;
+
+	//Добавление имени атрибута
+	vector<char> nameBytes = CodeGenerationHelpers::intToByteArray(1, 2);
+	CodeGenerationHelpers::appendArrayToByteVector(&res, nameBytes.data(), nameBytes.size());
+
+	//Формирование байт-кода метода
+	vector<char> codeBytes;
+	vector<char> aload = CodeGenerationCommands::aload(0); //загрузка объекта
+	CodeGenerationHelpers::appendArrayToByteVector(&codeBytes, aload.data(), aload.size());
+	vector<char> invokespecial = CodeGenerationCommands::invokespecial(parrentInitConstant); //вызов конструктора
+	CodeGenerationHelpers::appendArrayToByteVector(&codeBytes, invokespecial.data(), invokespecial.size());
+	vector<char> returnCommand = CodeGenerationCommands::return_(); //Завершение работы конструктора
+	CodeGenerationHelpers::appendArrayToByteVector(&codeBytes, returnCommand.data(), returnCommand.size());
+
+	//Добавление длины атрибута
+	vector<char> lengthBytes = CodeGenerationHelpers::intToByteArray(12 + codeBytes.size(), 4);
+	CodeGenerationHelpers::appendArrayToByteVector(&res, lengthBytes.data(), lengthBytes.size());
+
+	//Добавление размера стека операндов
+	vector<char> stackSizeBytes = CodeGenerationHelpers::intToByteArray(CodeGenerationHelpers::stackSize, 2);
+	CodeGenerationHelpers::appendArrayToByteVector(&res, stackSizeBytes.data(), stackSizeBytes.size());
+
+	//Добавление количества локальных переменных
+	vector<char> localsSizeBytes = CodeGenerationHelpers::intToByteArray(1, 2);
+	CodeGenerationHelpers::appendArrayToByteVector(&res, localsSizeBytes.data(), localsSizeBytes.size());
+
+	//Добавление длины байт-кода
+	vector<char> codeSizeBytes = CodeGenerationHelpers::intToByteArray(codeBytes.size(), 4);
+	CodeGenerationHelpers::appendArrayToByteVector(&res, codeSizeBytes.data(), codeSizeBytes.size());
+
+	//Добавление байт-кода
+	CodeGenerationHelpers::appendArrayToByteVector(&res, codeBytes.data(), codeBytes.size());
+
+	//Добавление количества записей в таблице исключений
+	vector<char> exceptionTableSizeBytes = CodeGenerationHelpers::intToByteArray(0, 2);
+	CodeGenerationHelpers::appendArrayToByteVector(&res, exceptionTableSizeBytes.data(), exceptionTableSizeBytes.size());
+
+	//Добавление количества атрибутов
+	vector<char> attributesCountBytes = CodeGenerationHelpers::intToByteArray(0, 2);
+	CodeGenerationHelpers::appendArrayToByteVector(&res, attributesCountBytes.data(), attributesCountBytes.size());
+
+
+	return res;
+}
+
 // -------------------- ГЕНЕРАЦИИ КОМАНД JVM --------------------
 
 // ---------- iconst, bipush, sipush ----------

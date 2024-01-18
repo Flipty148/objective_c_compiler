@@ -964,3 +964,23 @@ void Keyword_argument_list_node::setAttributes(LocalVariablesTable* locals, Cons
 		cur = cur->Next;
 	}
 }
+
+
+// ---------- APPEND_DEFAULT_CONSTRUCTOR ----------
+void ClassesTableElement::appendConstructor()
+{
+	if (isNeedToGenerateClassFile()) {
+		string name = "<init>";
+		string descriptor = "()V";
+		Type* returnType = new Type(VOID_TYPE);
+		vector<Type*>* params = new vector<Type*>;
+		vector<Type*>* kw = new vector<Type*>;
+		MethodsTableElement *method = Methods->addMethod(ConstantTable, name, descriptor, false, NULL, returnType, params, kw);
+
+		Type* dataType = new Type(CLASS_NAME_TYPE, getClassName());
+		method->LocalVariables->findOrAddLocalVariable("self", dataType);
+
+		constructorNumber = ConstantTable->findOrAddMethodRefConstant(getSuperClassName(), "<init>", "()V"); 
+	}
+
+}

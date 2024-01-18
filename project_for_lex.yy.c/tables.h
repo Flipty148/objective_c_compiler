@@ -126,6 +126,7 @@ public:
     MethodsTable* Methods; // Ссылка на соответстующую таблицу методов класса
     PropertiesTable* Properties; // Ссылка на соответствующую таблицу свойств класса
     ConstantsTable* ConstantTable; // Таблица констант
+    int constructorNumber; //Ссылка на константу с methodRef конструктора родителя
 
     ClassesTableElement(string name, string *superclassName, bool isImplementation);
 
@@ -148,6 +149,9 @@ public:
 
 	void generateClassFile(string filepath); //Генерация файла .class
 	bool isNeedToGenerateClassFile(); //Проверка необходимости генерации файла .class
+
+private:
+	void appendConstructor();
 };
 
 class ClassesTable
@@ -245,7 +249,7 @@ public:
     void addDefaultReturn(Statement_node *lastStatement);
 
 
-	vector<char> generateBytes(ConstantsTable* constantsTable); //Генерация байт кода метода
+	vector<char> generateBytes(ConstantsTable* constantsTable, int parrentInitNumber); //Генерация байт кода метода
 	vector<char> generateCodeAttribute(ConstantsTable* constantsTable); //Генерация атрибута Code для метода
 };
 
@@ -258,7 +262,7 @@ public:
 
     void toCsvFile(string filename, string filepath, char separator = '|'); //Преобразование в CSV-файл
 
-	vector<char> generateBytes(ConstantsTable* constantsTable); //Генерация байт кода таблицы методов
+	vector<char> generateBytes(ConstantsTable* constantsTable, int parrentInitNumber); //Генерация байт кода таблицы методов
 };
 
 // ----------- Таблица свойств ----------

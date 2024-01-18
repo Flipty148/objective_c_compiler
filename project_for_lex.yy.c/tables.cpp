@@ -240,7 +240,10 @@ string ClassesTableElement::getClassName()
 
 string ClassesTableElement::getSuperClassName()
 {
-	return ConstantTable->getConstantString(SuperclassName);
+	if (SuperclassName == NULL)
+		return "java/lang/Object";
+	else
+		return ConstantTable->getConstantString(SuperclassName);
 }
 
 void ClassesTableElement::fillFieldRefs()
@@ -358,6 +361,8 @@ void ClassesTableElement::semanticTransform()
 		SuperclassName = ConstantTable->findOrAddConstant(UTF8, "java/lang/Object");
 		Superclass = ConstantTable->findOrAddConstant(Class, NULL, SuperclassName);
 	}
+
+	appendConstructor();
 }
 
 // -------------------- ClassesTable --------------------
@@ -1243,6 +1248,8 @@ int LocalVariablesTable::findOrAddLocalVariable(string name, Type* type)
 
 void LocalVariablesTable::toCsvFile(string filename, string fileoath, char separator)
 {
+	filename.erase(std::remove(filename.begin(), filename.end(), '<'), filename.end());
+	filename.erase(std::remove(filename.begin(), filename.end(), '>'), filename.end());
 	ofstream out(fileoath + filename); //Создание и открытие потока на запись в файл
 	out << "Id" << separator << "Name" << separator << "Type" << endl; // Запись заголовков
 	auto iter = items.cbegin();

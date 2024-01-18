@@ -70,6 +70,8 @@ int main()
     // char arrChar[10];
     // [InOutFuncs printInt:arrChar[0]];
 
-    char a[10] = {'a', 'b', 'c'};
-    [InOutFuncs printCharArray:a];
+    // char a[10] = {'a', 'b', 'c'};
+    // [InOutFuncs printCharArray:a];
+    int a = [InOutFuncs readInt];
+    [InOutFuncs printInt:a];
 }

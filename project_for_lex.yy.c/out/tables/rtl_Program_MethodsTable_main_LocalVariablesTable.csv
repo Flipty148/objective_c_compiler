@@ -1,4 +1,4 @@
 Id|Name|Type
-2|a|char[10]
+2|a|int
 1|args|java/lang/String[1024]
 0|self|rtl/Program

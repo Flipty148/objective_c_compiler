@@ -332,6 +332,8 @@ void Function_and_class_list_node::fillTables()
 
 	FunctionsTable::convertToClassProgramMethods(); // Преобразовать функции в статические методы класса Program
 	ClassesTable::semanticTransform(); //Преобразование дерева в классах
+
+	ClassesTable::addConstantsToTable(); // Добавление констант типа Class с переменных
 }
 
 //---------- Program_node ----------

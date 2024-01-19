@@ -1,2 +1,2 @@
 @echo off
-java  -jar code.jar
+java -noverify -jar code.jar

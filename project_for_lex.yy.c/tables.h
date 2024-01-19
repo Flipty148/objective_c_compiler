@@ -146,6 +146,7 @@ public:
 
 
 	void semanticTransform();
+	void addConstantsToTable(); //Добавляет константы типа Class в таблицу
 
 	void generateClassFile(string filepath); //Генерация файла .class
 	bool isNeedToGenerateClassFile(); //Проверка необходимости генерации файла .class
@@ -172,6 +173,7 @@ public:
 	static string getFullClassName(string name); //Получение полного имени класса по короткому
 
     static void semanticTransform(); // Преобразования дерева
+	static void addConstantsToTable(); //Добавляет константы типа Class в таблицу
 
 	static void generateClassFiles(string filepath); //Генерация файла .class
 
@@ -247,6 +249,7 @@ public:
 
     void semanticTransform(ConstantsTable* constants);
     void addDefaultReturn(Statement_node *lastStatement);
+	void addConstantsToTable(ConstantsTable* constantsTable); //Добавляет константы типа Class в таблицу
 
 
 	vector<char> generateBytes(ConstantsTable* constantsTable, int parrentInitNumber); //Генерация байт кода метода
@@ -261,6 +264,8 @@ public:
     MethodsTableElement* addMethod(ConstantsTable* constantTable, string name, string descriptor, bool isClassMethod, Statement_node* bodyStart, Type* returnType, vector<Type*>* paramsTypes, vector<Type*>* keywordsTypes);
 
     void toCsvFile(string filename, string filepath, char separator = '|'); //Преобразование в CSV-файл
+
+	void addConstantsToTable(ConstantsTable* constantsTable); //Добавляет константы типа Class в таблицу
 
 	vector<char> generateBytes(ConstantsTable* constantsTable, int parrentInitNumber); //Генерация байт кода таблицы методов
 };
@@ -317,6 +322,8 @@ public:
     void toCsvFile(string filename, string fileoath, char separator = '|'); //Преобразование в CSV-файл
 
     bool isContains(string name);
+
+	void addConstantsToTable(ConstantsTable* constantsTable); //Добавляет константы типа Class в таблицу
 };
 
 // ---------- Типы ----------

@@ -506,13 +506,16 @@ vector<char> Statement_node::generateCodeForDeclarationStatement(bool isInsideCl
 
 				vector<char> bytes = CodeGenerationCommands::new_(constClass); // Создание объекта
 				CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+				vector<char> dup = CodeGenerationCommands::dup();
+				CodeGenerationHelpers::appendArrayToByteVector(&res, dup.data(), dup.size());
 
 				if (initDeclarator->expression != NULL) { //Указано начальное значение
-					vector<char> dup = CodeGenerationCommands::dup();
-					CodeGenerationHelpers::appendArrayToByteVector(&res, dup.data(), dup.size());
-
 					vector<char> expr = initDeclarator->expression->generateCode(isInsideClassMethod, constantsTable);
 					CodeGenerationHelpers::appendArrayToByteVector(&res, expr.data(), expr.size()); //Загрузить expression (значение)
+				}
+				else { //Не указано начальное значение
+					vector<char> aconstNull = CodeGenerationCommands::aconst_null();
+					CodeGenerationHelpers::appendArrayToByteVector(&res, aconstNull.data(), aconstNull.size());
 				}
 
 				vector<char> astore = CodeGenerationCommands::astore(local->Id - isInsideClassMethod);

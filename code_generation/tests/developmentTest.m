@@ -42,7 +42,7 @@ int main()
     // [InOutFuncs printInt:5 >= 5];
     MyClass1 *obj;
     // // [obj print];
-    // // // obj = [MyClass1 new];
+    obj = [MyClass1 new];
     // // [obj setA:10];
     // // [InOutFuncs printInt:40578];
     // // int a;

@@ -995,3 +995,42 @@ void ClassesTableElement::appendConstructor()
 	}
 
 }
+
+// ---------- APPEND CLASS CONSTANTS FROM LOCALS ----------
+void LocalVariablesTable::addConstantsToTable(ConstantsTable* constantsTable)
+{
+	for (auto iter = items.begin(); iter != items.end(); iter++) {
+		if (iter->second->type->DataType == CLASS_NAME_TYPE) {
+			int utf = constantsTable->findOrAddConstant(UTF8, iter->second->type->ClassName);
+			constantsTable->findOrAddConstant(Class, NULL, utf);
+		}
+		else if (iter->second->type->DataType == ID_TYPE) {
+			int utf = constantsTable->findOrAddConstant(UTF8, "rtl/NSObject");
+			constantsTable->findOrAddConstant(Class, NULL, utf);
+		}
+	}
+}
+
+void ClassesTable::addConstantsToTable()
+{
+	for (auto iter = items->begin(); iter != items->end(); iter++) {
+		iter->second->addConstantsToTable();
+	}
+}
+
+void ClassesTableElement::addConstantsToTable()
+{
+	Methods->addConstantsToTable(ConstantTable);
+}
+
+void MethodsTable::addConstantsToTable(ConstantsTable* constantsTable)
+{
+	for (auto iter = items.begin(); iter != items.end(); iter++) {
+		iter->second->addConstantsToTable(constantsTable);
+	}
+}
+
+void MethodsTableElement::addConstantsToTable(ConstantsTable* constantsTable)
+{
+	LocalVariables->addConstantsToTable(constantsTable);
+}

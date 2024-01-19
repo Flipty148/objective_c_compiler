@@ -40,7 +40,7 @@ int main()
     // [InOutFuncs printInt:243 < 15];
     // [InOutFuncs printInt:513 <= 513];
     // [InOutFuncs printInt:5 >= 5];
-    // MyClass1 *obj= [MyClass1 new];
+    MyClass1 *obj= [MyClass1 new];
     // // [obj print];
     // // // obj = [MyClass1 new];
     // // [obj setA:10];
@@ -72,6 +72,13 @@ int main()
 
     // char a[10] = {'a', 'b', 'c'};
     // [InOutFuncs printCharArray:a];
-    int a = [InOutFuncs readInt];
-    [InOutFuncs printInt:a];
+    // int a = [InOutFuncs readInt];
+    // [InOutFuncs printInt:a];
+
+    if (obj) {
+
+    }
+    else {
+        
+    }
 }

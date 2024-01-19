@@ -21,7 +21,8 @@ void Statement_node::semanticTransform(LocalVariablesTable* locals, ConstantsTab
 		cur->Condition->assignmentTransform();
 		cur->Condition->setDataTypesAndCasts(locals);
 		cur->Condition->setAttributes(locals, constants);
-		cur->TrueBranch->semanticTransform(locals, constants);
+		if (cur->TrueBranch != NULL)
+			cur->TrueBranch->semanticTransform(locals, constants);
 		if (cur->FalseBranch != NULL) {
 			cur->FalseBranch->semanticTransform(locals, constants);
 		}

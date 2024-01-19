@@ -1823,8 +1823,10 @@ string If_statement_node::toDot(string labelConection)
     res += to_string(id);
     res += Condition->toDot("condition");
 
-    res += to_string(id);
-    res += TrueBranch->toDot("true");
+    if (TrueBranch != NULL) {
+        res += to_string(id);
+        res += TrueBranch->toDot("true");
+    }
 
     if (FalseBranch!= NULL)
     {

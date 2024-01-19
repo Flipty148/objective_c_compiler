@@ -910,7 +910,8 @@ void Statement_node::fillFieldRefs(ConstantsTable *constantTable, LocalVariables
 	else if (type == IF_STATEMENT_TYPE) {
 		If_statement_node *cur = (If_statement_node*)this;
 		cur->Condition->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
-		cur->TrueBranch->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+		if (cur->TrueBranch != NULL)
+			cur->TrueBranch->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
 		if (cur->FalseBranch != NULL)
 			cur->FalseBranch->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
 	}
@@ -970,7 +971,8 @@ void Statement_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariable
 	else if (type == IF_STATEMENT_TYPE) {
 		If_statement_node* cur = (If_statement_node*)this;
 		cur->Condition->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
-		cur->TrueBranch->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+		if (cur->TrueBranch != NULL)
+			cur->TrueBranch->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
 		if (cur->FalseBranch != NULL)
 			cur->FalseBranch->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
 	}
@@ -1030,7 +1032,8 @@ void Statement_node::fillLiterals(ConstantsTable* constantTable)
 	else if (type == IF_STATEMENT_TYPE) {
 		If_statement_node* cur = (If_statement_node*)this;
 		cur->Condition->fillLiterals(constantTable);
-		cur->TrueBranch->fillLiterals(constantTable);
+		if (cur->TrueBranch != NULL)
+			cur->TrueBranch->fillLiterals(constantTable);
 		if (cur->FalseBranch != NULL) {
 			cur->FalseBranch->fillLiterals(constantTable);
 		}

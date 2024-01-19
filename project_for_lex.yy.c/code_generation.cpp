@@ -332,7 +332,8 @@ vector<char> Statement_node::generateCode(bool isInsideClassMethod, ConstantsTab
 	}
 		break;
 	case COMPOUND_STATEMENT_TYPE: {
-
+		vector<char> bytes = generateCodeForCompoundStatement(isInsideClassMethod, constantsTable, locals);
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case DECLARATION_STATEMENT_TYPE: {
@@ -605,6 +606,22 @@ vector<char> Statement_node::generateCodeForIfStatement(bool isInsideClassMethod
 	CodeGenerationHelpers::appendArrayToByteVector(&res, trueBytes.data(), trueBytes.size());
 	CodeGenerationHelpers::appendArrayToByteVector(&res, gotoBytes.data(), gotoBytes.size());
 	CodeGenerationHelpers::appendArrayToByteVector(&res, falseBytes.data(), falseBytes.size());
+
+	return res;
+}
+
+vector<char> Statement_node::generateCodeForCompoundStatement(bool isInsideClassMethod, ConstantsTable* constantsTable, LocalVariablesTable* locals)
+{
+	vector<char> res;
+	
+	Statement_list_node* statements = (Statement_list_node*)this;
+	
+	Statement_node* cur = statements->First;
+	while (cur != NULL) {
+		vector<char> bytes = cur->generateCode(isInsideClassMethod, constantsTable, locals);
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+		cur = cur->Next;
+	}
 
 	return res;
 }

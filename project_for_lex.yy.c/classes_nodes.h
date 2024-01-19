@@ -165,6 +165,7 @@ private:
 	vector<char> generateCodeForReturnStatement(bool isInsideClassMethod, ConstantsTable* constantsTable); //Функция генерации кода для ReturnStatement
 	vector<char> generateCodeForDeclarationStatement(bool isInsideClassMethod, ConstantsTable* constantsTable, LocalVariablesTable* locals); //Функция генерации кода для DeclarationStatement
 	vector<char> generateCodeForIfStatement(bool isInsideClassMethod, ConstantsTable* constantsTable, LocalVariablesTable* locals); //Функция генерации кода для IfStatement
+	vector<char> generateCodeForCompoundStatement(bool isInsideClassMethod, ConstantsTable* constantsTable, LocalVariablesTable* locals); //Функция генерации кода для CompoundStatement
 };
 
 // ---------- declaration ----------

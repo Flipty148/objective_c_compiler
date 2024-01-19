@@ -83,9 +83,11 @@ int main()
     // }
 
     int a = 31;
-    char b = 32;
-    if (obj)
+    char b = 31;
+    if (a == b) {
         [InOutFuncs printCharArray:"a == b"];
-    else
+    }
+    else {
         [InOutFuncs printCharArray:"a != b"];
+    }
 }

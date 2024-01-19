@@ -16,12 +16,10 @@ ID|Type|Value
 15|MethodRef|14, 11
 16|UTF8|a == b
 17|String|16
-18|UTF8|a != b
-19|String|18
-20|UTF8|main
-21|UTF8|([Ljava/lang/String;)V
-22|UTF8|java/lang/Object
-23|Class|22
-24|MethodRef|8, 23
-25|UTF8|java/lang/String
-26|Class|25
+18|UTF8|main
+19|UTF8|([Ljava/lang/String;)V
+20|UTF8|java/lang/Object
+21|Class|20
+22|MethodRef|8, 21
+23|UTF8|java/lang/String
+24|Class|23

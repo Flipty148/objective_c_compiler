@@ -288,8 +288,28 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 			DataType = new Type(CHAR_TYPE);
 		else if (literal->type == STRING_CONSTANT_TYPE)
 			DataType = new Type(CHAR_TYPE, strlen(literal->value) + 1);
-		else if (literal->type == NSSTRING_CONSTANT_TYPE)
+		else if (literal->type == NSSTRING_CONSTANT_TYPE) {
 			DataType = new Type(CLASS_NAME_TYPE, ClassesTable::getFullClassName("NSString"));
+			type = MESSAGE_EXPRESSION_EXPRESSION_TYPE;
+
+			char* className = new char[strlen("rtl/NSString")];
+			strcpy(className, "rtl/NSString");
+			Receiver = Receiver_node::createReceiverNode(CLASS_NAME_RECEIVER_TYPE, className);
+			Receiver->DataType = new Type(CLASS_NAME_TYPE, className);
+			Expression_node* val = Expression_node::createExpressionNodeFromLiteral(Literal_node::createLiteralNode(STRING_CONSTANT_TYPE, literal->value));
+			val->DataType = new Type(CHAR_TYPE, strlen(literal->value));
+			char* methodName = new char[strlen("stringWithCStringStatic")];
+			strcpy(methodName, "stringWithCStringStatic");
+		    Arguments = Message_selector_node::createMessageSelectorNode(methodName, val, NULL, NULL);
+			literal = NULL;
+
+			string thisClass = locals->items["self"]->type->ClassName;
+			ConstantsTable* constantTable = ClassesTable::items->at(thisClass)->ConstantTable;
+			Constant = constantTable->findOrAddMethodRefConstant(className, methodName, "([C)Lrtl/NSString;");
+			string d;
+			string c;
+			Method = ClassesTable::items->at(className)->getMethodForRef("stringWithCStringStatic", &d, &c);
+		}
 	}
 		break;
 	case NUMERIIC_CONSTANT_EXPRESSION_TYPE: //Тип для числовой константы будет соответствовать int (т.к. float не поддерживается)

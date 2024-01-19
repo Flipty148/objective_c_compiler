@@ -1,5 +1,5 @@
 Id|Name|Type
 1|args|java/lang/String[1024]
-2|i|int
-3|obj|global/MyClass1
+2|obj|global/MyClass1
 0|self|rtl/Program
+3|str|rtl/NSString

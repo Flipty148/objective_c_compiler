@@ -1,4 +1,4 @@
-@class InOutFuncs;
+@class InOutFuncs, NSString;
 @implementation MyClass1 : NSObject
 {
     int a;
@@ -103,7 +103,11 @@ int main()
     //     i = i +1;
     // } while (i < 10);
 
-    for (int i = 0; i < 10; i = i + 1) {
-        [InOutFuncs printInt:i];
-    }
+    // for (int i = 0; i < 10; i = i + 1) {
+    //     [InOutFuncs printInt:i];
+    // }
+
+    NSString *str = @"hello";
+    [InOutFuncs printNSString:str];
+    [InOutFuncs printNSString:@"test"];
 }

@@ -1,4 +1,4 @@
 Id|Name|Type
-2|i|int
 1|obj|global/MyClass1
 0|self|rtl/Program
+2|str|rtl/NSString

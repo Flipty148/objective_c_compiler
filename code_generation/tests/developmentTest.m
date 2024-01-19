@@ -82,12 +82,18 @@ int main()
 
     // }
 
-    int a = 31;
-    char b = 31;
-    if (a == b) {
-        [InOutFuncs printCharArray:"a == b"];
-    }
-    else {
-        [InOutFuncs printCharArray:"a != b"];
+    // int a = 31;
+    // char b = 31;
+    // if (a == b) {
+    //     [InOutFuncs printCharArray:"a == b"];
+    // }
+    // else {
+    //     [InOutFuncs printCharArray:"a != b"];
+    // }
+
+    int i = 1;
+    while (i < 10) {
+        [InOutFuncs printInt:i];
+        i = i +1;
     }
 }

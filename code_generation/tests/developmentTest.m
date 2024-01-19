@@ -97,9 +97,13 @@ int main()
     //     i = i +1;
     // }
 
-    int i = 1;
-    do {
+    // int i = 1;
+    // do {
+    //     [InOutFuncs printInt:i];
+    //     i = i +1;
+    // } while (i < 10);
+
+    for (int i = 0; i < 10; i = i + 1) {
         [InOutFuncs printInt:i];
-        i = i +1;
-    } while (i < 10);
+    }
 }

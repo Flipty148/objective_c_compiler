@@ -168,6 +168,7 @@ private:
 	vector<char> generateCodeForCompoundStatement(bool isInsideClassMethod, ConstantsTable* constantsTable, LocalVariablesTable* locals); //Функция генерации кода для CompoundStatement
 	vector<char> generateCodeForWhileStatement(bool isInsideClassMethod, ConstantsTable* constantsTable, LocalVariablesTable* locals); //Функция генерации кода для WhileStatement
 	vector<char> generateCodeForDoWhileStatement(bool isInsideClassMethod, ConstantsTable* constantsTable, LocalVariablesTable* locals); //Функция генерации кода для DoWhileStatement
+	vector<char> generateCodeForForStatement(bool isInsideClassMethod, ConstantsTable* constantsTable, LocalVariablesTable* locals); //Функция генерации кода для ForStatement
 };
 
 // ---------- declaration ----------
@@ -256,6 +257,8 @@ class Init_declarator_node
 
 
 		void semanticTransform(LocalVariablesTable* locals, Type* dataType, ConstantsTable* constants);
+
+		vector<char> generateCodeForInitDeclarator(bool isInsideClassMethod, ConstantsTable* constantsTable, LocalVariablesTable* locals); //Функция генерации кода
 
 };
 

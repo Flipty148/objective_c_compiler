@@ -8,7 +8,7 @@ ID|Type|Value
 7|UTF8|()V
 8|NameAndType|6, 7
 9|MethodRef|8, 5
-10|UTF8|rtl/InOutFuncs
+10|UTF8|rtl/NSArray
 11|Class|10
 12|UTF8|printNSStringStatic
 13|UTF8|(Lrtl/NSString;)V

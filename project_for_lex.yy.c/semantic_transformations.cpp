@@ -59,6 +59,7 @@ void Statement_node::semanticTransform(LocalVariablesTable* locals, ConstantsTab
 
 		if (cur->ForType == FOREACH_FOR_TYPE || cur->ForType == FOREACH_WITH_DECLARATION_FOR_TYPE) {
 			cur->checkFastEnumerationTypes(locals);
+			locals->findOrAddLocalVariable("<iterator>", new Type(INT_TYPE));
 		}
 	}
 	else if (type == DO_WHILE_STATEMENT_TYPE) {

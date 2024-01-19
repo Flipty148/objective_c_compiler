@@ -90,7 +90,7 @@ public class NSString extends  NSObject {
         return string.endsWith(suffix.string);
     }
 
-    public NSString init() {
+    public NSString initDynamic() {
         super.initDynamic();
         return this;
     }

@@ -1,4 +1,4 @@
-@class InOutFuncs, NSString;
+@class InOutFuncs, NSArray, NSString;
 @implementation MyClass1 : NSObject
 {
     int a;
@@ -103,11 +103,24 @@ int main()
     //     i = i +1;
     // } while (i < 10);
 
-    // for (int i = 0; i < 10; i = i + 1) {
-    //     [InOutFuncs printInt:i];
+    // // for (int i = 0; i < 10; i = i + 1) {
+    // //     [InOutFuncs printInt:i];
     // }
 
-    NSString *str = @"hello";
-    [InOutFuncs printNSString:str];
-    [InOutFuncs printNSString:@"test"];
+    NSArray *arr = [NSArray array];
+    NSString *str1 = @"first";
+    NSString *str2 = @"second";
+    NSString *str3 = @"third";
+    arr = [arr arrayByAddingObject: str1];
+    arr = [arr arrayByAddingObject: str2];
+    arr = [arr arrayByAddingObject: str3];
+    // NSString *elem;
+    for (NSString *elem in arr)
+    {
+        [InOutFuncs printNSString:elem];
+    }
+
+    // NSString *str = @"hello";
+    // [InOutFuncs printNSString:str];
+    // [InOutFuncs printNSString:@"test"];
 }

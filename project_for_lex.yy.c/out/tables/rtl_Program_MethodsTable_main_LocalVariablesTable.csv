@@ -1,5 +1,10 @@
 Id|Name|Type
+8|<iterator>|int
 1|args|java/lang/String[1024]
-2|obj|global/MyClass1
+2|arr|rtl/NSArray
+3|elem|rtl/NSString
+4|obj|global/MyClass1
 0|self|rtl/Program
-3|str|rtl/NSString
+5|str1|rtl/NSString
+6|str2|rtl/NSString
+7|str3|rtl/NSString

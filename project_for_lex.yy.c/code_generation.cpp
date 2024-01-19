@@ -315,7 +315,8 @@ vector<char> Statement_node::generateCode(bool isInsideClassMethod, ConstantsTab
 	}
 		break;
 	case IF_STATEMENT_TYPE: {
-
+		vector<char> bytes = generateCodeForIfStatement(isInsideClassMethod, constantsTable, locals);
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case WHILE_STATEMENT_TYPE: {
@@ -559,6 +560,39 @@ vector<char> Statement_node::generateCodeForDeclarationStatement(bool isInsideCl
 	
 	
 
+
+	return res;
+}
+
+vector<char> Statement_node::generateCodeForIfStatement(bool isInsideClassMethod, ConstantsTable* constantsTable, LocalVariablesTable* locals)
+{
+	vector<char> res;
+	
+	If_statement_node* if_stmt = (If_statement_node*)this;
+
+	vector<char> condition = if_stmt->Condition->generateCode(isInsideClassMethod, constantsTable); //Условие
+	CodeGenerationHelpers::appendArrayToByteVector(&res, condition.data(), condition.size());
+
+	vector<char> trueBytes;
+	vector<char> falseBytes;
+	vector<char> gotoBytes;
+
+	if (if_stmt->TrueBranch != NULL)
+		trueBytes = if_stmt->TrueBranch->generateCode(isInsideClassMethod, constantsTable, locals);
+
+	if (if_stmt->FalseBranch != NULL) {
+		falseBytes = if_stmt->FalseBranch->generateCode(isInsideClassMethod, constantsTable, locals);
+		gotoBytes = CodeGenerationCommands::goto_(falseBytes.size());
+	}
+
+	int offset = trueBytes.size() + gotoBytes.size();
+	vector<char> ifBytes = CodeGenerationCommands::if_(CodeGenerationCommands::EQ, offset);
+
+	// Формирование кода
+	CodeGenerationHelpers::appendArrayToByteVector(&res, ifBytes.data(), ifBytes.size());
+	CodeGenerationHelpers::appendArrayToByteVector(&res, trueBytes.data(), trueBytes.size());
+	CodeGenerationHelpers::appendArrayToByteVector(&res, gotoBytes.data(), gotoBytes.size());
+	CodeGenerationHelpers::appendArrayToByteVector(&res, falseBytes.data(), falseBytes.size());
 
 	return res;
 }

@@ -75,10 +75,17 @@ int main()
     // int a = [InOutFuncs readInt];
     // [InOutFuncs printInt:a];
 
-    if (obj) {
+    // if (obj) {
 
-    }
-    else {
-        
-    }
+    // }
+    // else {
+
+    // }
+
+    int a = 31;
+    char b = 32;
+    if (a == b)
+        [InOutFuncs printCharArray:"a == b"];
+    else
+        [InOutFuncs printCharArray:"a != b"];
 }

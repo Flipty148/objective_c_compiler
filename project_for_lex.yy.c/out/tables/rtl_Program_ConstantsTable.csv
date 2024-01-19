@@ -8,8 +8,18 @@ ID|Type|Value
 7|UTF8|()V
 8|NameAndType|6, 7
 9|MethodRef|8, 5
-10|UTF8|main
-11|UTF8|([Ljava/lang/String;)V
-12|UTF8|java/lang/Object
-13|Class|12
-14|MethodRef|8, 13
+10|UTF8|rtl/InOutFuncs
+11|Class|10
+12|UTF8|printCharArrayStatic
+13|UTF8|([C)V
+14|NameAndType|12, 13
+15|MethodRef|14, 11
+16|UTF8|a == b
+17|String|16
+18|UTF8|a != b
+19|String|18
+20|UTF8|main
+21|UTF8|([Ljava/lang/String;)V
+22|UTF8|java/lang/Object
+23|Class|22
+24|MethodRef|8, 23

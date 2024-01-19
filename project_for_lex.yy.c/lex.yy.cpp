@@ -2399,7 +2399,7 @@ if (parseRes == 0) {
 			out.close();
 			string jar = "cd ./out/ && jar -cmf manifest.mf code.jar -C code .";
 			system(jar.c_str());
-			string runBat = "@echo off\njava -noverify -jar code.jar";
+			string runBat = "@echo off\njava  -jar code.jar";
 			ofstream outBat("./out/run.bat");
 			outBat << runBat;
 			outBat.close();

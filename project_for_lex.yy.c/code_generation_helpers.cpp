@@ -191,6 +191,13 @@ vector<char> CodeGenerationCommands::aload(int num)
 	return res;
 }
 
+vector<char> CodeGenerationCommands::aconst_null()
+{
+	vector<char> res;
+	res.push_back(0x1); //aconst_null
+	return res;
+}
+
 // ---------- istore ----------
 vector<char> CodeGenerationCommands::istore(int num)
 {

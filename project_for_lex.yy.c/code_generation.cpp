@@ -586,7 +586,16 @@ vector<char> Statement_node::generateCodeForIfStatement(bool isInsideClassMethod
 	}
 
 	int offset = trueBytes.size() + gotoBytes.size();
-	vector<char> ifBytes = CodeGenerationCommands::if_(CodeGenerationCommands::EQ, offset);
+	vector<char> ifBytes;
+	if (if_stmt->Condition->DataType->isPrimitive()) {
+		ifBytes = CodeGenerationCommands::if_(CodeGenerationCommands::EQ, offset);
+	}
+	else {
+		vector<char> aconst_null = CodeGenerationCommands::aconst_null(); //Загрузка null для сравнения объекта
+		CodeGenerationHelpers::appendArrayToByteVector(&res, aconst_null.data(), aconst_null.size());
+		ifBytes = CodeGenerationCommands::if_acmp(CodeGenerationCommands::EQ, offset);
+	}
+
 
 	// Формирование кода
 	CodeGenerationHelpers::appendArrayToByteVector(&res, ifBytes.data(), ifBytes.size());

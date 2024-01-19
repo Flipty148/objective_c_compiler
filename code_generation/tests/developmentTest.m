@@ -40,7 +40,7 @@ int main()
     // [InOutFuncs printInt:243 < 15];
     // [InOutFuncs printInt:513 <= 513];
     // [InOutFuncs printInt:5 >= 5];
-    MyClass1 *obj= [MyClass1 new];
+    MyClass1 *obj;
     // // [obj print];
     // // // obj = [MyClass1 new];
     // // [obj setA:10];
@@ -84,7 +84,7 @@ int main()
 
     int a = 31;
     char b = 32;
-    if (a == b)
+    if (obj)
         [InOutFuncs printCharArray:"a == b"];
     else
         [InOutFuncs printCharArray:"a != b"];

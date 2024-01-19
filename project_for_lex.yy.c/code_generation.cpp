@@ -325,7 +325,8 @@ vector<char> Statement_node::generateCode(bool isInsideClassMethod, ConstantsTab
 	}
 		break;
 	case DO_WHILE_STATEMENT_TYPE: {
-
+		vector<char> bytes = generateCodeForDoWhileStatement(isInsideClassMethod, constantsTable, locals);
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
 	}
 		break;
 	case FOR_STATEMENT_TYPE: {
@@ -641,7 +642,7 @@ vector<char> Statement_node::generateCodeForWhileStatement(bool isInsideClassMet
 	vector<char> conditionBytes = while_stmt->LoopCondition->generateCode(isInsideClassMethod, constantsTable); //Условие
 	CodeGenerationHelpers::appendArrayToByteVector(&res, conditionBytes.data(), conditionBytes.size());
 
-	int offset = bodyBytes.size() + conditionBytes.size() + gotoBytes.size();
+	int offset = bodyBytes.size() + conditionBytes.size();
 	offset = -offset;
 	vector<char> ifBytes;
 	if (while_stmt->LoopCondition->DataType->isPrimitive()) {
@@ -655,6 +656,35 @@ vector<char> Statement_node::generateCodeForWhileStatement(bool isInsideClassMet
 
 	CodeGenerationHelpers::appendArrayToByteVector(&res, ifBytes.data(), ifBytes.size());
 	
+
+	return res;
+}
+
+vector<char> Statement_node::generateCodeForDoWhileStatement(bool isInsideClassMethod, ConstantsTable* constantsTable, LocalVariablesTable* locals)
+{
+	vector<char> res;
+
+	Do_while_statement_node* do_while_stmt = (Do_while_statement_node*)this;
+
+	vector<char> bodyBytes = do_while_stmt->LoopBody->generateCode(isInsideClassMethod, constantsTable, locals);
+	CodeGenerationHelpers::appendArrayToByteVector(&res, bodyBytes.data(), bodyBytes.size());
+
+	vector<char> conditionBytes = do_while_stmt->LoopCondition->generateCode(isInsideClassMethod, constantsTable); //Условие
+	CodeGenerationHelpers::appendArrayToByteVector(&res, conditionBytes.data(), conditionBytes.size());
+
+	int offset = bodyBytes.size() + conditionBytes.size();
+	offset = -offset;
+	vector<char> ifBytes;
+	if (do_while_stmt->LoopCondition->DataType->isPrimitive()) {
+		ifBytes = CodeGenerationCommands::if_(CodeGenerationCommands::NE, offset);
+	}
+	else {
+		vector<char> aconst_null = CodeGenerationCommands::aconst_null(); //Загрузка null для сравнения объекта
+		CodeGenerationHelpers::appendArrayToByteVector(&res, aconst_null.data(), aconst_null.size());
+		ifBytes = CodeGenerationCommands::if_acmp(CodeGenerationCommands::NE, offset);
+	}
+
+	CodeGenerationHelpers::appendArrayToByteVector(&res, ifBytes.data(), ifBytes.size());
 
 	return res;
 }

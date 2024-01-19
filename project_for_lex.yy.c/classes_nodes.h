@@ -167,6 +167,7 @@ private:
 	vector<char> generateCodeForIfStatement(bool isInsideClassMethod, ConstantsTable* constantsTable, LocalVariablesTable* locals); //Функция генерации кода для IfStatement
 	vector<char> generateCodeForCompoundStatement(bool isInsideClassMethod, ConstantsTable* constantsTable, LocalVariablesTable* locals); //Функция генерации кода для CompoundStatement
 	vector<char> generateCodeForWhileStatement(bool isInsideClassMethod, ConstantsTable* constantsTable, LocalVariablesTable* locals); //Функция генерации кода для WhileStatement
+	vector<char> generateCodeForDoWhileStatement(bool isInsideClassMethod, ConstantsTable* constantsTable, LocalVariablesTable* locals); //Функция генерации кода для DoWhileStatement
 };
 
 // ---------- declaration ----------

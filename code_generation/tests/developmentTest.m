@@ -91,9 +91,15 @@ int main()
     //     [InOutFuncs printCharArray:"a != b"];
     // }
 
+    // int i = 1;
+    // while (i < 10) {
+    //     [InOutFuncs printInt:i];
+    //     i = i +1;
+    // }
+
     int i = 1;
-    while (i < 10) {
+    do {
         [InOutFuncs printInt:i];
         i = i +1;
-    }
+    } while (i < 10);
 }

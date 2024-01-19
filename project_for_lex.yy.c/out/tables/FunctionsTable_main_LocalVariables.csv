@@ -1,4 +1,8 @@
 Id|Name|Type
+2|arr|rtl/NSArray
+6|elem|rtl/NSString
 1|obj|global/MyClass1
 0|self|rtl/Program
-2|str|rtl/NSString
+3|str1|rtl/NSString
+4|str2|rtl/NSString
+5|str3|rtl/NSString

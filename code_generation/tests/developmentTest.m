@@ -114,13 +114,13 @@ int main()
     arr = [arr arrayByAddingObject: str1];
     arr = [arr arrayByAddingObject: str2];
     arr = [arr arrayByAddingObject: str3];
-    NSString *elem;
-    for (elem in arr)
+    // NSString *elem;
+    for (NSString *elem in arr)
     {
         [InOutFuncs printNSString:elem];
     }
 
-    NSString *str = @"hello";
-    [InOutFuncs printNSString:str];
-    [InOutFuncs printNSString:@"test"];
+    // NSString *str = @"hello";
+    // [InOutFuncs printNSString:str];
+    // [InOutFuncs printNSString:@"test"];
 }

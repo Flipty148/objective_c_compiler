@@ -722,8 +722,29 @@ vector<char> Statement_node::generateCodeForForStatement(bool isInsideClassMetho
 		CodeGenerationHelpers::appendArrayToByteVector(&res, initValue.data(), initValue.size());
 		vector<char> initBytes = CodeGenerationCommands::istore(num); // Инициализация
 		CodeGenerationHelpers::appendArrayToByteVector(&res, initBytes.data(), initBytes.size());
-		constantsTable->findOrAddMethodRefConstant("rtl/NSArray", "countDynamic", "()I");
-		constantsTable->findOrAddMethodRefConstant("rtl/NSArray", "objectAtIndexDynamic", "(I)Lrtl/NSObject;");
+	}
+	else if (for_stmt->ForType == FOREACH_WITH_DECLARATION_FOR_TYPE) {
+		LocalVariablesTableElement* local = locals->items[for_stmt->name];
+		num = locals->items["<iterator>"]->Id - isInsideClassMethod;
+		vector<char> initValue = CodeGenerationCommands::iconstBipushSipush(0); // Инициализация
+		CodeGenerationHelpers::appendArrayToByteVector(&res, initValue.data(), initValue.size());
+		vector<char> initBytes = CodeGenerationCommands::istore(num); // Инициализация
+		CodeGenerationHelpers::appendArrayToByteVector(&res, initBytes.data(), initBytes.size());
+		
+		// Поиск константы с создаваемым классом
+		string className = for_stmt->NameType->ClassName;
+		int constUtf = constantsTable->findConstant(UTF8, &className);
+		int constClass = constantsTable->findConstant(Class, NULL, NULL, constUtf);
+
+		vector<char> bytes = CodeGenerationCommands::new_(constClass); // Создание объекта
+		CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+		vector<char> dup = CodeGenerationCommands::dup();
+		CodeGenerationHelpers::appendArrayToByteVector(&res, dup.data(), dup.size());
+		vector<char> aconstNull = CodeGenerationCommands::aconst_null();
+		CodeGenerationHelpers::appendArrayToByteVector(&res, aconstNull.data(), aconstNull.size());
+
+		vector<char> astore = CodeGenerationCommands::astore(local->Id - isInsideClassMethod);
+		CodeGenerationHelpers::appendArrayToByteVector(&res, astore.data(), astore.size());
 	}
 
 	if (for_stmt->ForType == FOR_FOR_TYPE || for_stmt->ForType == FOR_WITH_DECLARATION_FOR_TYPE) {
@@ -753,25 +774,26 @@ vector<char> Statement_node::generateCodeForForStatement(bool isInsideClassMetho
 	}
 	else {
 		vector<char> arr = for_stmt->ConditionExpression->generateCode(isInsideClassMethod, constantsTable); //Объект
-		CodeGenerationHelpers::appendArrayToByteVector(&res, arr.data(), arr.size());
 		
 		vector<char> iload = CodeGenerationCommands::iload(num); //Индекс
-		CodeGenerationHelpers::appendArrayToByteVector(&res, iload.data(), iload.size());
 
 		int constant = constantsTable->findOrAddMethodRefConstant("rtl/NSArray", "objectAtIndexDynamic", "(I)Lrtl/NSObject;");
 		vector<char> value = CodeGenerationCommands::invokevirtual(constant); //Значение
-		CodeGenerationHelpers::appendArrayToByteVector(&res, value.data(), value.size());
 
 		int valLocal = locals->items[for_stmt->name]->Id - isInsideClassMethod;
 		vector<char> astore = CodeGenerationCommands::astore(valLocal); //Сохранение
-		CodeGenerationHelpers::appendArrayToByteVector(&res, astore.data(), astore.size());
 		
-
-		vector<char> bodyBytes = for_stmt->LoopBody->generateCode(isInsideClassMethod, constantsTable, locals); // Тело цикла
+		vector<char> bodyBytes;
+		if (for_stmt->LoopBody != NULL)
+			bodyBytes = for_stmt->LoopBody->generateCode(isInsideClassMethod, constantsTable, locals); // Тело цикла
 		vector<char> incIter = CodeGenerationCommands::iinc(num, 1); // Инкремент
-		CodeGenerationHelpers::appendArrayToByteVector(&res, incIter.data(), incIter.size());
-		vector<char> gotoBytes = CodeGenerationCommands::goto_(bodyBytes.size() + incIter.size()); // Переход к условию цикла
+		int gotoOffset = arr.size() + iload.size() + value.size() + astore.size() + bodyBytes.size() + incIter.size();
+		vector<char> gotoBytes = CodeGenerationCommands::goto_(gotoOffset); // Переход к условию цикла
 		CodeGenerationHelpers::appendArrayToByteVector(&res, gotoBytes.data(), gotoBytes.size());
+		CodeGenerationHelpers::appendArrayToByteVector(&res, arr.data(), arr.size());
+		CodeGenerationHelpers::appendArrayToByteVector(&res, iload.data(), iload.size());
+		CodeGenerationHelpers::appendArrayToByteVector(&res, value.data(), value.size());
+		CodeGenerationHelpers::appendArrayToByteVector(&res, astore.data(), astore.size());
 		CodeGenerationHelpers::appendArrayToByteVector(&res, bodyBytes.data(), bodyBytes.size());
 		CodeGenerationHelpers::appendArrayToByteVector(&res, incIter.data(), incIter.size());
 
@@ -779,9 +801,10 @@ vector<char> Statement_node::generateCodeForForStatement(bool isInsideClassMetho
 		CodeGenerationHelpers::appendArrayToByteVector(&res, iload.data(), iload.size()); //Текущее значение итератора
 		int sizeConst = constantsTable->findOrAddMethodRefConstant("rtl/NSArray", "countDynamic", "()I");
 		vector<char> invokeVirtual = CodeGenerationCommands::invokevirtual(sizeConst); //Размер массива
+		CodeGenerationHelpers::appendArrayToByteVector(&res, arr.data(), arr.size());
 		CodeGenerationHelpers::appendArrayToByteVector(&res, invokeVirtual.data(), invokeVirtual.size());
 		
-		int offset = arr.size() + iload.size() + value.size() + astore.size() + bodyBytes.size() + incIter.size() + iload.size() + invokeVirtual.size();
+		int offset = arr.size() + iload.size() + value.size() + astore.size() + bodyBytes.size() + incIter.size() + iload.size() + arr.size() + invokeVirtual.size();
 		offset = -offset;
 		vector<char> ifBytes;
 		ifBytes = CodeGenerationCommands::if_icmp(CodeGenerationCommands::LT, offset);

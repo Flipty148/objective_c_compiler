@@ -60,6 +60,8 @@ void Statement_node::semanticTransform(LocalVariablesTable* locals, ConstantsTab
 		if (cur->ForType == FOREACH_FOR_TYPE || cur->ForType == FOREACH_WITH_DECLARATION_FOR_TYPE) {
 			cur->checkFastEnumerationTypes(locals);
 			locals->findOrAddLocalVariable("<iterator>", new Type(INT_TYPE));
+			constants->findOrAddMethodRefConstant("rtl/NSArray", "countDynamic", "()I");
+			constants->findOrAddMethodRefConstant("rtl/NSArray", "objectAtIndexDynamic", "(I)Lrtl/NSObject;");
 		}
 	}
 	else if (type == DO_WHILE_STATEMENT_TYPE) {

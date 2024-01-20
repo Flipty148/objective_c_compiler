@@ -1413,7 +1413,7 @@ void Expression_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariabl
 			if (isObject) {
 				string className;
 				if (receiverName == "super") {//Super
-					className = classTableElement->getClassName();
+					className = classTableElement->getSuperClassName();
 				}
 				else if (!localVariablesTable->isContains(receiverName) && classTableElement->isContainsField(receiverName)) { //Является полем класса
 					FieldsTableElement* field = classTableElement->Fields->items[receiverName];
@@ -1513,6 +1513,15 @@ void Receiver_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariablesT
 			Constant = constantTable->findOrAddFieldRefConstant(className, name, descriptor); //Формирование fieldRef
 		}
 	}
+	else if (type == OBJECT_ARRAY_RECEIVER_TYPE) {
+		if (classTableElement->isContainsField(name)) {
+			string descriptor; //Дескриптор
+			string className; //Имя класса
+			classTableElement->getFieldForRef(name, &descriptor, &className); //Получение данных поля для создания fieldRef
+			Constant = constantTable->findOrAddFieldRefConstant(className, name, descriptor); //Формирование fieldRef
+		}
+		ObjectArrayIndex->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+	}
 	else if (type == MESSAGE_EXPRESSION_RECEIVER_TYPE) {
 		Receiver->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
 		if  (Arguments != NULL)
@@ -1531,6 +1540,10 @@ bool Receiver_node::getName(string* Name)
 		return true;
 	}
 	else if (type == OBJECT_NAME_RECEIVER_TYPE) {
+		*Name = name;
+		return true;
+	}
+	else if (type == OBJECT_ARRAY_RECEIVER_TYPE) {
 		*Name = name;
 		return true;
 	}
@@ -1672,7 +1685,7 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 			if (isObject) {
 				string className;
 				if (receiverName == "super") {//Super
-					className = classTableElement->getClassName();
+					className = classTableElement->getSuperClassName();
 				}
 				else if (!localVariablesTable->isContains(receiverName) && classTableElement->isContainsField(receiverName)) { //Является полем класса
 					FieldsTableElement* field = classTableElement->Fields->items[receiverName];
@@ -1724,6 +1737,9 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 		// Выполнит поиску на дочерних элементах message selector
 		Arguments->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
 	}
+	else if (type == OBJECT_ARRAY_RECEIVER_TYPE) {
+		ObjectArrayIndex->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+	}
 }
 
 void Receiver_node::fillLiterals(ConstantsTable* constantTable)
@@ -1732,6 +1748,8 @@ void Receiver_node::fillLiterals(ConstantsTable* constantTable)
 		Receiver->fillLiterals(constantTable);
 	if (Arguments != NULL)
 		Arguments->fillLiterals(constantTable);
+	if (ObjectArrayIndex != NULL)
+		ObjectArrayIndex->fillLiterals(constantTable);
 }
 
 // ---------- Message_selector_node ----------

@@ -289,6 +289,7 @@ expression_list: expression							{$$ = Expression_list_node::createExpressionLi
 receiver: SUPER								{$$ = Receiver_node::createReceiverNode(SUPER_RECEIVER_TYPE, NULL);}
 		| SELF								{$$ = Receiver_node::createReceiverNode(SELF_RECEIVER_TYPE, NULL);}
 		| IDENTIFIER						{$$ = Receiver_node::createReceiverNode(OBJECT_NAME_RECEIVER_TYPE, $1);}
+		| IDENTIFIER '[' expression ']'		{$$ = Receiver_node::createReceiverNodeFromObjectArray($1, $3);}
 		| CLASS_NAME						{$$ = Receiver_node::createReceiverNode(CLASS_NAME_RECEIVER_TYPE, $1);}
 		| '[' receiver message_selector ']'	{$$ = Receiver_node::createReceiverNodeFromMessageExpression($2, $3);}
 		;

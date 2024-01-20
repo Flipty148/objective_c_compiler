@@ -1,3 +1,3 @@
 Name|Descriptor|IsClassMethod|ReturnType|ParamsTypes|KeywordsTypes|BodyStartStatementId|LocalVariablesTableName
 6 (<init>)|7 (()V)|false|void|||empty|rtl_!Program!_MethodsTable_<init>_LocalVariablesTable.csv
-13 (main)|14 (([Ljava/lang/String;)V)|true|void||java/lang/String[1024]|18|rtl_!Program!_MethodsTable_main_LocalVariablesTable.csv
+19 (main)|20 (([Ljava/lang/String;)V)|true|void||java/lang/String[1024]|53|rtl_!Program!_MethodsTable_main_LocalVariablesTable.csv

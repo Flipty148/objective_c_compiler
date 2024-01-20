@@ -479,6 +479,7 @@ enum receiver_type {
     SUPER_RECEIVER_TYPE,
     SELF_RECEIVER_TYPE,
     OBJECT_NAME_RECEIVER_TYPE,
+	OBJECT_ARRAY_RECEIVER_TYPE,
     CLASS_NAME_RECEIVER_TYPE,
     MESSAGE_EXPRESSION_RECEIVER_TYPE
 };
@@ -492,6 +493,7 @@ class Receiver_node
         receiver_type type;
         Receiver_node *Receiver = NULL;
         Message_selector_node *Arguments = NULL;
+		Expression_node* ObjectArrayIndex = NULL;
 
 		Type* DataType = NULL;
 		LocalVariablesTableElement* LocalVariable = NULL; //Ссылка на локальную переменную
@@ -502,6 +504,7 @@ class Receiver_node
 
         static Receiver_node* createReceiverNode(receiver_type type, char *name);
         static Receiver_node* createReceiverNodeFromMessageExpression(Receiver_node *receiver, Message_selector_node *arguments);
+		static Receiver_node* createReceiverNodeFromObjectArray(char* name, Expression_node *arrIndex);
 
         string toDot(string labelConection="");
 

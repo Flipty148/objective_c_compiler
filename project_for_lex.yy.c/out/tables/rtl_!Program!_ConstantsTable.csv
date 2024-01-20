@@ -11,10 +11,16 @@ ID|Type|Value
 10|UTF8|global/MyClass2
 11|Class|10
 12|MethodRef|8, 11
-13|UTF8|main
-14|UTF8|([Ljava/lang/String;)V
-15|UTF8|java/lang/Object
-16|Class|15
-17|MethodRef|8, 16
-18|UTF8|java/lang/String
-19|Class|18
+13|UTF8|global/MyClass3
+14|Class|13
+15|MethodRef|8, 14
+16|UTF8|printDynamic
+17|NameAndType|16, 7
+18|MethodRef|17, 5
+19|UTF8|main
+20|UTF8|([Ljava/lang/String;)V
+21|UTF8|java/lang/Object
+22|Class|21
+23|MethodRef|8, 22
+24|UTF8|java/lang/String
+25|Class|24

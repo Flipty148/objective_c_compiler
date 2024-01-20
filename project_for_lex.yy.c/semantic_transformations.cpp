@@ -648,6 +648,34 @@ void Receiver_node::setDataType(LocalVariablesTable* locals)
 		}
 	}
 		break;
+	case OBJECT_ARRAY_RECEIVER_TYPE: 
+	{
+		if (locals->isContains(name)) { //Локальная переменная
+			DataType = locals->items[name]->type;
+		}
+		else { //Поле
+			if (ClassesTable::items->count(locals->items["self"]->type->ClassName) != 0) {
+				ClassesTableElement* selfClass = ClassesTable::items->at(locals->items["self"]->type->ClassName);
+				if (selfClass->isContainsField(name)) {
+					string descr;
+					string className;
+					FieldsTableElement* field = selfClass->getFieldForRef(name, &descr, &className);
+					DataType = field->type;
+				}
+				else {
+					string msg = string("Class '") + selfClass->getClassName() + "doesn't contains field '" + string(name);
+					throw new std::exception(msg.c_str());
+				}
+			}
+
+		}
+		ObjectArrayIndex->setDataTypesAndCasts(locals);
+		if (DataType == NULL) { //Отсутствует в локальных переменных и полях
+			string msg = string("Doesn't contains variable '") + string(name);
+			throw new std::exception(msg.c_str());
+		}
+	}
+		break;
 	case CLASS_NAME_RECEIVER_TYPE:
 	{
 		if (ClassesTable::items->count(name) != NULL) {
@@ -962,6 +990,20 @@ void Receiver_node::setAttributes(LocalVariablesTable* locals, ConstantsTable *c
 			string className;
 			Field = selfClass->getFieldForRef(name, &descr, &className);
 		}
+	}
+	break;
+	case OBJECT_ARRAY_RECEIVER_TYPE:
+	{
+		if (locals->isContains(name)) { //Локальная переменная
+			LocalVariable = locals->items[name];
+		}
+		else { //Поле
+			ClassesTableElement* selfClass = ClassesTable::items->at(locals->items["self"]->type->ClassName);
+			string descr;
+			string className;
+			Field = selfClass->getFieldForRef(name, &descr, &className);
+		}
+		ObjectArrayIndex->setAttributes(locals, constants);
 	}
 	break;
 	case MESSAGE_EXPRESSION_RECEIVER_TYPE:

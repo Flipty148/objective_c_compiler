@@ -460,6 +460,16 @@ Receiver_node* Receiver_node::createReceiverNodeFromMessageExpression(Receiver_n
     return res;
 }
 
+Receiver_node* Receiver_node::createReceiverNodeFromObjectArray(char* name, Expression_node* arrIndex)
+{
+	Receiver_node* res = new Receiver_node;
+	res->id = maxId++;
+	res->type = OBJECT_ARRAY_RECEIVER_TYPE;
+	res->ObjectArrayIndex = arrIndex;
+	res->name = name;
+	return res;
+}
+
 // ---------- message_selector ----------
 
 Message_selector_node* Message_selector_node::createMessageSelectorNode(char *methodName,Expression_node *expression, Keyword_argument_list_node *arguments, Expression_list_node *exprArguments)
@@ -1677,6 +1687,13 @@ string Receiver_node::toDot(string labelConection)
         res += to_string(id) + "[label=\"receiver: object_name\"];\n";
         res += to_string(id) + ".1 [label=\"" + name + "\"];\n";
         res += to_string(id) + "->" + to_string(id) + ".1 [label=\"name\"];\n";
+    }
+    else if (type == OBJECT_ARRAY_RECEIVER_TYPE) {
+		res += to_string(id) + "[label=\"receiver: object_array\"];\n";
+		res += to_string(id) + ".1 [label=\"" + name + "\"];\n";
+		res += to_string(id) + "->" + to_string(id) + ".1 [label=\"name\"];\n";
+        res += to_string(id);
+		res += ObjectArrayIndex->toDot("index");
     }
     else if (type == CLASS_NAME_RECEIVER_TYPE)
     {

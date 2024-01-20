@@ -1648,6 +1648,37 @@ vector<char> Receiver_node::generateCode(bool isInsideClassMethod, ConstantsTabl
 		}
 	}
 		break;
+	case OBJECT_ARRAY_RECEIVER_TYPE:
+	{
+		if (LocalVariable != NULL)
+		{
+			vector<char> arr = CodeGenerationCommands::aload(LocalVariable->Id - isInsideClassMethod); //Массив
+			CodeGenerationHelpers::appendArrayToByteVector(&res, arr.data(), arr.size());
+		}
+		else if (Field != NULL) {
+			vector<char> obj = CodeGenerationCommands::aload(0); //Объект
+			CodeGenerationHelpers::appendArrayToByteVector(&res, obj.data(), obj.size());
+
+			string className = Receiver->DataType->ClassName;
+			ConstantsTable* constantsTable = ClassesTable::items->at(className)->ConstantTable;
+			if (constantsTable->items.count(Constant) == 0) {
+				string msg = "Class " + className + " doesn't have constant " + to_string(Constant);
+				throw std::exception(msg.c_str());
+			}
+			else if (constantsTable->items[Constant]->Type != FieldRef) {
+				string msg = "Constant " + to_string(Constant) + " is not fieldRef";
+				throw std::exception(msg.c_str());
+			}
+
+			vector<char> field = CodeGenerationCommands::getfield(Constant); //Поле
+			CodeGenerationHelpers::appendArrayToByteVector(&res, field.data(), field.size());
+		}
+		vector<char> index = ObjectArrayIndex->generateCode(isInsideClassMethod, constantsTable); //Индекс
+		CodeGenerationHelpers::appendArrayToByteVector(&res, index.data(), index.size());
+		vector<char> array = CodeGenerationCommands::aaload(); //Объект
+		CodeGenerationHelpers::appendArrayToByteVector(&res, array.data(), array.size());
+	}
+	break;
 	case CLASS_NAME_RECEIVER_TYPE: {
 
 	}

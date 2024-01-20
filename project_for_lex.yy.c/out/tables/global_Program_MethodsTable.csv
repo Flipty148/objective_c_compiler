@@ -1,0 +1,4 @@
+Name|Descriptor|IsClassMethod|ReturnType|ParamsTypes|KeywordsTypes|BodyStartStatementId|LocalVariablesTableName
+22 (<init>)|9 (()V)|false|void|||empty|global_Program_MethodsTable_<init>_LocalVariablesTable.csv
+8 (printDynamic)|9 (()V)|false|void|||25|global_Program_MethodsTable_printDynamic_LocalVariablesTable.csv
+10 (setADynamic)|11 ((I)V)|false|void||int|14|global_Program_MethodsTable_setADynamic_LocalVariablesTable.csv

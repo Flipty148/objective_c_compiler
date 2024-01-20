@@ -21,6 +21,8 @@ void ClassesTableElement::generateClassFile(string filepath)
 {
 	string className = getClassName(); //Получить имя текущего класса
 	string classFile = filepath + className + ".class"; //Путь к файлу
+	classFile.erase(std::remove(classFile.begin(), classFile.end(), '<'), classFile.end());
+	classFile.erase(std::remove(classFile.begin(), classFile.end(), '>'), classFile.end());
 	
 	//Генерация .class файла
 	vector<char> data;
@@ -82,7 +84,7 @@ void ClassesTableElement::generateClassFile(string filepath)
 bool ClassesTableElement::isNeedToGenerateClassFile()
 {
 	string className = getClassName(); //Получить имя текущего класса
-	if (className == "rtl/Program" || className.find("rtl/") == string::npos)
+	if (className == "rtl/!Program!" || className.find("rtl/") == string::npos)
 		return true;
 	return false;
 }

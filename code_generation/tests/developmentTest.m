@@ -1,5 +1,5 @@
 @class InOutFuncs, NSArray, NSString;
-@implementation MyClass1 : NSObject
+@implementation Program : NSObject
 {
     int a;
 }
@@ -40,9 +40,9 @@ int main()
     // [InOutFuncs printInt:243 < 15];
     // [InOutFuncs printInt:513 <= 513];
     // [InOutFuncs printInt:5 >= 5];
-    MyClass1 *obj;
+    Program *obj;
     // // [obj print];
-    obj = [MyClass1 new];
+    obj = [Program new];
     // // [obj setA:10];
     // // [InOutFuncs printInt:40578];
     // // int a;

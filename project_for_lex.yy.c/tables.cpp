@@ -436,10 +436,10 @@ void ClassesTable::initRTL()
 void ClassesTable::initClassProgram()
 {
 	// Создание класса Program
-	ClassesTableElement* Program = new ClassesTableElement("rtl/Program", NULL, true);
+	ClassesTableElement* Program = new ClassesTableElement("rtl/!Program!", NULL, true);
 
-	//Добавление класса InOutFuncs в таблицу классов
-	(*items)["rtl/Program"] = Program;
+	//Добавление класса Program в таблицу классов
+	(*items)["rtl/!Program!"] = Program;
 }
 
 void ClassesTable::initClassInOutFuncs()
@@ -1534,7 +1534,7 @@ void FunctionsTableElement::convertToClassProgramMethods(ClassesTableElement* cl
 		vector<Type*>* parametersTypes = new vector<Type*>;
 		parametersTypes->push_back(new Type(CLASS_NAME_TYPE, "java/lang/String", 1024));
 		MethodsTableElement* method = classTableElement->Methods->addMethod(classTableElement->ConstantTable, NameStr, descr, true, BodyStart, returnType, new vector<Type*>, parametersTypes);
-		method->LocalVariables->findOrAddLocalVariable("self", new Type(CLASS_NAME_TYPE, "rtl/Program"));
+		method->LocalVariables->findOrAddLocalVariable("self", new Type(CLASS_NAME_TYPE, "rtl/!Program!"));
 		method->LocalVariables->findOrAddLocalVariable("args", new Type(CLASS_NAME_TYPE, "java/lang/String", 1024));
 
 		for (auto i = LocalVariables->items.begin(); i != LocalVariables->items.end(); i++) {
@@ -1550,7 +1550,7 @@ void FunctionsTableElement::convertToClassProgramMethods(ClassesTableElement* cl
 
 void FunctionsTableElement::semanticTransform()
 {
-	ConstantsTable* constants = ClassesTable::items->at("rtl/Program")->ConstantTable;
+	ConstantsTable* constants = ClassesTable::items->at("rtl/!Program!")->ConstantTable;
 	Statement_node* cur = BodyStart;
 	while (cur != NULL)
 	{
@@ -1600,7 +1600,7 @@ void FunctionsTable::toCsvFile(string filename, string filepath, char separator)
 
 void FunctionsTable::fillFieldRefs()
 {
-	ClassesTableElement* classTableElement = ClassesTable::items->at("rtl/Program");
+	ClassesTableElement* classTableElement = ClassesTable::items->at("rtl/!Program!");
 	bool isDontContainsMain = true;
 	auto iter = items.cbegin();
 	while (iter != items.cend())
@@ -1618,7 +1618,7 @@ void FunctionsTable::fillFieldRefs()
 
 void FunctionsTable::fillMethodRefs()
 {
-	ClassesTableElement* classTableElement = ClassesTable::items->at("rtl/Program");
+	ClassesTableElement* classTableElement = ClassesTable::items->at("rtl/!Program!");
 	auto iter = items.cbegin();
 	while (iter != items.cend())
 	{
@@ -1629,7 +1629,7 @@ void FunctionsTable::fillMethodRefs()
 
 void FunctionsTable::fillLiterals()
 {
-	ClassesTableElement* classTableElement = ClassesTable::items->at("rtl/Program");
+	ClassesTableElement* classTableElement = ClassesTable::items->at("rtl/!Program!");
 	auto iter = items.cbegin();
 	while (iter != items.cend())
 	{
@@ -1646,7 +1646,7 @@ void FunctionsTable::convertToClassProgramMethods()
 		throw new exception(msg.c_str());
 	}
 
-	ClassesTableElement* classTableElement = ClassesTable::items->at("rtl/Program");
+	ClassesTableElement* classTableElement = ClassesTable::items->at("rtl/!Program!");
 	auto iter = items.cbegin();
 	while (iter != items.cend())
 	{

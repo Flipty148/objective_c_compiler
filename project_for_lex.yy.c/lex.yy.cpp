@@ -2393,7 +2393,7 @@ if (parseRes == 0) {
 	if (isPreviousSuccess) {
 		try {
 			printf("Start generating .jar file\n");
-			string manifest = "main-class: rtl.Program\nclass-path: code/\n";
+			string manifest = "main-class: rtl.!Program!\nclass-path: code/\n";
 			ofstream out("./out/manifest.mf");
 			out << manifest;
 			out.close();

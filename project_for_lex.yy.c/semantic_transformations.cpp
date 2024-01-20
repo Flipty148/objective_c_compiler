@@ -355,7 +355,10 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 			string descriptor;
 			string className;
 			MethodsTableElement* method = ClassesTable::items->at(receiverType->ClassName)->getMethodForRef(Arguments->MethodName, &descriptor, &className);
-			DataType = method->ReturnType;
+			if (method->NameStr == "newStatic" || method->NameStr == "allocStatic")
+				DataType = Receiver->DataType;
+			else
+				DataType = method->ReturnType;
 			Arguments->setDataTypes(locals, receiverType->ClassName); //Установить DataType для параметров
 		}
 	}

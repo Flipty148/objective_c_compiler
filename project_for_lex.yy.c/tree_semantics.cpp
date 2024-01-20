@@ -966,10 +966,14 @@ void Statement_node::fillFieldRefs(ConstantsTable *constantTable, LocalVariables
 
 	}
 	else if (type == SIMPLE_STATEMENT_TYPE) {
-		Expression->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+		if (Expression != NULL) {
+			Expression->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+		}
 	}
 	else if (type == RETURN_STATEMENT_TYPE) {
-		Expression->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+		if (Expression != NULL) {
+			Expression->fillFieldRefs(constantTable, localVariablesTable, classTableElement);
+		}
 	}
 	else if (type == IF_STATEMENT_TYPE) {
 		If_statement_node *cur = (If_statement_node*)this;
@@ -1027,10 +1031,12 @@ void Statement_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariable
 
 	}
 	else if (type == SIMPLE_STATEMENT_TYPE) {
-		Expression->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+		if (Expression != NULL)
+			Expression->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
 	}
 	else if (type == RETURN_STATEMENT_TYPE) {
-		Expression->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
+		if (Expression != NULL)
+			Expression->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod);
 	}
 	else if (type == IF_STATEMENT_TYPE) {
 		If_statement_node* cur = (If_statement_node*)this;
@@ -1088,10 +1094,12 @@ void Statement_node::fillLiterals(ConstantsTable* constantTable)
 
 	}
 	else if (type == SIMPLE_STATEMENT_TYPE) {
-		Expression->fillLiterals(constantTable);
+		if (Expression != NULL)
+			Expression->fillLiterals(constantTable);
 	}
 	else if (type == RETURN_STATEMENT_TYPE) {
-		Expression->fillLiterals(constantTable);
+		if (Expression != NULL)
+			Expression->fillLiterals(constantTable);
 	}
 	else if (type == IF_STATEMENT_TYPE) {
 		If_statement_node* cur = (If_statement_node*)this;

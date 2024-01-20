@@ -1,5 +1,8 @@
 Name|SuperclassName|IsImplementation|ThisClass|Superclass|FieldsTableName|MethodsTableName|PropertiesTableName|ConstantsTableName
-2(rtl/!Program!)|40(java/lang/Object)|true|3|41|emptyTable|rtl/!Program!_MethodsTable.csv|emptyTable|rtl/!Program!_ConstantsTable.csv
+2(global/MyClass1)|3(rtl/NSObject)|true|4|5|emptyTable|global/MyClass1_MethodsTable.csv|emptyTable|global/MyClass1_ConstantsTable.csv
+2(global/MyClass2)|3(global/MyClass1)|true|4|5|emptyTable|global/MyClass2_MethodsTable.csv|emptyTable|global/MyClass2_ConstantsTable.csv
+2(global/MyClass3)|3(rtl/NSObject)|true|4|5|emptyTable|global/MyClass3_MethodsTable.csv|emptyTable|global/MyClass3_ConstantsTable.csv
+2(rtl/!Program!)|15(java/lang/Object)|true|3|16|emptyTable|rtl/!Program!_MethodsTable.csv|emptyTable|rtl/!Program!_ConstantsTable.csv
 2(rtl/InOutFuncs)|26(java/lang/Object)|true|3|27|emptyTable|rtl/InOutFuncs_MethodsTable.csv|emptyTable|rtl/InOutFuncs_ConstantsTable.csv
 2(rtl/NSArray)|3(rtl/NSObject)|true|4|5|emptyTable|rtl/NSArray_MethodsTable.csv|emptyTable|rtl/NSArray_ConstantsTable.csv
 2(rtl/NSObject)|21(java/lang/Object)|true|3|22|emptyTable|rtl/NSObject_MethodsTable.csv|emptyTable|rtl/NSObject_ConstantsTable.csv

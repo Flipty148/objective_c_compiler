@@ -2,56 +2,19 @@ ID|Type|Value
 1|UTF8|Code
 2|UTF8|rtl/!Program!
 3|Class|2
-4|UTF8|rtl/InOutFuncs
+4|UTF8|global/MyClass1
 5|Class|4
-6|UTF8|printCharArrayStatic
-7|UTF8|([C)V
+6|UTF8|<init>
+7|UTF8|()V
 8|NameAndType|6, 7
 9|MethodRef|8, 5
-10|UTF8|printIntStatic
-11|UTF8|(I)V
-12|NameAndType|10, 11
-13|MethodRef|12, 5
-14|UTF8|printCharStatic
-15|UTF8|(C)V
-16|NameAndType|14, 15
-17|MethodRef|16, 5
-18|UTF8|Plus
-19|String|18
-20|UTF8|
-Minus
-21|String|20
-22|UTF8|
-Mul
-23|String|22
-24|UTF8|
-Div
-25|String|24
-26|UTF8|
-Equal
-27|String|26
-28|UTF8|
-NotEqual
-29|String|28
-30|UTF8|
-Less
-31|String|30
-32|UTF8|
-Greater
-33|String|32
-34|UTF8|
-LessEqual
-35|String|34
-36|UTF8|
-GreaterEqual
-37|String|36
-38|UTF8|main
-39|UTF8|([Ljava/lang/String;)V
-40|UTF8|java/lang/Object
-41|Class|40
-42|UTF8|<init>
-43|UTF8|()V
-44|NameAndType|42, 43
-45|MethodRef|44, 41
-46|UTF8|java/lang/String
-47|Class|46
+10|UTF8|global/MyClass2
+11|Class|10
+12|MethodRef|8, 11
+13|UTF8|main
+14|UTF8|([Ljava/lang/String;)V
+15|UTF8|java/lang/Object
+16|Class|15
+17|MethodRef|8, 16
+18|UTF8|java/lang/String
+19|Class|18

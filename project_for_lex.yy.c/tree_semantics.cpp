@@ -347,23 +347,25 @@ void Program_node::fillClassesTable()
 
 vector<string> Interface_body_node::getInstanceVariables(vector<Type*>* varTypes)
 {
-	Instance_variables_declaration_node* first = Variables->First;
 	vector<string> res;
-	while (first != NULL)
-	{
-		vector<Type*> *types = new vector<Type*>;
-		vector <string> names = first->getInstanceVariables(types);
-		for (int i = 0; i < names.size(); i++)
+	if (Variables != NULL) {
+		Instance_variables_declaration_node* first = Variables->First;
+		while (first != NULL)
 		{
-			if (std::find(res.begin(), res.end(), names[i]) != res.end())
+			vector<Type*>* types = new vector<Type*>;
+			vector <string> names = first->getInstanceVariables(types);
+			for (int i = 0; i < names.size(); i++)
 			{
-				string msg = "Variable '" + names[i] + "' redeclaration";
-				throw new std::exception(msg.c_str());
+				if (std::find(res.begin(), res.end(), names[i]) != res.end())
+				{
+					string msg = "Variable '" + names[i] + "' redeclaration";
+					throw new std::exception(msg.c_str());
+				}
+				res.push_back(names[i]);
+				varTypes->push_back(types->at(i));
 			}
-			res.push_back(names[i]);
-			varTypes->push_back(types->at(i));
+			first = first->Next;
 		}
-		first = first->Next;
 	}
 	return res;
 }
@@ -590,6 +592,7 @@ map<string, Type*> Declaration_node::getDeclaration(map<string, Expression_node*
 		Expression_node* arrSize = (*it)->ArraySize; //Размер массива
 		Expression_node* initializer = (*it)->expression; // Инициализатор
 		Expression_list_node* initializerList = (*it)->InitializerList; // Инициализатор массива
+		bool isArr = (*it)->isArray;
 		if (type == CLASS_NAME_TYPE)
 		{
 			string className = ClassesTable::getFullClassName(string(this->typeNode->ClassName));
@@ -628,7 +631,7 @@ map<string, Type*> Declaration_node::getDeclaration(map<string, Expression_node*
 		}
 		else
 		{ 
-			if (arrSize != NULL || initializerList != NULL)
+			if (isArr)
 			{ // Массив примитивного типа
 				int arraySize;
 				Type* curType;
@@ -638,7 +641,14 @@ map<string, Type*> Declaration_node::getDeclaration(map<string, Expression_node*
 				}
 				else
 				{
-					arraySize = initializerList->getElements()->size();
+					if (initializer != NULL && initializer->type == LITERAL_EXPRESSION_TYPE) {
+						if (initializer->literal->type == STRING_CONSTANT_TYPE) {
+							arraySize = strlen(initializer->literal->value) + 1;
+						}
+					}
+					else if (initializerList != NULL) {
+						arraySize = initializerList->getElements()->size();
+					}
 					curType = new Type(type, arraySize);
 				}
 				
@@ -720,12 +730,24 @@ Type* Type_node::toDataType()
 	{
 		string className = ClassesTable::getFullClassName(string(ClassName));
 		strcpy(ClassName, className.c_str()); //Преобразование имени класа в узле дерева
-		Type* res = new Type(type, className);
+		Type* res;
+		if (isArray) {
+			res = new Type(type, className, 1024);
+		}
+		else {
+			res = new Type(type, className);
+		}
 		return res;
 	}
 	else
 	{
-		Type* res = new Type(type);
+		Type* res;
+		if (isArray) {
+			res = new Type(type, 1024);
+		}
+		else {
+			res = new Type(type);
+		}
 		return res;
 	}
 }
@@ -856,6 +878,7 @@ void getTypesFromInitDeclaratorType(vector<Init_declarator_node*>* declarators, 
 		Expression_node* arrSize = (*it)->ArraySize; //Размер массива
 		Expression_node* initializer = (*it)->expression; // Инициализатор
 		Expression_list_node* initializerList = (*it)->InitializerList; // Инициализатор массива
+		bool isArr = (*it)->isArray;
 		if (type == CLASS_NAME_TYPE)
 		{
 			string className = ClassesTable::getFullClassName(string(typeNode->ClassName));
@@ -895,7 +918,7 @@ void getTypesFromInitDeclaratorType(vector<Init_declarator_node*>* declarators, 
 		}
 		else
 		{
-			if (arrSize != NULL || initializerList != NULL)
+			if (isArr)
 			{ // Массив примитивного типа
 				Type* curType;
 				int arraySize;
@@ -905,7 +928,14 @@ void getTypesFromInitDeclaratorType(vector<Init_declarator_node*>* declarators, 
 				}
 				else
 				{
-					arraySize = initializerList->getElements()->size();
+					if (initializer != NULL && initializer->type == LITERAL_EXPRESSION_TYPE) {
+						if (initializer->literal->type == STRING_CONSTANT_TYPE) {
+							arraySize = strlen(initializer->literal->value) + 1;
+						}
+					}
+					else if (initializerList != NULL){
+						arraySize = initializerList->getElements()->size();
+					}
 					curType = new Type(type, arraySize);
 				}
 				

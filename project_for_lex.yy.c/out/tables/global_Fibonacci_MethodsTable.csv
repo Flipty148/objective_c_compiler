@@ -1,3 +1,0 @@
-Name|Descriptor|IsClassMethod|ReturnType|ParamsTypes|KeywordsTypes|BodyStartStatementId|LocalVariablesTableName
-14 (<init>)|15 (()V)|false|void|||empty|global_Fibonacci_MethodsTable_<init>_LocalVariablesTable.csv
-6 (nElemStatic)|7 ((I)I)|true|int||int|38|global_Fibonacci_MethodsTable_nElemStatic_LocalVariablesTable.csv

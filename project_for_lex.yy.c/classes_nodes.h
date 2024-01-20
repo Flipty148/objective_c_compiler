@@ -63,6 +63,7 @@ class Type_node
         int id;
         enum type_type type;
         char *ClassName;
+		bool isArray = false;
 
         static Type_node* createTypeNode(type_type type);
         static Type_node* createTypeNodeFromClassName(type_type type, char *name);
@@ -245,6 +246,7 @@ class Init_declarator_node
         Init_declarator_node *Next;
         char *Declarator;
         Expression_list_node *InitializerList;
+		bool isArray = false;
 
         static Init_declarator_node* createInitDeclaratorNode(init_declarator_type type, char *declarator, Expression_node *expression);
         static Init_declarator_node* createInitDeclaratorNodeFromArray(init_declarator_type type, char *declarator, Expression_node *arraySize, Expression_node *expression, Expression_list_node *initializerList);

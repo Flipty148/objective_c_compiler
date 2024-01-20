@@ -471,6 +471,8 @@ keyword_declaration: ':' method_type IDENTIFIER					{$$ = Keyword_declaration_no
 
 method_type: '(' type ')'	{$$ = $2;}
 		   | '(' CLASS_NAME '*' ')' {$$ = Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $2);}
+		   | '(' type '['']' ')' {$$ = $2; $$->isArray = true;}
+		   | '(' CLASS_NAME '*' '['']' ')' {$$ = Type_node::createTypeNodeFromClassName(CLASS_NAME_TYPE, $2); $$->isArray = true;}
 		   ;
 
 property: PROPERTY attribute type identifier_list ';'	{$$ = Property_node::createPropertyNode($2, $3, $4);}

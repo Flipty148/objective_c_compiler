@@ -228,6 +228,7 @@ Init_declarator_node* Init_declarator_node::createInitDeclaratorNodeFromArray(in
     res->expression = expression;
     res->ArraySize = arraySize;
     res->InitializerList = initializerList;
+	res->isArray = true;
     res->Next = NULL;
     return res;
 }

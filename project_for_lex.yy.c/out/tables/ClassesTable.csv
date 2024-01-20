@@ -1,4 +1,5 @@
 Name|SuperclassName|IsImplementation|ThisClass|Superclass|FieldsTableName|MethodsTableName|PropertiesTableName|ConstantsTableName
+2(global/NSString)|4(java/lang/Object)|false|3|5|emptyTable|global/NSString_MethodsTable.csv|emptyTable|global/NSString_ConstantsTable.csv
 2(global/Program)|3(rtl/NSObject)|true|4|5|global/Program_FieldsTable.csv|global/Program_MethodsTable.csv|emptyTable|global/Program_ConstantsTable.csv
 2(rtl/!Program!)|48(java/lang/Object)|true|3|49|emptyTable|rtl/!Program!_MethodsTable.csv|emptyTable|rtl/!Program!_ConstantsTable.csv
 2(rtl/InOutFuncs)|26(java/lang/Object)|true|3|27|emptyTable|rtl/InOutFuncs_MethodsTable.csv|emptyTable|rtl/InOutFuncs_ConstantsTable.csv

@@ -373,11 +373,16 @@ ClassesTableElement* ClassesTable::addClass(string name, string* superclassName,
 	string fullName = "global/" + name;
 	string* fullSuperclassName = NULL;
 	if (superclassName != NULL) {
-		if (*superclassName == "NSObject" || *superclassName == "NSString" || *superclassName == "NSArray")
+		if (*superclassName == "NSObject" || *superclassName == "NSString" || *superclassName == "NSArray" || *superclassName == "InOutFuncs")
 			fullSuperclassName = new string("rtl/" + *superclassName);
 		else
 			fullSuperclassName = new string("global/" + *superclassName);
 	}
+	if (name == "NSObject" || name == "NSString" || name == "NSArray" || name == "InOutFuncs") {
+		string msg = "Unsupported protocols. Because class '" + name + "' is reserved.";
+		throw new std::exception(msg.c_str());
+	}
+		
 	ClassesTableElement* element = new ClassesTableElement("global/" + name, fullSuperclassName, isImplementation); // Новый добавляемый элемент
 
 

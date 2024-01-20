@@ -20,6 +20,9 @@
 
 @end
 
+@implementation NSString
+@end
+
 int main()
 {
     // [InOutFuncs printInt:10];

@@ -216,8 +216,8 @@ void Function_and_class_list_node::fillTables()
             { // Интерфейс
                 Class_interface_node* curInterface = (Class_interface_node*)cur;
                 string className = curInterface->ClassName; // Имя класса
-                string superclassName = curInterface->SuperclassName; // Имя суперкласса
-                ClassesTableElement* element = ClassesTable::addClass(className, &superclassName, false, curInterface); // Добавление класса в таблицу
+				string* superclassName = curInterface->SuperclassName == NULL ? NULL : new string(curInterface->SuperclassName); // Имя суперкласса
+                ClassesTableElement* element = ClassesTable::addClass(className, superclassName, false, curInterface); // Добавление класса в таблицу
 
 				if (curInterface->Body != NULL) {
 					// Добавление переменных

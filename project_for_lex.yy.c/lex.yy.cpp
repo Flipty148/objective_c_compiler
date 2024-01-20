@@ -2317,16 +2317,16 @@ if (parseRes == 0) {
     
 	//Семантический анализ
 	if (isPreviousSuccess) {
-		try {
+		/*try {*/
 			printf("Start semantic analysis\n");
 			root->fillClassesTable();
 			printf("Successful semantic analysis\n");
-		}
+		/*}
 		catch (std::exception *e) {
 			printf("%s", e->what());
 			isPreviousSuccess = false;
 		}
-		/*catch (...) {
+		catch (...) {
 			printf("Failed semantic analysis\n");
 			isPreviousSuccess = false;
 		}*/

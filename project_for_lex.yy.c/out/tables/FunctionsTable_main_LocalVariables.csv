@@ -1,8 +1,7 @@
 Id|Name|Type
-2|arr|rtl/NSArray
-6|elem|rtl/NSString
-1|obj|global/Program
+3|arr|int[ expr(16) ]
+1|arrSize|int
+2|i|int
+5|j|int
 0|self|rtl/!Program!
-3|str1|rtl/NSString
-4|str2|rtl/NSString
-5|str3|rtl/NSString
+4|tmp|int

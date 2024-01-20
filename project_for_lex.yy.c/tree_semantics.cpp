@@ -803,6 +803,38 @@ void Statement_node::findLocalVariables(vector<string>* localVariablesNames, vec
 			declarators->push_back(dec);
 		}
 		typeNode = for_stmt->NameType;
+		if (for_stmt->LoopBody != NULL) {
+			for_stmt->LoopBody->findLocalVariables(localVariablesNames, localVariablesTypes);
+		}
+	}
+	if (type == WHILE_STATEMENT_TYPE) {
+		While_statement_node* while_stmt = (While_statement_node*)this;
+		if (while_stmt->LoopBody != NULL) {
+			while_stmt->LoopBody->findLocalVariables(localVariablesNames, localVariablesTypes);
+		}
+	}
+	if (type == DO_WHILE_STATEMENT_TYPE) {
+		Do_while_statement_node* do_while_stmt = (Do_while_statement_node*)this;
+		if (do_while_stmt->LoopBody != NULL) {
+			do_while_stmt->LoopBody->findLocalVariables(localVariablesNames, localVariablesTypes);
+		}
+	}
+	if (type == IF_STATEMENT_TYPE) {
+		If_statement_node* if_stmt = (If_statement_node*)this;
+		if (if_stmt->TrueBranch != NULL) {
+			if_stmt->TrueBranch->findLocalVariables(localVariablesNames, localVariablesTypes);
+		}
+		if (if_stmt->FalseBranch != NULL) {
+			if_stmt->FalseBranch->findLocalVariables(localVariablesNames, localVariablesTypes);
+		}
+	}
+	if (type == COMPOUND_STATEMENT_TYPE) {
+		Statement_node* cur = ((Statement_list_node*)this)->First;
+		while (cur != NULL)
+		{
+			cur->findLocalVariables(localVariablesNames, localVariablesTypes);
+			cur = cur->Next;
+		}
 	}
 	if (declarators != NULL && typeNode != NULL)
 		getTypesFromInitDeclaratorType(declarators, typeNode, localVariablesNames, localVariablesTypes); // Получение переменных

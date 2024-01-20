@@ -1,8 +1,4 @@
 Id|Name|Type
 1|args|java/lang/String[1024]
-2|arr|int[ expr(16) ]
-3|arrSize|int
-4|i|int
-5|j|int
+2|n|int
 0|self|rtl/!Program!
-6|tmp|int

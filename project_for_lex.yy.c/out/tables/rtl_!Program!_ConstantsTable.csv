@@ -16,20 +16,21 @@ ID|Type|Value
 15|UTF8|(I)V
 16|NameAndType|14, 15
 17|MethodRef|16, 5
-18|UTF8|Input arr: 
-
-19|String|18
-20|UTF8|
-Output arr: 
-
-21|String|20
-22|UTF8|main
-23|UTF8|([Ljava/lang/String;)V
-24|UTF8|java/lang/Object
-25|Class|24
-26|UTF8|<init>
-27|UTF8|()V
-28|NameAndType|26, 27
-29|MethodRef|28, 25
-30|UTF8|java/lang/String
-31|Class|30
+18|UTF8|global/Fibonacci
+19|Class|18
+20|UTF8|nElemStatic
+21|UTF8|(I)I
+22|NameAndType|20, 21
+23|MethodRef|22, 19
+24|UTF8|Input number:
+25|String|24
+26|UTF8|main
+27|UTF8|([Ljava/lang/String;)V
+28|UTF8|java/lang/Object
+29|Class|28
+30|UTF8|<init>
+31|UTF8|()V
+32|NameAndType|30, 31
+33|MethodRef|32, 29
+34|UTF8|java/lang/String
+35|Class|34

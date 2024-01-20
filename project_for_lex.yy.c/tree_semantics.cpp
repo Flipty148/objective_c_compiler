@@ -1230,7 +1230,7 @@ void Expression_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariable
 			}
 			if (classElem != classTableElement && classTableElement->getClassName() != "rtl/!Program!" && !classTableElement->isHaveOneOfSuperclass(className)) {
 				// Поле является protected и не выполнено условие для возможности использования protected
-				string msg = "Component '" + fieldName + "' only protected";
+				string msg = "Variable '" + fieldName + "' only protected";
 				throw new std::exception(msg.c_str());
 			}
 
@@ -1255,7 +1255,7 @@ void Expression_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariable
 			}
 			if (classElem != classTableElement && classTableElement->getClassName() != "rtl/!Program!" && !classTableElement->isHaveOneOfSuperclass(className)) {
 				// Поле является protected и не выполнено условие для возможности использования protected
-				string msg = "Component '" + fieldName + "' only protected";
+				string msg = "Variable '" + fieldName + "' only protected";
 				throw new std::exception(msg.c_str());
 			}
 

@@ -852,11 +852,7 @@ void Statement_node::findLocalVariables(vector<string>* localVariablesNames, vec
 	}
 	if (type == COMPOUND_STATEMENT_TYPE) {
 		Statement_node* cur = ((Statement_list_node*)this)->First;
-		while (cur != NULL)
-		{
-			cur->findLocalVariables(localVariablesNames, localVariablesTypes);
-			cur = cur->Next;
-		}
+		cur->findLocalVariables(localVariablesNames, localVariablesTypes);
 	}
 	if (declarators != NULL && typeNode != NULL)
 		getTypesFromInitDeclaratorType(declarators, typeNode, localVariablesNames, localVariablesTypes); // Получение переменных

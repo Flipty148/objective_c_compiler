@@ -20,8 +20,8 @@
 
 @end
 
-@implementation NSString
-@end
+// @implementation NSString
+// @end
 
 int main()
 {
@@ -110,20 +110,23 @@ int main()
     // //     [InOutFuncs printInt:i];
     // }
 
-    NSArray *arr = [NSArray array];
-    NSString *str1 = @"first";
-    NSString *str2 = @"second";
-    NSString *str3 = @"third";
-    arr = [arr arrayByAddingObject: str1];
-    arr = [arr arrayByAddingObject: str2];
-    arr = [arr arrayByAddingObject: str3];
-    // NSString *elem;
-    for (NSString *elem in arr)
-    {
-        [InOutFuncs printNSString:elem];
-    }
+    // NSArray *arr = [NSArray array];
+    // NSString *str1 = @"first";
+    // NSString *str2 = @"second";
+    // NSString *str3 = @"third";
+    // arr = [arr arrayByAddingObject: str1];
+    // arr = [arr arrayByAddingObject: str2];
+    // arr = [arr arrayByAddingObject: str3];
+    // // NSString *elem;
+    // for (NSString *elem in arr)
+    // {
+    //     [InOutFuncs printNSString:elem];
+    // }
 
     // NSString *str = @"hello";
     // [InOutFuncs printNSString:str];
     // [InOutFuncs printNSString:@"test"];
+
+    int a = 10;
+    int a = 20;
 }

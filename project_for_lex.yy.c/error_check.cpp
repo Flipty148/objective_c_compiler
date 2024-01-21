@@ -1,4 +1,5 @@
 #include "tables.h"
+#include <string>
 
 void Expression_node::checkLvalueError()
 {
@@ -10,7 +11,7 @@ void Expression_node::checkLvalueError()
 		isIncorrectLvalue = isIncorrectLvalue && Left->type != ARRAY_ELEMENT_ACCESS_EXPRESSION_TYPE;
 
 		if (isIncorrectLvalue) {
-			string msg = "Incorrect lvalue. Lvalue have '" + Left->getTypeName() + "' type";
+			string msg = "Incorrect lvalue. Lvalue have '" + Left->getTypeName() + "' type in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 	}
@@ -118,7 +119,7 @@ void For_statement_node::checkFastEnumerationTypes(LocalVariablesTable* locals)
 	if (locals->isContains(name)) { //Локальная переменная
 		Type* type = locals->items[name]->type;
 		if (type->ClassName == "") {
-			string msg = "Variable in fast enumeration isn't an object. It has type '" + type->toString() + "'";
+			string msg = "Variable in fast enumeration isn't an object. It has type '" + type->toString() + "' in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 	}
@@ -131,12 +132,12 @@ void For_statement_node::checkFastEnumerationTypes(LocalVariablesTable* locals)
 				FieldsTableElement* field = selfClass->getFieldForRef(name, &descr, &className);
 				Type* type = field->type;
 				if (type->ClassName == "") {
-					string msg = "Variable in fast enumeration isn't an object. It has type '" + type->toString() + "'";
+					string msg = "Variable in fast enumeration isn't an object. It has type '" + type->toString() + "' in line: " + to_string(line);
 					throw new std::exception(msg.c_str());
 				}
 			}
 			else {
-				string msg = "Variable '" + string(name) + "' is undeclarated";
+				string msg = "Variable '" + string(name) + "' is undeclarated in line: " + to_string(line);
 				throw new std::exception(msg.c_str());
 			}
 		}
@@ -144,13 +145,13 @@ void For_statement_node::checkFastEnumerationTypes(LocalVariablesTable* locals)
 
 	//Проверка итерируемой переменной
 	if (ConditionExpression->type != IDENTIFIER_EXPRESSION_TYPE) {
-		string msg = "Iterable variable isn't variable. It has type '" + ConditionExpression->getTypeName() + "'";
+		string msg = "Iterable variable isn't variable. It has type '" + ConditionExpression->getTypeName() + "' in line: " + to_string(line);
 		throw new std::exception(msg.c_str());
 	}
 	if (locals->isContains(ConditionExpression->name)) { //Локальная переменная
 		Type* type = locals->items[ConditionExpression->name]->type;
 		if (type->ClassName == "") {
-			string msg = "Variable in fast enumeration isn't an object. It has type '" + type->toString() + "'";
+			string msg = "Variable in fast enumeration isn't an object. It has type '" + type->toString() + "' in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 	}
@@ -163,12 +164,12 @@ void For_statement_node::checkFastEnumerationTypes(LocalVariablesTable* locals)
 				FieldsTableElement* field = selfClass->getFieldForRef(ConditionExpression->name, &descr, &className);
 				Type* type = field->type;
 				if (type->ClassName == "") {
-					string msg = "Variable in fast enumeration isn't an object. It has type '" + type->toString() + "'";
+					string msg = "Variable in fast enumeration isn't an object. It has type '" + type->toString() + "' in line: " + to_string(line);
 					throw new std::exception(msg.c_str());
 				}
 			}
 			else {
-				string msg = "Variable '" + string(ConditionExpression->name) + "' is undeclarated";
+				string msg = "Variable '" + string(ConditionExpression->name) + "' is undeclarated in line: " + to_string(line);
 				throw new std::exception(msg.c_str());
 			}
 		}

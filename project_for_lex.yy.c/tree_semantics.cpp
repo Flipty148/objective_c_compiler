@@ -1,5 +1,6 @@
 #include "tables.h"
 #include <algorithm>
+#include <string>
 // ------------------------------ Обход дерева -------------------------------
 
 void getTypesFromInitDeclaratorType(vector<Init_declarator_node*>* declarators, Type_node* typeNode, vector<string>* varsNames, vector<Type*>* varsTypes);
@@ -613,8 +614,8 @@ map<string, Type*> Declaration_node::getDeclaration(map<string, Expression_node*
 				
 				res[name] = curType;
 				if (initializators->count(name) && (*initializators)[name] != NULL && initializerList != NULL) {
-					string msg = "Variable '" + name + "' redifinition";
-					throw new exception(msg.c_str());
+					string msg = "Variable '" + name + "' redifinition in line: " + to_string(line);
+					throw new std::exception(msg.c_str());
 				}
 				(*initializators)[name] = initializerList;
 			}
@@ -623,8 +624,8 @@ map<string, Type*> Declaration_node::getDeclaration(map<string, Expression_node*
 				Type* curType = new Type(type, className);
 				res[name] = curType;
 				if (initializators->count(name) && (*initializators)[name] != NULL && initializer != NULL) {
-					string msg = "Variable '" + name + "' redifinition";
-					throw new exception(msg.c_str());
+					string msg = "Variable '" + name + "' redifinition in line: " + to_string(line);
+					throw new std::exception(msg.c_str());
 				}
 				(*initializators)[name] = initializer;
 			}
@@ -654,8 +655,8 @@ map<string, Type*> Declaration_node::getDeclaration(map<string, Expression_node*
 				
 				res[name] = curType;
 				if (initializators->count(name) && (*initializators)[name] != NULL && initializerList != NULL) {
-					string msg = "Variable '" + name + "' redifinition";
-					throw new exception(msg.c_str());
+					string msg = "Variable '" + name + "' redifinition in line: " + to_string(line);
+					throw new std::exception(msg.c_str());
 				}
 				(*initializators)[name] = initializerList;
 			}
@@ -664,8 +665,8 @@ map<string, Type*> Declaration_node::getDeclaration(map<string, Expression_node*
 				Type* curType = new Type(type);
 				res[name] = curType;
 				if (initializators->count(name) && (*initializators)[name] != NULL && initializer != NULL) {
-					string msg = "Variable '" + name + "' redifinition";
-					throw new exception(msg.c_str());
+					string msg = "Variable '" + name + "' redifinition in line: " + to_string(line);
+					throw new std::exception(msg.c_str());
 				}
 				(*initializators)[name] = initializer;
 			}
@@ -776,8 +777,8 @@ void Method_selector_node::getParams(vector<string>* keywordsNames, vector<Type*
 			string name = string(keyword->KeywordName); //Имя
 			Type* type = keyword->KeywordType->toDataType(); //Тип
 			if (std::find(keywordsNames->begin(), keywordsNames->end(), name) != keywordsNames->end()) { //Переопределение параметра
-				string msg = "Parameter '" + name + "' redifinition";
-				throw new exception(msg.c_str());
+				string msg = "Parameter '" + name + "' redifinition in method '" + string(MethodName) + "'";
+				throw new std::exception(msg.c_str());
 			}
 			keywordsNames->push_back(name); //Добавление имени
 			keywordsTypes->push_back(type); //Добавление типа
@@ -792,8 +793,8 @@ void Method_selector_node::getParams(vector<string>* keywordsNames, vector<Type*
 			string name = string(parameter->name); //Имя
 			Type* type = parameter->type->toDataType(); //Тип
 			if (std::find(parametersNames->begin(), parametersNames->end(), name) != parametersNames->end() || std::find(keywordsNames->begin(), keywordsNames->end(), name) != keywordsNames->end()) { //Переопределение параметра
-				string msg = "Parameter '" + name + "' redifinition";
-				throw new exception(msg.c_str());
+				string msg = "Parameter '" + name + "' redifinition in line: " + to_string(line);
+				throw new std::exception(msg.c_str());
 			}
 			parametersNames->push_back(name); //Добавление имени
 			parametersTypes->push_back(type); //Добавление типа
@@ -894,8 +895,8 @@ void getTypesFromInitDeclaratorType(vector<Init_declarator_node*>* declarators, 
 				}
 				
 				if (std::find(varsNames->begin(), varsNames->end(), name) != varsNames->end() && initializerList != NULL) {
-					string msg = "Variable '" + name + "' redifinition";
-					throw new exception(msg.c_str());
+					string msg = "Variable '" + name + "' redifinition in line: " + to_string((*it)->line);
+					throw new std::exception(msg.c_str());
 				}
 				varsNames->push_back(name);
 				varsTypes->push_back(curType);
@@ -905,8 +906,8 @@ void getTypesFromInitDeclaratorType(vector<Init_declarator_node*>* declarators, 
 			{ //Тип класса
 				Type* curType = new Type(type, className);
 				if (std::find(varsNames->begin(), varsNames->end(), name) != varsNames->end() && initializer != NULL) {
-					string msg = "Variable '" + name + "' redifinition";
-					throw new exception(msg.c_str());
+					string msg = "Variable '" + name + "' redifinition in line: " + to_string((*it)->line);
+					throw new std::exception(msg.c_str());
 				}
 				varsNames->push_back(name);
 				varsTypes->push_back(curType);
@@ -936,8 +937,8 @@ void getTypesFromInitDeclaratorType(vector<Init_declarator_node*>* declarators, 
 				}
 				
 				if (std::find(varsNames->begin(), varsNames->end(), name) != varsNames->end() && initializerList != NULL) {
-					string msg = "Variable '" + name + "' redifinition";
-					throw new exception(msg.c_str());
+					string msg = "Variable '" + name + "' redifinition in line: " + to_string((*it)->line);
+					throw new std::exception(msg.c_str());
 				}
 				varsNames->push_back(name);
 				varsTypes->push_back(curType);
@@ -946,8 +947,8 @@ void getTypesFromInitDeclaratorType(vector<Init_declarator_node*>* declarators, 
 			{ //Примитивный тип
 				Type* curType = new Type(type);
 				if (std::find(varsNames->begin(), varsNames->end(), name) != varsNames->end() && initializer != NULL) {
-					string msg = "Variable '" + name + "' redifinition";
-					throw new exception(msg.c_str());
+					string msg = "Variable '" + name + "' redifinition in line: " + to_string((*it)->line);
+					throw new std::exception(msg.c_str());
 				}
 				varsNames->push_back(name);
 				varsTypes->push_back(curType);
@@ -1166,8 +1167,8 @@ void Expression_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariable
 
 	if (type == IDENTIFIER_EXPRESSION_TYPE) {
 		if (!localVariablesTable->isContains(name) && !classTableElement->isContainsField(name)) {
-			string msg = "Variable '" + string(name) + "' not declarated";
-			throw new exception(msg.c_str());
+			string msg = "Variable '" + string(name) + "' not declarated in line: " + to_string(line);
+			throw new std::exception(msg.c_str());
 		}
 		else if (!localVariablesTable->isContains(name) && classTableElement->isContainsField(name)) {
 			string descriptor; //Строка дескриптора
@@ -1181,7 +1182,7 @@ void Expression_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariable
 
 	}
 	else if (type == SUPER_EXPRESSION_TYPE) {
-		string msg = "Can not call field from super object";
+		string msg = "Can not call field from super object in line: " + to_string(line);
 		throw new std::exception(msg.c_str());
 	}
 	if (type == ARROW_EXPRESSION_TYPE) {
@@ -1192,41 +1193,41 @@ void Expression_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariable
 		else if (Left->type == SELF_EXPRESSION_TYPE)
 			objName = "self";
 		else if (Left->type == SUPER_EXPRESSION_TYPE) {
-			string msg = "Can not call field from super object";
+			string msg = "Can not call field from super object in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 		else {
-			string msg = "Invalid expression type in field call.";
+			string msg = "Invalid expression type in field call. in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 
 
 		if (name == NULL) {
-			string msg = "Field call not to field";
+			string msg = "Field call not to field in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 
 
 		string fieldName = name; //Имя поля
 		if (!localVariablesTable->isContains(objName) && !classTableElement->isContainsField(objName)) { //Не является локальной переменной или полем класса
-			string msg = "Variable '" + string(objName) + "' not declarated";
-			throw new exception(msg.c_str());
+			string msg = "Variable '" + string(objName) + "' not declarated in line: " + to_string(line);
+			throw new std::exception(msg.c_str());
 		}
 		else if (classTableElement->isContainsField(objName) && !localVariablesTable->isContains(objName)) {
 			FieldsTableElement* field = classTableElement->Fields->items[objName]; //Локальная переменная
 			if (field->type->DataType != CLASS_NAME_TYPE) { // Не является экземпляром класса
-				string msg = "Variable '" + objName + "' is not instance of object.";
+				string msg = "Variable '" + objName + "' is not instance of object. in line: " + to_string(line);
 				throw new std::exception(msg.c_str());
 			}
 			string className = field->type->ClassName; //Имя класса локальной переменной
 			ClassesTableElement* classElem = ClassesTable::items->at(className);
 			if (!classElem->isContainsField(fieldName) || classElem->Fields->items[fieldName]->IsInstance == false) { //Поле не содержится в классе объекта
-				string msg = "Class '" + className + "' don't contains field '" + fieldName;
+				string msg = "Class '" + className + "' don't contains field '" + fieldName + "' in line: " + to_string(line);
 				throw new std::exception(msg.c_str());
 			}
 			if (classElem != classTableElement && classTableElement->getClassName() != "rtl/!Program!" && !classTableElement->isHaveOneOfSuperclass(className)) {
 				// Поле является protected и не выполнено условие для возможности использования protected
-				string msg = "Variable '" + fieldName + "' only protected";
+				string msg = "Variable '" + fieldName + "' only protected in line: " + to_string(line);
 				throw new std::exception(msg.c_str());
 			}
 
@@ -1240,18 +1241,18 @@ void Expression_node::fillFieldRefs(ConstantsTable* constantTable, LocalVariable
 		else { //Является локальной переменной
 			LocalVariablesTableElement* local = localVariablesTable->items[objName]; //Локальная переменная
 			if (local->type->DataType != CLASS_NAME_TYPE) { // Не является экземпляром класса
-				string msg = "Variable '" + objName + "' is not instance of object.";
+				string msg = "Variable '" + objName + "' is not instance of object. in line: " + to_string(line);
 				throw new std::exception(msg.c_str());
 			}
 			string className = local->type->ClassName; //Имя класса локальной переменной
 			ClassesTableElement* classElem = ClassesTable::items->at(className);
 			if (!classElem->isContainsField(fieldName) || classElem->Fields->items[fieldName]->IsInstance == false) { //Поле не содержится в классе объекта
-				string msg = "Class '" + className + "' don't contains field '" + fieldName;
+				string msg = "Class '" + className + "' don't contains field '" + fieldName + "' in line: " + to_string(line);
 				throw new std::exception(msg.c_str());
 			}
 			if (classElem != classTableElement && classTableElement->getClassName() != "rtl/!Program!" && !classTableElement->isHaveOneOfSuperclass(className)) {
 				// Поле является protected и не выполнено условие для возможности использования protected
-				string msg = "Variable '" + fieldName + "' only protected";
+				string msg = "Variable '" + fieldName + "' only protected in line: " + to_string(line);
 				throw new std::exception(msg.c_str());
 			}
 
@@ -1291,7 +1292,7 @@ void Expression_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariabl
 			Type *returnType;
 			Receiver->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod, &returnType);
 			if (returnType->DataType != CLASS_NAME_TYPE) {
-				string msg = "Receiver is not an object";
+				string msg = "Receiver is not an object in line: " + to_string(line);
 				throw new std::exception(msg.c_str());
 			}
 			isObject = true;
@@ -1336,13 +1337,13 @@ void Expression_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariabl
 		else {
 			if (isObject) {
 				if (!localVariablesTable->isContains(receiverName) && !classTableElement->isContainsField(receiverName) && receiverName != "super") {
-					string msg = "Using undeclarated variable '" + receiverName + "'";
+					string msg = "Using undeclarated variable '" + receiverName + "' in line: " + to_string(line);
 					throw new std::exception(msg.c_str());
 				}
 				else if (!localVariablesTable->isContains(receiverName) && classTableElement->isContainsField(receiverName) && receiverName != "super") { //Является полем класса
 					FieldsTableElement* field = classTableElement->Fields->items[receiverName];
 					if (field->type->DataType != CLASS_NAME_TYPE) {
-						string msg = "Variable '" + receiverName + "' is not an object";
+						string msg = "Variable '" + receiverName + "' is not an object in line: " + to_string(line);
 						throw new std::exception(msg.c_str());
 					}
 					string className = field->type->ClassName;
@@ -1355,7 +1356,7 @@ void Expression_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariabl
 				else if (receiverName != "super") { //Является локальной переменной
 					LocalVariablesTableElement* local = localVariablesTable->items[receiverName];
 					if (local->type->DataType != CLASS_NAME_TYPE) {
-						string msg = "Variable '" + receiverName + "' is not an object";
+						string msg = "Variable '" + receiverName + "' is not an object in line: " + to_string(line);
 						throw new std::exception(msg.c_str());
 					}
 					string className = local->type->ClassName;
@@ -1562,7 +1563,7 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 			Type* returnType;
 			Receiver->fillMethodRefs(constantTable, localVariablesTable, classTableElement, isInInstanceMethod, &returnType);
 			if (returnType->DataType != CLASS_NAME_TYPE) {
-				string msg = "Receiver is not an object";
+				string msg = "Receiver is not an object in line: " + to_string(line);
 				throw new std::exception(msg.c_str());
 			}
 			isObject = true;
@@ -1608,13 +1609,13 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 		else {
 			if (isObject) {
 				if (!localVariablesTable->isContains(receiverName) && !classTableElement->isContainsField(receiverName) && receiverName != "super") {
-					string msg = "Using undeclarated variable '" + receiverName + "'";
+					string msg = "Using undeclarated variable '" + receiverName + "' in line: " + to_string(line);
 					throw new std::exception(msg.c_str());
 				}
 				else if (!localVariablesTable->isContains(receiverName) && !classTableElement->isContainsField(receiverName) && receiverName != "super") { //Является полем класса
 					FieldsTableElement* field = classTableElement->Fields->items[receiverName];
 					if (field->type->DataType != CLASS_NAME_TYPE) {
-						string msg = "Variable '" + receiverName + "' is not an object";
+						string msg = "Variable '" + receiverName + "' is not an object in line: " + to_string(line);
 						throw new std::exception(msg.c_str());
 					}
 					string className = field->type->ClassName;
@@ -1627,7 +1628,7 @@ void Receiver_node::fillMethodRefs(ConstantsTable* constantTable, LocalVariables
 				else if (receiverName != "super") { //Является локальной переменной
 					LocalVariablesTableElement* local = localVariablesTable->items[receiverName];
 					if (local->type->DataType != CLASS_NAME_TYPE) {
-						string msg = "Variable '" + receiverName + "' is not an object";
+						string msg = "Variable '" + receiverName + "' is not an object in line: " + to_string(line);
 						throw new std::exception(msg.c_str());
 					}
 					string className = local->type->ClassName;

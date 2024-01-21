@@ -108,7 +108,7 @@ void Init_declarator_node::semanticTransform(LocalVariablesTable* locals, Type *
 
 		if (type == ARRAY_WITH_INITIALIZING_DECLARATOR_TYPE) {
 			if (dataType->DataType != CHAR_TYPE || expression->type != LITERAL_EXPRESSION_TYPE) {
-				string msg = string("Type '") + expression->DataType->toString() + "' can't assignment to '" + dataType->toString() + "'";
+				string msg = string("Type '") + expression->DataType->toString() + "' can't assignment to '" + dataType->toString() + "' in line: " + to_string(line);
 				throw new std::exception(msg.c_str());
 			}
 		}
@@ -131,7 +131,7 @@ void Init_declarator_node::semanticTransform(LocalVariablesTable* locals, Type *
 				expression = cast;
 			}
 			else {
-				string msg = string("Type '") + expression->DataType->toString() + "' doesn't castable to type '" + dataType->toString();
+				string msg = string("Type '") + expression->DataType->toString() + "' doesn't castable to type '" + dataType->toString() + "' in line: " + to_string(line);
 				throw new std::exception(msg.c_str());
 			}
 		}
@@ -147,7 +147,7 @@ void Init_declarator_node::semanticTransform(LocalVariablesTable* locals, Type *
 		ArraySize->setAttributes(locals, constants);
 		Type* castType = new Type(INT_TYPE);
 		if (!ArraySize->DataType->isCastableTo(castType)) {
-			string msg = "Array size isn't 'int' or castable to 'int'. It has type '" + ArraySize->DataType->toString() + "'";
+			string msg = "Array size isn't 'int' or castable to 'int'. It has type '" + ArraySize->DataType->toString() + "' in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 		delete castType;
@@ -277,7 +277,7 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 					DataType = field->type;
 				}
 				else {
-					string msg = string("Class '") + selfClass->getClassName() + "doesn't contains field '" + string(name);
+					string msg = string("Class '") + selfClass->getClassName() + "doesn't contains field '" + string(name) + "' in line: " + to_string(line);
 					throw new std::exception(msg.c_str());
 				}
 			}
@@ -330,7 +330,7 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 		Type* selfType = locals->items["self"]->type;
 		DataType = selfType->getSuperType();
 		if (DataType == NULL) {
-			string msg = string("Class '") + selfType->ClassName + "' don't have superclass";
+			string msg = string("Class '") + selfType->ClassName + "' don't have superclass in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 	}
@@ -340,15 +340,15 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 		Receiver->setDataType(locals);
 		Type* receiverType = Receiver->DataType;
 		if (receiverType->DataType != CLASS_NAME_TYPE && receiverType->DataType != ID_TYPE) {
-			string msg = string("Receiver is not a class or object. It has type: '") + receiverType->toString();
+			string msg = string("Receiver is not a class or object. It has type: '") + receiverType->toString() + "' in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 		else if (ClassesTable::items->count(receiverType->ClassName) == 0) {
-			string msg = string("Class '") + receiverType->ClassName + "' doesn't exist";
+			string msg = string("Class '") + receiverType->ClassName + "' doesn't exist in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 		else if (!ClassesTable::items->at(receiverType->ClassName)->isContainsMethod(Arguments->MethodName)) {
-			string msg = string("Class '") + receiverType->ClassName + "doesn't contains method '" + string(Arguments->MethodName);
+			string msg = string("Class '") + receiverType->ClassName + "doesn't contains method '" + string(Arguments->MethodName) + "' in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 		else {
@@ -370,7 +370,7 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 			ArgumentsList->setDataTypesAndCasts(locals);
 		}
 		else {
-			string msg = "Function '" + string(name) + "' doesn't exist";
+			string msg = "Function '" + string(name) + "' doesn't exist in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 	}
@@ -381,14 +381,14 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 		if (Right->DataType->isPrimitive())
 			DataType = Right->DataType;
 		else {
-			string msg = string("Type '") + Right->DataType->toString() + "can't using as argument of unary operation";
+			string msg = string("Type '") + Right->DataType->toString() + "can't using as argument of unary operation in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 	}
 		break;
 	case UAMPERSAND_EXPRESSION_TYPE:
 	{
-		string msg = "Error! Unsupported operation unary ampersand.";
+		string msg = "Error! Unsupported operation unary ampersand. in line: " + to_string(line);
 		throw new std::exception(msg.c_str());
 	}
 	break;
@@ -428,7 +428,7 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 					DataType = Left->DataType;
 				}
 				else {
-					string msg = string("Type '") + Right->DataType->toString() + "' doesn't castable to type '" + Left->DataType->toString();
+					string msg = string("Type '") + Right->DataType->toString() + "' doesn't castable to type '" + Left->DataType->toString() + "' in line: " + to_string(line);
 					throw new std::exception(msg.c_str());
 				}
 			}
@@ -440,9 +440,9 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 		else {
 			string msg = "Type '";
 			if (!Left->DataType->isPrimitive())
-				msg += Left->DataType->toString() + "can't using as argument of binary arithmetic or comparation operation";
+				msg += Left->DataType->toString() + "can't using as argument of binary arithmetic or comparation operation in line: " + to_string(line);
 			else
-				msg += Right->DataType->toString() + "can't using as argument of binary arithmetic or comparation operation";
+				msg += Right->DataType->toString() + "can't using as argument of binary arithmetic or comparation operation in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 	}
@@ -450,7 +450,7 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 	case ARRAY_ELEMENT_ACCESS_EXPRESSION_TYPE:
 	{
 		if (!Right->DataType->isCastableTo(new Type(INT_TYPE))) {
-			string msg = "Array element access isn't 'int' or castable to 'int'. It have type '" + Right->DataType->toString() + "'";
+			string msg = "Array element access isn't 'int' or castable to 'int'. It have type '" + Right->DataType->toString() + "' in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 		DataType = new Type(Left->DataType->DataType, Left->DataType->ClassName);
@@ -459,16 +459,16 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 	case ARROW_EXPRESSION_TYPE:
 	{
 		if (Left->DataType->ClassName == "") {
-			string msg = string("Can't access to field '") + string(name) + "' because of left is not object";
+			string msg = string("Can't access to field '") + string(name) + "' because of left is not object in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 		className = Left->DataType->ClassName;
 		if (ClassesTable::items->count(className) == 0) {
-			string msg = string("Class '") + className + "' doesn't exist";
+			string msg = string("Class '") + className + "' doesn't exist in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 		if (Left->type == SUPER_EXPRESSION_TYPE) {
-			string msg = "Can't access to field of super object";
+			string msg = "Can't access to field of super object in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 		ClassesTableElement* classElem = ClassesTable::items->at(className);
@@ -479,7 +479,7 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 			DataType = field->type;
 		}
 		else {
-			string msg = string("Class '") + className + "' doesn't contains field '" + string(name);
+			string msg = string("Class '") + className + "' doesn't contains field '" + string(name) + "' in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 	}
@@ -507,7 +507,7 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 				Right = cast;
 			}
 			else {
-				string msg = string("Type '") + Right->DataType->toString() + "' doesn't castable to type '" + Left->DataType->toString();
+				string msg = string("Type '") + Right->DataType->toString() + "' doesn't castable to type '" + Left->DataType->toString() + "' in line: " + to_string(line);
 				throw new std::exception(msg.c_str());
 			}
 		}
@@ -516,7 +516,7 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 	case ARRAY_ASSIGNMENT_EXPRESSION_TYPE:
 	{
 		if (!Child->DataType->isCastableTo(new Type(INT_TYPE))) {
-			string msg = "Array element access isn't 'int' or castable to 'int'. It has type '" + Child->DataType->toString() + "'";
+			string msg = "Array element access isn't 'int' or castable to 'int'. It has type '" + Child->DataType->toString() + "' in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 		DataType = Left->DataType;
@@ -540,7 +540,7 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 				Right = cast;
 			}
 			else {
-				string msg = string("Type '") + Right->DataType->toString() + "' doesn't castable to type '" + Left->DataType->toString();
+				string msg = string("Type '") + Right->DataType->toString() + "' doesn't castable to type '" + Left->DataType->toString() + "' in line: " + to_string(line);
 				throw new std::exception(msg.c_str());
 			}
 		}
@@ -550,12 +550,12 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 	case MEMBER_ACCESS_ASSIGNMENT_EXPRESSION_TYPE:
 	{
 		if (Left->DataType->ClassName == "") {
-			string msg = string("Can't access to field '") + string(name) + "' because of left is not object";
+			string msg = string("Can't access to field '") + string(name) + "' because of left is not object in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 		className = Left->DataType->ClassName;
 		if (ClassesTable::items->count(className) == 0) {
-			string msg = string("Class '") + className + "' doesn't exist";
+			string msg = string("Class '") + className + "' doesn't exist in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 		ClassesTableElement* classElem = ClassesTable::items->at(className);
@@ -584,13 +584,13 @@ void Expression_node::setDataTypesAndCasts(LocalVariablesTable *locals)
 					Right = cast;
 				}
 				else {
-					string msg = string("Type '") + Right->DataType->toString() + "' doesn't castable to type '" + Left->DataType->toString();
+					string msg = string("Type '") + Right->DataType->toString() + "' doesn't castable to type '" + Left->DataType->toString() + "' in line: " + to_string(line);
 					throw new std::exception(msg.c_str());
 				}
 			}
 		}
 		else {
-			string msg = string("Class '") + className + "' doesn't contains field '" + string(name);
+			string msg = string("Class '") + className + "' doesn't contains field '" + string(name) + "' in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 	}
@@ -611,7 +611,7 @@ void Receiver_node::setDataType(LocalVariablesTable* locals)
 		Type* selfType = locals->items["self"]->type;
 		DataType = selfType->getSuperType();
 		if (DataType == NULL) {
-			string msg = string("Class '") + selfType->ClassName + "' don't have superclass";
+			string msg = string("Class '") + selfType->ClassName + "' don't have superclass in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 	}
@@ -636,14 +636,14 @@ void Receiver_node::setDataType(LocalVariablesTable* locals)
 					DataType = field->type;
 				}
 				else {
-					string msg = string("Class '") + selfClass->getClassName() + "doesn't contains field '" + string(name);
+					string msg = string("Class '") + selfClass->getClassName() + "doesn't contains field '" + string(name) + "' in line: " + to_string(line);
 					throw new std::exception(msg.c_str());
 				}
 			}
 
 		}
 		if (DataType == NULL) { //Отсутствует в локальных переменных и полях
-			string msg = string("Doesn't contains variable '") + string(name);
+			string msg = string("Doesn't contains variable '") + string(name) + "' in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 	}
@@ -663,7 +663,7 @@ void Receiver_node::setDataType(LocalVariablesTable* locals)
 					DataType = field->type;
 				}
 				else {
-					string msg = string("Class '") + selfClass->getClassName() + "doesn't contains field '" + string(name);
+					string msg = string("Class '") + selfClass->getClassName() + "doesn't contains field '" + string(name) + "' in line: " + to_string(line);
 					throw new std::exception(msg.c_str());
 				}
 			}
@@ -671,7 +671,7 @@ void Receiver_node::setDataType(LocalVariablesTable* locals)
 		}
 		ObjectArrayIndex->setDataTypesAndCasts(locals);
 		if (DataType == NULL) { //Отсутствует в локальных переменных и полях
-			string msg = string("Doesn't contains variable '") + string(name);
+			string msg = string("Doesn't contains variable '") + string(name) + "' in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 	}
@@ -682,7 +682,7 @@ void Receiver_node::setDataType(LocalVariablesTable* locals)
 			DataType = new Type(CLASS_NAME_TYPE, ClassesTable::getFullClassName(name));
 		}
 		else {
-			string msg = string("Class '") + string(name) + "doesn't exist";
+			string msg = string("Class '") + string(name) + "doesn't exist in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 	}
@@ -692,15 +692,15 @@ void Receiver_node::setDataType(LocalVariablesTable* locals)
 		Receiver->setDataType(locals);
 		Type* receiverType = Receiver->DataType;
 		if (receiverType->DataType != CLASS_NAME_TYPE && receiverType->DataType != ID_TYPE) {
-			string msg = string("Receiver is not a class or object. It has type: '") + receiverType->toString();
+			string msg = string("Receiver is not a class or object. It has type: '") + receiverType->toString() + "' in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 		else if (ClassesTable::items->count(receiverType->ClassName) == 0) {
-			string msg = string("Class '") + receiverType->ClassName + "' doesn't exist";
+			string msg = string("Class '") + receiverType->ClassName + "' doesn't exist in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 		else if (!ClassesTable::items->at(receiverType->ClassName)->isContainsMethod(Arguments->MethodName)) {
-			string msg = string("Class '") + receiverType->ClassName + "doesn't contains method '" + string(Arguments->MethodName);
+			string msg = string("Class '") + receiverType->ClassName + "doesn't contains method '" + string(Arguments->MethodName) + "' in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 		else {
@@ -737,7 +737,7 @@ void Message_selector_node::setDataTypes(LocalVariablesTable* locals, string rec
 		method = classElem->getMethodForRef(MethodName, &descr, &n);
 	}
 	else {
-		string msg = string("Class '") + receiverClassName + "' doesn't contains method '" + MethodName + "'";
+		string msg = string("Class '") + receiverClassName + "' doesn't contains method '" + MethodName + "' in line: " + to_string(line);
 		throw new std::exception(msg.c_str());
 	}
 
@@ -752,11 +752,11 @@ void Message_selector_node::setDataTypes(LocalVariablesTable* locals, string rec
 		ExprArguments->getElements()->size();
 
 	if (kwCount != method->KeywordsTypes->size()) {
-		string msg = string("Method '") + string(MethodName) + "' get '" + to_string(kwCount) + "' keyword arguments, but expected '" + to_string(method->KeywordsTypes->size()) + "'";
+		string msg = string("Method '") + string(MethodName) + "' get '" + to_string(kwCount) + "' keyword arguments, but expected '" + to_string(method->KeywordsTypes->size()) + "' in line: " + to_string(line);
 		throw new std::exception(msg.c_str());
 	}
 	if (paramCount != method->ParamsTypes->size()) {
-		string msg = string("Method '") + string(MethodName) + "' get '" + to_string(paramCount) + "' parameters arguments, but expected '" + to_string(method->ParamsTypes->size()) + "'";
+		string msg = string("Method '") + string(MethodName) + "' get '" + to_string(paramCount) + "' parameters arguments, but expected '" + to_string(method->ParamsTypes->size()) + "' in line: " + to_string(line);
 		throw new std::exception(msg.c_str());
 	}
 
@@ -783,7 +783,7 @@ void Message_selector_node::setDataTypes(LocalVariablesTable* locals, string rec
 			}
 		}
 		else {
-			string msg = string("Type '") + FirstArgument->DataType->toString() + "' doesn't castable to type '" + method->KeywordsTypes->at(0)->toString() + "' in method '" + string(MethodName);
+			string msg = string("Type '") + FirstArgument->DataType->toString() + "' doesn't castable to type '" + method->KeywordsTypes->at(0)->toString() + "' in method '" + string(MethodName) + "' in line: " + to_string(line);
 			throw new std::exception(msg.c_str());
 		}
 	}
@@ -813,7 +813,7 @@ void Message_selector_node::setDataTypes(LocalVariablesTable* locals, string rec
 				}
 			}
 			else {
-				string msg = string("Type '") + kwArgs->at(i - 1)->expression->DataType->toString() + "' doesn't castable to type '" + method->KeywordsTypes->at(i)->toString() + "' in method '" + string(MethodName);
+				string msg = string("Type '") + kwArgs->at(i - 1)->expression->DataType->toString() + "' doesn't castable to type '" + method->KeywordsTypes->at(i)->toString() + "' in method '" + string(MethodName) + "' in line: " + to_string(line);
 				throw new std::exception(msg.c_str());
 			}
 		}
@@ -844,7 +844,7 @@ void Message_selector_node::setDataTypes(LocalVariablesTable* locals, string rec
 				}
 			}
 			else {
-				string msg = string("Type '") + args->at(i)->DataType->toString() + "' doesn't castable to type '" + method->ParamsTypes->at(i)->toString() + "' in method '" + string(MethodName);
+				string msg = string("Type '") + args->at(i)->DataType->toString() + "' doesn't castable to type '" + method->ParamsTypes->at(i)->toString() + "' in method '" + string(MethodName) + "' in line: " + to_string(line);
 				throw new std::exception(msg.c_str());
 			}
 		}

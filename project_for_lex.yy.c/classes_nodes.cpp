@@ -3,6 +3,7 @@
 using namespace std;
 long maxId = 0; // Глобальный id узла
 set<string> ClassNames; //Множество имен объявленных классов
+extern int lineCount;
 
 //---------- program ----------
 
@@ -11,6 +12,7 @@ Program_node* Program_node::createProgramNode(Function_and_class_list_node* list
 	Program_node *res = new Program_node;
     res->id = maxId++;
     res->list = list;
+	res->line = lineCount;
     return res;
 }
 
@@ -95,6 +97,7 @@ Function_node* Function_node::createFunctionNode(Type_node *type, char *name, St
     res->ReturnType = type;
     res->Name = name;
     res->statement = statement;
+	res->line = lineCount;
     return res;
 }
 
@@ -108,6 +111,7 @@ Type_node* Type_node::createTypeNode(type_type type)
     res->id = maxId++;
     res->type = type;
     res->ClassName = NULL;
+	res->line = lineCount;
     return res;
 }
 
@@ -117,6 +121,7 @@ Type_node* Type_node::createTypeNodeFromClassName(type_type type, char *name)
     res->id = maxId++;
     res->type = type;
     res->ClassName = name;
+	res->line = lineCount;
     return res;
 }
 
@@ -130,6 +135,7 @@ Numeric_constant_node* Numeric_constant_node::createNumericConstantNodeFromInteg
     res->id = maxId++;
     res->type = INTEGER_CONSTANT_TYPE;
     res->Int = number;
+	res->line = lineCount;
     return res;
 }
 
@@ -139,6 +145,7 @@ Numeric_constant_node* Numeric_constant_node::createNumericConstantNodeFromFloat
     res->id = maxId++;
     res->type = FLOAT_CONSTANT_TYPE;
     res->Float = number;
+	res->line = lineCount;
     return res;
 }
 
@@ -150,6 +157,7 @@ Literal_node* Literal_node::createLiteralNode(literal_type type, char *value)
     res->id = maxId++;
     res->type = type;
     res->value = value;
+	res->line = lineCount;
     return res;
 }
 
@@ -165,6 +173,7 @@ Declaration_node* Declaration_node::createDeclarationNode(Type_node *type, Init_
 	res->type = DECLARATION_STATEMENT_TYPE;
     res->init_declarator_list = initDeclarators;
     res->Next = NULL;
+    res->line = lineCount;
     return res;
 }
 
@@ -216,6 +225,7 @@ Init_declarator_node* Init_declarator_node::createInitDeclaratorNode(init_declar
     res->ArraySize = NULL;
     res->InitializerList = NULL;
     res->Next = NULL;
+	res->line = lineCount;
     return res;
 }
 
@@ -230,6 +240,7 @@ Init_declarator_node* Init_declarator_node::createInitDeclaratorNodeFromArray(in
     res->InitializerList = initializerList;
 	res->isArray = true;
     res->Next = NULL;
+	res->line = lineCount;
     return res;
 }
 
@@ -241,6 +252,7 @@ Declarator_node* Declarator_node::createDeclaratorNode(char *identifier, Express
     res->id = maxId++;
     res->Identifier = identifier;
     res->Expression = expression;
+	res->line = lineCount;
     return res;
 }
 
@@ -288,6 +300,7 @@ Parameter_declaration_node* Parameter_declaration_node::createParameterDeclarati
     res->type = type;
     res->name = name;
     res->Next = NULL;
+	res->line = lineCount;
     return res;
 }
 
@@ -304,6 +317,7 @@ Expression_node* Expression_node::createExpressionNodeFromIdentifier(char *name)
     res->Left = NULL;
     res->Right = NULL;
     res->Next = NULL;
+	res->line = lineCount;
     return res;
 }
 
@@ -317,6 +331,7 @@ Expression_node* Expression_node::createExpressionNodeFromLiteral(Literal_node *
     res->Left = NULL;
     res->Right = NULL;
     res->Next = NULL;
+	res->line = lineCount;
     return res;
 }
 
@@ -330,6 +345,7 @@ Expression_node* Expression_node::createExpressionNodeFromNumericConstant(Numeri
     res->Left = NULL;
     res->Right = NULL;
     res->Next = NULL;
+	res->line = lineCount;
     return res;
 }
 
@@ -342,6 +358,7 @@ Expression_node* Expression_node::createExpressionNodeFromSimpleExpression(expre
     res->Left = NULL;
     res->Right = expression;
     res->Next = NULL;
+	res->line = lineCount;
     return res;
 }
 
@@ -354,6 +371,7 @@ Expression_node* Expression_node::createExpressionNodeFromSelf()
     res->Left = NULL;
     res->Right = NULL;
     res->Next = NULL;
+	res->line = lineCount;
     return res;
 }
 
@@ -366,6 +384,7 @@ Expression_node* Expression_node::createExpressionNodeFromSuper()
     res->Left = NULL;
     res->Right = NULL;
     res->Next = NULL;
+	res->line = lineCount;
     return res;
 }
 
@@ -378,6 +397,7 @@ Expression_node* Expression_node::createExpressionNodeFromOperator(expression_ty
     res->Left = leftExpression;
     res->Right = rightExpression;
     res->Next = NULL;
+	res->line = lineCount;
     return res;
 }
 
@@ -389,6 +409,7 @@ Expression_node* Expression_node::createExpressionNodeFromMessageExpression(Rece
     res->Receiver = receiver;
     res->Arguments = arguments;
     res->Next = NULL;
+	res->line = lineCount;
     return res;
 }
 
@@ -400,6 +421,7 @@ Expression_node* Expression_node::createExpressionNodeFromFunctionCall(char *nam
     res->name = name;
     res->ArgumentsList = argumentsList;
     res->Next = NULL;
+	res->line = lineCount;
     return res;
 }
 
@@ -412,12 +434,14 @@ Expression_node* Expression_node::createExpressionNodeFromMemberAccessOperator(e
     res->Left = expression;
     res->Right = NULL;
     res->Next = NULL;
+	res->line = lineCount;
     return res;
 }
 
 Expression_node* Expression_node::setPriority(Expression_node *expression, bool priority)
 {
     expression->isPriority = priority;
+    expression->line = lineCount;
     return expression;
 }
 
@@ -447,6 +471,7 @@ Receiver_node* Receiver_node::createReceiverNode(receiver_type type, char *name)
     res->id = maxId++;
     res->type = type;
     res->name = name;
+	res->line = lineCount;
     return res;
 }
 
@@ -457,6 +482,7 @@ Receiver_node* Receiver_node::createReceiverNodeFromMessageExpression(Receiver_n
     res->type = MESSAGE_EXPRESSION_RECEIVER_TYPE;
     res->Receiver = receiver;
     res->Arguments = arguments;
+	res->line = lineCount;
     return res;
 }
 
@@ -467,6 +493,7 @@ Receiver_node* Receiver_node::createReceiverNodeFromObjectArray(char* name, Expr
 	res->type = OBJECT_ARRAY_RECEIVER_TYPE;
 	res->ObjectArrayIndex = arrIndex;
 	res->name = name;
+	res->line = lineCount;
 	return res;
 }
 
@@ -480,6 +507,7 @@ Message_selector_node* Message_selector_node::createMessageSelectorNode(char *me
     res->Arguments = arguments;
     res->FirstArgument = expression;
     res->ExprArguments = exprArguments;
+	res->line = lineCount;
     return res;
 }
 
@@ -511,6 +539,7 @@ Keyword_argument_node* Keyword_argument_node::createKeywordArgumentNode(keyword_
     res->name = identifier;
     res->expression = expression;
     res->Next = NULL;
+	res->line = lineCount;
     return res;
 }
 
@@ -527,6 +556,7 @@ If_statement_node* If_statement_node::createIfStatementNode(if_type type, Expres
     res->Condition = condition;
     res->TrueBranch = trueBranch;
     res->FalseBranch = falseBranch;
+	res->line = lineCount;
     return res;
 }
 
@@ -541,6 +571,7 @@ While_statement_node* While_statement_node::createWhileStatementNode(Expression_
     res->type = WHILE_STATEMENT_TYPE;
     res->LoopCondition = condition;
     res->LoopBody = body;
+	res->line = lineCount;
     return res;
 }
 
@@ -553,6 +584,7 @@ Do_while_statement_node* Do_while_statement_node::createDoWhileStatementNode(Exp
     res->type = DO_WHILE_STATEMENT_TYPE;
     res->LoopCondition = condition;
     res->LoopBody = body;
+	res->line = lineCount;
     return res;
 }
 
@@ -570,6 +602,7 @@ For_statement_node* For_statement_node::createForStatementNode(Expression_list_n
     res->LoopBody = body;
     res->name = NULL;
     res->NameType = NULL;
+    res->line;
     return res;
 }
 
@@ -585,6 +618,7 @@ For_statement_node* For_statement_node::createForStatementNodeFromForWithDeclara
     res->LoopBody = body;
     res->NameType = type;
     res->InitList = initList;
+    res->line = lineCount;
     return res;
 }
 
@@ -600,6 +634,7 @@ For_statement_node* For_statement_node::createForStatementNodeFromForeach(for_ty
     res->LoopBody = body;
     res->name = loopVar;
     res->NameType = varType;
+	res->line = lineCount;
     return res;
 }
 
@@ -614,6 +649,7 @@ Statement_node* Statement_node::createStatementNodeFromSimpleStatement(statement
     res->type = type;
     res->Expression = expression;
     res->Next = NULL;
+	res->line = lineCount;
     return res;
 }
 
@@ -657,6 +693,7 @@ Class_interface_node* Class_interface_node::createClassInterfaceNode(char *class
         string superClassStr = superclassName;
         ClassNames.insert(superClassStr);
     }
+	res->line = lineCount;
     return res;
 }
 
@@ -668,6 +705,7 @@ Interface_body_node* Interface_body_node::createInterfaceBodyNode(Instance_varia
     res->id = maxId++;
     res->Variables = variables;
     res->Declaration_list = declarationList;
+	res->line = lineCount;
     return res;
 }
 
@@ -679,6 +717,7 @@ Implementation_body_node* Implementation_body_node::createImplementationBodyNode
     res->id = maxId++;
     res->Variables = variables;
     res->Declaration_list = definitionList;
+	res->line = lineCount;
     return res;
 }
 
@@ -700,6 +739,7 @@ Class_implementation_node* Class_implementation_node::createClassImplementationN
         string superClassStr = superclassName;
         ClassNames.insert(superClassStr);
     }
+	res->line = lineCount;
     return res;
 }
 
@@ -742,6 +782,7 @@ Instance_variables_declaration_node* Instance_variables_declaration_node::create
     res->type = type;
     res->DeclaratorList = declaratorList;
     res->Next = NULL;
+	res->line = lineCount;
     return res;
 }
 
@@ -843,6 +884,7 @@ Method_declaration_node* Method_declaration_node::createMethodDeclarationNode(me
     res->type = type;
     res->MethodType = methodType;
     res->MethodSelector = selector;
+	res->line = lineCount;
     return res;
 }
 
@@ -929,6 +971,7 @@ Method_definition_node* Method_definition_node::createMethodDefinitionNode(metho
     res->DeclarationList = declarationList;
     res->MethodBody = methodBody;
     res->Next = NULL;
+    res->line;
     return res;
 }
 
@@ -942,6 +985,7 @@ Method_selector_node* Method_selector_node::createMethodSelectorNode(char *metho
     res->KeywordSelector = selector;
     res->ParameterListNode = parameters;
     res->KeywordDeclaration = keywordDeclaration;
+	res->line = lineCount;
     return res;
 }
 
@@ -973,6 +1017,7 @@ Keyword_declaration_node* Keyword_declaration_node::createKeywordDeclarationNode
     res->Identifier = identifier;
     res->KeywordName = keywordName;
     res->Next = NULL;
+	res->line = lineCount;
     return res;
 }
 
@@ -986,6 +1031,7 @@ Property_node* Property_node::createPropertyNode(Attribute_node *attribute, Type
     res->type = type;
     res->Names = names;
     res->Next = NULL;
+	res->line = lineCount;
     return res;
 }
 
@@ -996,6 +1042,7 @@ Attribute_node* Attribute_node::createAttributeNode(attrribute_type type)
     Attribute_node *res = new Attribute_node;
     res->id = maxId++;
     res->type = type;
+	res->line = lineCount;
     return res;
 }
 

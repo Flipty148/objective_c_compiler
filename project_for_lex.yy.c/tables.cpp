@@ -379,7 +379,7 @@ ClassesTableElement* ClassesTable::addClass(string name, string* superclassName,
 			fullSuperclassName = new string("global/" + *superclassName);
 	}
 	if (name == "NSObject" || name == "NSString" || name == "NSArray" || name == "InOutFuncs") {
-		string msg = "Unsupported protocols. Because class '" + name + "' is reserved.";
+		string msg = "Unsupported protocols. Because of class '" + name + "' is reserved.";
 		throw new std::exception(msg.c_str());
 	}
 		
@@ -1141,7 +1141,7 @@ MethodsTableElement* MethodsTable::addMethod(ConstantsTable* constantTable, stri
 	if (items.count(name) != 0)
 	{
 		string msg = "Method '" + name + "' already exists";
-		throw new exception(msg.c_str());
+		throw new std::exception(msg.c_str());
 	}
 	int NameId = constantTable->findOrAddConstant(UTF8, name);
 	int DescriptorId = constantTable->findOrAddConstant(UTF8, descriptor);
@@ -1196,7 +1196,7 @@ void PropertiesTable::addProperty(ConstantsTable* constantTable, string name, st
 	if (items.count(name) != 0)
 	{
 		string msg = "Property '" + name + "' already exists";
-		throw new exception(msg.c_str());
+		throw new std::exception(msg.c_str());
 	}
 	int NameId = constantTable->findOrAddConstant(UTF8, name);
 	int DescriptorId = constantTable->findOrAddConstant(UTF8, descriptor);
@@ -1246,7 +1246,7 @@ int LocalVariablesTable::findOrAddLocalVariable(string name, Type* type)
 	}
 	else {
 		string msg = "Variable '" + name + "' already exists";
-		throw new exception(msg.c_str());
+		throw new std::exception(msg.c_str());
 	}
 	return items[name]->Id;
 }
@@ -1279,7 +1279,7 @@ Type::Type(type_type dataType, string className, Expression_node* arrSize)
 	if (arrSize != NULL) {
 		if (arrSize->type == UMINUS_EXPRESSION_TYPE) {
 			if (arrSize->Right->type == NUMERIIC_CONSTANT_EXPRESSION_TYPE && arrSize->Right->num->Int > 0) {
-				string msg = "Negative array size '" + to_string(arrSize->num->Int) + "'";
+				string msg = "Negative array size '" + to_string(arrSize->num->Int) + "' in line: " + to_string(arrSize->line);
 				throw new std::exception(msg.c_str());
 			}
 		}
@@ -1305,7 +1305,7 @@ Type::Type(type_type dataType, Expression_node* arrSize)
 	if (arrSize != NULL) {
 		if (arrSize->type == UMINUS_EXPRESSION_TYPE) {
 			if (arrSize->Right->type == NUMERIIC_CONSTANT_EXPRESSION_TYPE && arrSize->Right->num->Int > 0) {
-				string msg = "Negative array size '-" + to_string(arrSize->Right->num->Int) + "'";
+				string msg = "Negative array size '-" + to_string(arrSize->Right->num->Int) + "' in line: " + to_string(arrSize->line);
 				throw new std::exception(msg.c_str());
 			}
 		}
@@ -1580,7 +1580,7 @@ FunctionsTableElement* FunctionsTable::addFunction(string name, string descripto
 	if (items.count(name) != 0)
 	{
 		string msg = "Function '" + name + "' already exists";
-		throw new exception(msg.c_str());
+		throw new std::exception(msg.c_str());
 	}
 	FunctionsTableElement* function = new FunctionsTableElement(bodyStart, name, descriptor, params, returnType);
 	items[name] = function;
@@ -1617,7 +1617,7 @@ void FunctionsTable::fillFieldRefs()
 
 	if (!isDontContainsMain) { //Функция main не найдена
 		string msg = "Function 'main' not found";
-		throw new exception(msg.c_str());
+		throw new std::exception(msg.c_str());
 	}
 }
 
@@ -1648,7 +1648,7 @@ void FunctionsTable::convertToClassProgramMethods()
 	if (items.count("main") == 0) //Функция main не найдена
 	{
 		string msg = "Function 'main' not found";
-		throw new exception(msg.c_str());
+		throw new std::exception(msg.c_str());
 	}
 
 	ClassesTableElement* classTableElement = ClassesTable::items->at("rtl/!Program!");

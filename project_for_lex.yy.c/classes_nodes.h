@@ -64,6 +64,7 @@ class Type_node
         enum type_type type;
         char *ClassName;
 		bool isArray = false;
+        int line;
 
         static Type_node* createTypeNode(type_type type);
         static Type_node* createTypeNodeFromClassName(type_type type, char *name);
@@ -89,6 +90,7 @@ class Numeric_constant_node
         enum numeric_constant_type type;
         int Int;
         float Float;
+        int line;
 
 		int constant; // номер константы если значение более 2-х байт
 
@@ -115,6 +117,7 @@ class Literal_node
         enum literal_type type;
         char *value;
 		ConstantsTableElement* constant;
+		int line;
 
         static Literal_node* createLiteralNode(literal_type type, char *value);
 
@@ -146,6 +149,7 @@ class Statement_node
         enum statement_type type;
         Expression_node *Expression;
         Statement_node *Next;
+		int line;
 
         static Statement_node* createStatementNodeFromSimpleStatement(statement_type type, Expression_node *expression);
 
@@ -180,6 +184,7 @@ class Declaration_node : public Statement_node
         Type_node *typeNode;
         Init_declarator_list_node *init_declarator_list;
         Declaration_node *Next;
+        int line;
 
         static Declaration_node* createDeclarationNode(Type_node *type, Init_declarator_list_node *initDeclarators);
 
@@ -247,6 +252,7 @@ class Init_declarator_node
         char *Declarator;
         Expression_list_node *InitializerList;
 		bool isArray = false;
+        int line;
 
         static Init_declarator_node* createInitDeclaratorNode(init_declarator_type type, char *declarator, Expression_node *expression);
         static Init_declarator_node* createInitDeclaratorNodeFromArray(init_declarator_type type, char *declarator, Expression_node *arraySize, Expression_node *expression, Expression_list_node *initializerList);
@@ -271,6 +277,7 @@ class Declarator_node
         int id;
         char *Identifier;
         Expression_node *Expression;
+		int line;
 
         static Declarator_node* createDeclaratorNode(char *identifier, Expression_node *expression);
 
@@ -316,6 +323,7 @@ class Parameter_declaration_node
         Type_node *type;
         char *name;
         Parameter_declaration_node *Next;
+        int line;
 
         static Parameter_declaration_node* createParameterDeclarationNode(Type_node *type, char *name);
 
@@ -387,6 +395,7 @@ class Expression_node
 		MethodsTableElement* Method = NULL; //Ссылка на метод
 		int Constant = NULL; //Ссылка на константу
 		bool isInitMethod = false;
+        int line;
 
 		Type* DataType = NULL;
 
@@ -501,6 +510,7 @@ class Receiver_node
 		MethodsTableElement* Method = NULL; //Ссылка на метод
 		int Constant = NULL; //Ссылка на константу
         bool isInitMethod = false;
+        int line;
 
         static Receiver_node* createReceiverNode(receiver_type type, char *name);
         static Receiver_node* createReceiverNodeFromMessageExpression(Receiver_node *receiver, Message_selector_node *arguments);
@@ -536,6 +546,7 @@ class Message_selector_node
         Keyword_argument_list_node *Arguments;
         Expression_node *FirstArgument;
         Expression_list_node *ExprArguments;
+        int line;
 
         static Message_selector_node* createMessageSelectorNode(char *methodName, Expression_node *expression, Keyword_argument_list_node *arguments, Expression_list_node *exprArguments);
 
@@ -589,6 +600,7 @@ class Keyword_argument_node
         char *name;
         Expression_node *expression;
         Keyword_argument_node *Next;
+        int line;
 
         static Keyword_argument_node* createKeywordArgumentNode(keyword_argument_type type, char *identifier, Expression_node *expression);
 
@@ -615,6 +627,7 @@ class If_statement_node : public Statement_node
         Expression_node *Condition;
         Statement_node *TrueBranch;
         Statement_node *FalseBranch;
+		int line;
 
         static If_statement_node* createIfStatementNode(if_type type, Expression_node *condition, Statement_node *trueBranch, Statement_node *falseBranch);
 
@@ -630,6 +643,7 @@ class While_statement_node : public Statement_node
     public:
         Expression_node *LoopCondition;
         Statement_node *LoopBody;
+        int line;
 
         static While_statement_node* createWhileStatementNode(Expression_node *condition, Statement_node *body);
 
@@ -643,6 +657,7 @@ class Do_while_statement_node : public Statement_node
     public:
         Expression_node *LoopCondition;
         Statement_node *LoopBody;
+		int line;
 
         static Do_while_statement_node* createDoWhileStatementNode(Expression_node *condition, Statement_node *body);
 
@@ -669,6 +684,7 @@ class For_statement_node : public Statement_node
         char *name;
         Type_node *NameType;
         Init_declarator_list_node *InitList;
+		int line;
 
         static For_statement_node* createForStatementNode(Expression_list_node *initExpression, Expression_node *condition, Expression_list_node *loopExpression, Statement_node *body);
         static For_statement_node* createForStatementNodeFromForWithDeclaration(Type_node *type, Init_declarator_list_node *initList, Expression_node *condition, Expression_list_node *loopExpression, Statement_node *body);
@@ -722,6 +738,7 @@ class Class_interface_node : public Class_block_node
         char *ClassName;
         char *SuperclassName;
         Interface_body_node *Body;
+		int line;
 
         static Class_interface_node* createClassInterfaceNode(char *className, char *superclassName, Interface_body_node *body);
 
@@ -736,6 +753,7 @@ class Interface_body_node
         int id;
         Instance_variables_declaration_list_node *Variables;
         Interface_declaration_list_node *Declaration_list;
+        int line;
 
         static Interface_body_node* createInterfaceBodyNode(Instance_variables_declaration_list_node *variables, Interface_declaration_list_node *declarationList);
 
@@ -755,6 +773,7 @@ class Implementation_body_node
         int id;
         Instance_variables_declaration_list_node *Variables;
         Implementation_definition_list_node *Declaration_list;
+		int line;
 
         static Implementation_body_node* createImplementationBodyNode(Instance_variables_declaration_list_node *variables, Implementation_definition_list_node *definitionList);
 
@@ -774,6 +793,7 @@ class Class_implementation_node : public Class_block_node
         char *ClassName;
         char *SuperclassName;
         Implementation_body_node *Body;
+		int line;
 
         static Class_implementation_node* createClassImplementationNode(char *className, char *superclassName, Implementation_body_node *body);
 
@@ -815,6 +835,7 @@ class Instance_variables_declaration_node
         Type_node *type;
         Declarator_list_node *DeclaratorList;
         Instance_variables_declaration_node *Next;
+		int line;
 
         static Instance_variables_declaration_node* createInstanceVariablesDeclarationNode(Type_node *type, Declarator_list_node *declaratorList);
 
@@ -877,6 +898,7 @@ class Method_declaration_node
         Type_node *MethodType;
         Method_selector_node *MethodSelector;
         Method_declaration_node *Next;
+		int line;
 
         static Method_declaration_node* createMethodDeclarationNode(method_declaration_type type, Type_node *methodType, Method_selector_node *selector);
 
@@ -926,6 +948,7 @@ class Method_definition_node
         Declaration_list_node *DeclarationList;
         Statement_list_node *MethodBody;
         Method_definition_node *Next;
+		int line;
 
         static Method_definition_node* createMethodDefinitionNode(method_definition_type type, Type_node *methodType, Method_selector_node *selector, Declaration_list_node *declarationList, Statement_list_node *methodBody);
 
@@ -944,6 +967,7 @@ class Method_selector_node
         Keyword_selector_node *KeywordSelector;
         Parameter_list_node *ParameterListNode;
         Keyword_declaration_node *KeywordDeclaration;
+		int line;
 
         static Method_selector_node* createMethodSelectorNode(char *methodName, Keyword_declaration_node *keywordDeclaration, Keyword_selector_node *selector, Parameter_list_node *parameters);
 
@@ -978,6 +1002,7 @@ class Keyword_declaration_node
         char *Identifier;
         char *KeywordName;
         Keyword_declaration_node *Next;
+        int line;
 
         static Keyword_declaration_node* createKeywordDeclarationNode(Type_node *type, char *identifier, char *keywordName);
 
@@ -994,6 +1019,7 @@ class Property_node
         Type_node *type;
         Identifier_list_node *Names;
         Property_node *Next;
+		int line;
 
         static Property_node* createPropertyNode(Attribute_node *attribute, Type_node *type, Identifier_list_node *names);
 
@@ -1013,6 +1039,7 @@ class Attribute_node
     public:
         int id;
         enum attrribute_type type;
+		int line;
 
         static Attribute_node* createAttributeNode(attrribute_type type);
 
@@ -1027,6 +1054,7 @@ class Program_node
     public:
         int id;
         Function_and_class_list_node *list;
+        int line;
 
         static Program_node* createProgramNode(Function_and_class_list_node *list);
         
@@ -1069,6 +1097,7 @@ class Function_node
         char *Name;
         Statement_list_node *statement;
         Function_node *Next;
+		int line;
 
         static Function_node* createFunctionNode(Type_node *type, char *name, Statement_list_node *statement);
         

@@ -1,7 +1,4 @@
 Id|Name|Type
-1|a|int
-2|b|int
-3|c|int
-4|d|int
-5|obj|global/MyClass
+1|arr|rtl/NSArray
+2|elem|rtl/NSString
 0|self|rtl/!Program!

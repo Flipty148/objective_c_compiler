@@ -2,49 +2,49 @@ ID|Type|Value
 1|UTF8|Code
 2|UTF8|rtl/!Program!
 3|Class|2
-4|UTF8|rtl/InOutFuncs
+4|UTF8|rtl/NSArray
 5|Class|4
-6|UTF8|printCharArrayStatic
-7|UTF8|([C)V
+6|UTF8|arrayStatic
+7|UTF8|()Lrtl/NSArray;
 8|NameAndType|6, 7
 9|MethodRef|8, 5
-10|UTF8|readIntStatic
-11|UTF8|()I
+10|UTF8|arrayByAddingObjectDynamic
+11|UTF8|(Lrtl/NSObject;)Lrtl/NSArray;
 12|NameAndType|10, 11
 13|MethodRef|12, 5
-14|UTF8|Input a:
-15|String|14
-16|UTF8|Input b:
-17|String|16
-18|UTF8|Input c:
-19|String|18
-20|UTF8|Input d:
+14|UTF8|rtl/InOutFuncs
+15|Class|14
+16|UTF8|printNSStringStatic
+17|UTF8|(Lrtl/NSString;)V
+18|NameAndType|16, 17
+19|MethodRef|18, 15
+20|UTF8|first
 21|String|20
-22|UTF8|a == b
+22|UTF8|second
 23|String|22
-24|UTF8|a != b
+24|UTF8|third
 25|String|24
-26|UTF8|a == b, true
-27|String|26
-28|UTF8|a == b, false
-29|String|28
-30|UTF8|a != b, true
-31|String|30
-32|UTF8|a != b, false
-33|String|32
-34|UTF8|c < d
-35|String|34
-36|UTF8|a != b, c >= d
-37|String|36
-38|UTF8|main
-39|UTF8|([Ljava/lang/String;)V
-40|UTF8|java/lang/Object
-41|Class|40
-42|UTF8|<init>
-43|UTF8|()V
-44|NameAndType|42, 43
-45|MethodRef|44, 41
-46|UTF8|java/lang/String
-47|Class|46
-48|UTF8|global/MyClass
+26|UTF8|main
+27|UTF8|([Ljava/lang/String;)V
+28|UTF8|rtl/NSString
+29|Class|28
+30|UTF8|stringWithCStringStatic
+31|UTF8|([C)Lrtl/NSString;
+32|NameAndType|30, 31
+33|MethodRef|32, 29
+34|UTF8|countDynamic
+35|UTF8|()I
+36|NameAndType|34, 35
+37|MethodRef|36, 5
+38|UTF8|objectAtIndexDynamic
+39|UTF8|(I)Lrtl/NSObject;
+40|NameAndType|38, 39
+41|MethodRef|40, 5
+42|UTF8|java/lang/Object
+43|Class|42
+44|UTF8|<init>
+45|UTF8|()V
+46|NameAndType|44, 45
+47|MethodRef|46, 43
+48|UTF8|java/lang/String
 49|Class|48

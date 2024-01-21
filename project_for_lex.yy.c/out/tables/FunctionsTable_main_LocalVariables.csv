@@ -1,7 +1,7 @@
 Id|Name|Type
-3|arr|int[ expr(16) ]
-1|arrSize|int
-2|i|int
-4|j|int
+1|a|int
+2|b|int
+3|c|int
+4|d|int
+5|obj|global/MyClass
 0|self|rtl/!Program!
-5|tmp|int

@@ -12,22 +12,39 @@ ID|Type|Value
 11|UTF8|()I
 12|NameAndType|10, 11
 13|MethodRef|12, 5
-14|UTF8|printIntStatic
-15|UTF8|(I)V
-16|NameAndType|14, 15
-17|MethodRef|16, 5
-18|UTF8|Input arr:
+14|UTF8|Input a:
+15|String|14
+16|UTF8|Input b:
+17|String|16
+18|UTF8|Input c:
 19|String|18
-20|UTF8|
-Output arr:
+20|UTF8|Input d:
 21|String|20
-22|UTF8|main
-23|UTF8|([Ljava/lang/String;)V
-24|UTF8|java/lang/Object
-25|Class|24
-26|UTF8|<init>
-27|UTF8|()V
-28|NameAndType|26, 27
-29|MethodRef|28, 25
-30|UTF8|java/lang/String
-31|Class|30
+22|UTF8|a == b
+23|String|22
+24|UTF8|a != b
+25|String|24
+26|UTF8|a == b, true
+27|String|26
+28|UTF8|a == b, false
+29|String|28
+30|UTF8|a != b, true
+31|String|30
+32|UTF8|a != b, false
+33|String|32
+34|UTF8|c < d
+35|String|34
+36|UTF8|a != b, c >= d
+37|String|36
+38|UTF8|main
+39|UTF8|([Ljava/lang/String;)V
+40|UTF8|java/lang/Object
+41|Class|40
+42|UTF8|<init>
+43|UTF8|()V
+44|NameAndType|42, 43
+45|MethodRef|44, 41
+46|UTF8|java/lang/String
+47|Class|46
+48|UTF8|global/MyClass
+49|Class|48

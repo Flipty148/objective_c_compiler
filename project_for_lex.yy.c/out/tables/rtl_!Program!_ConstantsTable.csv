@@ -24,27 +24,33 @@ ID|Type|Value
 23|String|22
 24|UTF8|third
 25|String|24
-26|UTF8|main
-27|UTF8|([Ljava/lang/String;)V
-28|UTF8|rtl/NSString
-29|Class|28
-30|UTF8|stringWithCStringStatic
-31|UTF8|([C)Lrtl/NSString;
-32|NameAndType|30, 31
-33|MethodRef|32, 29
-34|UTF8|countDynamic
-35|UTF8|()I
-36|NameAndType|34, 35
-37|MethodRef|36, 5
-38|UTF8|objectAtIndexDynamic
-39|UTF8|(I)Lrtl/NSObject;
-40|NameAndType|38, 39
-41|MethodRef|40, 5
-42|UTF8|java/lang/Object
-43|Class|42
-44|UTF8|<init>
-45|UTF8|()V
+26|UTF8|four
+27|String|26
+28|UTF8|five
+29|String|28
+30|UTF8|six
+31|String|30
+32|UTF8|main
+33|UTF8|([Ljava/lang/String;)V
+34|UTF8|rtl/NSString
+35|Class|34
+36|UTF8|stringWithCStringStatic
+37|UTF8|([C)Lrtl/NSString;
+38|NameAndType|36, 37
+39|MethodRef|38, 35
+40|UTF8|countDynamic
+41|UTF8|()I
+42|NameAndType|40, 41
+43|MethodRef|42, 5
+44|UTF8|objectAtIndexDynamic
+45|UTF8|(I)Lrtl/NSObject;
 46|NameAndType|44, 45
-47|MethodRef|46, 43
-48|UTF8|java/lang/String
+47|MethodRef|46, 5
+48|UTF8|java/lang/Object
 49|Class|48
+50|UTF8|<init>
+51|UTF8|()V
+52|NameAndType|50, 51
+53|MethodRef|52, 49
+54|UTF8|java/lang/String
+55|Class|54

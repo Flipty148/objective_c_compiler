@@ -1,4 +1,6 @@
 Id|Name|Type
 1|arr|rtl/NSArray
-2|elem|rtl/NSString
+2|arr1|rtl/NSArray
+3|e|rtl/NSString
+4|elem|rtl/NSString
 0|self|rtl/!Program!

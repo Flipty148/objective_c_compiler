@@ -719,7 +719,7 @@ vector<char> Statement_node::generateCodeForForStatement(bool isInsideClassMetho
 		}
 	}
 	else if (for_stmt->ForType == FOREACH_FOR_TYPE) {
-		num = locals->items["<iterator>"]->Id - isInsideClassMethod;
+		num = locals->items["<iterator" + to_string(for_stmt->id) + ">"]->Id - isInsideClassMethod;
 		vector<char> initValue = CodeGenerationCommands::iconstBipushSipush(0); // Инициализация
 		CodeGenerationHelpers::appendArrayToByteVector(&res, initValue.data(), initValue.size());
 		vector<char> initBytes = CodeGenerationCommands::istore(num); // Инициализация
@@ -727,7 +727,7 @@ vector<char> Statement_node::generateCodeForForStatement(bool isInsideClassMetho
 	}
 	else if (for_stmt->ForType == FOREACH_WITH_DECLARATION_FOR_TYPE) {
 		LocalVariablesTableElement* local = locals->items[for_stmt->name];
-		num = locals->items["<iterator>"]->Id - isInsideClassMethod;
+		num = locals->items["<iterator" + to_string(for_stmt->id) + ">"]->Id - isInsideClassMethod;
 		vector<char> initValue = CodeGenerationCommands::iconstBipushSipush(0); // Инициализация
 		CodeGenerationHelpers::appendArrayToByteVector(&res, initValue.data(), initValue.size());
 		vector<char> initBytes = CodeGenerationCommands::istore(num); // Инициализация

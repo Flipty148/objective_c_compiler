@@ -1,6 +1,9 @@
 Id|Name|Type
-4|<iterator>|int
+6|<iterator82>|int
+7|<iterator84>|int
 1|args|java/lang/String[1024]
 2|arr|rtl/NSArray
-3|elem|rtl/NSString
+3|arr1|rtl/NSArray
+4|e|rtl/NSString
+5|elem|rtl/NSString
 0|self|rtl/!Program!

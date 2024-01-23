@@ -13,6 +13,7 @@ class LocalVariablesTableElement;
 class FieldsTableElement;
 class MethodsTableElement;
 class ConstantsTableElement;
+class FieldsTable;
 
 //---------- Прототипы классов ----------
 class Init_declarator_list_node;
@@ -155,7 +156,7 @@ class Statement_node
 
         virtual string toDot(string labelConection="");
 
-		void findLocalVariables(vector<string>* localVariablesNames, vector<Type*>* localVariablesTypes);
+		void findLocalVariables(vector<string>* localVariablesNames, vector<Type*>* localVariablesTypes, ClassesTableElement *classElem, vector<string> keywordNames, vector<string> parameterNames);
 
         void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); //Функция поиска и заполнения fieldRefs
 		void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod); //Функция поиска и заполнения methodRefs
@@ -422,6 +423,7 @@ class Expression_node
 		virtual void setAttributes(LocalVariablesTable *locals, ConstantsTable *constants); // Установка атрибутов (ссылок на локальные переменные, поля, методы)
 
 		void checkLvalueError(); // Проверка ошибки левого значения
+		virtual void checkDeclarated(vector<string> localNames, ClassesTableElement* classElement, vector<string> keywordNames, vector<string> parameterNames); // Проверка на объявление
 		string getTypeName(); // Возвращает имя вида выражения
 
 		virtual vector<char> generateCode(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода
@@ -479,6 +481,7 @@ class Expression_list_node : public Expression_node
 		void assignmentTransform(); // Преобразование присваивания в дереве
 		void setDataTypesAndCasts(LocalVariablesTable* locals); // Преобразование и установка DataType в дереве
 		void setAttributes(LocalVariablesTable* locals, ConstantsTable* constants); // Установка атрибутов (ссылок на локальные переменные, поля, методы)
+        void checkDeclarated(vector<string> localNames, ClassesTableElement* classElement, vector<string> keywordNames, vector<string> parameterNames); // Проверка на объявление
 
 		vector<char> generateCode(bool isInsideClassMethod, ConstantsTable* constantsTable); // Генерация кода
 };
@@ -533,6 +536,8 @@ class Receiver_node
 
 		void setAttributes(LocalVariablesTable* locals, ConstantsTable* constants); //Установка атрибутов (ссылок на локальные переменные, поля, методы)
 
+		void checkDeclarated(vector<string> localNames, ClassesTableElement* classElement, vector<string> keywordNames, vector<string> parameterNames); //Проверка на объявление
+
 		vector<char> generateCode(bool isInsideClassMethod, ConstantsTable* constantsTable); //Генерация кода
 };
 
@@ -558,6 +563,7 @@ class Message_selector_node
 
 		void setDataTypes(LocalVariablesTable* locals, string receiverClassName); //Установка DataType
 		void setAttributes(LocalVariablesTable* locals, ConstantsTable* constants);
+		void checkDeclarated(vector<string> localNames, ClassesTableElement* classElement, vector<string> keywordNames, vector<string> parameterNames); //Проверка на объявление
 
 		vector<char> generateCode(bool isInsideClassMethod, ConstantsTable* constantsTable); //Генерация кода
 };
@@ -583,6 +589,7 @@ class Keyword_argument_list_node
 
 		void setDataTypes(LocalVariablesTable* locals); //Установка DataType
 		void setAttributes(LocalVariablesTable* locals, ConstantsTable* constant); //Установка атрибутов
+		void checkDeclarated(vector<string> localNames, ClassesTableElement* classElement, vector<string> keywordNames, vector<string> parameterNames); //Проверка на объявление
 };
 
 // ---------- keyword_argument ----------

@@ -127,6 +127,12 @@ int main()
     // [InOutFuncs printNSString:str];
     // [InOutFuncs printNSString:@"test"];
 
-    int a = 10;
-    int a = 20;
+    // int a = 10;
+    // int a = 20;
+
+    int b;
+    b = a;
+    if (b > 0) {
+    int a;
+    }
 }

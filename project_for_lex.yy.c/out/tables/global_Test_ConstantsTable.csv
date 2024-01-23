@@ -1,0 +1,33 @@
+ID|Type|Value
+1|UTF8|Code
+2|UTF8|global/Test
+3|UTF8|rtl/NSObject
+4|Class|2
+5|Class|3
+6|UTF8|testArrayDynamic
+7|UTF8|([I)V
+8|UTF8|testNSStringDynamic
+9|UTF8|(Lrtl/NSString;)V
+10|UTF8|testNumberDynamic
+11|UTF8|(I)V
+12|UTF8|testStringDynamic
+13|UTF8|([C)V
+14|UTF8|testObjectDynamic
+15|UTF8|(Lglobal/MyClass1;)V
+16|UTF8|global/MyClass1
+17|Class|16
+18|UTF8|setADynamic
+19|NameAndType|18, 11
+20|MethodRef|19, 17
+21|UTF8|test
+22|String|21
+23|UTF8|rtl/NSString
+24|Class|23
+25|UTF8|stringWithCStringStatic
+26|UTF8|([C)Lrtl/NSString;
+27|NameAndType|25, 26
+28|MethodRef|27, 24
+29|UTF8|<init>
+30|UTF8|()V
+31|NameAndType|29, 30
+32|MethodRef|31, 5

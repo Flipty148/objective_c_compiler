@@ -1,9 +1,9 @@
 Id|Name|Type
-6|<iterator82>|int
-7|<iterator84>|int
 1|args|java/lang/String[1024]
-2|arr|rtl/NSArray
-3|arr1|rtl/NSArray
-4|e|rtl/NSString
-5|elem|rtl/NSString
+2|arr|int[3]
+3|n|int
+4|nsstr|rtl/NSString
+5|obj|global/MyClass1
 0|self|rtl/!Program!
+6|str|char[6]
+7|test|global/Test

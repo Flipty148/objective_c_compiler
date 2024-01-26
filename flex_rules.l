@@ -73,6 +73,7 @@ UNDERLINE_LETTER [A-Za-z_]
 "/" {return (unsigned char)'/';}
 "++" {printf("ERROR! Unsupported operation '++': %s\n", yytext); return -1;}
 "--" {printf("ERROR! Unsupported operation '--': %s\n", yytext); return -1;}
+"%" {printf("ERROR! Unsupported operation '%': %s\n", yytext); return -1;}
 
 "==" {return EQUAL;}
 "!=" {return NOT_EQUAL;}
@@ -81,12 +82,24 @@ UNDERLINE_LETTER [A-Za-z_]
 ">=" {return GREATER_EQUAL;}
 "<=" {return LESS_EQUAL;}
 
+"&" {printf("ERROR! Unsupported operation '&': %s\n", yytext); return -1;}
+"|" {printf("ERROR! Unsupported operation '|': %s\n", yytext); return -1;}
+
+"&&" {printf("ERROR! Unsupported operation '&&': %s\n", yytext); return -1;}
+"||" {printf("ERROR! Unsupported operation '||': %s\n", yytext); return -1;}
+
+"!" {printf("ERROR! Unsupported operation '!': %s\n", yytext); return -1;}
+
+"<<" {printf("ERROR! Unsupported operation '<<': %s\n", yytext); return -1;}
+">>" {printf("ERROR! Unsupported operation '>>': %s\n", yytext); return -1;}
+
 
 "=" {return (unsigned char)'=';}
 "+=" {printf("ERROR! Unsupported operation '+=': %s\n", yytext); return -1;}
 "-=" {printf("ERROR! Unsupported operation '-=': %s\n", yytext); return -1;}
 "*=" {printf("ERROR! Unsupported operation '*=': %s\n", yytext); return -1;}
 "/=" {printf("ERROR! Unsupported operation '/=': %s\n", yytext); return -1;}
+"%=" {printf("ERROR! Unsupported operation '%=': %s\n", yytext); return -1;}
 
 "." {printf("ERROR! Unsupported property access operation: %s\n", yytext); return -1;}
 "->" {return ARROW;}
@@ -305,6 +318,7 @@ if (parseRes == 0) {
 
 	bool isPreviousSuccess = true;
 
+
 	//Построение dot дерева до семантического анализа
 	if (isPreviousSuccess) {
 		try {
@@ -329,13 +343,13 @@ if (parseRes == 0) {
 			printf("Successful semantic analysis\n");
 		}
 		catch (std::exception *e) {
-            printf("%s", e->what());
-            isPreviousSuccess = false;
-        }
-        catch (...) {
-            printf("Failed semantic analysis\n");
-            isPreviousSuccess = false;
-        }
+			printf("%s", e->what());
+			isPreviousSuccess = false;
+		}
+		catch (...) {
+			printf("Failed semantic analysis\n");
+			isPreviousSuccess = false;
+		}
 		
 	}
 
@@ -347,7 +361,7 @@ if (parseRes == 0) {
 			filesystem::remove_all(p);
 			filesystem::create_directory(p);
 			ClassesTable::toCsvFile("./out/tables/");
-			FunctionsTable::toCsvFile("FunctionsTable.csv", "./out/tables");
+			FunctionsTable::toCsvFile("FunctionsTable.csv", "./out/tables/");
 			printf("Successful printing tables after semantic analysis\n");
 		}
 		catch (...) {
@@ -372,45 +386,51 @@ if (parseRes == 0) {
 		}
 	}
 
-    //Генерация .class файлов
-    if (isPreviousSuccess) {
-        try {
-            printf("Start code generation\n");
-            filesystem::path p = filesystem::path("./out/code/global/");
-            filesystem::remove_all(p);
-            filesystem::create_directory(p);
-            ClassesTable::generateClassFiles("./out/code/");
-            printf("Successful code generation\n");
-        }
-        catch (...) {
-            printf("Failed code generation\n");
-            isPreviousSuccess = false;
-        }
-    }
+	//Генерация .class файлов
+	if (isPreviousSuccess) {
+		try {
+			printf("Start code generation\n");
+			filesystem::path p = filesystem::path("./out/code/global/");
+			filesystem::remove_all(p);
+			filesystem::create_directory(p);
+			ClassesTable::generateClassFiles("./out/code/");
+			printf("Successful code generation\n");
+		}
+		catch (std::exception* e) {
+			printf("%s", e->what());
+			isPreviousSuccess = false;
+		}
+		catch (...) {
+			printf("Failed code generation\n");
+			isPreviousSuccess = false;
+		}
+	}
 
-    //Генерация .jar файла
-    if (isPreviousSuccess) {
-        try {
-            printf("Start generating .jar file\n");
-            string manifest = "main-class: rtl.Program\nclass-path: code/\n";
-            ofstream out("./out/manifest.mf");
-            out << manifest;
-            out.close();
-            string jar = "cd ./out/ && jar -cmf manifest.mf code.jar -C code .";
-            system(jar.c_str());
-            string runBat = "@echo off\njava -noverify -jar code.jar";
-            ofstream outBat("./out/run.bat");
-            outBat << runBat;
-            outBat.close();
+	delete root;
+	delete ClassesTable::items;
 
-            printf("Successful generating .jar file\n");
-        }
-        catch (...) {
-            printf("Failed generating .jar file\n");
-            isPreviousSuccess = false;
-        }
-    }
+	//Генерация .jar файла
+	if (isPreviousSuccess) {
+		try {
+			printf("Start generating .jar file\n");
+			string manifest = "main-class: rtl.!Program!\nclass-path: code/\n";
+			ofstream out("./out/manifest.mf");
+			out << manifest;
+			out.close();
+			string jar = "cd ./out/ && jar -cmf manifest.mf code.jar -C code .";
+			system(jar.c_str());
+			string runBat = "@echo off\njava -noverify -jar code.jar";
+			ofstream outBat("./out/run.bat");
+			outBat << runBat;
+			outBat.close();
+
+			printf("Successful generating .jar file\n");
+		}
+		catch (...) {
+			printf("Failed generating .jar file\n");
+			isPreviousSuccess = false;
+		}
+	}
 }
-
-    _CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_DEBUG);
+	_CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_DEBUG);
 }

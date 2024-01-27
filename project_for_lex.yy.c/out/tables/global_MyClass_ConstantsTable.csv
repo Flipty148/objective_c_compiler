@@ -1,0 +1,10 @@
+ID|Type|Value
+1|UTF8|Code
+2|UTF8|global/MyClass
+3|UTF8|rtl/NSObject
+4|Class|2
+5|Class|3
+6|UTF8|<init>
+7|UTF8|()V
+8|NameAndType|6, 7
+9|MethodRef|8, 5

@@ -10,10 +10,11 @@ int main() {
         arr[i] = [InOutFuncs readInt];
     }
     
+    int tmp;
     for (i = 0; i<arrSize; i = i + 1) {
         for (int j = 0; j < arrSize; j = j + 1) {
             if (arr[i] > arr[j]) {
-                int tmp = arr[i];
+                tmp = arr[i];
                 arr[i] = arr[j];
                 arr[j] = tmp;
             }

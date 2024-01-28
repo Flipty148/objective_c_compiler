@@ -11,11 +11,12 @@ int main() {
         
         int j;
         i = 0;
+        int tmp;
         do {
             j = 0;
             do {
                 if (arr[i] > arr[j]) {
-                    int tmp = arr[i];
+                    tmp = arr[i];
                     arr[i] = arr[j];
                     arr[j] = tmp; 
                 }

@@ -98,12 +98,13 @@ int main() {
     }
     
     int j;
+    int tmp;
     i = 0;
     do {
         j = 0;
         do {
             if (arr1[i] > arr1[j]) {
-                int tmp = arr1[i];
+                tmp = arr1[i];
                 arr1[i] = arr1[j];
                 arr1[j] = tmp; 
             }

@@ -306,9 +306,14 @@ int countChar(const char *str, char character)
 
 int main(int argc, char* argv[])
 {
-   if ( argc > 1 )
-        yyin = fopen( argv[1], "r" );
-else
+	if (argc > 1) {
+		yyin = fopen(argv[1], "r");
+		if (yyin == NULL) {
+			printf("Can't open file %s\n", argv[1]);
+			exit(1);
+		}
+	}
+   else
         yyin = stdin;
 
 printf("Start parsing\n");

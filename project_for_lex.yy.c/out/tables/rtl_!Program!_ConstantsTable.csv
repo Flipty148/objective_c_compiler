@@ -2,220 +2,34 @@ ID|Type|Value
 1|UTF8|Code
 2|UTF8|rtl/!Program!
 3|Class|2
-4|UTF8|global/MyClass4
+4|UTF8|rtl/InOutFuncs
 5|Class|4
-6|UTF8|a
-7|UTF8|I
+6|UTF8|printCharArrayStatic
+7|UTF8|([C)V
 8|NameAndType|6, 7
-9|FieldRef|8, 5
-10|UTF8|global/MyClass10
-11|Class|10
-12|FieldRef|8, 11
-13|UTF8|rtl/InOutFuncs
-14|Class|13
-15|UTF8|printCharArrayStatic
-16|UTF8|([C)V
-17|NameAndType|15, 16
-18|MethodRef|17, 14
-19|UTF8|readIntStatic
-20|UTF8|()I
-21|NameAndType|19, 20
-22|MethodRef|21, 14
-23|UTF8|printIntStatic
-24|UTF8|(I)V
-25|NameAndType|23, 24
-26|MethodRef|25, 14
-27|UTF8|global/MyClass1
-28|Class|27
-29|UTF8|<init>
-30|UTF8|()V
-31|NameAndType|29, 30
-32|MethodRef|31, 28
-33|UTF8|global/MyClass2
-34|Class|33
-35|MethodRef|31, 34
-36|UTF8|rtl/NSArray
-37|Class|36
-38|UTF8|arrayStatic
-39|UTF8|()Lrtl/NSArray;
-40|NameAndType|38, 39
-41|MethodRef|40, 37
-42|UTF8|arrayByAddingObjectDynamic
-43|UTF8|(Lrtl/NSObject;)Lrtl/NSArray;
-44|NameAndType|42, 43
-45|MethodRef|44, 37
-46|UTF8|printNSStringStatic
-47|UTF8|(Lrtl/NSString;)V
-48|NameAndType|46, 47
-49|MethodRef|48, 14
-50|UTF8|global/Fibonacci
-51|Class|50
-52|UTF8|nElemStatic
-53|UTF8|(I)I
-54|NameAndType|52, 53
-55|MethodRef|54, 51
-56|MethodRef|31, 5
-57|UTF8|global/MyClass7
-58|Class|57
-59|MethodRef|31, 58
-60|UTF8|global/MyClass8
-61|Class|60
-62|MethodRef|31, 61
-63|UTF8|global/MyClass9
-64|Class|63
-65|MethodRef|31, 64
-66|UTF8|printDynamic
-67|NameAndType|66, 30
-68|MethodRef|67, 58
-69|UTF8|printCharStatic
-70|UTF8|(C)V
-71|NameAndType|69, 70
-72|MethodRef|71, 14
-73|UTF8|global/Test
-74|Class|73
-75|MethodRef|31, 74
-76|UTF8|testNumberDynamic
-77|NameAndType|76, 24
-78|MethodRef|77, 74
-79|UTF8|testArrayDynamic
-80|UTF8|([I)V
-81|NameAndType|79, 80
-82|MethodRef|81, 74
-83|UTF8|testStringDynamic
-84|NameAndType|83, 16
-85|MethodRef|84, 74
-86|UTF8|testNSStringDynamic
-87|NameAndType|86, 47
-88|MethodRef|87, 74
-89|MethodRef|31, 11
-90|UTF8|setADynamic
-91|NameAndType|90, 24
-92|MethodRef|91, 11
-93|UTF8|testObjectDynamic
-94|UTF8|(Lglobal/MyClass10;)V
-95|NameAndType|93, 94
-96|MethodRef|95, 74
-97|UTF8|Input arr1:
-98|String|97
-99|UTF8|
-Output arr1:
-100|String|99
-101|UTF8|Input arr2: 
+9|MethodRef|8, 5
+10|UTF8|readIntStatic
+11|UTF8|()I
+12|NameAndType|10, 11
+13|MethodRef|12, 5
+14|UTF8|printIntStatic
+15|UTF8|(I)V
+16|NameAndType|14, 15
+17|MethodRef|16, 5
+18|UTF8|Input arr: 
 
-102|String|101
-103|UTF8|
-Output arr2: 
+19|String|18
+20|UTF8|
+Output arr: 
 
-104|String|103
-105|UTF8|Input arr3:
-106|String|105
-107|UTF8|
-Output arr3:
-108|String|107
-109|UTF8|first
-110|String|109
-111|UTF8|second
-112|String|111
-113|UTF8|third
-114|String|113
-115|UTF8|four
-116|String|115
-117|UTF8|five
-118|String|117
-119|UTF8|six
-120|String|119
-121|UTF8|Input number for fibonacci:
-122|String|121
-123|UTF8|Input a:
-124|String|123
-125|UTF8|Input b:
-126|String|125
-127|UTF8|Input c:
-128|String|127
-129|UTF8|Input d:
-130|String|129
-131|UTF8|a == b
-132|String|131
-133|UTF8|a != b
-134|String|133
-135|UTF8|a == b, true
-136|String|135
-137|UTF8|a == b, false
-138|String|137
-139|UTF8|a != b, true
-140|String|139
-141|UTF8|a != b, false
-142|String|141
-143|UTF8|c < d
-144|String|143
-145|UTF8|a != b, c >= d
-146|String|145
-147|UTF8|Plus
-148|String|147
-149|UTF8|
-Minus
-150|String|149
-151|UTF8|
-Mul
-152|String|151
-153|UTF8|
-Div
-154|String|153
-155|UTF8|
-Equal
-156|String|155
-157|UTF8|
-NotEqual
-158|String|157
-159|UTF8|
-Less
-160|String|159
-161|UTF8|
-Greater
-162|String|161
-163|UTF8|
-LessEqual
-164|String|163
-165|UTF8|
-GreaterEqual
-166|String|165
-167|UTF8|Test number
-168|String|167
-169|UTF8|
-Test array
-170|String|169
-171|UTF8|
-Test string
-172|String|171
-173|UTF8|c str
-174|String|173
-175|UTF8|
-Test NSString
-176|String|175
-177|UTF8|nsstr
-178|String|177
-179|UTF8|
-Test object
-180|String|179
-181|UTF8|main
-182|UTF8|([Ljava/lang/String;)V
-183|UTF8|rtl/NSString
-184|Class|183
-185|UTF8|stringWithCStringStatic
-186|UTF8|([C)Lrtl/NSString;
-187|NameAndType|185, 186
-188|MethodRef|187, 184
-189|UTF8|countDynamic
-190|NameAndType|189, 20
-191|MethodRef|190, 37
-192|UTF8|objectAtIndexDynamic
-193|UTF8|(I)Lrtl/NSObject;
-194|NameAndType|192, 193
-195|MethodRef|194, 37
-196|UTF8|java/lang/Object
-197|Class|196
-198|MethodRef|31, 197
-199|UTF8|java/lang/String
-200|Class|199
-201|UTF8|global/MyClass
-202|Class|201
+21|String|20
+22|UTF8|main
+23|UTF8|([Ljava/lang/String;)V
+24|UTF8|java/lang/Object
+25|Class|24
+26|UTF8|<init>
+27|UTF8|()V
+28|NameAndType|26, 27
+29|MethodRef|28, 25
+30|UTF8|java/lang/String
+31|Class|30

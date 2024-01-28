@@ -1,7 +1,0 @@
-Name|Descriptor|IsClassMethod|ReturnType|ParamsTypes|KeywordsTypes|BodyStartStatementId|LocalVariablesTableName
-29 (<init>)|30 (()V)|false|void|||empty|global_Test_MethodsTable_<init>_LocalVariablesTable.csv
-6 (testArrayDynamic)|7 (([I)V)|false|void||int[1024]|1877|global_Test_MethodsTable_testArrayDynamic_LocalVariablesTable.csv
-8 (testNSStringDynamic)|9 ((Lrtl/NSString;)V)|false|void||rtl/NSString|1902|global_Test_MethodsTable_testNSStringDynamic_LocalVariablesTable.csv
-10 (testNumberDynamic)|11 ((I)V)|false|void||int|1857|global_Test_MethodsTable_testNumberDynamic_LocalVariablesTable.csv
-14 (testObjectDynamic)|15 ((Lglobal/MyClass10;)V)|false|void||global/MyClass10|1914|global_Test_MethodsTable_testObjectDynamic_LocalVariablesTable.csv
-12 (testStringDynamic)|13 (([C)V)|false|void||char[1024]|1891|global_Test_MethodsTable_testStringDynamic_LocalVariablesTable.csv

@@ -156,7 +156,7 @@ class Statement_node
 
         virtual string toDot(string labelConection="");
 
-		void findLocalVariables(vector<string>* localVariablesNames, vector<Type*>* localVariablesTypes, ClassesTableElement *classElem, vector<string> keywordNames, vector<string> parameterNames);
+		void findLocalVariables(vector<string>* localVariablesNames, vector<Type*>* localVariablesTypes, ClassesTableElement *classElem, vector<string> keywordNames, vector<string> parameterNames, bool isInTopFunctionLevel = true);
 
         void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); //Функция поиска и заполнения fieldRefs
 		void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod); //Функция поиска и заполнения methodRefs
@@ -224,6 +224,7 @@ class Init_declarator_list_node
 
         string toDot(string labelConection="");
         vector<Init_declarator_node*>* getElements();
+        string getNames();
 
 		void fillFieldRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement); //Функция поиска и заполнения fieldRefs
 		void fillMethodRefs(ConstantsTable* constantTable, LocalVariablesTable* localVariablesTable, ClassesTableElement* classTableElement, bool isInInstanceMethod); //Функция поиска и заполнения methodRefs

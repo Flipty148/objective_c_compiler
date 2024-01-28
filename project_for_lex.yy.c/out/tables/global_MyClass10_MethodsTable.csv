@@ -1,3 +1,0 @@
-Name|Descriptor|IsClassMethod|ReturnType|ParamsTypes|KeywordsTypes|BodyStartStatementId|LocalVariablesTableName
-12 (<init>)|13 (()V)|false|void|||empty|global_MyClass10_MethodsTable_<init>_LocalVariablesTable.csv
-8 (setADynamic)|9 ((I)V)|false|void||int|104|global_MyClass10_MethodsTable_setADynamic_LocalVariablesTable.csv

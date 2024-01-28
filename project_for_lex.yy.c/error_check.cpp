@@ -303,3 +303,18 @@ void For_statement_node::checkFastEnumerationTypes(LocalVariablesTable* locals)
 
 	}
 }
+
+string Init_declarator_list_node::getNames()
+{
+	string res;
+	Init_declarator_node* decl = First;
+	while (decl != NULL) {
+		string str = "'" + string(decl->Declarator) + "'";
+		res += str;
+		decl = decl->Next;
+		if (decl != NULL) {
+			res += ", ";
+		}
+	}
+	return res;
+}

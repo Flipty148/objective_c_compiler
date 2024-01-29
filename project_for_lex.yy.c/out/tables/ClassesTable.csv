@@ -1,5 +1,5 @@
 Name|SuperclassName|IsImplementation|ThisClass|Superclass|FieldsTableName|MethodsTableName|PropertiesTableName|ConstantsTableName
-2(rtl/!Program!)|58(java/lang/Object)|true|3|59|emptyTable|rtl/!Program!_MethodsTable.csv|emptyTable|rtl/!Program!_ConstantsTable.csv
+2(rtl/!Program!)|26(java/lang/Object)|true|3|27|emptyTable|rtl/!Program!_MethodsTable.csv|emptyTable|rtl/!Program!_ConstantsTable.csv
 2(rtl/InOutFuncs)|26(java/lang/Object)|true|3|27|emptyTable|rtl/InOutFuncs_MethodsTable.csv|emptyTable|rtl/InOutFuncs_ConstantsTable.csv
 2(rtl/NSArray)|3(rtl/NSObject)|true|4|5|emptyTable|rtl/NSArray_MethodsTable.csv|emptyTable|rtl/NSArray_ConstantsTable.csv
 2(rtl/NSObject)|21(java/lang/Object)|true|3|22|emptyTable|rtl/NSObject_MethodsTable.csv|emptyTable|rtl/NSObject_ConstantsTable.csv

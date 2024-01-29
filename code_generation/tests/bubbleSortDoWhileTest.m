@@ -1,7 +1,9 @@
 @class InOutFuncs;
 int main() {
-    int arrSize = 10;
+        int arrSize;
         int i;
+        [InOutFuncs printCharArray: "Input array size"];
+        arrSize = [InOutFuncs readInt];
         
         int arr[arrSize];
         [InOutFuncs printCharArray: "Input arr:"];

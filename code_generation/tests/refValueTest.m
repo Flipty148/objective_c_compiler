@@ -33,7 +33,7 @@
 }
 
 - (void) testObject: (MyClass1*) o {
-    [o setA: 15];
+    [o setA: 1587];
 }
 @end
 

@@ -18,15 +18,18 @@
 }
 @end
 
+ @implementation MyClass4 : MyClass2
+@end
+
 int main ()
 {
     MyClass1 *obj1 = [MyClass1 new];
     MyClass2 *obj2 = [MyClass2 new];
     MyClass3 *obj3 = [MyClass3 new];
     
-    MyClass1 *objects[] = { obj1, obj2, obj3 };
+    MyClass1 *objects[] = { obj1, obj2, obj3, [MyClass4 new] };
     
-    for (int i=0; i<3; i = i + 1) {
+    for (int i=0; i<4; i = i + 1) {
         [objects[i] print];
     }
 }

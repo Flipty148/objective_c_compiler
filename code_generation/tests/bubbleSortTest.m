@@ -14,8 +14,8 @@ int main() {
     
     int tmp;
     for (i = 0; i<arrSize; i = i + 1) {
-        for (int j = 0; j < arrSize; j = j + 1) {
-            if (arr[i] > arr[j]) {
+        for (int j = 0; j < i; j = j + 1) {
+            if (arr[i] < arr[j]) {
                 tmp = arr[i];
                 arr[i] = arr[j];
                 arr[j] = tmp;
@@ -23,7 +23,7 @@ int main() {
         }
     }
     
-    [InOutFuncs printCharArray: "\nOutput arr: \n"];
+    [InOutFuncs printCharArray: "\nSorted arr: \n"];
     for (i=0; i < arrSize; i = i + 1) {
         [InOutFuncs printInt: arr[i]];
     }

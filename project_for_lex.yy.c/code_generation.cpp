@@ -519,20 +519,22 @@ vector<char> Init_declarator_node::generateCodeForInitDeclarator(bool isInsideCl
 	else if (dataType->DataType == CLASS_NAME_TYPE || dataType->DataType == ID_TYPE) { //Тип класса
 		if (dataType->ArrSize == NULL) { //Не является массивом
 
-			// Поиск константы с создаваемым классом
-			int constUtf = constantsTable->findConstant(UTF8, &dataType->ClassName);
-			int constClass = constantsTable->findConstant(Class, NULL, NULL, constUtf);
-
-			vector<char> bytes = CodeGenerationCommands::new_(constClass); // Создание объекта
-			CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
-			vector<char> dup = CodeGenerationCommands::dup();
-			CodeGenerationHelpers::appendArrayToByteVector(&res, dup.data(), dup.size());
+			
 
 			if (expression != NULL) { //Указано начальное значение
 				vector<char> expr = expression->generateCode(isInsideClassMethod, constantsTable);
 				CodeGenerationHelpers::appendArrayToByteVector(&res, expr.data(), expr.size()); //Загрузить expression (значение)
 			}
+
 			else { //Не указано начальное значение
+				// Поиск константы с создаваемым классом
+				int constUtf = constantsTable->findConstant(UTF8, &dataType->ClassName);
+				int constClass = constantsTable->findConstant(Class, NULL, NULL, constUtf);
+
+				vector<char> bytes = CodeGenerationCommands::new_(constClass); // Создание объекта
+				CodeGenerationHelpers::appendArrayToByteVector(&res, bytes.data(), bytes.size());
+				vector<char> dup = CodeGenerationCommands::dup();
+				CodeGenerationHelpers::appendArrayToByteVector(&res, dup.data(), dup.size());
 				vector<char> aconstNull = CodeGenerationCommands::aconst_null();
 				CodeGenerationHelpers::appendArrayToByteVector(&res, aconstNull.data(), aconstNull.size());
 			}
@@ -1315,6 +1317,12 @@ vector<char> Expression_node::generateCodeForMessageExpression(bool isInsideClas
 	
 
 	if (isInitMethod) {
+		int utf = constantsTable->findConstant(UTF8, &Receiver->DataType->ClassName);
+		int classConst = constantsTable->findConstant(Class, NULL, NULL, utf);
+		vector<char> newBytes = CodeGenerationCommands::new_(classConst);
+		CodeGenerationHelpers::appendArrayToByteVector(&res, newBytes.data(), newBytes.size());
+		vector<char> dupBytes = CodeGenerationCommands::dup();
+		CodeGenerationHelpers::appendArrayToByteVector(&res, dupBytes.data(), dupBytes.size());
 		CodeGenerationHelpers::appendArrayToByteVector(&res, receiver.data(), receiver.size());
 		CodeGenerationHelpers::appendArrayToByteVector(&res, messageSelector.data(), messageSelector.size());
 		vector<char> invoke = CodeGenerationCommands::invokespecial(Constant);
@@ -1709,7 +1717,19 @@ vector<char> Receiver_node::generateCode(bool isInsideClassMethod, ConstantsTabl
 			throw std::exception(msg.c_str());
 		}
 
-		if (Method->IsClassMethod) {
+		if (isInitMethod) {
+			int utf = constantsTable->findConstant(UTF8, &Receiver->DataType->ClassName);
+			int classConst = constantsTable->findConstant(Class, NULL, NULL, utf);
+			vector<char> newBytes = CodeGenerationCommands::new_(classConst);
+			CodeGenerationHelpers::appendArrayToByteVector(&res, newBytes.data(), newBytes.size());
+			vector<char> dupBytes = CodeGenerationCommands::dup();
+			CodeGenerationHelpers::appendArrayToByteVector(&res, dupBytes.data(), dupBytes.size());
+			CodeGenerationHelpers::appendArrayToByteVector(&res, receiver.data(), receiver.size());
+			CodeGenerationHelpers::appendArrayToByteVector(&res, messageSelector.data(), messageSelector.size());
+			vector<char> invoke = CodeGenerationCommands::invokespecial(Constant);
+			CodeGenerationHelpers::appendArrayToByteVector(&res, invoke.data(), invoke.size());
+		}
+		else if (Method->IsClassMethod) {
 			CodeGenerationHelpers::appendArrayToByteVector(&res, messageSelector.data(), messageSelector.size());
 			vector<char> invoke = CodeGenerationCommands::invokestatic(Constant);
 			CodeGenerationHelpers::appendArrayToByteVector(&res, invoke.data(), invoke.size());

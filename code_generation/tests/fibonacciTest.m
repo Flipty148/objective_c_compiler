@@ -12,10 +12,13 @@
 
 @end
 
+@implementation Fib : Fibonacci
+@end
+
 int main ()
 {
     [InOutFuncs printCharArray: "Input number:"];
     int n = [InOutFuncs readInt];
-    [InOutFuncs printInt: [Fibonacci nElem: n]];
+    [InOutFuncs printInt: [Fib nElem: n]];
     return 0;
 }

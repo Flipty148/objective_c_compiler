@@ -35,7 +35,13 @@ public class InOutFuncs {
      * Считывает целое число с консоли
      * */
     public static int readIntStatic() {
-        return  Integer.parseInt(readStatic());
+        int res = 0;
+        try {
+            res = Integer.parseInt(readStatic());
+        } catch (NumberFormatException e) {
+            res = 0;
+        }
+        return res;
     }
 
     /**

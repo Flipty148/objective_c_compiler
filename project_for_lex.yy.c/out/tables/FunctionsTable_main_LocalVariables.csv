@@ -1,7 +1,7 @@
 Id|Name|Type
-5|i|int
-1|obj1|global/MyClass1
-2|obj2|global/MyClass2
-3|obj3|global/MyClass3
-4|objects|global/MyClass1[4]
+3|arr|int[ expr(26) ]
+1|arrSize|int
+2|i|int
+4|j|int
 0|self|rtl/!Program!
+5|tmp|int

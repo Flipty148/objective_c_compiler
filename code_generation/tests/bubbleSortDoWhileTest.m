@@ -24,7 +24,7 @@ int main() {
                 }
                 j = j + 1;
             }
-            while (j < arrSize);
+            while (j < i);
             i = i + 1;
         }
         while (i < arrSize);

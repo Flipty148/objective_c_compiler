@@ -16,7 +16,7 @@ int main() {
     int tmp;
     while (i < arrSize) {
         j = 0;
-        while (j < arrSize) {
+        while (j < i) {
             if (arr[i] > arr[j]) {
                 tmp = arr[i];
                 arr[i] = arr[j];
